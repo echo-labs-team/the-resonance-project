@@ -1,7 +1,7 @@
 {
-  "name": "test-app",
+  "name": "github.com/phillip3/the-resonance-project",
   "version": "0.0.0",
-  "description": "No description",
+  "description": "Phillip3/the-resonance-project @ May 19, 2019",
   "author": null,
   "private": true,
   "main": "node_modules/expo/AppEntry.js",

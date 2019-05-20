@@ -1,13 +1,18 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation';
-import {TimelineScreen} from './Timeline';
-import {SettingsScreen} from './Settings';
+import {HomeScreen} from './Home';
+import {MediaScreen} from './Media';
+import {GroupsScreen} from './Groups';
+import {EngageScreen} from './Engage';
+import {GivingScreen} from './Giving';
 
 const TabNavigator = createBottomTabNavigator({
-  Home: TimelineScreen,
-  Settings: SettingsScreen,
-  Settings2: SettingsScreen
+  Home: HomeScreen,
+  Media: MediaScreen,
+  Groups: GroupsScreen,
+  Engage: EngageScreen,
+  Giving: GivingScreen
 });
 
 export default createAppContainer(TabNavigator);

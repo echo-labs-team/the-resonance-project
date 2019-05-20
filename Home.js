@@ -1,11 +1,12 @@
 import React from 'react'
 import { Text, View } from 'react-native';
+import { styles } from './Styles'
 
-export class TimelineScreen extends React.Component {
+export class HomeScreen extends React.Component {
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Timeline!</Text>
+      <View style={styles.defaultScreen}>
+        <Text>Home!</Text>
       </View>
     );
   }
