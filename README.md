@@ -1,2 +1,2 @@
-# the-resonance-project
-Mobile App for Echo.Church
+# The Resonance Project
+A mobile application for Echo.Church built by volunteers in React Native.
