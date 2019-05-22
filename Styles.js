@@ -1,11 +1,9 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native';
-import { Constants } from 'expo';
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   defaultScreen: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+  },
+});

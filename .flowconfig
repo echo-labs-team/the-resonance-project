@@ -1,0 +1,25 @@
+[ignore]
+.*/node_modules/react-native/Libraries/*
+.*/node_modules/react-native-tab-view/*
+.*/node_modules/.*[^e]\.json$
+.*/node_modules/.*\(lib\|test\).*\.json$
+.*/node_modules/jest-*/*
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+suppress_type=$FlowIssue
+suppress_type=$FlowFixMe
+suppress_type=$FlowFixMeProps
+suppress_comment=\\(.\\|\n\\)*\\$FlowFixMe
+
+# ESNext features
+esproposal.class_instance_fields=enable
+esproposal.class_static_fields=enable
+esproposal.optional_chaining=enable
+
+[strict]
