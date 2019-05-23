@@ -1,15 +1,55 @@
 {
-  "name": "github.com/phillip3/the-resonance-project",
-  "version": "0.0.0",
-  "description": "Phillip3/the-resonance-project @ May 19, 2019",
-  "author": null,
-  "private": true,
   "main": "node_modules/expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "eject": "expo eject",
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll=false",
+    "test:watch": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "lint": "eslint .",
+    "flow": "flow",
+    "format": "prettier --write \"**/*.js\"",
+    "prepush": "npm run flow && npm test"
+  },
+  "jest": {
+    "preset": "jest-expo"
+  },
   "dependencies": {
+    "@expo/samples": "2.1.1",
     "expo": "^32.0.0",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-native-paper": "2.2.8",
-    "react-navigation": "3.11.0"
+    "react-navigation": "^3.0.9"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
+    "@babel/preset-flow": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-preset-expo": "^5.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-plugin-eslint-comments": "^3.1.1",
+    "eslint-plugin-flowtype": "^3.9.0",
+    "eslint-plugin-react": "^7.13.0",
+    "eslint-plugin-react-native": "^3.7.0",
+    "flow-bin": "^0.98.1",
+    "husky": "^2.3.0",
+    "jest-expo": "^32.0.0",
+    "lint-staged": "^8.1.7",
+    "prettier": "^1.17.1"
+  },
+  "private": true,
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,css,md}": [
+      "prettier --write",
+      "eslint",
+      "git add"
+    ]
   }
 }

@@ -1,0 +1,7 @@
+.build/
+.configcache/
+.git/
+.vscode/
+node_modules/
+coverage/
+flow-typed/
