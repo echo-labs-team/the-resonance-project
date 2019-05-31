@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   createStackNavigator,
-  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
 } from 'react-navigation';
 import {
   AntDesign,
@@ -18,6 +18,32 @@ import EngageScreen from '../screens/Engage';
 import GroupsScreen from '../screens/Groups';
 import GivingScreen from '../screens/Giving';
 
+const HeaderBackImage = () => (
+  <Feather name={'chevron-left'} size={26} color={Colors.white} />
+);
+
+const defaultHeaderNavigationOptions = () => ({
+  headerStyle: {
+    backgroundColor: Colors.darkGray,
+    height: 40,
+    shadowColor: 'transparent',
+    borderBottomWidth: 0,
+  },
+  headerTitleStyle: {
+    fontSize: 22,
+    marginHorizontal: 32,
+    marginBottom: 12,
+    alignSelf: 'flex-end',
+    color: Colors.white,
+  },
+  headerBackImage: <HeaderBackImage />,
+  headerLeftContainerStyle: {
+    alignSelf: 'flex-end',
+    marginLeft: 16,
+    marginTop: 8,
+  },
+});
+
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
@@ -29,14 +55,15 @@ HomeStack.navigationOptions = {
       width={30}
       height={30}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ marginBottom: -3 }}
     />
   ),
-  tabBarOptions: { activeTintColor: Colors.tabIconSelected },
 };
 
 const MediaStack = createStackNavigator({
-  Media: MediaScreen,
+  Media: {
+    screen: MediaScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
 });
 
 MediaStack.navigationOptions = {
@@ -45,15 +72,16 @@ MediaStack.navigationOptions = {
     <Entypo
       name={'folder-video'}
       size={24}
-      style={{ marginBottom: -6 }}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
-  tabBarOptions: { activeTintColor: Colors.tabIconSelected },
 };
 
 const EngageStack = createStackNavigator({
-  Engage: EngageScreen,
+  Engage: {
+    screen: EngageScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
 });
 
 EngageStack.navigationOptions = {
@@ -62,15 +90,16 @@ EngageStack.navigationOptions = {
     <AntDesign
       name={'message1'}
       size={24}
-      style={{ marginBottom: -6 }}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
-  tabBarOptions: { activeTintColor: Colors.tabIconSelected },
 };
 
 const GroupsStack = createStackNavigator({
-  Groups: GroupsScreen,
+  Groups: {
+    screen: GroupsScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
 });
 
 GroupsStack.navigationOptions = {
@@ -78,16 +107,17 @@ GroupsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <MaterialCommunityIcons
       name={'account-group'}
-      size={34}
-      style={{ marginBottom: -3 }}
+      size={28}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
-  tabBarOptions: { activeTintColor: Colors.tabIconSelected },
 };
 
 const GivingStack = createStackNavigator({
-  Giving: GivingScreen,
+  Giving: {
+    screen: GivingScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
 });
 
 GivingStack.navigationOptions = {
@@ -96,17 +126,33 @@ GivingStack.navigationOptions = {
     <Feather
       name={'gift'}
       size={24}
-      style={{ marginBottom: -3 }}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
-  tabBarOptions: { activeTintColor: Colors.tabIconSelected },
 };
 
-export default createBottomTabNavigator({
-  HomeStack,
-  MediaStack,
-  EngageStack,
-  GroupsStack,
-  GivingStack,
-});
+export default createMaterialTopTabNavigator(
+  {
+    HomeStack,
+    MediaStack,
+    EngageStack,
+    GroupsStack,
+    GivingStack,
+  },
+  {
+    tabBarPosition: 'bottom',
+    optimizationsEnabled: true,
+    tabBarOptions: {
+      activeTintColor: Colors.tabIconSelected,
+      inactiveTintColor: Colors.tabIconDefault,
+      showIcon: true,
+      showLabel: false,
+      style: {
+        backgroundColor: Colors.darkestGray,
+      },
+      indicatorStyle: {
+        backgroundColor: Colors.red,
+      },
+    },
+  }
+);
