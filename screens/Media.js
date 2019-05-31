@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, WebView } from 'react-native';
+import Colors from '../constants/Colors';
 
 export default class MediaScreen extends React.Component {
   static navigationOptions = {
@@ -23,6 +24,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: '#fff',
+    backgroundColor: Colors.darkGray,
   },
 });

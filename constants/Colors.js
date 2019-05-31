@@ -4,6 +4,10 @@ const gray = '#b8bab8';
 const blue = '#1f6276';
 const green = '#36ce78';
 const white = '#fff';
+const darkGray = '#313d48';
+const darkerGray = '#212931';
+const darkestGray = '#25282c';
+const darkBlue = '#183f50';
 
 export default {
   red,
@@ -12,9 +16,13 @@ export default {
   blue,
   green,
   white,
-  tabIconDefault: '#ccc',
+  darkGray,
+  darkerGray,
+  darkestGray,
+  darkBlue,
+  tabIconDefault: white,
   tabIconSelected: red,
-  tabBar: '#fefefe',
+  tabBar: darkestGray,
   errorBackground: red,
   errorText: white,
   warningBackground: '#EAEB5E',
