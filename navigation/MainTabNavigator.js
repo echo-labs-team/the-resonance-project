@@ -3,12 +3,7 @@ import {
   createStackNavigator,
   createMaterialTopTabNavigator,
 } from 'react-navigation';
-import {
-  AntDesign,
-  Entypo,
-  Feather,
-  MaterialCommunityIcons,
-} from '@expo/vector-icons';
+import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 
 import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
@@ -22,27 +17,24 @@ const HeaderBackImage = () => (
   <Feather name={'chevron-left'} size={26} color={Colors.white} />
 );
 
-const defaultHeaderNavigationOptions = () => ({
+const defaultHeaderNavigationOptions = {
   headerStyle: {
-    backgroundColor: Colors.darkGray,
-    height: 40,
+    backgroundColor: Colors.darkestGray,
     shadowColor: 'transparent',
     borderBottomWidth: 0,
   },
   headerTitleStyle: {
-    fontSize: 22,
-    marginHorizontal: 32,
-    marginBottom: 12,
-    alignSelf: 'flex-end',
-    color: Colors.white,
+    marginLeft: -200,
+    alignSelf: 'flex-start',
+    fontSize: 26,
+    color: Colors.red,
   },
   headerBackImage: <HeaderBackImage />,
   headerLeftContainerStyle: {
     alignSelf: 'flex-end',
-    marginLeft: 16,
-    marginTop: 8,
+    marginLeft: 10,
   },
-});
+};
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -52,9 +44,10 @@ HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <EchoLogo
-      width={30}
-      height={30}
+      width={28}
+      height={28}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      style={{ marginTop: 6 }}
     />
   ),
 };
@@ -70,8 +63,8 @@ MediaStack.navigationOptions = {
   tabBarLabel: 'Media',
   tabBarIcon: ({ focused }) => (
     <Entypo
-      name={'folder-video'}
-      size={24}
+      name={'controller-play'}
+      size={30}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
@@ -87,9 +80,9 @@ const EngageStack = createStackNavigator({
 EngageStack.navigationOptions = {
   tabBarLabel: 'Engage',
   tabBarIcon: ({ focused }) => (
-    <AntDesign
-      name={'message1'}
-      size={24}
+    <MaterialIcons
+      name={'compare-arrows'}
+      size={30}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
@@ -105,9 +98,9 @@ const GroupsStack = createStackNavigator({
 GroupsStack.navigationOptions = {
   tabBarLabel: 'Groups',
   tabBarIcon: ({ focused }) => (
-    <MaterialCommunityIcons
-      name={'account-group'}
-      size={28}
+    <MaterialIcons
+      name={'group'}
+      size={26}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
@@ -125,7 +118,7 @@ GivingStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <Feather
       name={'gift'}
-      size={24}
+      size={22}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
@@ -141,16 +134,24 @@ export default createMaterialTopTabNavigator(
   },
   {
     tabBarPosition: 'bottom',
+    animationEnabled: false,
+    swipeEnabled: false,
+    lazy: true,
     optimizationsEnabled: true,
     tabBarOptions: {
       activeTintColor: Colors.tabIconSelected,
       inactiveTintColor: Colors.tabIconDefault,
       showIcon: true,
-      showLabel: false,
+      showLabel: true,
       style: {
+        paddingBottom: 20,
         backgroundColor: Colors.darkestGray,
       },
+      labelStyle: {
+        fontSize: 10,
+      },
       indicatorStyle: {
+        marginBottom: 30,
         backgroundColor: Colors.red,
       },
     },
