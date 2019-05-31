@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet, WebView } from 'react-native';
 import Colors from '../constants/Colors';
 
 export default class MediaScreen extends React.Component {
@@ -9,10 +9,12 @@ export default class MediaScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <Text style={{ textAlign: 'center', color: Colors.white }}>
-          Media stuff goes here
-        </Text>
+      <ScrollView contentContainerStyle={{ flex: 1 }} style={styles.container}>
+        <WebView
+          style={styles.container}
+          javaScriptEnabled={true}
+          source={{ uri: 'https://www.youtube.com/embed/wZZ7oFKsKzY' }}
+        />
       </ScrollView>
     );
   }
