@@ -4,7 +4,7 @@ import Colors from '../constants/Colors';
 
 export default class GivingScreen extends React.Component {
   static navigationOptions = {
-    title: 'Giving',
+    title: 'GIVING',
   };
 
   render() {
@@ -22,6 +22,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 15,
-    backgroundColor: Colors.darkGray,
+    backgroundColor: Colors.darkestGray,
   },
 });

@@ -109,6 +109,7 @@
     "no-undef-init": "error",
     "no-undefined": "off",
     "no-use-before-define": "off",
+    "no-unused-vars": "warn",
 
     // Node.js and Common.js
     "callback-return": "error",

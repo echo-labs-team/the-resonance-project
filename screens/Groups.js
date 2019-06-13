@@ -1,19 +1,81 @@
 // @flow
 
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
-import { WebBrowser } from 'expo';
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  FlatList,
+  Text,
+} from 'react-native';
+import { WebBrowser, Svg } from 'expo';
+import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient';
+import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import EchoLogo from '../components/EchoLogo';
-import Button from '../components/Button';
+import { getOpenGroups, getCategories } from '../data/groups';
+import {
+  getCampusCode,
+  getMeetingFrequency,
+  getMeetingDay,
+  getMeetingTime,
+} from '../utils/groups';
+
+const Loader = () => {
+  const width = Layout.window.width - 60;
+
+  return (
+    <SvgAnimatedLinearGradient
+      width={width}
+      height={300}
+      x2="200%"
+      primaryColor={Colors.darkGray}
+      secondaryColor={Colors.darkestGray}
+    >
+      <Svg.Rect x="0" y="0" rx="4" ry="4" width="300" height="28" />
+      <Svg.Rect x="0" y="44" rx="4" ry="4" width="50" height="8" />
+      <Svg.Rect x="80" y="44" rx="4" ry="4" width="50" height="8" />
+      <Svg.Rect x="160" y="44" rx="4" ry="4" width="50" height="8" />
+      <Svg.Rect x="240" y="44" rx="4" ry="4" width="30" height="8" />
+      <Svg.Rect x="0" y="70" rx="5" ry="5" width={width} height="190" />
+    </SvgAnimatedLinearGradient>
+  );
+};
 
 type Props = {
   navigation: Object,
 };
 
-export default class GroupsScreen extends Component<Props> {
+type State = {
+  groups: Array<Object>,
+  categories: Array<string>,
+};
+
+export default class GroupsScreen extends Component<Props, State> {
   static navigationOptions = {
-    title: 'Groups',
+    title: 'GROUPS',
+  };
+
+  state = {
+    groups: [
+      { uuid: 'loading1' },
+      { uuid: 'loading2' },
+      { uuid: 'loading3' },
+      { uuid: 'loading4' },
+      { uuid: 'loading5' },
+      { uuid: 'loading6' },
+      { uuid: 'loading7' },
+      { uuid: 'loading8' },
+    ],
+    categories: [],
+  };
+
+  componentDidMount = async () => {
+    const [groups, categories] = await Promise.all([
+      getOpenGroups(),
+      getCategories(),
+    ]);
+
+    this.setState({ groups, categories });
   };
 
   handleOpenGroups = () => {
@@ -22,127 +84,129 @@ export default class GroupsScreen extends Component<Props> {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <View style={[styles.banner, styles.red]}>
-          <View style={styles.logo}>
-            <EchoLogo
-              width={200}
-              height={200}
-              color={'rgba(255, 255, 255, 0.25)'}
-            />
-          </View>
-          <Text style={styles.heading}>Echo Groups</Text>
-          <Text style={styles.text}>
-            One of the best ways for you to grow in your journey of faith,
-            connect in friendships with others, and serve the world around you.
-          </Text>
-        </View>
+      <View style={styles.mainContainer}>
+        <ImageBackground
+          source={require('../assets/images/fall_leaves_bg.png')}
+          style={styles.backgroundImage}
+        />
+        <FlatList
+          keyExtractor={({ uuid }) => uuid}
+          data={this.state.groups}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={({ item }) => {
+            const {
+              uuid,
+              groupname = '',
+              campus,
+              frequency,
+              interval,
+              daysOfWeek,
+              dayOfMonth,
+              meetingTime,
+              description,
+            } = item;
 
-        <View style={[styles.banner, styles.blue]}>
-          <Text style={[styles.heading, styles.center]}>Join a Group</Text>
-          <Text style={[styles.text, styles.center]}>
-            Ready to join a group? Explore groups by topic or location.
-          </Text>
-          <Button
-            title="Explore All Groups"
-            onPress={this.handleOpenGroups}
-            style={styles.button}
-          />
-        </View>
+            const groupTitleParts = groupname.split('-');
 
-        <View style={[styles.banner, styles.gray]}>
-          <Text style={[styles.text, styles.blackText]}>
-            Echo Groups are usually 8 to 15 people that meet regularly in homes,
-            parks, coffee shops, etc. around the Bay Area. Our groups range in
-            topics, with everything from hiking, to marriage focus, to financial
-            workshops, to in-depth Bible studies. Whether you are exploring
-            faith in God or you have been a long-time follower of Jesus, Echo
-            Groups are one of the best ways for you to grow in your journey of
-            faith, connect in friendships with others, and learn to make a
-            difference.
-          </Text>
-          <Text style={styles.semesterHeader}>Semester Cycles</Text>
-          <Text style={styles.semesterText}>
-            Echo Groups run in four-month cycles (semesters), which allows you
-            the option to switch groups according to your season of life.
-          </Text>
-          <View style={styles.season}>
-            <Text style={styles.seasonLabel}>Spring:</Text>
-            <Text style={styles.seasonText}>Feb – May (sign-ups in Jan)</Text>
-          </View>
-          <View style={styles.season}>
-            <Text style={styles.seasonLabel}>Summer:</Text>
-            <Text style={styles.seasonText}>Jun – Jul (sign-ups in May)</Text>
-          </View>
-          <View style={styles.season}>
-            <Text style={styles.seasonLabel}>Fall:</Text>
-            <Text style={styles.seasonText}>Sep – Dec (sign-ups in Aug)</Text>
-          </View>
-        </View>
-      </ScrollView>
+            groupTitleParts.shift();
+
+            return (
+              <View style={styles.card}>
+                {uuid.includes('loading') ? (
+                  <View style={styles.group}>
+                    <Loader />
+                  </View>
+                ) : (
+                  <View style={styles.group}>
+                    <Text
+                      adjustsFontSizeToFit
+                      numberOfLines={2}
+                      style={styles.title}
+                    >
+                      {groupTitleParts.join(' ').trim()}
+                    </Text>
+                    <View style={styles.details}>
+                      <Text style={styles.detail}>
+                        {getMeetingFrequency(frequency, interval)}
+                      </Text>
+                      <Text style={styles.detail}>
+                        {getMeetingDay(daysOfWeek, dayOfMonth)}
+                      </Text>
+                      <Text style={styles.detail}>
+                        {getMeetingTime(meetingTime)}
+                      </Text>
+                    </View>
+                    <View style={styles.details}>
+                      <Text style={[styles.detail, styles.bold]}>
+                        {getCampusCode(campus)}
+                      </Text>
+                    </View>
+                    <Text numberOfLines={6} style={styles.description}>
+                      {description}
+                    </Text>
+                  </View>
+                )}
+              </View>
+            );
+          }}
+          style={styles.list}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  center: {
-    textAlign: 'center',
+  bold: {
+    fontWeight: '800',
   },
-  container: {
+  mainContainer: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: Colors.darkGray,
+    backgroundColor: Colors.black,
   },
-  banner: {
-    paddingHorizontal: 40,
-    paddingVertical: 30,
-  },
-  red: {
-    backgroundColor: Colors.red,
-  },
-  blue: {
-    backgroundColor: Colors.blue,
-  },
-  gray: {
-    backgroundColor: Colors.gray,
-  },
-  logo: {
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
     position: 'absolute',
-    top: -26,
-    left: -100,
+    opacity: 0.3,
   },
-  heading: {
-    fontSize: 30,
+  list: { padding: 10 },
+  separator: { height: 20 },
+  card: {
+    borderRadius: 10,
+    shadowColor: Colors.black,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.8,
+    shadowRadius: 5,
+    elevation: 8,
+    backgroundColor: Colors.darkerGray,
+  },
+  group: {
+    height: 300,
+    padding: 20,
+    borderRadius: 10,
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  title: {
+    marginBottom: 10,
+    fontSize: 28,
     color: Colors.white,
   },
-  text: {
-    fontSize: 16,
-    color: Colors.white,
-  },
-  blackText: {
-    color: Colors.black,
-  },
-  button: {
-    marginTop: 20,
-  },
-  semesterHeader: {
-    marginTop: 16,
-    fontSize: 30,
-  },
-  semesterText: {
-    marginTop: 16,
-    fontSize: 16,
-  },
-  season: {
-    marginTop: 6,
+  details: {
+    marginBottom: 10,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  seasonLabel: {
-    marginRight: 4,
+  detail: {
     fontSize: 16,
-    fontWeight: '600',
+    color: Colors.gray,
   },
-  seasonText: {
+  description: {
+    padding: 10,
     fontSize: 16,
+    lineHeight: 24,
+    color: Colors.gray,
   },
 });
