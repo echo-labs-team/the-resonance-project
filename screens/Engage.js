@@ -1,6 +1,7 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { StyleSheet, ScrollView, View, Text } from 'react-native';
 import Colors from '../constants/Colors';
+import { getHeaderInset } from '../utils/header';
 
 export default class EngageScreen extends React.Component {
   static navigationOptions = {
@@ -9,7 +10,7 @@ export default class EngageScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} {...getHeaderInset()}>
         <Text style={{ textAlign: 'center', color: Colors.white }}>
           Engage stuff goes here
         </Text>
@@ -21,7 +22,7 @@ export default class EngageScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
+    paddingTop: 20,
     backgroundColor: Colors.darkestGray,
   },
 });

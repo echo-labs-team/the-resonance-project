@@ -8,10 +8,9 @@ import {
   FlatList,
   Text,
 } from 'react-native';
-import { WebBrowser, Svg } from 'expo';
-import SvgAnimatedLinearGradient from 'react-native-svg-animated-linear-gradient';
-import Layout from '../constants/Layout';
+import Placeholder, { Line } from 'rn-placeholder';
 import Colors from '../constants/Colors';
+import { getHeaderInset } from '../utils/header';
 import { getOpenGroups, getCategories } from '../data/groups';
 import {
   getCampusCode,
@@ -20,24 +19,72 @@ import {
   getMeetingTime,
 } from '../utils/groups';
 
-const Loader = () => {
-  const width = Layout.window.width - 60;
+const CardDetails = ({ item }) => {
+  const {
+    groupname = '',
+    campus,
+    frequency,
+    interval,
+    daysOfWeek,
+    dayOfMonth,
+    meetingTime,
+    description,
+  } = item;
+
+  const groupTitleParts = groupname.split('-');
+
+  groupTitleParts.shift();
 
   return (
-    <SvgAnimatedLinearGradient
-      width={width}
-      height={300}
-      x2="200%"
-      primaryColor={Colors.darkGray}
-      secondaryColor={Colors.darkestGray}
-    >
-      <Svg.Rect x="0" y="0" rx="4" ry="4" width="300" height="28" />
-      <Svg.Rect x="0" y="44" rx="4" ry="4" width="50" height="8" />
-      <Svg.Rect x="80" y="44" rx="4" ry="4" width="50" height="8" />
-      <Svg.Rect x="160" y="44" rx="4" ry="4" width="50" height="8" />
-      <Svg.Rect x="240" y="44" rx="4" ry="4" width="30" height="8" />
-      <Svg.Rect x="0" y="70" rx="5" ry="5" width={width} height="190" />
-    </SvgAnimatedLinearGradient>
+    <View style={styles.group}>
+      <Text adjustsFontSizeToFit numberOfLines={2} style={styles.title}>
+        {groupTitleParts.join(' ').trim()}
+      </Text>
+      <View style={styles.details}>
+        <Text style={styles.detail}>
+          {getMeetingFrequency(frequency, interval)}
+        </Text>
+        <Text style={styles.detail}>
+          {getMeetingDay(daysOfWeek, dayOfMonth)}
+        </Text>
+        <Text style={styles.detail}>{getMeetingTime(meetingTime)}</Text>
+      </View>
+      <View style={styles.details}>
+        <Text style={[styles.detail, styles.bold]}>
+          {getCampusCode(campus)}
+        </Text>
+      </View>
+      <Text numberOfLines={5} style={styles.description}>
+        {description}
+      </Text>
+    </View>
+  );
+};
+
+const Card = ({ index, numberOfGroups, item }) => {
+  const isLastCard = index === numberOfGroups;
+  const lastCardStyles = { marginBottom: 60 };
+
+  return (
+    <View style={[styles.card, isLastCard && lastCardStyles]}>
+      <Placeholder
+        isReady={!item.uuid.includes('loading')}
+        animation="fade"
+        whenReadyRender={() => <CardDetails item={item} />}
+        style={styles.placeholder}
+      >
+        <Line width="70%" height={40} />
+        <Line />
+        <Line width={40} />
+        <Line width="80%" />
+        <Line width="70%" />
+        <Line width="80%" />
+        <Line width="70%" />
+        <Line width="60%" />
+        <Line width="70%" />
+        <Line width="60%" />
+      </Placeholder>
+    </View>
   );
 };
 
@@ -78,10 +125,6 @@ export default class GroupsScreen extends Component<Props, State> {
     this.setState({ groups, categories });
   };
 
-  handleOpenGroups = () => {
-    WebBrowser.openBrowserAsync('https://stage.groups.echo.church');
-  };
-
   render() {
     return (
       <View style={styles.mainContainer}>
@@ -93,63 +136,15 @@ export default class GroupsScreen extends Component<Props, State> {
           keyExtractor={({ uuid }) => uuid}
           data={this.state.groups}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({ item }) => {
-            const {
-              uuid,
-              groupname = '',
-              campus,
-              frequency,
-              interval,
-              daysOfWeek,
-              dayOfMonth,
-              meetingTime,
-              description,
-            } = item;
-
-            const groupTitleParts = groupname.split('-');
-
-            groupTitleParts.shift();
-
-            return (
-              <View style={styles.card}>
-                {uuid.includes('loading') ? (
-                  <View style={styles.group}>
-                    <Loader />
-                  </View>
-                ) : (
-                  <View style={styles.group}>
-                    <Text
-                      adjustsFontSizeToFit
-                      numberOfLines={2}
-                      style={styles.title}
-                    >
-                      {groupTitleParts.join(' ').trim()}
-                    </Text>
-                    <View style={styles.details}>
-                      <Text style={styles.detail}>
-                        {getMeetingFrequency(frequency, interval)}
-                      </Text>
-                      <Text style={styles.detail}>
-                        {getMeetingDay(daysOfWeek, dayOfMonth)}
-                      </Text>
-                      <Text style={styles.detail}>
-                        {getMeetingTime(meetingTime)}
-                      </Text>
-                    </View>
-                    <View style={styles.details}>
-                      <Text style={[styles.detail, styles.bold]}>
-                        {getCampusCode(campus)}
-                      </Text>
-                    </View>
-                    <Text numberOfLines={6} style={styles.description}>
-                      {description}
-                    </Text>
-                  </View>
-                )}
-              </View>
-            );
-          }}
+          renderItem={({ index, item }) => (
+            <Card
+              index={index}
+              numberOfGroups={this.state.groups.length - 1}
+              item={item}
+            />
+          )}
           style={styles.list}
+          {...getHeaderInset()}
         />
       </View>
     );
@@ -171,17 +166,21 @@ const styles = StyleSheet.create({
     position: 'absolute',
     opacity: 0.3,
   },
-  list: { padding: 10 },
+  list: {
+    paddingTop: 20,
+    paddingHorizontal: 10,
+  },
   separator: { height: 20 },
   card: {
-    borderRadius: 10,
+    borderRadius: 16,
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.8,
-    shadowRadius: 5,
+    shadowRadius: 8,
     elevation: 8,
     backgroundColor: Colors.darkerGray,
   },
+  placeholder: { padding: 20 },
   group: {
     height: 300,
     padding: 20,

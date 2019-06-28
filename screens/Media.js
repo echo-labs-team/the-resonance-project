@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, WebView } from 'react-native';
 import Colors from '../constants/Colors';
+import { getHeaderInset } from '../utils/header';
 
 export default class MediaScreen extends React.Component {
   static navigationOptions = {
@@ -9,7 +10,11 @@ export default class MediaScreen extends React.Component {
 
   render() {
     return (
-      <ScrollView contentContainerStyle={{ flex: 1 }} style={styles.container}>
+      <ScrollView
+        contentContainerStyle={{ flex: 1 }}
+        style={styles.container}
+        {...getHeaderInset()}
+      >
         <WebView
           style={styles.container}
           javaScriptEnabled={true}
@@ -23,7 +28,6 @@ export default class MediaScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 15,
     backgroundColor: Colors.darkestGray,
   },
 });

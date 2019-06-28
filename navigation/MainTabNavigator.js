@@ -1,9 +1,11 @@
 import React from 'react';
+import { Platform, View } from 'react-native';
 import {
   createStackNavigator,
   createMaterialTopTabNavigator,
 } from 'react-navigation';
 import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+import { BlurView } from 'expo-blur';
 
 import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
@@ -13,23 +15,27 @@ import EngageScreen from '../screens/Engage';
 import GroupsScreen from '../screens/Groups';
 import GivingScreen from '../screens/Giving';
 
-const HeaderBackImage = () => (
-  <Feather name={'chevron-left'} size={26} color={Colors.white} />
-);
-
 const defaultHeaderNavigationOptions = {
+  headerTransparent: true,
   headerStyle: {
-    backgroundColor: Colors.darkestGray,
     shadowColor: 'transparent',
     borderBottomWidth: 0,
   },
+  headerBackground:
+    Platform.OS === 'ios' ? (
+      <BlurView style={{ flex: 1 }} tint="dark" intensity={98} />
+    ) : (
+      <View style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.7)' }} />
+    ),
   headerTitleStyle: {
     marginLeft: -200,
     alignSelf: 'flex-start',
     fontSize: 26,
     color: Colors.red,
   },
-  headerBackImage: <HeaderBackImage />,
+  headerBackImage: (
+    <Feather name={'chevron-left'} size={26} color={Colors.white} />
+  ),
   headerLeftContainerStyle: {
     alignSelf: 'flex-end',
     marginLeft: 10,
@@ -44,8 +50,8 @@ HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <EchoLogo
-      width={28}
-      height={28}
+      width="28"
+      height="28"
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={{ marginTop: 6 }}
     />
