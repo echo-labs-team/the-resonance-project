@@ -1,6 +1,6 @@
 // @flow
 
-export const getCampusCode = (campus: string) => {
+export const getCampusCode = (campus: string = '') => {
   switch (campus) {
     case 'NORTH SAN JOSE':
       return 'NSJ';
@@ -18,7 +18,10 @@ export const getCampusCode = (campus: string) => {
   }
 };
 
-export const getMeetingFrequency = (frequency: string, interval: string) => {
+export const getMeetingFrequency = (
+  frequency: string = '',
+  interval: string = ''
+) => {
   if (interval.toLowerCase() === 'weekly') {
     if (frequency === '1') {
       return interval;
@@ -57,7 +60,7 @@ export const getMeetingDay = (
   }
 };
 
-export const getMeetingTime = (time: string) => {
+export const getMeetingTime = (time: string = '') => {
   const [hours, minutes] = time
     .split('(')[0]
     .trim()
