@@ -46,7 +46,7 @@
     "dot-notation": "error",
     "eqeqeq": "off",
     "guard-for-in": "off",
-    "max-classes-per-file": "error",
+    "max-classes-per-file": "off",
     "no-alert": "error",
     "no-caller": "error",
     "no-div-regex": "error",
