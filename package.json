@@ -41,9 +41,9 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-native": "^3.7.0",
     "flow-bin": "^0.98.1",
-    "husky": "^2.3.0",
+    "husky": "^3.0.0",
     "jest-expo": "^33.0.2",
-    "lint-staged": "^8.1.7",
+    "lint-staged": "^9.1.0",
     "prettier": "^1.17.1"
   },
   "private": true,
@@ -51,12 +51,5 @@
     "hooks": {
       "pre-commit": "lint-staged"
     }
-  },
-  "lint-staged": {
-    "*.{js,json,css,md}": [
-      "prettier --write",
-      "eslint",
-      "git add"
-    ]
   }
 }

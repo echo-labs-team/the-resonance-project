@@ -2,11 +2,8 @@
 
 import axios from 'axios';
 
-const env = process.env.NODE_ENV;
-const isDev = env !== 'production';
-
 // get the service endpoint based on the environment
-const baseURL = isDev
+const baseURL = __DEV__
   ? 'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA'
   : 'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod';
 const testGroupID = '2860932';
@@ -121,7 +118,7 @@ export async function askQuestion(
     } = {},
   } =
     (await axios.post(`${baseURL}/contact`, {
-      groupId: isDev ? testGroupID : groupId,
+      groupId: __DEV__ ? testGroupID : groupId,
       firstName,
       lastName,
       email,
@@ -156,7 +153,7 @@ export async function joinGroup(
     } = {},
   } =
     (await axios.post(`${baseURL}/people/join`, {
-      groupId: isDev ? testGroupID : groupId,
+      groupId: __DEV__ ? testGroupID : groupId,
       person: {
         firstName,
         lastName,
