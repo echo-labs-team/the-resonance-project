@@ -13,6 +13,7 @@ import HomeScreen from '../screens/Home';
 import MediaScreen from '../screens/Media';
 import EngageScreen from '../screens/Engage';
 import GroupsScreen from '../screens/Groups';
+import GroupDetailsScreen from '../screens/GroupDetailsScreen';
 import GivingScreen from '../screens/Giving';
 
 const defaultHeaderNavigationOptions = {
@@ -25,17 +26,19 @@ const defaultHeaderNavigationOptions = {
     Platform.OS === 'ios' ? (
       <BlurView style={{ flex: 1 }} tint="dark" intensity={98} />
     ) : (
-      <View style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.7)' }} />
+      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)' }} />
     ),
   headerTitleStyle: {
-    marginLeft: -200,
-    alignSelf: 'flex-start',
+    position: 'absolute',
+    left: 20,
+    fontFamily: 'NunitoSans-Regular',
     fontSize: 26,
     color: Colors.red,
   },
   headerBackImage: (
     <Feather name={'chevron-left'} size={26} color={Colors.white} />
   ),
+  headerBackTitle: null,
   headerLeftContainerStyle: {
     alignSelf: 'flex-end',
     marginLeft: 10,
@@ -99,6 +102,10 @@ const GroupsStack = createStackNavigator({
     screen: GroupsScreen,
     navigationOptions: defaultHeaderNavigationOptions,
   },
+  GroupDetails: {
+    screen: GroupDetailsScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
 });
 
 GroupsStack.navigationOptions = {
@@ -154,6 +161,7 @@ export default createMaterialTopTabNavigator(
         backgroundColor: Colors.darkestGray,
       },
       labelStyle: {
+        fontFamily: 'NunitoSans-Regular',
         fontSize: 10,
       },
       indicatorStyle: {

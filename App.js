@@ -18,9 +18,9 @@ export default props => {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Icon.Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
-        // to remove this if you are not using it in your app
-        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+        'NunitoSans-Light': require('./assets/fonts/NunitoSans-Light.ttf'),
+        'NunitoSans-Regular': require('./assets/fonts/NunitoSans-Regular.ttf'),
+        'NunitoSans-Bold': require('./assets/fonts/NunitoSans-Bold.ttf'),
       }),
     ]);
   };
@@ -45,7 +45,15 @@ export default props => {
 
   return (
     <View style={styles.container}>
-      {Platform.OS === 'ios' && <StatusBar barStyle="light-content" />}
+      {Platform.OS === 'ios' && (
+        <StatusBar
+          animated
+          barStyle="light-content"
+          networkActivityIndicatorVisible
+          showHideTransition="slide"
+          translucent
+        />
+      )}
       <AppNavigator />
     </View>
   );
