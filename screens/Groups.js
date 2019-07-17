@@ -187,7 +187,9 @@ export const styles = StyleSheet.create({
     height: '100%',
     flex: 1,
     position: 'absolute',
-    opacity: 0.3,
+    top: 0,
+    left: 0,
+    opacity: 0.25,
   },
   list: {
     paddingTop: 20,

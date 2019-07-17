@@ -1,7 +1,13 @@
 // @flow
 
 import React, { useRef } from 'react';
-import { Platform, ScrollView, StyleSheet, View } from 'react-native';
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+  ImageBackground,
+} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Colors from '../constants/Colors';
@@ -23,14 +29,10 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
   const scrollViewRef = useRef(null);
   const dropdownAlertRef = useRef(null);
 
-  function handleSuccess() {
+  function showSuccess(message) {
     if (scrollViewRef.current && dropdownAlertRef.current) {
       scrollViewRef.current.scrollTo({ x: 0, y: -100, animated: true });
-      dropdownAlertRef.current.alertWithType(
-        'success',
-        'Success!',
-        'Thanks for joining ☺️'
-      );
+      dropdownAlertRef.current.alertWithType('success', 'Success!', message);
     }
   }
 
@@ -60,91 +62,99 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
   const shouldShowLeaders = leaders.length > 0;
 
   return (
-    <ScrollView
-      ref={scrollViewRef}
-      style={styles.container}
-      {...getHeaderInset()}
-    >
-      <Text
-        light
-        adjustsFontSizeToFit
-        numberOfLines={2}
-        style={groupStyles.title}
+    <View style={styles.mainContainer}>
+      <ImageBackground
+        source={require('../assets/images/fall_leaves_bg.png')}
+        style={groupStyles.backgroundImage}
+      />
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.container}
+        {...getHeaderInset()}
       >
-        {title}
-      </Text>
+        <Text
+          light
+          adjustsFontSizeToFit
+          numberOfLines={2}
+          style={groupStyles.title}
+        >
+          {title}
+        </Text>
 
-      <View style={groupStyles.when}>
-        <Text style={groupStyles.detail}>
-          {getMeetingFrequency(frequency, interval)} on{' '}
-          <Text bold style={[groupStyles.detail, groupStyles.b]}>
-            {getMeetingDay(daysOfWeek, dayOfMonth)}
-          </Text>{' '}
-          @{' '}
-          <Text bold style={[groupStyles.detail, groupStyles.b]}>
-            {getMeetingTime(meetingTime)}
+        <View style={groupStyles.when}>
+          <Text style={groupStyles.detail}>
+            {getMeetingFrequency(frequency, interval)} on{' '}
+            <Text bold style={[groupStyles.detail, groupStyles.b]}>
+              {getMeetingDay(daysOfWeek, dayOfMonth)}
+            </Text>{' '}
+            @{' '}
+            <Text bold style={[groupStyles.detail, groupStyles.b]}>
+              {getMeetingTime(meetingTime)}
+            </Text>
           </Text>
-        </Text>
-      </View>
+        </View>
 
-      <View style={[groupStyles.details, { marginBottom: 16 }]}>
-        <Text bold style={[groupStyles.detail, { fontSize: 18 }]}>
-          {getCampusCode(campus)}
-        </Text>
-      </View>
+        <View style={[groupStyles.details, { marginBottom: 16 }]}>
+          <Text bold style={[groupStyles.detail, { fontSize: 18 }]}>
+            {getCampusCode(campus)}
+          </Text>
+        </View>
 
-      {shouldShowLocation && (
-        <Location isOnline={isOnline} location={location} />
-      )}
+        {shouldShowLocation && (
+          <Location isOnline={isOnline} location={location} />
+        )}
 
-      {shouldShowAddress && <Address location={location} />}
+        {shouldShowAddress && <Address location={location} />}
 
-      {shouldShowLeaders && (
+        {shouldShowLeaders && (
+          <View style={{ marginBottom: 16 }}>
+            <Text bold style={{ fontSize: 18, color: Colors.gray }}>
+              Leaders
+            </Text>
+            {leaders.map(({ Name: name }) => (
+              <Text key={name} style={{ fontSize: 16, color: Colors.gray }}>
+                {name}
+              </Text>
+            ))}
+          </View>
+        )}
+
         <View style={{ marginBottom: 16 }}>
           <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-            Leaders
+            Childcare
           </Text>
-          {leaders.map(({ Name: name }) => (
-            <Text key={name} style={{ fontSize: 16, color: Colors.gray }}>
-              {name}
-            </Text>
-          ))}
+          <Text style={{ fontSize: 16, color: Colors.gray }}>
+            {hasChildcare ? 'Provided' : 'Not Provided'}
+          </Text>
         </View>
-      )}
 
-      <View style={{ marginBottom: 16 }}>
-        <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-          Childcare
+        <Text
+          style={[groupStyles.description, { padding: 0, marginBottom: 20 }]}
+        >
+          {description}
         </Text>
-        <Text style={{ fontSize: 16, color: Colors.gray }}>
-          {hasChildcare ? 'Provided' : 'Not Provided'}
-        </Text>
-      </View>
 
-      <Text style={[groupStyles.description, { padding: 0, marginBottom: 20 }]}>
-        {description}
-      </Text>
+        <SignUp groupID={uuid} showSuccess={showSuccess} />
+        <Ask groupID={uuid} showSuccess={showSuccess} />
 
-      <SignUp groupID={uuid} onSuccess={handleSuccess} />
-      <Ask />
+        <View style={{ marginBottom: 40 }} />
 
-      <View style={{ marginBottom: 40 }} />
-
-      {/* $FlowFixMe */}
-      <DropdownAlert
-        ref={dropdownAlertRef}
-        successColor={Colors.blue}
-        wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
-        renderImage={() => (
-          <Feather
-            name={'check-circle'}
-            size={30}
-            color={Colors.white}
-            style={{ padding: 8, alignSelf: 'center' }}
-          />
-        )}
-      />
-    </ScrollView>
+        {/* $FlowFixMe */}
+        <DropdownAlert
+          ref={dropdownAlertRef}
+          successColor={Colors.blue}
+          wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
+          renderImage={() => (
+            <Feather
+              name={'check-circle'}
+              size={30}
+              color={Colors.white}
+              style={{ padding: 8, alignSelf: 'center' }}
+            />
+          )}
+        />
+      </ScrollView>
+    </View>
   );
 };
 
@@ -174,11 +184,13 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: Colors.red,
   },
-  container: {
+  mainContainer: {
     flex: 1,
+    backgroundColor: Colors.black,
+  },
+  container: {
     paddingVertical: 20,
     paddingHorizontal: 16,
-    backgroundColor: Colors.darkestGray,
   },
 });
 

@@ -4,13 +4,10 @@ import axios from 'axios';
 import config from './config';
 
 // get the service endpoint based on the environment
-// const baseURL = __DEV__
-//   ? 'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA'
-//   : 'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod';
+const baseURL = __DEV__
+  ? 'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA'
+  : 'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod';
 
-// TODO: use prod url later
-const baseURL =
-  'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA';
 const testGroupID = '2860932';
 
 // set the featured group, which is sorted to the top of the list of groups
@@ -137,7 +134,9 @@ export async function askQuestion(
     } = {},
   } =
     (await axios.post(`${baseURL}/contact`, {
-      groupId: __DEV__ ? testGroupID : groupId,
+      // TODO: change back later
+      // groupId: __DEV__ ? testGroupID : groupId,
+      groupId: testGroupID,
       firstName,
       lastName,
       email,
@@ -172,7 +171,9 @@ export async function joinGroup(
     } = {},
   } =
     (await axios.post(`${baseURL}/people/join`, {
-      groupId: __DEV__ ? testGroupID : groupId,
+      // TODO: change back later
+      // groupId: __DEV__ ? testGroupID : groupId,
+      groupId: testGroupID,
       person: {
         firstName,
         lastName,

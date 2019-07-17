@@ -6,14 +6,14 @@ import Text from '../components/Text';
 
 export default class EngageScreen extends React.Component {
   static navigationOptions = {
-    title: 'ENGAGE',
+    title: 'CONNECT',
   };
 
   render() {
     return (
       <ScrollView style={styles.container} {...getHeaderInset()}>
         <Text style={{ textAlign: 'center', color: Colors.white }}>
-          Engage stuff goes here
+          connect stuff goes here
         </Text>
       </ScrollView>
     );

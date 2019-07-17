@@ -7,7 +7,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView, View } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import Button from './Button';
@@ -52,7 +52,9 @@ export default ({
         />
         <View style={styles.container}>
           <View style={styles.dragBar} />
-          {children}
+          <ScrollView contentContainerStyle={styles.contentContainer}>
+            {children}
+          </ScrollView>
         </View>
       </Modal>
     </>
@@ -71,16 +73,18 @@ const styles = StyleSheet.create({
   container: {
     height: '90%',
     paddingTop: 10,
-    paddingBottom: 20,
+    paddingBottom: 40,
     paddingHorizontal: 16,
     position: 'relative',
     borderRadius: 10,
     backgroundColor: Colors.darkerGray,
   },
+  // needed to allow scrolling on android
+  contentContainer: { flexGrow: 1 },
   dragBar: {
     width: 100,
     height: 6,
-    marginBottom: 20,
+    marginBottom: 30,
     alignSelf: 'center',
     borderRadius: 6,
     backgroundColor: dragBarColor,
