@@ -1,7 +1,8 @@
 import React from 'react';
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
+import Text from '../components/Text';
 
 export default class GivingScreen extends React.Component {
   static navigationOptions = {

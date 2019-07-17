@@ -1,12 +1,21 @@
 // @flow
 
 import axios from 'axios';
+import config from './config';
 
 // get the service endpoint based on the environment
-const baseURL = __DEV__
-  ? 'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA'
-  : 'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod';
+// const baseURL = __DEV__
+//   ? 'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA'
+//   : 'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod';
+
+// TODO: use prod url later
+const baseURL =
+  'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA';
 const testGroupID = '2860932';
+
+// set the featured group, which is sorted to the top of the list of groups
+const isFeaturedGroup = groupName =>
+  groupName.toLowerCase().includes(config.featuredGroup);
 
 export async function getOpenGroups(): Object {
   const today = new Date();
@@ -55,20 +64,30 @@ export async function getOpenGroups(): Object {
     throw Error(errorMessage);
   }
 
-  return groups.map(group => {
-    const {
-      campus = '',
-      categories = { CustomeCategories: [] },
-      hasChildcare,
-    } = group;
+  return groups
+    .map(group => {
+      const {
+        campus = '',
+        categories = { CustomeCategories: [] },
+        hasChildcare,
+      } = group;
 
-    return {
-      ...group,
-      campus: campus && campus.toUpperCase(),
-      attributes: categories.CustomeCategories,
-      hasChildcare: hasChildcare === 'true',
-    };
-  });
+      return {
+        ...group,
+        campus: campus && campus.toUpperCase(),
+        attributes: categories.CustomeCategories,
+        hasChildcare: hasChildcare === 'true',
+      };
+    })
+    .sort(({ groupname = '' }, { groupname: groupName = '' }) => {
+      if (isFeaturedGroup(groupname) && !isFeaturedGroup(groupName)) {
+        return -1;
+      }
+      if (!isFeaturedGroup(groupname) && isFeaturedGroup(groupName)) {
+        return 1;
+      }
+      return 0;
+    });
 }
 
 export async function getCategories(): Promise<Array<any>> {

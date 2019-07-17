@@ -4,15 +4,15 @@
 const siteConfig = {
   title: 'Echo.Church', // Title for your website.
   tagline: 'the app',
-  url: 'https://your-docusaurus-test-site.com', // Your website URL
-  baseUrl: '/', // Base URL for your project */
+  url: 'https://Phillip3.github.io', // Your website URL
+  baseUrl: '/the-resonance-project/', // Base URL for your project */
   // For github.io type URLs, you would set the url and baseUrl like:
   //   url: 'https://facebook.github.io',
   //   baseUrl: '/test-site/',
 
   // Used for publishing and more
   projectName: 'the-resonance-project',
-  organizationName: 'Echo.Church',
+  organizationName: 'Phillip3',
   // For top-level user or org sites, the organization is still the same.
   // e.g., for the https://JoelMarcey.github.io site, it would be set like...
   //   organizationName: 'JoelMarcey'
