@@ -11214,14 +11214,6 @@ prop-types@15.5.10:
     fbjs "^0.8.9"
     loose-envify "^1.3.1"
 
-prop-types@15.6.2:
-  version "15.6.2"
-  resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
-  integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
-  dependencies:
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
 prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
@@ -12281,12 +12273,10 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
-rn-placeholder@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/rn-placeholder/-/rn-placeholder-2.0.0.tgz#8d72a432e9a6b02f0b3cb7de8ddf22b200b80ffd"
-  integrity sha512-bVy0GYu3LrxR0o/fGo09YN3a4OR13f6/Y1HFZ0s9f/ejUZWU2E1cvmNuPmPvEyjRQATa8NQcwNhB0CvXFJhbSg==
-  dependencies:
-    prop-types "15.6.2"
+rn-placeholder@^3.0.0-alpha.3:
+  version "3.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/rn-placeholder/-/rn-placeholder-3.0.0-alpha.3.tgz#f3a139fcf441f2662ed1d08f20185827808ca531"
+  integrity sha512-7lsn7Lce/TjePGKWEhKEbu3X1g4Sdx89u6EWPMZ8wl6TfZdv1ZBzkw9q9rliWkPErdyjJEJ4kooHvn2Hi8Tkyg==
 
 rsvp@^3.3.3:
   version "3.6.2"

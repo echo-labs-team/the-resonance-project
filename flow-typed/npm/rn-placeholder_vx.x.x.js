@@ -1,4 +1,4 @@
-// flow-typed signature: 04a86d290664f200c678b1435d4a7cd3
+// flow-typed signature: 0844b38623aabadfb5e42d6bff120d37
 // flow-typed version: <<STUB>>/rn-placeholder_v^2.0.0/flow_v0.98.1
 
 /**
@@ -62,7 +62,7 @@ declare module 'rn-placeholder/src/imageContent/imageContent' {
   declare module.exports: any;
 }
 
-declare module 'rn-placeholder/src/index' {
+declare module 'rn-placeholder/src' {
   declare module.exports: any;
 }
 
@@ -82,7 +82,7 @@ declare module 'rn-placeholder/src/shapes/box/box.style' {
   declare module.exports: any;
 }
 
-declare module 'rn-placeholder/src/shapes/index' {
+declare module 'rn-placeholder/src/shapes' {
   declare module.exports: any;
 }
 
@@ -125,8 +125,11 @@ declare module 'rn-placeholder/src/connect.js' {
 declare module 'rn-placeholder/src/imageContent/imageContent.js' {
   declare module.exports: $Exports<'rn-placeholder/src/imageContent/imageContent'>;
 }
+declare module 'rn-placeholder/src/index' {
+  declare module.exports: $Exports<'rn-placeholder/src'>;
+}
 declare module 'rn-placeholder/src/index.js' {
-  declare module.exports: $Exports<'rn-placeholder/src/index'>;
+  declare module.exports: $Exports<'rn-placeholder/src'>;
 }
 declare module 'rn-placeholder/src/line/line.js' {
   declare module.exports: $Exports<'rn-placeholder/src/line/line'>;
@@ -140,8 +143,11 @@ declare module 'rn-placeholder/src/placeholder/placeholder.js' {
 declare module 'rn-placeholder/src/shapes/box/box.style.js' {
   declare module.exports: $Exports<'rn-placeholder/src/shapes/box/box.style'>;
 }
+declare module 'rn-placeholder/src/shapes/index' {
+  declare module.exports: $Exports<'rn-placeholder/src/shapes'>;
+}
 declare module 'rn-placeholder/src/shapes/index.js' {
-  declare module.exports: $Exports<'rn-placeholder/src/shapes/index'>;
+  declare module.exports: $Exports<'rn-placeholder/src/shapes'>;
 }
 declare module 'rn-placeholder/src/shapes/media/media.style.js' {
   declare module.exports: $Exports<'rn-placeholder/src/shapes/media/media.style'>;

@@ -1,4 +1,4 @@
-// flow-typed signature: ac542607a412ada4ea21d1722433ab3d
+// flow-typed signature: 5c3298fe662406f88a7f9b7676b877e7
 // flow-typed version: <<STUB>>/jest-expo_v^33.0.2/flow_v0.98.1
 
 /**
@@ -30,7 +30,7 @@ declare module 'jest-expo/jest-preset' {
   declare module.exports: any;
 }
 
-declare module 'jest-expo/src/index' {
+declare module 'jest-expo/src' {
   declare module.exports: any;
 }
 
@@ -61,8 +61,11 @@ declare module 'jest-expo/bin/jest.js' {
 declare module 'jest-expo/jest-preset.js' {
   declare module.exports: $Exports<'jest-expo/jest-preset'>;
 }
+declare module 'jest-expo/src/index' {
+  declare module.exports: $Exports<'jest-expo/src'>;
+}
 declare module 'jest-expo/src/index.js' {
-  declare module.exports: $Exports<'jest-expo/src/index'>;
+  declare module.exports: $Exports<'jest-expo/src'>;
 }
 declare module 'jest-expo/src/preset/assetFileTransformer.js' {
   declare module.exports: $Exports<'jest-expo/src/preset/assetFileTransformer'>;

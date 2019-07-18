@@ -1,4 +1,4 @@
-// flow-typed signature: df51b0a352b3617a289461cc66f59a85
+// flow-typed signature: eb90049dda81b8ac7e8fd02ad918df06
 // flow-typed version: <<STUB>>/babel-eslint_v^10.0.1/flow_v0.98.1
 
 /**
@@ -38,7 +38,7 @@ declare module 'babel-eslint/lib/babylon-to-espree/convertTemplateType' {
   declare module.exports: any;
 }
 
-declare module 'babel-eslint/lib/babylon-to-espree/index' {
+declare module 'babel-eslint/lib/babylon-to-espree' {
   declare module.exports: any;
 }
 
@@ -54,7 +54,7 @@ declare module 'babel-eslint/lib/babylon-to-espree/toTokens' {
   declare module.exports: any;
 }
 
-declare module 'babel-eslint/lib/index' {
+declare module 'babel-eslint/lib' {
   declare module.exports: any;
 }
 
@@ -83,8 +83,11 @@ declare module 'babel-eslint/lib/babylon-to-espree/convertComments.js' {
 declare module 'babel-eslint/lib/babylon-to-espree/convertTemplateType.js' {
   declare module.exports: $Exports<'babel-eslint/lib/babylon-to-espree/convertTemplateType'>;
 }
+declare module 'babel-eslint/lib/babylon-to-espree/index' {
+  declare module.exports: $Exports<'babel-eslint/lib/babylon-to-espree'>;
+}
 declare module 'babel-eslint/lib/babylon-to-espree/index.js' {
-  declare module.exports: $Exports<'babel-eslint/lib/babylon-to-espree/index'>;
+  declare module.exports: $Exports<'babel-eslint/lib/babylon-to-espree'>;
 }
 declare module 'babel-eslint/lib/babylon-to-espree/toAST.js' {
   declare module.exports: $Exports<'babel-eslint/lib/babylon-to-espree/toAST'>;
@@ -95,8 +98,11 @@ declare module 'babel-eslint/lib/babylon-to-espree/toToken.js' {
 declare module 'babel-eslint/lib/babylon-to-espree/toTokens.js' {
   declare module.exports: $Exports<'babel-eslint/lib/babylon-to-espree/toTokens'>;
 }
+declare module 'babel-eslint/lib/index' {
+  declare module.exports: $Exports<'babel-eslint/lib'>;
+}
 declare module 'babel-eslint/lib/index.js' {
-  declare module.exports: $Exports<'babel-eslint/lib/index'>;
+  declare module.exports: $Exports<'babel-eslint/lib'>;
 }
 declare module 'babel-eslint/lib/parse-with-scope.js' {
   declare module.exports: $Exports<'babel-eslint/lib/parse-with-scope'>;

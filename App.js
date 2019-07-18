@@ -13,7 +13,14 @@ export default props => {
     return Promise.all([
       Asset.loadAsync([
         require('./assets/images/echo_logo.png'),
-        require('./assets/images/fall_leaves_bg.png'),
+        require('./assets/images/activate.png'),
+        require('./assets/images/baptism.jpg'),
+        require('./assets/images/volunteer.jpg'),
+        require('./assets/images/pray.jpg'),
+        require('./assets/images/missions.png'),
+        require('./assets/images/connect_bg.png'),
+        require('./assets/images/groups_bg.png'),
+        require('./assets/images/giving_bg.png'),
       ]),
       Font.loadAsync({
         // This is the font that we are using for our tab bar

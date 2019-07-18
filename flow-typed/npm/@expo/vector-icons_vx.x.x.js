@@ -1,4 +1,4 @@
-// flow-typed signature: 320f8178c4cfc86efbe53d9606705ceb
+// flow-typed signature: d23dab2cecf74f490810196142e7aaa2
 // flow-typed version: <<STUB>>/@expo/vector-icons_v^9.0.0/flow_v0.98.1
 
 /**
@@ -134,7 +134,7 @@ declare module '@expo/vector-icons/vendor/react-native-vector-icons/Foundation' 
   declare module.exports: any;
 }
 
-declare module '@expo/vector-icons/vendor/react-native-vector-icons/index' {
+declare module '@expo/vector-icons/vendor/react-native-vector-icons' {
   declare module.exports: any;
 }
 
@@ -226,7 +226,7 @@ declare module '@expo/vector-icons/website/src/IconList' {
   declare module.exports: any;
 }
 
-declare module '@expo/vector-icons/website/src/index' {
+declare module '@expo/vector-icons/website/src' {
   declare module.exports: any;
 }
 
@@ -325,8 +325,11 @@ declare module '@expo/vector-icons/vendor/react-native-vector-icons/FontAwesome5
 declare module '@expo/vector-icons/vendor/react-native-vector-icons/Foundation.js' {
   declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/Foundation'>;
 }
+declare module '@expo/vector-icons/vendor/react-native-vector-icons/index' {
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons'>;
+}
 declare module '@expo/vector-icons/vendor/react-native-vector-icons/index.js' {
-  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/index'>;
+  declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons'>;
 }
 declare module '@expo/vector-icons/vendor/react-native-vector-icons/Ionicons.js' {
   declare module.exports: $Exports<'@expo/vector-icons/vendor/react-native-vector-icons/Ionicons'>;
@@ -394,8 +397,11 @@ declare module '@expo/vector-icons/website/src/IconConstants.js' {
 declare module '@expo/vector-icons/website/src/IconList.js' {
   declare module.exports: $Exports<'@expo/vector-icons/website/src/IconList'>;
 }
+declare module '@expo/vector-icons/website/src/index' {
+  declare module.exports: $Exports<'@expo/vector-icons/website/src'>;
+}
 declare module '@expo/vector-icons/website/src/index.js' {
-  declare module.exports: $Exports<'@expo/vector-icons/website/src/index'>;
+  declare module.exports: $Exports<'@expo/vector-icons/website/src'>;
 }
 declare module '@expo/vector-icons/Zocial.js' {
   declare module.exports: $Exports<'@expo/vector-icons/Zocial'>;

@@ -1,4 +1,4 @@
-// flow-typed signature: 86f8afc6cfd82e51f44aadd8c8b18d66
+// flow-typed signature: 5eb2b1d2a54564d947eda3bbf873b458
 // flow-typed version: <<STUB>>/expo-blur_v^5.0.1/flow_v0.98.1
 
 /**
@@ -42,7 +42,7 @@ declare module 'expo-blur/build/getBackgroundColor' {
   declare module.exports: any;
 }
 
-declare module 'expo-blur/build/index' {
+declare module 'expo-blur/build' {
   declare module.exports: any;
 }
 
@@ -62,6 +62,9 @@ declare module 'expo-blur/build/BlurView.web.js' {
 declare module 'expo-blur/build/getBackgroundColor.js' {
   declare module.exports: $Exports<'expo-blur/build/getBackgroundColor'>;
 }
+declare module 'expo-blur/build/index' {
+  declare module.exports: $Exports<'expo-blur/build'>;
+}
 declare module 'expo-blur/build/index.js' {
-  declare module.exports: $Exports<'expo-blur/build/index'>;
+  declare module.exports: $Exports<'expo-blur/build'>;
 }

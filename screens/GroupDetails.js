@@ -13,7 +13,7 @@ import DropdownAlert from 'react-native-dropdownalert';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
-import { styles as groupStyles } from './Groups';
+import { styles as groupStyles } from '../components/GroupCardDetails';
 import {
   getCampusCode,
   getMeetingFrequency,
@@ -64,8 +64,8 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
-        source={require('../assets/images/fall_leaves_bg.png')}
-        style={groupStyles.backgroundImage}
+        source={require('../assets/images/groups_bg.png')}
+        style={styles.backgroundImage}
       />
       <ScrollView
         ref={scrollViewRef}
@@ -187,6 +187,15 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: Colors.black,
+  },
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    opacity: 0.75,
   },
   container: {
     paddingVertical: 20,

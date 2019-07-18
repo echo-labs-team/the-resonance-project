@@ -1,4 +1,4 @@
-// flow-typed signature: 6fbba1ac900cfb60f948833017e3491e
+// flow-typed signature: ca26d7a9fa62a1688756d0b3206c722f
 // flow-typed version: <<STUB>>/@babel/plugin-proposal-optional-chaining_v^7.2.0/flow_v0.98.1
 
 /**
@@ -22,11 +22,14 @@ declare module '@babel/plugin-proposal-optional-chaining' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module '@babel/plugin-proposal-optional-chaining/lib/index' {
+declare module '@babel/plugin-proposal-optional-chaining/lib' {
   declare module.exports: any;
 }
 
 // Filename aliases
+declare module '@babel/plugin-proposal-optional-chaining/lib/index' {
+  declare module.exports: $Exports<'@babel/plugin-proposal-optional-chaining/lib'>;
+}
 declare module '@babel/plugin-proposal-optional-chaining/lib/index.js' {
-  declare module.exports: $Exports<'@babel/plugin-proposal-optional-chaining/lib/index'>;
+  declare module.exports: $Exports<'@babel/plugin-proposal-optional-chaining/lib'>;
 }

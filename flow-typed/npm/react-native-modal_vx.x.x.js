@@ -1,4 +1,4 @@
-// flow-typed signature: 0e0486ee27f0a8d851b068e293fe9d9f
+// flow-typed signature: 3b868d404b2ecb5945afe81d4600f0a3
 // flow-typed version: <<STUB>>/react-native-modal_v^11.1.0/flow_v0.98.1
 
 /**
@@ -22,7 +22,7 @@ declare module 'react-native-modal' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module 'react-native-modal/src/index' {
+declare module 'react-native-modal/src' {
   declare module.exports: any;
 }
 
@@ -35,8 +35,11 @@ declare module 'react-native-modal/src/utils' {
 }
 
 // Filename aliases
+declare module 'react-native-modal/src/index' {
+  declare module.exports: $Exports<'react-native-modal/src'>;
+}
 declare module 'react-native-modal/src/index.js' {
-  declare module.exports: $Exports<'react-native-modal/src/index'>;
+  declare module.exports: $Exports<'react-native-modal/src'>;
 }
 declare module 'react-native-modal/src/index.style.js' {
   declare module.exports: $Exports<'react-native-modal/src/index.style'>;
