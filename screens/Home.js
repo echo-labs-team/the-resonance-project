@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Image,
   StatusBar,
@@ -15,9 +15,17 @@ import Colors from '../constants/Colors';
 import { getSomething } from '../data/wordpress';
 import { BlurView } from 'expo-blur';
 
-export default class HomeScreen extends React.Component {
-  state: {
-    cardData: Object,
+type Props = {
+  navigation: Object,
+};
+
+type State = {
+  cardData: Array<Object>,
+};
+
+export default class HomeScreen extends React.Component<Props, State> {
+  state = {
+    cardData: [],
   };
 
   static navigationOptions = {
@@ -58,87 +66,85 @@ export default class HomeScreen extends React.Component {
               style={styles.welcomeImage}
             />
           </View>
-          <FlatList
-            keyExtractor={({ title }) => title}
-            data={this.state.cardData}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item }) => {
-              return (
-                <View style={{ alignItems: 'center' }}>
-                  <Card data={item} />
-                </View>
-              );
-            }}
-            style={styles.list}
-          />
+          {this.state.cardData && (
+            <FlatList
+              keyExtractor={({ title }) => title}
+              data={this.state.cardData}
+              ItemSeparatorComponent={() => <View style={styles.separator} />}
+              renderItem={({ item }) => {
+                return (
+                  <View style={{ alignItems: 'center' }}>
+                    <Card data={item} />
+                  </View>
+                );
+              }}
+              style={styles.list}
+            />
+          )}
         </ScrollView>
       </View>
     );
   }
 }
 
-class Card extends React.Component {
-  state = {
-    numBodyLines: 3,
-  };
+const Card = ({ data }) => {
+  const [textHeight, setHeight] = useState(0);
+  const [numBodyLines, setNumBodyLines] = useState(3);
+  const screenWidth = Dimensions.get('window').width;
+  const cardHeight = screenWidth - 16;
 
-  onLayout(event) {
-    const screenWidth = Dimensions.get('window').width;
-    const cardHeight = screenWidth - 16;
-    const { x, y, height, width } = event.nativeEvent.layout;
-    console.log(`screenWidth = ${screenWidth}, height = ${height}`);
-    if (height > cardHeight / 2) {
-      this.setState({ numBodyLines: 2 });
-    }
+  console.log(`screenWidth = ${screenWidth}, textHeight = ${textHeight}`);
+  if (textHeight > cardHeight / 2) {
+    setNumBodyLines(2);
   }
 
-  render() {
-    const screenWidth = Dimensions.get('window').width;
-    const icon = {
-      BLOG: require('../assets/icons/Blog.png'),
-      'MESSAGE SERIES': require('../assets/icons/Message.png'),
-      EVENTS: require('../assets/icons/Events.png'),
-      ANNOUNCEMENT: require('../assets/icons/Announcements.png'),
-    }[this.props.data.type];
-    return (
-      <View
+  const icon = {
+    BLOG: require('../assets/icons/Blog.png'),
+    'MESSAGE SERIES': require('../assets/icons/Message.png'),
+    EVENTS: require('../assets/icons/Events.png'),
+    ANNOUNCEMENT: require('../assets/icons/Announcements.png'),
+  }[data.type];
+  return (
+    <View
+      style={{
+        width: screenWidth - 16,
+        height: screenWidth - 16,
+        backgroundColor: Colors.darkGray,
+        borderRadius: 8,
+        overflow: 'hidden',
+      }}
+    >
+      <Image
+        source={data.image}
         style={{
           width: screenWidth - 16,
-          height: screenWidth - 16,
-          backgroundColor: Colors.darkGray,
-          borderRadius: 8,
-          overflow: 'hidden',
+          height: (screenWidth - 16) / 2,
+        }}
+      />
+
+      <View
+        onLayout={event => {
+          const { x, y, width, height } = event.nativeEvent.layout;
+          setHeight(height);
         }}
       >
-        <Image
-          source={this.props.data.image}
-          style={{
-            width: screenWidth - 16,
-            height: (screenWidth - 16) / 2,
-          }}
-        />
-        <View onLayout={event => this.onLayout(event)}>
-          <View style={styles.cardTypeView}>
-            <Image source={icon} style={styles.cardTypeIcon} />
-            <Text style={styles.cardTypeText}>{this.props.data.type}</Text>
-          </View>
-          <Text style={styles.cardTitleText} numberOfLines={2}>
-            {this.props.data.title}
-          </Text>
-          <Text style={styles.cardSubtitleText}>
-            {`${this.props.data.author} | ${formatDate(this.props.data.date)}`}
-          </Text>
-          <Text
-            style={styles.cardBodyText}
-            numberOfLines={this.state.numBodyLines}
-          >
-            {this.props.data.body}
-          </Text>
+        <View style={styles.cardTypeView}>
+          <Image source={icon} style={styles.cardTypeIcon} />
+          <Text style={styles.cardTypeText}>{data.type}</Text>
         </View>
+        <Text style={styles.cardTitleText} numberOfLines={2}>
+          {data.title}
+        </Text>
+        <Text style={styles.cardSubtitleText}>
+          {`${data.author} | ${formatDate(data.date)}`}
+        </Text>
+        <Text style={styles.cardBodyText} numberOfLines={numBodyLines}>
+          {data.body}
+        </Text>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 const formatDate = date => {
   return date.toLocaleString('en-us', {
