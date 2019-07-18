@@ -1,18 +1,19 @@
 import React from 'react';
-import { StyleSheet, ScrollView, View, Text } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
+import Text from '../components/Text';
 
 export default class EngageScreen extends React.Component {
   static navigationOptions = {
-    title: 'ENGAGE',
+    title: 'CONNECT',
   };
 
   render() {
     return (
       <ScrollView style={styles.container} {...getHeaderInset()}>
         <Text style={{ textAlign: 'center', color: Colors.white }}>
-          Engage stuff goes here
+          connect stuff goes here
         </Text>
       </ScrollView>
     );

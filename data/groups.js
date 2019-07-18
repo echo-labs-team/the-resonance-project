@@ -1,15 +1,18 @@
 // @flow
 
 import axios from 'axios';
-
-const env = process.env.NODE_ENV;
-const isDev = env !== 'production';
+import config from './config';
 
 // get the service endpoint based on the environment
-const baseURL = isDev
+const baseURL = __DEV__
   ? 'https://mzbo5txd78.execute-api.us-west-1.amazonaws.com/Echo_Groups_QA'
   : 'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod';
+
 const testGroupID = '2860932';
+
+// set the featured group, which is sorted to the top of the list of groups
+const isFeaturedGroup = groupName =>
+  groupName.toLowerCase().includes(config.featuredGroup);
 
 export async function getOpenGroups(): Object {
   const today = new Date();
@@ -58,20 +61,30 @@ export async function getOpenGroups(): Object {
     throw Error(errorMessage);
   }
 
-  return groups.map(group => {
-    const {
-      campus = '',
-      categories = { CustomeCategories: [] },
-      hasChildcare,
-    } = group;
+  return groups
+    .map(group => {
+      const {
+        campus = '',
+        categories = { CustomeCategories: [] },
+        hasChildcare,
+      } = group;
 
-    return {
-      ...group,
-      campus: campus && campus.toUpperCase(),
-      attributes: categories.CustomeCategories,
-      hasChildcare: hasChildcare === 'true',
-    };
-  });
+      return {
+        ...group,
+        campus: campus && campus.toUpperCase(),
+        attributes: categories.CustomeCategories,
+        hasChildcare: hasChildcare === 'true',
+      };
+    })
+    .sort(({ groupname = '' }, { groupname: groupName = '' }) => {
+      if (isFeaturedGroup(groupname) && !isFeaturedGroup(groupName)) {
+        return -1;
+      }
+      if (!isFeaturedGroup(groupname) && isFeaturedGroup(groupName)) {
+        return 1;
+      }
+      return 0;
+    });
 }
 
 export async function getCategories(): Promise<Array<any>> {
@@ -121,7 +134,9 @@ export async function askQuestion(
     } = {},
   } =
     (await axios.post(`${baseURL}/contact`, {
-      groupId: isDev ? testGroupID : groupId,
+      // TODO: change back later
+      // groupId: __DEV__ ? testGroupID : groupId,
+      groupId: testGroupID,
       firstName,
       lastName,
       email,
@@ -156,7 +171,9 @@ export async function joinGroup(
     } = {},
   } =
     (await axios.post(`${baseURL}/people/join`, {
-      groupId: isDev ? testGroupID : groupId,
+      // TODO: change back later
+      // groupId: __DEV__ ? testGroupID : groupId,
+      groupId: testGroupID,
       person: {
         firstName,
         lastName,

@@ -24,7 +24,7 @@ export const getMeetingFrequency = (
 ) => {
   if (interval.toLowerCase() === 'weekly') {
     if (frequency === '1') {
-      return interval;
+      return 'Every week';
     }
 
     return `Every ${frequency} weeks`;
@@ -32,11 +32,18 @@ export const getMeetingFrequency = (
 
   if (interval.toLowerCase() === 'monthly') {
     if (frequency === '1') {
-      return interval;
+      return 'Every month';
     }
 
     return `Every ${frequency} months`;
   }
+};
+
+const getGetOrdinal = (n: number) => {
+  const s = ['th', 'st', 'nd', 'rd'];
+  const v = n % 100;
+
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
 };
 
 export const getMeetingDay = (
@@ -54,9 +61,11 @@ export const getMeetingDay = (
   if (dayOfMonth.length) {
     // TODO: make sure `dayOfMonth` is an array of days
     // make sure we have an array of days of the month
-    const daysOfTheMonth = [...dayOfMonth];
+    const daysOfTheMonth = [...dayOfMonth].map(day =>
+      getGetOrdinal(parseInt(day, 10))
+    );
 
-    return `Days of each month: ${daysOfTheMonth.join(', ')}`;
+    return `the ${daysOfTheMonth.join(' & ')}`;
   }
 };
 
@@ -72,5 +81,5 @@ export const getMeetingTime = (time: string = '') => {
   if (h === 0) {
     h = 12;
   }
-  return `${h}:${minutes} ${hrs < 12 ? 'am' : 'pm'}`;
+  return `${h}:${minutes}${hrs < 12 ? 'am' : 'pm'}`;
 };

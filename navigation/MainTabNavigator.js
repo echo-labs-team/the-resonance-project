@@ -11,8 +11,9 @@ import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
 import HomeScreen from '../screens/Home';
 import MediaScreen from '../screens/Media';
-import EngageScreen from '../screens/Engage';
+import ConnectScreen from '../screens/Connect';
 import GroupsScreen from '../screens/Groups';
+import GroupDetailsScreen from '../screens/GroupDetailsScreen';
 import GivingScreen from '../screens/Giving';
 
 const defaultHeaderNavigationOptions = {
@@ -25,17 +26,19 @@ const defaultHeaderNavigationOptions = {
     Platform.OS === 'ios' ? (
       <BlurView style={{ flex: 1 }} tint="dark" intensity={98} />
     ) : (
-      <View style={{ flex: 1, backgroundColor: 'rgba(255,255,255,0.7)' }} />
+      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)' }} />
     ),
   headerTitleStyle: {
-    marginLeft: -200,
-    alignSelf: 'flex-start',
+    position: 'absolute',
+    left: 20,
+    fontFamily: 'NunitoSans-Regular',
     fontSize: 26,
     color: Colors.red,
   },
   headerBackImage: (
     <Feather name={'chevron-left'} size={26} color={Colors.white} />
   ),
+  headerBackTitle: null,
   headerLeftContainerStyle: {
     alignSelf: 'flex-end',
     marginLeft: 10,
@@ -76,15 +79,15 @@ MediaStack.navigationOptions = {
   ),
 };
 
-const EngageStack = createStackNavigator({
-  Engage: {
-    screen: EngageScreen,
+const ConnectStack = createStackNavigator({
+  Connect: {
+    screen: ConnectScreen,
     navigationOptions: defaultHeaderNavigationOptions,
   },
 });
 
-EngageStack.navigationOptions = {
-  tabBarLabel: 'Engage',
+ConnectStack.navigationOptions = {
+  tabBarLabel: 'Connect',
   tabBarIcon: ({ focused }) => (
     <MaterialIcons
       name={'compare-arrows'}
@@ -97,6 +100,10 @@ EngageStack.navigationOptions = {
 const GroupsStack = createStackNavigator({
   Groups: {
     screen: GroupsScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
+  GroupDetails: {
+    screen: GroupDetailsScreen,
     navigationOptions: defaultHeaderNavigationOptions,
   },
 });
@@ -134,7 +141,7 @@ export default createMaterialTopTabNavigator(
   {
     HomeStack,
     MediaStack,
-    EngageStack,
+    ConnectStack,
     GroupsStack,
     GivingStack,
   },
@@ -154,7 +161,9 @@ export default createMaterialTopTabNavigator(
         backgroundColor: Colors.darkestGray,
       },
       labelStyle: {
-        fontSize: 10,
+        fontFamily: 'NunitoSans-Regular',
+        fontSize: 9,
+        includeFontPadding: false,
       },
       indicatorStyle: {
         marginBottom: 30,

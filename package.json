@@ -5,12 +5,14 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
+    "publish": "expo optimize && expo publish",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll=false",
     "test:watch": "node ./node_modules/jest/bin/jest.js --watchAll",
     "lint": "eslint .",
     "flow": "flow",
     "format": "prettier --write \"**/*.js\"",
-    "prepush": "npm run flow && npm test"
+    "prepush": "npm run flow && npm test",
+    "react-devtools": "react-devtools"
   },
   "jest": {
     "preset": "jest-expo"
@@ -22,9 +24,12 @@
     "expo-asset": "^5.0.1",
     "expo-blur": "^5.0.1",
     "expo-font": "^5.0.1",
+    "expo-web-browser": "~5.0.2",
     "react": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-dropdownalert": "^4.1.0",
     "react-native-iphone-x-helper": "^1.2.1",
+    "react-native-modal": "^11.1.0",
     "react-native-svg": "^9.5.1",
     "react-navigation": "^3.11.0",
     "rn-placeholder": "^2.0.0"
@@ -40,11 +45,13 @@
     "eslint-plugin-flowtype": "^3.9.0",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-native": "^3.7.0",
+    "expo-cli": "^2.21.2",
     "flow-bin": "^0.98.1",
-    "husky": "^2.3.0",
+    "husky": "^3.0.0",
     "jest-expo": "^33.0.2",
-    "lint-staged": "^8.1.7",
-    "prettier": "^1.17.1"
+    "lint-staged": "^9.1.0",
+    "prettier": "^1.17.1",
+    "react-devtools": "^3.6.1"
   },
   "private": true,
   "husky": {
@@ -53,7 +60,7 @@
     }
   },
   "lint-staged": {
-    "*.{js,json,css,md}": [
+    "*.{js,json,css}": [
       "prettier --write",
       "eslint",
       "git add"
