@@ -43,19 +43,7 @@ export default class HomeScreen extends React.Component<Props, State> {
     const statusBarHeight = 40;
     return (
       <View style={styles.container}>
-        <StatusBar
-          backgroundColor="blue"
-          translucent
-          barStyle="light-content"
-        />
-        <BlurView
-          style={{
-            width: screenWidth,
-            height: statusBarHeight,
-          }}
-          tint="dark"
-          intensity={100}
-        />
+        <StatusBar hidden={true} />
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
