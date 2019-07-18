@@ -6,7 +6,6 @@ import Colors from '../constants/Colors';
 import { joinGroup } from '../data/groups';
 import ModalSheet from './ModalSheet';
 import Spinner from '../components/Spinner';
-import DropdownAlert from 'react-native-dropdownalert';
 
 const initialState = {
   loading: false,
@@ -65,7 +64,7 @@ export default props => {
           dispatch({ type: 'setSuccess', value: true });
           setTimeout(() => dispatch({ type: 'setSuccess', value: false }), 0);
 
-          props.onSuccess();
+          props.showSuccess('Thanks for joining ☺️');
         }
       })
       .catch(err => {
@@ -79,8 +78,12 @@ export default props => {
       {loading && <Spinner />}
 
       <View style={{ flex: 1 }}>
-        <Text style={{ marginBottom: 20, fontSize: 28, color: Colors.white }}>
+        <Text style={{ marginBottom: 40, fontSize: 30, color: Colors.white }}>
           Sign up
+        </Text>
+
+        <Text style={{ marginBottom: 30, fontSize: 18, color: Colors.gray }}>
+          {`The group leaders will reach out to you with more info once you've joined`}
         </Text>
 
         <TextInput
@@ -112,8 +115,9 @@ export default props => {
           onChangeText={value => dispatch({ type: 'setEmail', value })}
           style={styles.input}
         />
-
-        <View style={{ flex: 1, marginBottom: 10, justifyContent: 'flex-end' }}>
+        <View
+          style={{ flex: 1, marginVertical: 10, justifyContent: 'flex-end' }}
+        >
           <Button title="Sign Up" onPress={handleSignUp} />
         </View>
       </View>
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 8,
     marginBottom: 10,
-    fontSize: 18,
+    fontSize: 20,
     color: Colors.white,
     borderBottomWidth: 1,
     borderBottomColor: Colors.gray,

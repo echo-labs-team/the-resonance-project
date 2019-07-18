@@ -11,7 +11,7 @@ import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
 import HomeScreen from '../screens/Home';
 import MediaScreen from '../screens/Media';
-import EngageScreen from '../screens/Engage';
+import ConnectScreen from '../screens/Connect';
 import GroupsScreen from '../screens/Groups';
 import GroupDetailsScreen from '../screens/GroupDetailsScreen';
 import GivingScreen from '../screens/Giving';
@@ -79,15 +79,15 @@ MediaStack.navigationOptions = {
   ),
 };
 
-const EngageStack = createStackNavigator({
-  Engage: {
-    screen: EngageScreen,
+const ConnectStack = createStackNavigator({
+  Connect: {
+    screen: ConnectScreen,
     navigationOptions: defaultHeaderNavigationOptions,
   },
 });
 
-EngageStack.navigationOptions = {
-  tabBarLabel: 'Engage',
+ConnectStack.navigationOptions = {
+  tabBarLabel: 'Connect',
   tabBarIcon: ({ focused }) => (
     <MaterialIcons
       name={'compare-arrows'}
@@ -141,7 +141,7 @@ export default createMaterialTopTabNavigator(
   {
     HomeStack,
     MediaStack,
-    EngageStack,
+    ConnectStack,
     GroupsStack,
     GivingStack,
   },
@@ -162,7 +162,8 @@ export default createMaterialTopTabNavigator(
       },
       labelStyle: {
         fontFamily: 'NunitoSans-Regular',
-        fontSize: 10,
+        fontSize: 9,
+        includeFontPadding: false,
       },
       indicatorStyle: {
         marginBottom: 30,
