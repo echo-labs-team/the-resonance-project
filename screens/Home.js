@@ -81,7 +81,6 @@ const Card = ({ data }) => {
   const screenWidth = Dimensions.get('window').width;
   const cardHeight = screenWidth - 16;
 
-  console.log(`screenWidth = ${screenWidth}, textHeight = ${textHeight}`);
   if (textHeight > cardHeight / 2) {
     setNumBodyLines(2);
   }
