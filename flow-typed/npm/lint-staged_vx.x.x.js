@@ -1,4 +1,4 @@
-// flow-typed signature: 3c03eb8a8123c9f82b407a172eba48d3
+// flow-typed signature: 329a9d766ac2ef07e3a754e662631742
 // flow-typed version: <<STUB>>/lint-staged_v^9.1.0/flow_v0.98.1
 
 /**
@@ -38,7 +38,7 @@ declare module 'lint-staged/src/gitWorkflow' {
   declare module.exports: any;
 }
 
-declare module 'lint-staged/src/index' {
+declare module 'lint-staged/src' {
   declare module.exports: any;
 }
 
@@ -79,8 +79,11 @@ declare module 'lint-staged/src/getStagedFiles.js' {
 declare module 'lint-staged/src/gitWorkflow.js' {
   declare module.exports: $Exports<'lint-staged/src/gitWorkflow'>;
 }
+declare module 'lint-staged/src/index' {
+  declare module.exports: $Exports<'lint-staged/src'>;
+}
 declare module 'lint-staged/src/index.js' {
-  declare module.exports: $Exports<'lint-staged/src/index'>;
+  declare module.exports: $Exports<'lint-staged/src'>;
 }
 declare module 'lint-staged/src/makeCmdTasks.js' {
   declare module.exports: $Exports<'lint-staged/src/makeCmdTasks'>;

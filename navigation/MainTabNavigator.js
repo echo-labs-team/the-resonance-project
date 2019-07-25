@@ -9,11 +9,22 @@ import { BlurView } from 'expo-blur';
 
 import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
+import ConnectLogo from '../components/ConnectLogo';
+import GroupsLogo from '../components/GroupsLogo';
+
 import HomeScreen from '../screens/Home';
 import MediaScreen from '../screens/Media';
+
 import ConnectScreen from '../screens/Connect';
+import ActivateScreen from '../screens/Activate';
+import BaptismScreen from '../screens/Baptism';
+import VolunteerScreen from '../screens/Volunteer';
+import PrayerRequestsScreen from '../screens/PrayerRequests';
+import MissionsScreen from '../screens/Missions';
+
 import GroupsScreen from '../screens/Groups';
-import GroupDetailsScreen from '../screens/GroupDetailsScreen';
+import GroupDetailsScreen from '../screens/GroupDetails';
+
 import GivingScreen from '../screens/Giving';
 
 const defaultHeaderNavigationOptions = {
@@ -84,15 +95,36 @@ const ConnectStack = createStackNavigator({
     screen: ConnectScreen,
     navigationOptions: defaultHeaderNavigationOptions,
   },
+  Activate: {
+    screen: ActivateScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
+  Baptism: {
+    screen: BaptismScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
+  Volunteer: {
+    screen: VolunteerScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
+  PrayerRequests: {
+    screen: PrayerRequestsScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
+  Missions: {
+    screen: MissionsScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
 });
 
 ConnectStack.navigationOptions = {
   tabBarLabel: 'Connect',
   tabBarIcon: ({ focused }) => (
-    <MaterialIcons
-      name={'compare-arrows'}
-      size={30}
+    <ConnectLogo
+      width="36"
+      height="36"
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      style={{ marginTop: 8 }}
     />
   ),
 };
@@ -111,10 +143,11 @@ const GroupsStack = createStackNavigator({
 GroupsStack.navigationOptions = {
   tabBarLabel: 'Groups',
   tabBarIcon: ({ focused }) => (
-    <MaterialIcons
-      name={'group'}
-      size={26}
+    <GroupsLogo
+      width="36"
+      height="36"
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      style={{ marginTop: 8 }}
     />
   ),
 };

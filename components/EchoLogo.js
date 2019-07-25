@@ -4,8 +4,6 @@ import * as Svg from 'react-native-svg';
 export default ({ width, height, color, style }) => {
   return (
     <Svg.Svg
-      x="0px"
-      y="0px"
       width={width}
       height={height}
       viewBox="0 0 75.103 35.494"

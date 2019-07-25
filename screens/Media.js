@@ -1,29 +1,31 @@
 import React from 'react';
-import { ScrollView, StyleSheet, WebView } from 'react-native';
+import { ScrollView, StyleSheet, WebView, Linking } from 'react-native';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
+import Button from '../components/Button';
 
-export default class MediaScreen extends React.Component {
-  static navigationOptions = {
-    title: 'MEDIA',
-  };
+const MediaScreen = () => {
+  return (
+    <ScrollView style={styles.container} {...getHeaderInset()}>
+      <WebView
+        style={{
+          width: '100%',
+          height: 300,
+        }}
+        javaScriptEnabled={true}
+        source={{ uri: 'https://www.youtube.com/embed/wZZ7oFKsKzY' }}
+      />
+      <Button
+        title="Notes"
+        onPress={() => Linking.openURL('https://www.bible.com/events/652292')}
+      />
+    </ScrollView>
+  );
+};
 
-  render() {
-    return (
-      <ScrollView
-        contentContainerStyle={{ flex: 1 }}
-        style={styles.container}
-        {...getHeaderInset()}
-      >
-        <WebView
-          style={styles.container}
-          javaScriptEnabled={true}
-          source={{ uri: 'https://www.youtube.com/embed/wZZ7oFKsKzY' }}
-        />
-      </ScrollView>
-    );
-  }
-}
+MediaScreen.navigationOptions = {
+  title: 'MEDIA',
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -31,3 +33,5 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkestGray,
   },
 });
+
+export default MediaScreen;
