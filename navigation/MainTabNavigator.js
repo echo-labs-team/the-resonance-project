@@ -1,10 +1,10 @@
 import React from 'react';
-import { Platform, View } from 'react-native';
+import { Platform, StatusBar, View } from 'react-native';
 import {
   createStackNavigator,
   createMaterialTopTabNavigator,
 } from 'react-navigation';
-import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 
 import Colors from '../constants/Colors';
@@ -56,6 +56,12 @@ const defaultHeaderNavigationOptions = {
   },
 };
 
+// need to hide the `StatusBar` on the home screen
+const defaultTabBarOnPress = ({ navigation, defaultHandler }) => {
+  StatusBar.setHidden(navigation.state.routeName === 'HomeStack', 'fade');
+  defaultHandler();
+};
+
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
 });
@@ -70,6 +76,7 @@ HomeStack.navigationOptions = {
       style={{ marginTop: 6 }}
     />
   ),
+  tabBarOnPress: defaultTabBarOnPress,
 };
 
 const MediaStack = createStackNavigator({
@@ -88,6 +95,7 @@ MediaStack.navigationOptions = {
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
+  tabBarOnPress: defaultTabBarOnPress,
 };
 
 const ConnectStack = createStackNavigator({
@@ -127,6 +135,7 @@ ConnectStack.navigationOptions = {
       style={{ marginTop: 8 }}
     />
   ),
+  tabBarOnPress: defaultTabBarOnPress,
 };
 
 const GroupsStack = createStackNavigator({
@@ -150,6 +159,7 @@ GroupsStack.navigationOptions = {
       style={{ marginTop: 8 }}
     />
   ),
+  tabBarOnPress: defaultTabBarOnPress,
 };
 
 const GivingStack = createStackNavigator({
@@ -168,6 +178,7 @@ GivingStack.navigationOptions = {
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
     />
   ),
+  tabBarOnPress: defaultTabBarOnPress,
 };
 
 export default createMaterialTopTabNavigator(

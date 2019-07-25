@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { StyleSheet, StatusBar, View } from 'react-native';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -52,15 +52,14 @@ export default props => {
 
   return (
     <View style={styles.container}>
-      {Platform.OS === 'ios' && (
-        <StatusBar
-          animated
-          barStyle="light-content"
-          networkActivityIndicatorVisible
-          showHideTransition="slide"
-          translucent
-        />
-      )}
+      <StatusBar
+        hidden={true}
+        animated
+        barStyle="light-content"
+        networkActivityIndicatorVisible
+        showHideTransition="fade"
+        translucent
+      />
       <AppNavigator />
     </View>
   );
