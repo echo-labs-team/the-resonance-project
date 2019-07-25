@@ -10,6 +10,7 @@ import {
   Text,
   View,
   Dimensions,
+  RefreshControl,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
@@ -24,57 +25,57 @@ type State = {
   cardData: Array<Object>,
 };
 
-export default class HomeScreen extends React.Component<Props, State> {
-  state = {
-    cardData: [],
-  };
-
-  static navigationOptions = {
-    header: null,
-  };
-
-  componentDidMount = async () => {
+const HomeScreen = () => {
+  const [cardData, setCardData] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const screenWidth = Dimensions.get('window').width;
+  const statusBarHeight = 40;
+  const getNewData = async () => {
     const data = await getSomething();
-
-    this.setState({ cardData: data });
+    setCardData(data);
   };
-
-  render() {
-    const screenWidth = Dimensions.get('window').width;
-    const statusBarHeight = 40;
-    return (
-      <View style={styles.container}>
-        <StatusBar hidden={true} />
-        <ScrollView
-          style={styles.container}
-          contentContainerStyle={styles.contentContainer}
-        >
-          <View style={styles.welcomeContainer}>
-            <Image
-              source={require('../assets/images/echo_logo.png')}
-              style={styles.welcomeImage}
-            />
-          </View>
-          {this.state.cardData && (
-            <FlatList
-              keyExtractor={({ title }) => title}
-              data={this.state.cardData}
-              ItemSeparatorComponent={() => <View style={styles.separator} />}
-              renderItem={({ item }) => {
-                return (
-                  <View style={{ alignItems: 'center' }}>
-                    <Card data={item} />
-                  </View>
-                );
-              }}
-              style={styles.list}
-            />
-          )}
-        </ScrollView>
-      </View>
-    );
+  if (cardData.length == 0) {
+    getNewData();
   }
-}
+  return (
+    <View style={styles.container}>
+      <StatusBar hidden={true} />
+      <ScrollView
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={getNewData} />
+        }
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+      >
+        <View style={styles.welcomeContainer}>
+          <Image
+            source={require('../assets/images/echo_logo.png')}
+            style={styles.welcomeImage}
+          />
+        </View>
+        {cardData && (
+          <FlatList
+            keyExtractor={({ title }) => title}
+            data={cardData}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            renderItem={({ item }) => {
+              return (
+                <View style={{ alignItems: 'center' }}>
+                  <Card data={item} />
+                </View>
+              );
+            }}
+            style={styles.list}
+          />
+        )}
+      </ScrollView>
+    </View>
+  );
+};
+
+HomeScreen.navigationOptions = {
+  header: null,
+};
 
 const Card = ({ data }) => {
   const [textHeight, setHeight] = useState(0);
@@ -205,3 +206,5 @@ const styles = StyleSheet.create({
     height: 16,
   },
 });
+
+export default HomeScreen;
