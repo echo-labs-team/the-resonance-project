@@ -7,6 +7,7 @@ const white = '#fff';
 const darkGray = '#313d48';
 const darkerGray = '#212931';
 const darkestGray = '#25282c';
+const darkestGray2 = '#131313';
 const darkBlue = '#183f50';
 
 export default {
@@ -19,10 +20,12 @@ export default {
   darkGray,
   darkerGray,
   darkestGray,
+  darkestGray2,
   darkBlue,
-  tabIconDefault: white,
-  tabIconSelected: red,
-  tabBar: darkestGray,
+  tabIconDefault: gray,
+  tabIconSelected: white,
+  tabBar: darkestGray2,
+  headerBackground: black,
   errorBackground: red,
   errorText: white,
   warningBackground: '#EAEB5E',

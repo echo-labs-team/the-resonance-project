@@ -12,6 +12,7 @@ import {
   Dimensions,
 } from 'react-native';
 import Colors from '../constants/Colors';
+import TextStyles from '../constants/TextStyles';
 import { getSomething } from '../data/wordpress';
 import { BlurView } from 'expo-blur';
 
@@ -96,7 +97,7 @@ const Card = ({ data }) => {
       style={{
         width: screenWidth - 16,
         height: screenWidth - 16,
-        backgroundColor: Colors.darkGray,
+        backgroundColor: Colors.darkestGray,
         borderRadius: 8,
         overflow: 'hidden',
       }}
@@ -119,13 +120,19 @@ const Card = ({ data }) => {
           <Image source={icon} style={styles.cardTypeIcon} />
           <Text style={styles.cardTypeText}>{data.type}</Text>
         </View>
-        <Text style={styles.cardTitleText} numberOfLines={2}>
+        <Text
+          style={[TextStyles.title, { paddingLeft: 8, paddingTop: 8 }]}
+          numberOfLines={2}
+        >
           {data.title}
         </Text>
         <Text style={styles.cardSubtitleText}>
           {`${data.author} | ${formatDate(data.date)}`}
         </Text>
-        <Text style={styles.cardBodyText} numberOfLines={numBodyLines}>
+        <Text
+          style={[TextStyles.body, { padding: 8 }]}
+          numberOfLines={numBodyLines}
+        >
           {data.body}
         </Text>
       </View>
@@ -144,7 +151,7 @@ const formatDate = date => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.darkestGray,
+    backgroundColor: Colors.headerBackground,
   },
   statusBar: {
     height: 100,
@@ -168,14 +175,6 @@ const styles = StyleSheet.create({
     height: 80,
     backgroundColor: 'red',
     borderRadius: 10,
-  },
-  cardTitleText: {
-    fontSize: 20,
-    textAlign: 'left',
-    fontFamily: 'AvenirNext-Medium',
-    paddingLeft: 8,
-    paddingTop: 8,
-    color: Colors.white,
   },
   cardSubtitleText: {
     fontSize: 14,
@@ -201,14 +200,6 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 16,
     flexDirection: 'row',
-  },
-  cardBodyText: {
-    fontSize: 14,
-    textAlign: 'left',
-    paddingLeft: 8,
-    paddingTop: 8,
-    paddingRight: 8,
-    color: Colors.white,
   },
   separator: {
     height: 16,

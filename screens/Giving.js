@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ScrollView, ImageBackground } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Colors from '../constants/Colors';
+import TextStyles from '../constants/TextStyles';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
