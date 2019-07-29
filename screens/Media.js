@@ -30,7 +30,7 @@ MediaScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.darkestGray,
+    backgroundColor: Colors.headerBackground,
   },
 });
 

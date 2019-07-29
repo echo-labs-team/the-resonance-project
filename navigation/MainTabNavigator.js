@@ -41,8 +41,8 @@ const defaultHeaderNavigationOptions = {
     ),
   headerTitleStyle: {
     position: 'absolute',
-    left: 20,
-    fontFamily: 'NunitoSans-Regular',
+    left: 0,
+    fontFamily: 'NunitoSans-Bold',
     fontSize: 26,
     color: Colors.red,
   },
@@ -52,7 +52,7 @@ const defaultHeaderNavigationOptions = {
   headerBackTitle: null,
   headerLeftContainerStyle: {
     alignSelf: 'flex-end',
-    marginLeft: 10,
+    marginLeft: 16,
   },
 };
 
@@ -182,7 +182,7 @@ export default createMaterialTopTabNavigator(
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: false,
-    lazy: true,
+    lazy: false,
     optimizationsEnabled: true,
     tabBarOptions: {
       activeTintColor: Colors.tabIconSelected,
@@ -191,7 +191,7 @@ export default createMaterialTopTabNavigator(
       showLabel: true,
       style: {
         paddingBottom: 20,
-        backgroundColor: Colors.darkestGray,
+        backgroundColor: Colors.tabBar,
       },
       labelStyle: {
         fontFamily: 'NunitoSans-Regular',
@@ -199,7 +199,7 @@ export default createMaterialTopTabNavigator(
         includeFontPadding: false,
       },
       indicatorStyle: {
-        marginBottom: 30,
+        marginBottom: -10,
         backgroundColor: Colors.red,
       },
     },
