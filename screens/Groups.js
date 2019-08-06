@@ -81,6 +81,11 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   const [categories, setCategories] = useState([]);
   const [query, setQuery, queriedGroups] = useQuery(groups);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
+  const [filters, setFilters] = useState([]);
+
+  useEffect(() => {
+    console.log('applied filters', filters);
+  }, [filters]);
 
   useEffect(() => {
     const getGroups = async () => {
@@ -157,6 +162,8 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         categories={categories}
         isVisible={isFilterModalVisible}
         setIsVisible={setIsFilterModalVisible}
+        appliedFilters={filters}
+        applyFilters={setFilters}
       />
     </View>
   );

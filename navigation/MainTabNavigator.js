@@ -70,8 +70,8 @@ HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <EchoLogo
-      width="28"
-      height="28"
+      width={28}
+      height={28}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={{ marginTop: 6 }}
     />
@@ -129,8 +129,8 @@ ConnectStack.navigationOptions = {
   tabBarLabel: 'Connect',
   tabBarIcon: ({ focused }) => (
     <ConnectLogo
-      width="36"
-      height="36"
+      width={36}
+      height={36}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={{ marginTop: 8 }}
     />
@@ -153,8 +153,8 @@ GroupsStack.navigationOptions = {
   tabBarLabel: 'Groups',
   tabBarIcon: ({ focused }) => (
     <GroupsLogo
-      width="36"
-      height="36"
+      width={36}
+      height={36}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={{ marginTop: 8 }}
     />

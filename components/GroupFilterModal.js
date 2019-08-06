@@ -18,14 +18,15 @@ import Text from './Text';
 import Button from './Button';
 import Checkbox from './Checkbox';
 
-const Item = ({ item, areFiltersReset, onSelected }) => {
+const Item = ({ item, isSelected, onSelected }) => {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
-    if (areFiltersReset) {
-      setSelected(false);
+    if (isSelected) {
+      return setSelected(true);
     }
-  }, [areFiltersReset]);
+    setSelected(false);
+  }, [isSelected]);
 
   return (
     <TouchableHighlight
@@ -39,21 +40,40 @@ const Item = ({ item, areFiltersReset, onSelected }) => {
         <Text light style={styles.category}>
           {item}
         </Text>
-        {!areFiltersReset && selected ? <Checkbox checked /> : <Checkbox />}
+        {isSelected || selected ? <Checkbox checked /> : <Checkbox />}
       </View>
     </TouchableHighlight>
   );
 };
 
-export default ({ categories, isVisible, setIsVisible }) => {
-  const [filters, setFilters] = useState([]);
+export default ({
+  categories,
+  isVisible,
+  setIsVisible,
+  appliedFilters = [],
+  applyFilters,
+}) => {
+  const [filters, setFilters] = useState(appliedFilters);
+
+  useEffect(() => {
+    console.log('modal: selected filters', filters);
+  }, [filters]);
+
+  const handleCancel = () => {
+    setFilters(appliedFilters);
+    setIsVisible(false);
+  };
+  const handleApply = () => {
+    applyFilters(filters);
+    setIsVisible(false);
+  };
 
   return (
     <Modal
       isVisible={isVisible}
-      onBackButtonPress={() => setIsVisible(false)}
-      onBackdropPress={() => setIsVisible(false)}
-      onSwipeComplete={() => setIsVisible(false)}
+      onBackButtonPress={handleCancel}
+      onBackdropPress={handleCancel}
+      onSwipeComplete={handleCancel}
       swipeDirection="down"
       propagateSwipe={true}
       style={styles.modal}
@@ -65,7 +85,7 @@ export default ({ categories, isVisible, setIsVisible }) => {
         underlayColor="transparent"
         color={Colors.white}
         style={styles.closeButton}
-        onPress={() => setIsVisible(false)}
+        onPress={handleCancel}
       />
 
       <View style={styles.container}>
@@ -115,11 +135,13 @@ export default ({ categories, isVisible, setIsVisible }) => {
             <Item
               key={item}
               item={item}
-              areFiltersReset={!filters.length}
+              isSelected={filters.find(filter => filter === item)}
               onSelected={selected => {
                 if (selected) {
+                  // add the item to array of filters
                   setFilters([...filters, item]);
                 } else {
+                  // remove the item to array of filters
                   setFilters(
                     [...filters].filter(groupFilter => groupFilter !== item)
                   );
@@ -131,7 +153,7 @@ export default ({ categories, isVisible, setIsVisible }) => {
         />
 
         <View style={styles.button}>
-          <Button title="Apply" onPress={() => setIsVisible(false)} />
+          <Button title="Apply" onPress={handleApply} />
         </View>
       </View>
     </Modal>
