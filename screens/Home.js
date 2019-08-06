@@ -7,18 +7,25 @@ import {
   View,
   Image,
   FlatList,
-  Dimensions,
   RefreshControl,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
 import Text from '../components/Text';
 import { getSomething } from '../data/wordpress';
-
-const screenWidth = Dimensions.get('window').width;
+import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
 const HomeScreen = () => {
-  const [cardData, setCardData] = useState([]);
+  const [cardData, setCardData] = useState([
+    { title: 'loading1' },
+    { title: 'loading2' },
+    { title: 'loading3' },
+    { title: 'loading4' },
+    { title: 'loading5' },
+    { title: 'loading6' },
+    { title: 'loading7' },
+    { title: 'loading8' },
+  ]);
   const [refreshing, setRefreshing] = useState(false);
 
   // fetch data on mount
@@ -67,13 +74,11 @@ const HomeScreen = () => {
             data={cardData}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
             renderItem={({ item }) => {
-              return (
-                <View style={{ alignItems: 'center' }}>
-                  <Card data={item} />
-                </View>
-              );
+              if (item.title.includes('loading')) {
+                return <HomeCardPlaceholder />;
+              }
+              return <Card data={item} />;
             }}
-            style={styles.list}
           />
         )}
       </ScrollView>
@@ -86,14 +91,6 @@ HomeScreen.navigationOptions = {
 };
 
 const Card = ({ data }) => {
-  const [textHeight, setHeight] = useState(0);
-  const [numBodyLines, setNumBodyLines] = useState(3);
-  const cardHeight = screenWidth - 16;
-
-  if (textHeight > cardHeight / 2) {
-    setNumBodyLines(2);
-  }
-
   const icon = {
     BLOG: require('../assets/icons/Blog.png'),
     'MESSAGE SERIES': require('../assets/icons/Message.png'),
@@ -106,40 +103,31 @@ const Card = ({ data }) => {
       <Image
         source={data.image}
         style={{
-          width: screenWidth - 16,
-          height: (screenWidth - 16) / 2,
+          width: undefined,
+          height: 200,
+          resizeMode: 'cover',
         }}
       />
 
-      <View
-        onLayout={event => {
-          const { height } = event.nativeEvent.layout;
-
-          setHeight(height);
-        }}
-      >
-        <View style={styles.cardTypeView}>
-          <Image source={icon} style={styles.cardTypeIcon} />
-          <Text bold style={styles.cardTypeText}>
-            {data.type}
-          </Text>
-        </View>
-        <Text
-          style={[TextStyles.title, { paddingLeft: 8, paddingTop: 8 }]}
-          numberOfLines={2}
-        >
-          {data.title}
-        </Text>
-        <Text style={styles.cardSubtitleText}>
-          {`${data.author} | ${formatDate(data.date)}`}
-        </Text>
-        <Text
-          style={[TextStyles.body, { padding: 8 }]}
-          numberOfLines={numBodyLines}
-        >
-          {data.body}
+      <View style={styles.cardTypeView}>
+        <Image source={icon} style={styles.cardTypeIcon} />
+        <Text bold style={styles.cardTypeText}>
+          {data.type}
         </Text>
       </View>
+      <Text
+        style={[TextStyles.title, { paddingHorizontal: 8, paddingTop: 8 }]}
+        adjustsFontSizeToFit
+        numberOfLines={1}
+      >
+        {data.title}
+      </Text>
+      <Text style={styles.cardSubtitleText}>
+        {`${data.author} | ${formatDate(data.date)}`}
+      </Text>
+      <Text style={[TextStyles.body, { padding: 8 }]} numberOfLines={3}>
+        {data.body}
+      </Text>
     </View>
   );
 };
@@ -158,11 +146,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.headerBackground,
   },
   contentContainer: {
+    paddingHorizontal: 10,
     paddingBottom: 60,
   },
   welcomeContainer: {
     alignItems: 'center',
-    marginTop: 0,
     marginBottom: 10,
   },
   welcomeImage: {
@@ -170,8 +158,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   card: {
-    width: screenWidth - 16,
-    height: screenWidth - 16,
+    flex: 1,
     backgroundColor: Colors.darkestGray,
     borderRadius: 8,
     overflow: 'hidden',

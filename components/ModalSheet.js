@@ -37,6 +37,8 @@ export default ({
       />
       <Modal
         isVisible={isVisible}
+        onBackButtonPress={() => setIsVisible(false)}
+        onBackdropPress={() => setIsVisible(false)}
         onSwipeComplete={() => setIsVisible(false)}
         swipeDirection="down"
         style={styles.modal}

@@ -1,12 +1,56 @@
 // @flow
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ImageBackground, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  FlatList,
+  TouchableOpacity,
+} from 'react-native';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import { getOpenGroups, getCategories } from '../data/groups';
+import Text from '../components/Text';
 import GroupCardPlaceholder from '../components/GroupCardPlaceholder';
 import GroupCardDetails from '../components/GroupCardDetails';
+import SearchBar from '../components/SearchBar';
+import GroupFilterModal from '../components/GroupFilterModal';
+
+function useDebounce(value, delay) {
+  // State and setters for debounced value
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(
+    () => {
+      // Update debounced value after delay
+      const handler = setTimeout(() => {
+        setDebouncedValue(value);
+      }, delay);
+
+      // Cancel the timeout if value changes (also on delay change or unmount)
+      // This is how we prevent debounced value from updating if value is changed ...
+      // .. within the delay period. Timeout gets cleared and restarted.
+      return () => {
+        clearTimeout(handler);
+      };
+    },
+    [value, delay] // Only re-call effect if value or delay changes
+  );
+
+  return debouncedValue;
+}
+
+function useQuery(groups) {
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebounce(query, 500);
+  const queriedGroups = [...groups].filter(
+    ({ groupname = '' }: { groupname?: string }) =>
+      groupname.toLowerCase().includes(debouncedQuery.toLowerCase())
+  );
+
+  return [query, setQuery, queriedGroups];
+}
 
 const Card = ({ navigation, index, numberOfGroups, item }) => {
   const isLastCard = index === numberOfGroups;
@@ -35,6 +79,8 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
     { uuid: 'loading8' },
   ]);
   const [categories, setCategories] = useState([]);
+  const [query, setQuery, queriedGroups] = useQuery(groups);
+  const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
 
   useEffect(() => {
     const getGroups = async () => {
@@ -54,7 +100,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
           console.error('Error getting categories', err)
         )) || [];
 
-      setCategories(fetchedCategories.map(({ name } = {}) => name));
+      setCategories(fetchedCategories);
     };
 
     Promise.all([getGroups(), getGroupCategories()]);
@@ -66,20 +112,51 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         source={require('../assets/images/groups_bg.png')}
         style={styles.backgroundImage}
       />
+
       <FlatList
         keyExtractor={({ uuid }) => uuid}
-        data={groups}
+        data={
+          query
+            ? [{ uuid: 'searchbar' }, ...queriedGroups]
+            : [{ uuid: 'searchbar' }, ...groups]
+        }
         ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ index, item }) => (
-          <Card
-            navigation={navigation}
-            index={index}
-            numberOfGroups={groups.length - 1}
-            item={item}
-          />
-        )}
+        renderItem={({ index, item }) => {
+          if (index === 0) {
+            return (
+              <View style={styles.container}>
+                <SearchBar
+                  value={query}
+                  onChangeText={value => setQuery(value)}
+                />
+                <TouchableOpacity onPress={() => setIsFilterModalVisible(true)}>
+                  <Text
+                    bold
+                    style={{ padding: 10, fontSize: 22, color: Colors.blue }}
+                  >
+                    Filter
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            );
+          }
+          return (
+            <Card
+              navigation={navigation}
+              index={index}
+              numberOfGroups={groups.length - 1}
+              item={item}
+            />
+          );
+        }}
         style={styles.list}
         {...getHeaderInset()}
+      />
+
+      <GroupFilterModal
+        categories={categories}
+        isVisible={isFilterModalVisible}
+        setIsVisible={setIsFilterModalVisible}
       />
     </View>
   );
@@ -94,6 +171,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.black,
   },
+  container: {
+    marginTop: 20,
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   backgroundImage: {
     width: '100%',
     height: '100%',
@@ -103,7 +186,6 @@ const styles = StyleSheet.create({
     left: 0,
   },
   list: {
-    paddingTop: 20,
     paddingHorizontal: 10,
   },
   separator: { height: 20 },
