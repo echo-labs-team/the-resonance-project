@@ -109,10 +109,39 @@ const Card = ({ data }) => {
         }}
       />
 
+<<<<<<< HEAD
       <View style={styles.cardTypeView}>
         <Image source={icon} style={styles.cardTypeIcon} />
         <Text bold style={styles.cardTypeText}>
           {data.type}
+=======
+      <View
+        onLayout={event => {
+          const { height } = event.nativeEvent.layout;
+          setHeight(height);
+        }}
+      >
+        <View style={styles.cardTypeView}>
+          <Image source={icon} style={styles.cardTypeIcon} />
+          <Text bold style={styles.cardTypeText}>
+            {data.type}
+          </Text>
+        </View>
+        <Text
+          style={[TextStyles.title, { paddingLeft: 8, paddingTop: 8 }]}
+          numberOfLines={2}
+        >
+          {data.title}
+        </Text>
+        <Text style={styles.cardSubtitleText}>
+          {`${data.author} | ${formatDate(data.date)}`}
+        </Text>
+        <Text
+          style={[TextStyles.body, { padding: 8 }]}
+          numberOfLines={numBodyLines}
+        >
+          {data.body}
+>>>>>>> 7979affa... add some media ui stuffs
         </Text>
       </View>
       <Text
