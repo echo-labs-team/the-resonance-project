@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
+  Platform,
   StyleSheet,
   View,
   SectionList,
@@ -46,11 +47,13 @@ const Item = ({ item, isSelected, onSelected }) => {
   );
 };
 
+const initialFilters = { Campus: [], Day: [], Categories: [] };
+
 export default ({
   categories,
   isVisible,
   setIsVisible,
-  appliedFilters = [],
+  appliedFilters = initialFilters,
   applyFilters,
 }) => {
   const [filters, setFilters] = useState(appliedFilters);
@@ -93,7 +96,7 @@ export default ({
 
         <View style={styles.heading}>
           <Text style={styles.header}>Filters</Text>
-          <TouchableOpacity onPress={() => setFilters([])}>
+          <TouchableOpacity onPress={() => setFilters(initialFilters)}>
             <Text bold style={styles.reset}>
               Reset
             </Text>
@@ -131,24 +134,34 @@ export default ({
               {title}
             </Text>
           )}
-          renderItem={({ item }) => (
-            <Item
-              key={item}
-              item={item}
-              isSelected={filters.find(filter => filter === item)}
-              onSelected={selected => {
-                if (selected) {
-                  // add the item to array of filters
-                  setFilters([...filters, item]);
-                } else {
-                  // remove the item to array of filters
-                  setFilters(
-                    [...filters].filter(groupFilter => groupFilter !== item)
-                  );
-                }
-              }}
-            />
-          )}
+          renderItem={({ section: { title }, item }) => {
+            return (
+              <Item
+                key={item}
+                item={item}
+                isSelected={filters[title].find(filter => filter === item)}
+                onSelected={selected => {
+                  if (selected) {
+                    // add the item to array of filters
+                    setFilters({
+                      ...filters,
+                      [title]: [...filters[title], item],
+                    });
+                  } else {
+                    // remove the item to array of filters
+                    setFilters({
+                      ...filters,
+                      [title]: [
+                        ...filters[title].filter(
+                          groupFilter => groupFilter !== item
+                        ),
+                      ],
+                    });
+                  }
+                }}
+              />
+            );
+          }}
           style={styles.contentContainer}
         />
 
@@ -179,7 +192,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkerGray,
   },
   // needed to allow scrolling on android
-  contentContainer: { flexGrow: 3, height: '50%' },
+  contentContainer: {
+    flexGrow: 3,
+    height: '50%',
+  },
   dragBar: {
     width: 100,
     height: 6,
@@ -226,7 +242,7 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     paddingHorizontal: 16,
-    marginVertical: 10,
+    marginTop: Platform.OS === 'ios' ? 10 : 40,
     justifyContent: 'flex-end',
   },
 });

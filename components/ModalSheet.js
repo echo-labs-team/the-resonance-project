@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   closeButton: { alignSelf: 'flex-end' },
   container: {
-    height: '90%',
+    height: '85%',
     paddingTop: 10,
     paddingBottom: 40,
     paddingHorizontal: 16,

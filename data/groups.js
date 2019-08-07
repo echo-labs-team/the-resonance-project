@@ -17,10 +17,10 @@ const isFeaturedGroup = groupName =>
 export async function getOpenGroups(): Object {
   const today = new Date();
   const year = today.getFullYear();
-  const startMonth = 5;
-  const startDay = 1;
-  const endMonth = 8;
-  const endDay = 19;
+  const startMonth = 9;
+  const startDay = 7;
+  const endMonth = 12;
+  const endDay = 31;
 
   const {
     data: {
@@ -112,9 +112,7 @@ export async function getCategories(): Promise<Array<any>> {
   const { categories = [] } = JSON.parse(body);
 
   return categories
-    .map(
-      ({ name }) => name !== 'Sermon-based' && name !== 'Bible Study' && name
-    )
+    .map(({ name }) => name !== 'Sermon-based' && name !== 'Easter' && name)
     .filter(Boolean);
 }
 

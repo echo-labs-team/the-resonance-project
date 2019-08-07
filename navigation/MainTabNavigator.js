@@ -6,6 +6,7 @@ import {
 } from 'react-navigation';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
@@ -201,7 +202,7 @@ export default createMaterialTopTabNavigator(
       showIcon: true,
       showLabel: true,
       style: {
-        paddingBottom: 20,
+        paddingBottom: ifIphoneX ? 20 : 0,
         backgroundColor: Colors.tabBar,
       },
       labelStyle: {

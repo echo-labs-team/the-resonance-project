@@ -4,6 +4,7 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
+    "tunnel": "expo start --tunnel",
     "eject": "expo eject",
     "postinstall": "flow-typed install",
     "publish": "expo optimize && expo publish",
@@ -25,7 +26,7 @@
     "expo-blur": "^6.0.0",
     "expo-font": "^6.0.1",
     "expo-web-browser": "^6.0.0",
-    "react": "^16.8.6",
+    "react": "^16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
     "react-native-dropdownalert": "^4.1.0",
     "react-native-gesture-handler": "^1.3.0",
@@ -34,7 +35,7 @@
     "react-native-reanimated": "^1.1.0",
     "react-native-svg": "^9.5.1",
     "react-navigation": "^3.11.0",
-    "rn-placeholder": "^3.0.0-alpha.5"
+    "rn-placeholder": "^3.0.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.2.0",
@@ -47,7 +48,7 @@
     "eslint-plugin-flowtype": "^3.9.0",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-native": "^3.7.0",
-    "expo-cli": "^3.0.6",
+    "expo-cli": "^3.0.9",
     "flow-bin": "^0.104.0",
     "flow-typed": "^2.6.1",
     "husky": "^3.0.0",

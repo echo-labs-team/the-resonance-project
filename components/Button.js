@@ -21,7 +21,6 @@ export default ({
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
     backgroundColor: Colors.darkBlue,
     borderRadius: 6,
     paddingHorizontal: 24,

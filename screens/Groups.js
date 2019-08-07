@@ -81,7 +81,11 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   const [categories, setCategories] = useState([]);
   const [query, setQuery, queriedGroups] = useQuery(groups);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState({
+    Campus: [],
+    Day: [],
+    Categories: [],
+  });
 
   useEffect(() => {
     console.log('applied filters', filters);
@@ -111,6 +115,41 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
     Promise.all([getGroups(), getGroupCategories()]);
   }, [setGroups, setCategories]);
 
+  const filterGroups = ({
+    campus = '',
+    daysOfWeek = [],
+    categories: { CustomeCategories = [] } = {},
+  }: {
+    campus?: string,
+    daysOfWeek?: Array<string>,
+    dayOfMonth?: string,
+    categories?: { CustomeCategories: Array<string> },
+  } = {}) => {
+    const { Campus = [], Day = [], Categories = [] } = filters;
+
+    if (!Campus.length && !Day.length && !Categories.length) {
+      return true;
+    }
+
+    return (
+      (Campus.length
+        ? Campus.map(c => c.toLowerCase()).includes(campus.toLowerCase())
+        : true) &&
+      (Day.length
+        ? Day.some(day =>
+            daysOfWeek.map(dow => dow.toLowerCase()).includes(day.toLowerCase())
+          )
+        : true) &&
+      (Categories.length
+        ? Categories.some(category =>
+            CustomeCategories.map(cat => cat.toLowerCase()).includes(
+              category.toLowerCase()
+            )
+          )
+        : true)
+    );
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -123,7 +162,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         data={
           query
             ? [{ uuid: 'searchbar' }, ...queriedGroups]
-            : [{ uuid: 'searchbar' }, ...groups]
+            : [{ uuid: 'searchbar' }, ...groups.filter(filterGroups)]
         }
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         renderItem={({ index, item }) => {

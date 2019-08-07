@@ -1,5 +1,5 @@
-// flow-typed signature: ea8ee1e782c77a8f9b9274fd6628abe3
-// flow-typed version: f519c53a8c/expo-asset_v5.x.x/flow_>=v0.69.0
+// flow-typed signature: af763b23d19eb6d7afc2be2287bc268c
+// flow-typed version: 75b56c3a87/expo-asset_v6.x.x/flow_>=v0.69.0
 
 declare module 'expo-asset' {
   declare export type AssetMetadata = {|

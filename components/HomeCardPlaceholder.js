@@ -15,7 +15,6 @@ export default () => (
     }}
   >
     <PlaceholderLine
-      width="100%"
       style={{
         height: 200,
         backgroundColor: Colors.darkestGray,
@@ -28,32 +27,27 @@ export default () => (
         style={{ backgroundColor: Colors.darkestGray }}
       />
       <PlaceholderLine
-        width="80%"
+        width={80}
         style={{
           marginTop: 4,
           backgroundColor: Colors.darkestGray,
         }}
       />
       <PlaceholderLine
-        width="50%"
+        width={50}
         style={{
           marginTop: 4,
           backgroundColor: Colors.darkestGray,
         }}
       />
       <PlaceholderLine
-        width="100%"
         style={{
           marginTop: 4,
           backgroundColor: Colors.darkestGray,
         }}
       />
+      <PlaceholderLine style={{ backgroundColor: Colors.darkestGray }} />
       <PlaceholderLine
-        width="100%"
-        style={{ backgroundColor: Colors.darkestGray }}
-      />
-      <PlaceholderLine
-        width="100%"
         style={{ marginBottom: 0, backgroundColor: Colors.darkestGray }}
       />
     </View>
