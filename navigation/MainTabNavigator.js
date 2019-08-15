@@ -6,6 +6,7 @@ import {
 } from 'react-navigation';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
@@ -70,8 +71,8 @@ HomeStack.navigationOptions = {
   tabBarLabel: 'Home',
   tabBarIcon: ({ focused }) => (
     <EchoLogo
-      width="28"
-      height="28"
+      width={28}
+      height={28}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={{ marginTop: 6 }}
     />
@@ -129,8 +130,8 @@ ConnectStack.navigationOptions = {
   tabBarLabel: 'Connect',
   tabBarIcon: ({ focused }) => (
     <ConnectLogo
-      width="36"
-      height="36"
+      width={36}
+      height={36}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={{ marginTop: 8 }}
     />
@@ -153,8 +154,8 @@ GroupsStack.navigationOptions = {
   tabBarLabel: 'Groups',
   tabBarIcon: ({ focused }) => (
     <GroupsLogo
-      width="36"
-      height="36"
+      width={36}
+      height={36}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={{ marginTop: 8 }}
     />
@@ -201,7 +202,7 @@ export default createMaterialTopTabNavigator(
       showIcon: true,
       showLabel: true,
       style: {
-        paddingBottom: 20,
+        paddingBottom: ifIphoneX ? 20 : 0,
         backgroundColor: Colors.tabBar,
       },
       labelStyle: {

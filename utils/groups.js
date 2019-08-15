@@ -48,7 +48,7 @@ const getGetOrdinal = (n: number) => {
 
 export const getMeetingDay = (
   daysOfWeek: Array<string> = [],
-  dayOfMonth: Array<string> | string = []
+  dayOfMonth: string
 ) => {
   if (daysOfWeek.length) {
     if (daysOfWeek.length === 7) {
@@ -58,14 +58,10 @@ export const getMeetingDay = (
     return daysOfWeek.join(', ');
   }
 
-  if (dayOfMonth.length) {
-    // TODO: make sure `dayOfMonth` is an array of days
-    // make sure we have an array of days of the month
-    const daysOfTheMonth = [...dayOfMonth].map(day =>
-      getGetOrdinal(parseInt(day, 10))
-    );
+  if (dayOfMonth) {
+    const day = getGetOrdinal(parseInt(dayOfMonth, 10));
 
-    return `the ${daysOfTheMonth.join(' & ')}`;
+    return `the ${day}`;
   }
 };
 

@@ -22,7 +22,7 @@ export default ({
     frequency: string,
     interval: string,
     daysOfWeek: Array<string>,
-    dayOfMonth: Array<string>,
+    dayOfMonth: string,
     meetingTime: string,
     description: string,
   },

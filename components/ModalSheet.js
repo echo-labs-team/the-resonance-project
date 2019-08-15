@@ -37,6 +37,8 @@ export default ({
       />
       <Modal
         isVisible={isVisible}
+        onBackButtonPress={() => setIsVisible(false)}
+        onBackdropPress={() => setIsVisible(false)}
         onSwipeComplete={() => setIsVisible(false)}
         swipeDirection="down"
         style={styles.modal}
@@ -71,7 +73,7 @@ const styles = StyleSheet.create({
   },
   closeButton: { alignSelf: 'flex-end' },
   container: {
-    height: '90%',
+    height: '85%',
     paddingTop: 10,
     paddingBottom: 40,
     paddingHorizontal: 16,
