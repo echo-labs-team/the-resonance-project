@@ -3,6 +3,7 @@
 import React from 'react';
 import {
   StyleSheet,
+  ScrollView,
   View,
   ImageBackground,
   FlatList,
@@ -28,32 +29,45 @@ const EngageScreen = ({ navigation }: { navigation: Object }) => {
         source={require('../assets/images/connect_bg.png')}
         style={styles.backgroundImage}
       />
-      <FlatList
-        keyExtractor={({ value }) => value}
-        data={items}
-        renderItem={({ item: { value, page } = {} }) => (
-          <TouchableHighlight onPress={() => navigation.navigate(page)}>
-            <View style={styles.item}>
-              <Text style={styles.text}>{value}</Text>
-              <Feather name={'chevron-right'} size={26} color={Colors.white} />
-            </View>
-          </TouchableHighlight>
-        )}
-        style={styles.list}
-        {...getHeaderInset()}
-      />
+      <ScrollView style={{ flex: 1 }} {...getHeaderInset()}>
+        <Text bold style={styles.headerTitle}>
+          CONNECT
+        </Text>
+        <FlatList
+          keyExtractor={({ value }) => value}
+          data={items}
+          renderItem={({ item: { value, page } = {} }) => (
+            <TouchableHighlight onPress={() => navigation.navigate(page)}>
+              <View style={styles.item}>
+                <Text style={styles.text}>{value}</Text>
+                <Feather
+                  name={'chevron-right'}
+                  size={26}
+                  color={Colors.white}
+                />
+              </View>
+            </TouchableHighlight>
+          )}
+          style={styles.list}
+        />
+      </ScrollView>
     </View>
   );
 };
 
 EngageScreen.navigationOptions = {
-  title: 'CONNECT',
+  header: null,
 };
 
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: Colors.black,
+  },
+  headerTitle: {
+    marginLeft: 16,
+    fontSize: 30,
+    color: Colors.red,
   },
   backgroundImage: {
     width: '100%',
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
   },
   text: {
     paddingVertical: 10,
-    paddingLeft: 20,
+    paddingLeft: 8,
     fontSize: 26,
     color: Colors.white,
   },

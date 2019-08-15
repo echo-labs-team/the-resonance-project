@@ -97,9 +97,7 @@ export default ({
         <View style={styles.heading}>
           <Text style={styles.header}>Filters</Text>
           <TouchableOpacity onPress={() => setFilters(initialFilters)}>
-            <Text bold style={styles.reset}>
-              Reset
-            </Text>
+            <Text style={styles.reset}>Reset</Text>
           </TouchableOpacity>
         </View>
 
@@ -205,20 +203,20 @@ const styles = StyleSheet.create({
     backgroundColor: dragBarColor,
   },
   heading: {
+    marginBottom: 10,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   header: {
     paddingHorizontal: 16,
-    marginBottom: 20,
     fontSize: 30,
     color: Colors.white,
   },
   reset: {
     padding: 16,
     fontSize: 24,
-    color: Colors.blue,
+    color: Colors.gray,
   },
   sectionTitle: {
     paddingTop: 10,

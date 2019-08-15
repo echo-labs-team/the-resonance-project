@@ -3,11 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
+  ScrollView,
   View,
   ImageBackground,
   FlatList,
   TouchableOpacity,
 } from 'react-native';
+import { BlurView } from 'expo-blur';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import { getOpenGroups, getCategories } from '../data/groups';
@@ -52,12 +54,9 @@ function useQuery(groups) {
   return [query, setQuery, queriedGroups];
 }
 
-const Card = ({ navigation, index, numberOfGroups, item }) => {
-  const isLastCard = index === numberOfGroups;
-  const lastCardStyles = { marginBottom: 60 };
-
+const Card = ({ navigation, item }) => {
   return (
-    <View style={[styles.card, isLastCard && lastCardStyles]}>
+    <View>
       {item.uuid.includes('loading') ? (
         <GroupCardPlaceholder />
       ) : (
@@ -157,45 +156,49 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         style={styles.backgroundImage}
       />
 
-      <FlatList
-        keyExtractor={({ uuid }) => uuid}
-        data={
-          query
-            ? [{ uuid: 'searchbar' }, ...queriedGroups]
-            : [{ uuid: 'searchbar' }, ...groups.filter(filterGroups)]
-        }
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        renderItem={({ index, item }) => {
-          if (index === 0) {
-            return (
-              <View style={styles.container}>
-                <SearchBar
-                  value={query}
-                  onChangeText={value => setQuery(value)}
-                />
-                <TouchableOpacity onPress={() => setIsFilterModalVisible(true)}>
-                  <Text
-                    bold
-                    style={{ padding: 10, fontSize: 22, color: Colors.blue }}
+      <ScrollView style={{ flex: 1 }} {...getHeaderInset()}>
+        <Text bold style={styles.headerTitle}>
+          GROUPS
+        </Text>
+        <FlatList
+          keyExtractor={({ uuid }) => uuid}
+          data={
+            query
+              ? [{ uuid: 'searchbar' }, ...queriedGroups]
+              : [{ uuid: 'searchbar' }, ...groups.filter(filterGroups)]
+          }
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={({ index, item }) => {
+            if (index === 0) {
+              return (
+                <View style={styles.container}>
+                  <SearchBar
+                    value={query}
+                    onChangeText={value => setQuery(value)}
+                  />
+                  <TouchableOpacity
+                    onPress={() => setIsFilterModalVisible(true)}
                   >
-                    Filter
-                  </Text>
-                </TouchableOpacity>
+                    <Text
+                      style={{ padding: 10, fontSize: 22, color: Colors.gray }}
+                    >
+                      Filter
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              );
+            }
+            return (
+              <View style={styles.cardShadow}>
+                <BlurView tint="dark" intensity={100} style={styles.card}>
+                  <Card navigation={navigation} item={item} />
+                </BlurView>
               </View>
             );
-          }
-          return (
-            <Card
-              navigation={navigation}
-              index={index}
-              numberOfGroups={groups.length - 1}
-              item={item}
-            />
-          );
-        }}
-        style={styles.list}
-        {...getHeaderInset()}
-      />
+          }}
+          style={styles.list}
+        />
+      </ScrollView>
 
       <GroupFilterModal
         categories={categories}
@@ -209,7 +212,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
 };
 
 GroupsScreen.navigationOptions = {
-  title: 'GROUPS',
+  header: null,
 };
 
 const styles = StyleSheet.create({
@@ -222,6 +225,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  headerTitle: {
+    marginLeft: 16,
+    fontSize: 30,
+    color: Colors.red,
   },
   backgroundImage: {
     width: '100%',
@@ -237,12 +245,13 @@ const styles = StyleSheet.create({
   separator: { height: 20 },
   card: {
     borderRadius: 16,
+  },
+  cardShadow: {
     shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.8,
     shadowRadius: 8,
     elevation: 8,
-    backgroundColor: Colors.darkerGray,
   },
 });
 

@@ -7,7 +7,7 @@ export default () => (
     Animation={props => (
       <Fade {...props} style={{ backgroundColor: Colors.darkGray }} />
     )}
-    style={{ padding: 20 }}
+    style={{ padding: 16 }}
   >
     <PlaceholderLine
       width={70}
@@ -29,14 +29,6 @@ export default () => (
     />
     <PlaceholderLine
       width={80}
-      style={{ backgroundColor: Colors.darkestGray }}
-    />
-    <PlaceholderLine
-      width={70}
-      style={{ backgroundColor: Colors.darkestGray }}
-    />
-    <PlaceholderLine
-      width={60}
       style={{ backgroundColor: Colors.darkestGray }}
     />
   </Placeholder>

@@ -22,7 +22,9 @@ const MissionsScreen = () => {
           what God is doing beyond our region.
         </Text>
 
-        <Text style={styles.heading}>Some of our current mission trips</Text>
+        <Text bold style={[styles.heading, { fontSize: 24 }]}>
+          Some of our current mission trips
+        </Text>
         <Text bold style={styles.subHeading}>
           BRAZIL
         </Text>
@@ -90,14 +92,14 @@ const MissionsScreen = () => {
 };
 
 MissionsScreen.navigationOptions = {
-  headerTitle: () => <Text style={styles.header}>MISSIONS</Text>,
+  headerTitle: () => <Text style={styles.header}>Missions</Text>,
 };
 
 const styles = StyleSheet.create({
   header: {
     fontFamily: 'NunitoSans-Regular',
     fontSize: 26,
-    color: Colors.red,
+    color: Colors.white,
   },
   mainContainer: {
     flex: 1,
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   heading: {
     marginTop: 10,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 30,
     color: Colors.white,
   },
   subHeading: {

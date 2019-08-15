@@ -2,11 +2,15 @@ import React from 'react';
 import { ScrollView, StyleSheet, WebView, Linking } from 'react-native';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
+import Text from '../components/Text';
 import Button from '../components/Button';
 
 const MediaScreen = () => {
   return (
     <ScrollView style={styles.container} {...getHeaderInset()}>
+      <Text bold style={styles.headerTitle}>
+        MEDIA
+      </Text>
       <WebView
         style={{
           width: '100%',
@@ -24,13 +28,18 @@ const MediaScreen = () => {
 };
 
 MediaScreen.navigationOptions = {
-  title: 'MEDIA',
+  header: null,
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.headerBackground,
+  },
+  headerTitle: {
+    marginLeft: 16,
+    fontSize: 30,
+    color: Colors.red,
   },
 });
 

@@ -95,6 +95,8 @@ export default props => {
         <TextInput
           autoCompleteType="name"
           autoCorrect={false}
+          keyboardAppearance="dark"
+          returnKeyType="done"
           placeholder="First name"
           placeholderTextColor={Colors.gray}
           value={firstName}
@@ -104,6 +106,8 @@ export default props => {
         <TextInput
           autoCompleteType="name"
           autoCorrect={false}
+          keyboardAppearance="dark"
+          returnKeyType="done"
           placeholder="Last name"
           placeholderTextColor={Colors.gray}
           value={lastName}
@@ -113,6 +117,8 @@ export default props => {
         <TextInput
           autoCapitalize="none"
           autoCompleteType="email"
+          keyboardAppearance="dark"
+          returnKeyType="done"
           autoCorrect={false}
           keyboardType="email-address"
           placeholder="Email"
@@ -122,6 +128,7 @@ export default props => {
           style={styles.input}
         />
         <TextInput
+          keyboardAppearance="dark"
           placeholder="Ask a question..."
           placeholderTextColor={Colors.gray}
           multiline={true}

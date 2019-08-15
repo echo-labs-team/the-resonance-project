@@ -53,9 +53,6 @@ export default ({ location = {} }) => {
         style={{ borderRadius: 4 }}
       >
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-          <Text style={{ paddingLeft: 6, marginRight: 10, fontSize: 20 }}>
-            📍
-          </Text>
           <View>
             <Text
               style={{

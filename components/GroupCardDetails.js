@@ -47,7 +47,7 @@ export default ({
   return (
     <TouchableHighlight
       style={styles.cardHighlight}
-      underlayColor={Colors.darkBlue}
+      underlayColor={Colors.darkestGray}
       onPress={() =>
         navigation.navigate('GroupDetails', {
           group: { ...item, title },
@@ -55,7 +55,7 @@ export default ({
       }
     >
       <View style={styles.group}>
-        <Text light adjustsFontSizeToFit numberOfLines={2} style={styles.title}>
+        <Text light adjustsFontSizeToFit numberOfLines={1} style={styles.title}>
           {title}
         </Text>
 
@@ -74,7 +74,7 @@ export default ({
 
         <View style={styles.details}>
           <Text bold style={styles.detail}>
-            {getCampusCode(campus)}
+            {campus}
           </Text>
         </View>
 
@@ -91,8 +91,8 @@ export default ({
 export const styles = StyleSheet.create({
   cardHighlight: { borderRadius: 16 },
   group: {
-    height: 300,
-    padding: 20,
+    height: 250,
+    padding: 16,
     borderRadius: 10,
     position: 'relative',
     overflow: 'hidden',
@@ -111,7 +111,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.gray,
   },
-  b: { fontSize: 18 },
+  b: { fontSize: 17 },
   when: {
     marginBottom: 10,
     justifyContent: 'center',
@@ -121,7 +121,6 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   description: {
-    padding: 10,
     fontSize: 16,
     lineHeight: 24,
     color: Colors.gray,

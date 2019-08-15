@@ -66,14 +66,14 @@ const VolunteerScreen = () => {
 };
 
 VolunteerScreen.navigationOptions = {
-  headerTitle: () => <Text style={styles.header}>VOLUNTEER</Text>,
+  headerTitle: () => <Text style={styles.header}>Volunteer</Text>,
 };
 
 const styles = StyleSheet.create({
   header: {
     fontFamily: 'NunitoSans-Regular',
     fontSize: 26,
-    color: Colors.red,
+    color: Colors.white,
   },
   mainContainer: {
     flex: 1,
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   container: { paddingVertical: 20, paddingHorizontal: 16 },
   heading: {
     marginVertical: 10,
-    fontSize: 20,
+    fontSize: 30,
     color: Colors.white,
   },
   subHeading: {

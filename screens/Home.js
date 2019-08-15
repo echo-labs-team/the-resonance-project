@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   welcomeImage: {
-    width: 300,
+    width: 250,
     resizeMode: 'contain',
   },
   card: {
