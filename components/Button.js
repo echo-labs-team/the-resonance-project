@@ -15,13 +15,13 @@ export default ({
     onPress={onPress}
     underlayColor={Colors.blue}
   >
-    <Text style={[styles.text, textStyle]}>{title.toUpperCase()}</Text>
+    <Text style={[styles.text, textStyle]}>{title}</Text>
   </TouchableHighlight>
 );
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: Colors.darkBlue,
+    backgroundColor: Colors.darkGray,
     borderRadius: 6,
     paddingHorizontal: 24,
     paddingVertical: 16,
@@ -29,6 +29,6 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.white,
     textAlign: 'center',
-    fontSize: 16,
+    fontSize: 18,
   },
 });

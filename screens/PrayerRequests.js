@@ -21,7 +21,7 @@ const PrayerRequestsScreen = () => {
         </Text>
 
         <Button
-          title="Submit your prayer request"
+          title="Submit Your Prayer Request"
           style={styles.button}
           onPress={() => WebBrowser.openBrowserAsync('https://echo.church')}
         />
@@ -31,14 +31,14 @@ const PrayerRequestsScreen = () => {
 };
 
 PrayerRequestsScreen.navigationOptions = {
-  headerTitle: () => <Text style={styles.header}>PRAYER REQUESTS</Text>,
+  headerTitle: () => <Text style={styles.header}>Prayer Requests</Text>,
 };
 
 const styles = StyleSheet.create({
   header: {
     fontFamily: 'NunitoSans-Regular',
-    fontSize: 22,
-    color: Colors.red,
+    fontSize: 24,
+    color: Colors.white,
   },
   mainContainer: {
     flex: 1,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   heading: {
     marginTop: 10,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 30,
     color: Colors.white,
   },
   content: {

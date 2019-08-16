@@ -38,14 +38,14 @@ const ActivateScreen = () => {
 };
 
 ActivateScreen.navigationOptions = {
-  headerTitle: () => <Text style={styles.header}>ACTIVATE</Text>,
+  headerTitle: () => <Text style={styles.header}>Activate</Text>,
 };
 
 const styles = StyleSheet.create({
   header: {
     fontFamily: 'NunitoSans-Regular',
     fontSize: 26,
-    color: Colors.red,
+    color: Colors.white,
   },
   mainContainer: {
     flex: 1,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   heading: {
     marginTop: 10,
     marginBottom: 20,
-    fontSize: 20,
+    fontSize: 30,
     color: Colors.white,
   },
   content: {

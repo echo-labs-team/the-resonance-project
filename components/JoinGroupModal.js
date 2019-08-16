@@ -89,6 +89,8 @@ export default props => {
         <TextInput
           autoCompleteType="name"
           autoCorrect={false}
+          keyboardAppearance="dark"
+          returnKeyType="done"
           placeholder="First name"
           placeholderTextColor={Colors.gray}
           value={firstName}
@@ -98,6 +100,8 @@ export default props => {
         <TextInput
           autoCompleteType="name"
           autoCorrect={false}
+          keyboardAppearance="dark"
+          returnKeyType="done"
           placeholder="Last name"
           placeholderTextColor={Colors.gray}
           value={lastName}
@@ -109,6 +113,8 @@ export default props => {
           autoCompleteType="email"
           autoCorrect={false}
           keyboardType="email-address"
+          keyboardAppearance="dark"
+          returnKeyType="done"
           placeholder="Email"
           placeholderTextColor={Colors.gray}
           value={email}

@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet, View, ScrollView, ImageBackground } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import Colors from '../constants/Colors';
-import TextStyles from '../constants/TextStyles';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
@@ -36,6 +35,9 @@ const GivingScreen = () => {
         style={styles.backgroundImage}
       />
       <ScrollView style={styles.container} {...getHeaderInset()}>
+        <Text bold style={styles.headerTitle}>
+          GIVING
+        </Text>
         <Text style={styles.header}>Changing lives together</Text>
         <Text style={styles.content}>
           We believe that Christians ought to be the most generous people on
@@ -75,7 +77,7 @@ const GivingScreen = () => {
 };
 
 GivingScreen.navigationOptions = {
-  title: 'GIVING',
+  header: null,
 };
 
 const styles = StyleSheet.create({
@@ -85,8 +87,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    paddingVertical: 20,
     paddingHorizontal: 16,
+  },
+  headerTitle: {
+    fontSize: 30,
+    color: Colors.red,
   },
   backgroundImage: {
     width: '100%',

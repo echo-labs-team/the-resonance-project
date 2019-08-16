@@ -87,7 +87,7 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
             <Text bold style={[groupStyles.detail, groupStyles.b]}>
               {getMeetingDay(daysOfWeek, dayOfMonth)}
             </Text>{' '}
-            @{' '}
+            at{' '}
             <Text bold style={[groupStyles.detail, groupStyles.b]}>
               {getMeetingTime(meetingTime)}
             </Text>
@@ -96,7 +96,7 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
 
         <View style={[groupStyles.details, { marginBottom: 16 }]}>
           <Text bold style={[groupStyles.detail, { fontSize: 18 }]}>
-            {getCampusCode(campus)}
+            {campus}
           </Text>
         </View>
 
@@ -158,24 +158,8 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
   );
 };
 
-GroupDetails.navigationOptions = ({
-  navigation,
-}: {
-  navigation: { state: { params: { group: Object } } },
-}) => {
-  const {
-    state: {
-      params: { group: { title = '' } = {} },
-    },
-  } = navigation;
-
-  return {
-    headerTitle: () => (
-      <Text adjustsFontSizeToFit numberOfLines={1} style={styles.header}>
-        {title}
-      </Text>
-    ),
-  };
+GroupDetails.navigationOptions = {
+  headerTitle: null,
 };
 
 const styles = StyleSheet.create({
