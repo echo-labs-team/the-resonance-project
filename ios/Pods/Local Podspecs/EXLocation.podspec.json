@@ -18,14 +18,8 @@
   "preserve_paths": "EXLocation/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [
-
-    ],
-    "UMPermissionsInterface": [
-
-    ],
-    "UMTaskManagerInterface": [
-
-    ]
+    "UMCore": [],
+    "UMPermissionsInterface": [],
+    "UMTaskManagerInterface": []
   }
 }

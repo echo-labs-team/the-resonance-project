@@ -18,11 +18,7 @@
   "preserve_paths": "EXSharing/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [
-
-    ],
-    "UMFileSystemInterface": [
-
-    ]
+    "UMCore": [],
+    "UMFileSystemInterface": []
   }
 }
