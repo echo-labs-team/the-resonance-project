@@ -37,13 +37,11 @@ const HomeScreen = () => {
     const data = await getSomething();
 
     setTimeout(() => {
-      console.log('got news feed', data);
       setCardData(data);
     }, 2000);
   }
 
   const refresh = () => {
-    console.log('fetching news feed');
     setRefreshing(true);
     getNewData().then(() => setRefreshing(false));
   };
