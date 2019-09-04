@@ -18,17 +18,9 @@
   "preserve_paths": "**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [
-
-    ],
-    "UMFileSystemInterface": [
-
-    ],
-    "UMCameraInterface": [
-
-    ],
-    "EXGL-CPP": [
-
-    ]
+    "UMCore": [],
+    "UMFileSystemInterface": [],
+    "UMCameraInterface": [],
+    "EXGL-CPP": []
   }
 }

@@ -18,8 +18,6 @@
   "preserve_paths": "EXLinearGradient/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [
-
-    ]
+    "UMCore": []
   }
 }

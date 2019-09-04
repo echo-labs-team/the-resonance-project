@@ -17,9 +17,9 @@ import TextStyles from '../constants/TextStyles';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
-import YouTube from 'react-native-youtube'
-import fetchPlaylistData from '../data/youtube'
-import Spinner from '../components/Spinner'
+import YouTube from 'react-native-youtube';
+import fetchPlaylistData from '../data/youtube';
+import Spinner from '../components/Spinner';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -50,10 +50,10 @@ const MediaScreen = () => {
         <View />
       )}
       {
-      // <MediaSection
-      //   text={'CURRENT SERIES'}
-      //   uri={'https://www.youtube.com/embed/6djUI-u0rrA?controls=0&showinfo=0'}
-      // />\
+        // <MediaSection
+        //   text={'CURRENT SERIES'}
+        //   uri={'https://www.youtube.com/embed/6djUI-u0rrA?controls=0&showinfo=0'}
+        // />\
       }
       <MediaSection text={'PAST SERIES'} />
       <PastSeriesSection />
@@ -100,107 +100,111 @@ const MediaSection = props => {
 };
 
 const takeToItem = item => {
-  console.log("you pressed")
-  const name = item["snippet"]["localized"]["title"]
-  const url = "https://www.youtube.com/playlist?list=" + item["id"]
-  console.log(name)
-  console.log(url)
+  console.log('you pressed');
+  const name = item['snippet']['localized']['title'];
+  const url = 'https://www.youtube.com/playlist?list=' + item['id'];
+  console.log(name);
+  console.log(url);
   Linking.openURL(url);
-}
+};
 
 const PastSeriesSection = props => {
-  const [data, setData] = useState([])
-  const [pressedItem, setPressedItem] = useState(null)
-  if(data.length<2) {
-    const new_data = collectChannelData()
-    setData(new_data)
+  const [data, setData] = useState([]);
+  const [pressedItem, setPressedItem] = useState(null);
+  if (data.length < 2) {
+    const new_data = collectChannelData();
+    setData(new_data);
   }
   return (
-    <View style={{ flex: 1}}>
-    <FlatList
-        keyExtractor={(obj) => (obj["snippet"]["localized"]["title"])}
+    <View style={{ flex: 1 }}>
+      <FlatList
+        keyExtractor={obj => obj['snippet']['localized']['title']}
         data={data}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         numColumns={2}
         renderItem={({ index, item }) => {
-          const name = item["snippet"]["localized"]["title"]
-          const img = item["snippet"]["thumbnails"]["standard"]
+          const name = item['snippet']['localized']['title'];
+          const img = item['snippet']['thumbnails']['standard'];
           return (
-            <TouchableOpacity onPress={() => {
-              takeToItem(item)
-            }}>
-            <View style={styles.smallCard}>
-            <Image
-              onPress={() => console.log('1st')}
-              source={img}
-              style={{flex:1, height: undefined, width: undefined}}
-              resizeMode="contain"
-            />
-            <Text style={[TextStyles.subtitle, {textAlign: 'center'}]}>{name}</Text>
-            </View>
+            <TouchableOpacity
+              onPress={() => {
+                takeToItem(item);
+              }}
+            >
+              <View style={styles.smallCard}>
+                <Image
+                  onPress={() => console.log('1st')}
+                  source={img}
+                  style={{ flex: 1, height: undefined, width: undefined }}
+                  resizeMode="contain"
+                />
+                <Text style={[TextStyles.subtitle, { textAlign: 'center' }]}>
+                  {name}
+                </Text>
+              </View>
             </TouchableOpacity>
-            )
+          );
         }}
         style={styles.list}
       />
     </View>
   );
-}
+};
 
-  //     <View style={{ flex: 1, flexDirection: 'row' }}>
-  //       <WebView
-  //         style={styles.smallCard}
-  //         javaScriptEnabled={true}
-  //         source={{
-  //           uri:
-  //             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-  //         }}
-  //       />
-  //       <WebView
-  //         style={styles.smallCard}
-  //         javaScriptEnabled={true}
-  //         source={{
-  //           uri:
-  //             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-  //         }}
-  //       />
-  //     </View>
-  //     <View style={{ flex: 1, flexDirection: 'row' }}>
-  //       <WebView
-  //         style={styles.smallCard}
-  //         javaScriptEnabled={true}
-  //         source={{
-  //           uri:
-  //             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-  //         }}
-  //       />
-  //       <WebView
-  //         style={styles.smallCard}
-  //         javaScriptEnabled={true}
-  //         source={{
-  //           uri:
-  //             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-  //         }}
-  //       />
-  //     </View>
-  //     <View style={{ flex: 1, flexDirection: 'row' }}>
-  //       <WebView
-  //         style={styles.smallCard}
-  //         javaScriptEnabled={true}
-  //         source={{
-  //           uri:
-  //             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-  //         }}
-  //       />
-  //       <WebView
-  //         style={styles.smallCard}
-  //         javaScriptEnabled={true}
-  //         source={{
-  //           uri:
-  //             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-  //         }}
-  //       />
-  //     </View>
+//     <View style={{ flex: 1, flexDirection: 'row' }}>
+//       <WebView
+//         style={styles.smallCard}
+//         javaScriptEnabled={true}
+//         source={{
+//           uri:
+//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
+//         }}
+//       />
+//       <WebView
+//         style={styles.smallCard}
+//         javaScriptEnabled={true}
+//         source={{
+//           uri:
+//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
+//         }}
+//       />
+//     </View>
+//     <View style={{ flex: 1, flexDirection: 'row' }}>
+//       <WebView
+//         style={styles.smallCard}
+//         javaScriptEnabled={true}
+//         source={{
+//           uri:
+//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
+//         }}
+//       />
+//       <WebView
+//         style={styles.smallCard}
+//         javaScriptEnabled={true}
+//         source={{
+//           uri:
+//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
+//         }}
+//       />
+//     </View>
+//     <View style={{ flex: 1, flexDirection: 'row' }}>
+//       <WebView
+//         style={styles.smallCard}
+//         javaScriptEnabled={true}
+//         source={{
+//           uri:
+//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
+//         }}
+//       />
+//       <WebView
+//         style={styles.smallCard}
+//         javaScriptEnabled={true}
+//         source={{
+//           uri:
+//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
+//         }}
+//       />
+//     </View>
 
 MediaScreen.navigationOptions = {
   header: null,
@@ -224,7 +228,7 @@ const styles = StyleSheet.create({
   },
   smallCard: {
     width: (screenWidth - 48) / 2,
-    height: ((screenWidth - 16) / 2) - 32,
+    height: (screenWidth - 16) / 2 - 32,
     marginLeft: 16,
     borderRadius: 0,
   },

@@ -18,14 +18,8 @@
   "preserve_paths": "EXImageManipulator/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [
-
-    ],
-    "UMFileSystemInterface": [
-
-    ],
-    "UMImageLoaderInterface": [
-
-    ]
+    "UMCore": [],
+    "UMFileSystemInterface": [],
+    "UMImageLoaderInterface": []
   }
 }

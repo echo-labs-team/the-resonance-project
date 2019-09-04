@@ -18,11 +18,7 @@
   "preserve_paths": "EXGoogleSignIn/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [
-
-    ],
-    "GoogleSignIn": [
-      "~> 4.4"
-    ]
+    "UMCore": [],
+    "GoogleSignIn": ["~> 4.4"]
   }
 }
