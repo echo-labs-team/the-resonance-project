@@ -16,10 +16,17 @@
     "git": "https://github.com/inProgress-team/react-native-youtube.git",
     "tag": "v2.0.0-beta"
   },
-  "source_files": ["RCTYouTube*.{h,m}", "YTPlayerView/YTPlayerView.{h,m}"],
+  "source_files": [
+    "RCTYouTube*.{h,m}",
+    "YTPlayerView/YTPlayerView.{h,m}"
+  ],
   "preserve_paths": "*.js",
-  "resources": ["assets/YTPlayerView-iframe-player.html"],
+  "resources": [
+    "assets/YTPlayerView-iframe-player.html"
+  ],
   "dependencies": {
-    "React": []
+    "React": [
+
+    ]
   }
 }

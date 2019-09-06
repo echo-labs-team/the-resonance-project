@@ -18,7 +18,11 @@
   "preserve_paths": "EXDocumentPicker/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [],
-    "UMFileSystemInterface": []
+    "UMCore": [
+
+    ],
+    "UMFileSystemInterface": [
+
+    ]
   }
 }

@@ -18,8 +18,14 @@
   "preserve_paths": "EXContacts/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [],
-    "UMFileSystemInterface": [],
-    "UMPermissionsInterface": []
+    "UMCore": [
+
+    ],
+    "UMFileSystemInterface": [
+
+    ],
+    "UMPermissionsInterface": [
+
+    ]
   }
 }

@@ -18,6 +18,8 @@
   "preserve_paths": "EXHaptics/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": []
+    "UMCore": [
+
+    ]
   }
 }
