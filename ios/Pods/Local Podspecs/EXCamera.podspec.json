@@ -18,11 +18,23 @@
   "preserve_paths": "EXCamera/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [],
-    "UMFileSystemInterface": [],
-    "UMImageLoaderInterface": [],
-    "UMPermissionsInterface": [],
-    "UMFaceDetectorInterface": [],
-    "UMBarCodeScannerInterface": []
+    "UMCore": [
+
+    ],
+    "UMFileSystemInterface": [
+
+    ],
+    "UMImageLoaderInterface": [
+
+    ],
+    "UMPermissionsInterface": [
+
+    ],
+    "UMFaceDetectorInterface": [
+
+    ],
+    "UMBarCodeScannerInterface": [
+
+    ]
   }
 }

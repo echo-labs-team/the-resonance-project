@@ -18,6 +18,8 @@
   "preserve_paths": "EXRandom/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": []
+    "UMCore": [
+
+    ]
   }
 }

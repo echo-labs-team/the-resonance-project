@@ -18,8 +18,14 @@
   "preserve_paths": "EXSegment/**/*.{h,m}",
   "requires_arc": true,
   "dependencies": {
-    "UMCore": [],
-    "UMConstantsInterface": [],
-    "Analytics": ["~> 3.5"]
+    "UMCore": [
+
+    ],
+    "UMConstantsInterface": [
+
+    ],
+    "Analytics": [
+      "~> 3.5"
+    ]
   }
 }
