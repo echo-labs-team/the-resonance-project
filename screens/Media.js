@@ -24,7 +24,9 @@ import Spinner from '../components/Spinner';
 const screenWidth = Dimensions.get('window').width;
 
 const MediaScreen = () => {
-  const [isLive, setLive] = useState(false);
+  const [isLive, setLive] = useState(true);
+  const [isLoading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
   const date = new Date();
   if (
     !isLive &&
@@ -34,33 +36,50 @@ const MediaScreen = () => {
   ) {
     setLive(true);
   }
+
+  if (data.length < 2) {
+    const new_data = collectChannelData();
+    setData(new_data);
+  } else if (isLoading) {
+    setLoading(false)
+  }
+  if (isLoading) {
+    return(
+      <View style={styles.container}>
+      <Spinner/>
+      </View>
+    )
+  }
   return (
     <ScrollView style={styles.container} {...getHeaderInset()}>
       {isLive ? (
-        <MediaSection
-          text={'WATCH NOW'}
-          uri={'https://echochurchlive.churchonline.org'}
-          buttonText={'Notes'}
-          buttonUri={'https://www.bible.com/events/652292'}
-          onLoadingError={() => {
-            setLive(false);
-          }}
+        <View>
+        <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
+        <WebView
+          javaScriptEnabled={true}
+          style={styles.largeCard}
+          source={{uri:'https://echochurchlive.churchonline.org'}}
         />
-      ) : (
-        <View />
-      )}
+        <Button
+          title={'Notes'}
+          style={styles.notesButton}
+          onPress={() => Linking.openURL('https://www.bible.com/events/652292')}
+        />
+        </View>) : (<View />)
+      }
       {
         // <MediaSection
         //   text={'CURRENT SERIES'}
         //   uri={'https://www.youtube.com/embed/6djUI-u0rrA?controls=0&showinfo=0'}
         // />\
       }
-      <MediaSection text={'PAST SERIES'} />
-      <PastSeriesSection />
-      <MediaSection
-        text={'RESOURCES'}
-        buttonUri={'https://www.rightnowmedia.org/Account/Invite/EchoChurch'}
-        buttonText={'RightNow Media'}
+      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+      <PastSeriesSection data={data}/>
+      <Text style={styles.sectionHeaderText}>RESOURCES</Text>
+      <Button
+        title={'RightNow Media'}
+        style={styles.notesButton}
+        onPress={() => Linking.openURL('https://www.rightnowmedia.org/Account/Invite/EchoChurch')}
       />
     </ScrollView>
   );
@@ -109,12 +128,7 @@ const takeToItem = item => {
 };
 
 const PastSeriesSection = props => {
-  const [data, setData] = useState([]);
-  const [pressedItem, setPressedItem] = useState(null);
-  if (data.length < 2) {
-    const new_data = collectChannelData();
-    setData(new_data);
-  }
+  data = props.data
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -135,7 +149,7 @@ const PastSeriesSection = props => {
                 <Image
                   onPress={() => console.log('1st')}
                   source={img}
-                  style={{ flex: 1, height: undefined, width: undefined }}
+                  style={styles.youtubeThumbnailImage}
                   resizeMode="contain"
                 />
                 <Text style={[TextStyles.subtitle, { textAlign: 'center' }]}>
@@ -151,66 +165,17 @@ const PastSeriesSection = props => {
   );
 };
 
-//     <View style={{ flex: 1, flexDirection: 'row' }}>
-//       <WebView
-//         style={styles.smallCard}
-//         javaScriptEnabled={true}
-//         source={{
-//           uri:
-//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-//         }}
-//       />
-//       <WebView
-//         style={styles.smallCard}
-//         javaScriptEnabled={true}
-//         source={{
-//           uri:
-//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-//         }}
-//       />
-//     </View>
-//     <View style={{ flex: 1, flexDirection: 'row' }}>
-//       <WebView
-//         style={styles.smallCard}
-//         javaScriptEnabled={true}
-//         source={{
-//           uri:
-//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-//         }}
-//       />
-//       <WebView
-//         style={styles.smallCard}
-//         javaScriptEnabled={true}
-//         source={{
-//           uri:
-//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-//         }}
-//       />
-//     </View>
-//     <View style={{ flex: 1, flexDirection: 'row' }}>
-//       <WebView
-//         style={styles.smallCard}
-//         javaScriptEnabled={true}
-//         source={{
-//           uri:
-//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-//         }}
-//       />
-//       <WebView
-//         style={styles.smallCard}
-//         javaScriptEnabled={true}
-//         source={{
-//           uri:
-//             'https://www.youtube.com/embed/6djUI-u0rrA?rel=0&autoplay=0&showinfo=0&controls=0',
-//         }}
-//       />
-//     </View>
-
 MediaScreen.navigationOptions = {
   header: null,
 };
 
 const styles = StyleSheet.create({
+  sectionHeaderText: {
+    ...TextStyles.subtitle,
+    paddingLeft: 16, 
+    paddingTop: 32, 
+    paddingBottom: 8,
+  },
   separator: { height: 16 },
   container: {
     flex: 1,
@@ -242,6 +207,11 @@ const styles = StyleSheet.create({
     margin: 16,
     width: screenWidth - 32,
   },
+  youtubeThumbnailImage: {
+    flex: 1,
+    height: undefined, 
+    width: (screenWidth - 48)/2, 
+  }
 });
 
 export default MediaScreen;
