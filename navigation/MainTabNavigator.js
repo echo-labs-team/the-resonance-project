@@ -1,9 +1,7 @@
 import React from 'react';
 import { Platform, StatusBar, View } from 'react-native';
-import {
-  createStackNavigator,
-  createMaterialTopTabNavigator,
-} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
@@ -59,7 +57,11 @@ const defaultHeaderNavigationOptions = {
 
 // need to hide the `StatusBar` on the home screen
 const defaultTabBarOnPress = ({ navigation, defaultHandler }) => {
-  StatusBar.setHidden(navigation.state.routeName === 'HomeStack', 'fade');
+  StatusBar.setHidden(
+    navigation.state.routeName === 'HomeStack' ||
+      navigation.state.routeName === 'GroupsStack',
+    'fade'
+  );
   defaultHandler();
 };
 
@@ -74,7 +76,7 @@ HomeStack.navigationOptions = {
       width={28}
       height={28}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ marginTop: 6 }}
+      style={{ alignSelf: 'center' }}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -94,6 +96,7 @@ MediaStack.navigationOptions = {
       name={'controller-play'}
       size={30}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      style={{ alignSelf: 'center' }}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -133,7 +136,7 @@ ConnectStack.navigationOptions = {
       width={36}
       height={36}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ marginTop: 8 }}
+      style={{ alignSelf: 'center', marginTop: -4 }}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -157,7 +160,7 @@ GroupsStack.navigationOptions = {
       width={36}
       height={36}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ marginTop: 8 }}
+      style={{ alignSelf: 'center', marginTop: -4 }}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -177,6 +180,7 @@ GivingStack.navigationOptions = {
       name={'gift'}
       size={22}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      style={{ alignSelf: 'center' }}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -202,7 +206,7 @@ export default createMaterialTopTabNavigator(
       showIcon: true,
       showLabel: true,
       style: {
-        paddingBottom: ifIphoneX ? 20 : 0,
+        paddingBottom: ifIphoneX ? 16 : 0,
         backgroundColor: Colors.tabBar,
       },
       labelStyle: {
@@ -211,7 +215,7 @@ export default createMaterialTopTabNavigator(
         includeFontPadding: false,
       },
       indicatorStyle: {
-        marginBottom: -10,
+        marginBottom: 16,
         backgroundColor: Colors.red,
       },
     },
