@@ -42,44 +42,53 @@ const MediaScreen = () => {
     const new_data = collectChannelData();
     setData(new_data);
   } else if (isLoading) {
-    setLoading(false)
+    setLoading(false);
   }
   if (isLoading) {
-    return(
+    return (
       <View style={styles.container}>
-      <Spinner/>
+        <Spinner />
       </View>
-    )
+    );
   }
   return (
     <ScrollView style={styles.container} {...getHeaderInset()}>
       {isLive ? (
         <View>
-        <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
-        <WebView
-          javaScriptEnabled={true}
-          style={styles.largeCard}
-          source={{uri:'https://echochurchlive.churchonline.org'}}
-        />
-        <Button
-          title={'Notes'}
-          style={styles.notesButton}
-          onPress={() => Linking.openURL('https://www.bible.com/events/652292')}
-        />
-        </View>) : (<View />)
-      }
+          <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
+          <WebView
+            javaScriptEnabled={true}
+            style={styles.largeCard}
+            source={{ uri: 'https://echochurchlive.churchonline.org' }}
+          />
+          <Button
+            title={'Notes'}
+            style={styles.notesButton}
+            onPress={() =>
+              Linking.openURL('https://www.bible.com/events/652292')
+            }
+          />
+        </View>
+      ) : (
+        <View />
+      )}
       <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
       <YouTubeDataView
-        style={styles.currentSeriesCard} 
-        data={data[0]} 
-        thumbnailStyle={styles.youtubeThumbnailImageLarge}/>
+        style={styles.currentSeriesCard}
+        data={data[0]}
+        thumbnailStyle={styles.youtubeThumbnailImageLarge}
+      />
       <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
-      <PastSeriesSection data={data.slice(1, data.length)}/>
+      <PastSeriesSection data={data.slice(1, data.length)} />
       <Text style={styles.sectionHeaderText}>RESOURCES</Text>
       <Button
         title={'RightNow Media'}
         style={styles.notesButton}
-        onPress={() => Linking.openURL('https://www.rightnowmedia.org/Account/Invite/EchoChurch')}
+        onPress={() =>
+          Linking.openURL(
+            'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
+          )
+        }
       />
     </ScrollView>
   );
@@ -95,7 +104,7 @@ const takeToItem = item => {
 };
 
 const PastSeriesSection = props => {
-  data = props.data
+  data = props.data;
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -105,10 +114,12 @@ const PastSeriesSection = props => {
         numColumns={2}
         renderItem={({ index, item }) => {
           return (
-            <YouTubeDataView style={styles.smallCard}
+            <YouTubeDataView
+              style={styles.smallCard}
               data={item}
-              thumbnailStyle={styles.youtubeThumbnailImageSmall}/> 
-            );
+              thumbnailStyle={styles.youtubeThumbnailImageSmall}
+            />
+          );
         }}
         style={styles.list}
       />
@@ -117,11 +128,15 @@ const PastSeriesSection = props => {
 };
 
 const YouTubeDataView = props => {
-  const item = props.data
+  const item = props.data;
   const name = item['snippet']['localized']['title'];
   const img = item['snippet']['thumbnails']['maxres'];
   return (
-    <TouchableOpacity onPress={() => { takeToItem(item); }}>
+    <TouchableOpacity
+      onPress={() => {
+        takeToItem(item);
+      }}
+    >
       <View style={props.style}>
         <Image
           onPress={() => console.log('1st')}
@@ -135,7 +150,7 @@ const YouTubeDataView = props => {
       </View>
     </TouchableOpacity>
   );
-}
+};
 
 MediaScreen.navigationOptions = {
   header: null,
@@ -144,8 +159,8 @@ MediaScreen.navigationOptions = {
 const styles = StyleSheet.create({
   sectionHeaderText: {
     ...TextStyles.subtitle,
-    paddingLeft: 16, 
-    paddingTop: 32, 
+    paddingLeft: 16,
+    paddingTop: 32,
     paddingBottom: 8,
   },
   separator: { height: 16 },
@@ -187,14 +202,14 @@ const styles = StyleSheet.create({
   },
   youtubeThumbnailImageSmall: {
     flex: 1,
-    height: undefined, 
-    width: (screenWidth - 48)/2, 
+    height: undefined,
+    width: (screenWidth - 48) / 2,
   },
   youtubeThumbnailImageLarge: {
     flex: 1,
-    height: undefined, 
-    width: (screenWidth - 16), 
-  }
+    height: undefined,
+    width: screenWidth - 16,
+  },
 });
 
 export default MediaScreen;
