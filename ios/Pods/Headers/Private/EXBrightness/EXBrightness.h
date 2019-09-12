@@ -1,1 +1,0 @@
-../../../../../node_modules/expo-brightness/ios/EXBrightness/EXBrightness.h
