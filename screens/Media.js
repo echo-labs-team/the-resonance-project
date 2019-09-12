@@ -22,9 +22,10 @@ import fetchPlaylistData from '../data/youtube';
 import Spinner from '../components/Spinner';
 
 const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
 
 const MediaScreen = () => {
-  const [isLive, setLive] = useState(true);
+  const [isLive, setLive] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const date = new Date();
@@ -67,14 +68,13 @@ const MediaScreen = () => {
         />
         </View>) : (<View />)
       }
-      {
-        // <MediaSection
-        //   text={'CURRENT SERIES'}
-        //   uri={'https://www.youtube.com/embed/6djUI-u0rrA?controls=0&showinfo=0'}
-        // />\
-      }
+      <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
+      <YouTubeDataView
+        style={styles.currentSeriesCard} 
+        data={data[0]} 
+        thumbnailStyle={styles.youtubeThumbnailImageLarge}/>
       <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
-      <PastSeriesSection data={data}/>
+      <PastSeriesSection data={data.slice(1, data.length)}/>
       <Text style={styles.sectionHeaderText}>RESOURCES</Text>
       <Button
         title={'RightNow Media'}
@@ -82,39 +82,6 @@ const MediaScreen = () => {
         onPress={() => Linking.openURL('https://www.rightnowmedia.org/Account/Invite/EchoChurch')}
       />
     </ScrollView>
-  );
-};
-
-const MediaSection = props => {
-  return (
-    <View>
-      <Text
-        style={[
-          TextStyles.subtitle,
-          { paddingLeft: 16, paddingTop: 32, paddingBottom: 8 },
-        ]}
-      >
-        {props.text}
-      </Text>
-      {props.uri ? (
-        <WebView
-          javaScriptEnabled={true}
-          style={styles.largeCard}
-          source={props}
-        />
-      ) : (
-        <View />
-      )}
-      {props.buttonUri ? (
-        <Button
-          title={props.buttonText}
-          style={styles.notesButton}
-          onPress={() => Linking.openURL(props.buttonUri)}
-        />
-      ) : (
-        <View />
-      )}
-    </View>
   );
 };
 
@@ -137,33 +104,38 @@ const PastSeriesSection = props => {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         numColumns={2}
         renderItem={({ index, item }) => {
-          const name = item['snippet']['localized']['title'];
-          const img = item['snippet']['thumbnails']['standard'];
           return (
-            <TouchableOpacity
-              onPress={() => {
-                takeToItem(item);
-              }}
-            >
-              <View style={styles.smallCard}>
-                <Image
-                  onPress={() => console.log('1st')}
-                  source={img}
-                  style={styles.youtubeThumbnailImage}
-                  resizeMode="contain"
-                />
-                <Text style={[TextStyles.subtitle, { textAlign: 'center' }]}>
-                  {name}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
+            <YouTubeDataView style={styles.smallCard}
+              data={item}
+              thumbnailStyle={styles.youtubeThumbnailImageSmall}/> 
+            );
         }}
         style={styles.list}
       />
     </View>
   );
 };
+
+const YouTubeDataView = props => {
+  const item = props.data
+  const name = item['snippet']['localized']['title'];
+  const img = item['snippet']['thumbnails']['maxres'];
+  return (
+    <TouchableOpacity onPress={() => { takeToItem(item); }}>
+      <View style={props.style}>
+        <Image
+          onPress={() => console.log('1st')}
+          source={img}
+          style={props.thumbnailStyle}
+          resizeMode="contain"
+        />
+        <Text style={[TextStyles.subtitle, { textAlign: 'center' }]}>
+          {name}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
 
 MediaScreen.navigationOptions = {
   header: null,
@@ -183,7 +155,13 @@ const styles = StyleSheet.create({
   },
   largeCard: {
     width: screenWidth - 32,
-    height: screenWidth / 2,
+    height: 550,
+    marginLeft: 16,
+    borderRadius: 8,
+  },
+  currentSeriesCard: {
+    width: screenWidth - 16,
+    height: (screenWidth - 16) / 2,
     marginLeft: 16,
     borderRadius: 8,
   },
@@ -193,7 +171,7 @@ const styles = StyleSheet.create({
   },
   smallCard: {
     width: (screenWidth - 48) / 2,
-    height: (screenWidth - 16) / 2 - 32,
+    height: (screenWidth - 48) / 3,
     marginLeft: 16,
     borderRadius: 0,
   },
@@ -207,10 +185,15 @@ const styles = StyleSheet.create({
     margin: 16,
     width: screenWidth - 32,
   },
-  youtubeThumbnailImage: {
+  youtubeThumbnailImageSmall: {
     flex: 1,
     height: undefined, 
     width: (screenWidth - 48)/2, 
+  },
+  youtubeThumbnailImageLarge: {
+    flex: 1,
+    height: undefined, 
+    width: (screenWidth - 16), 
   }
 });
 
