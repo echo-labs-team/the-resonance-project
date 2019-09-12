@@ -1,3 +1,5 @@
+ios/Podfiles/Pods/**/*
+
 node_modules/**/*
 .expo/*
 .expo-shared/*

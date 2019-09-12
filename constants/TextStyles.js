@@ -8,6 +8,12 @@ const textStyles = StyleSheet.create({
     fontFamily: 'NunitoSans-Regular',
     color: Colors.white,
   },
+  subtitle: {
+    textAlign: 'left',
+    fontSize: 16,
+    fontFamily: 'NunitoSans-Bold',
+    color: Colors.white,
+  },
   body: {
     textAlign: 'left',
     fontSize: 16,
