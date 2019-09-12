@@ -36,7 +36,10 @@
     "react-native-svg": "^9.6.2",
     "react-native-unimodules": "^0.4.2",
     "react-native-youtube": "^2.0.0-beta",
-    "react-navigation": "^3.11.0",
+    "react-navigation": "^4.0.3",
+    "react-navigation-drawer": "^2.1.2",
+    "react-navigation-stack": "^1.5.5",
+    "react-navigation-tabs": "^2.4.2",
     "rn-placeholder": "^3.0.0"
   },
   "devDependencies": {
