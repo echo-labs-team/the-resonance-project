@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
   ScrollView,
   View,
-  Text,
   StyleSheet,
   WebView,
   Linking,
