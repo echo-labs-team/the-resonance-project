@@ -52,6 +52,9 @@ const MediaScreen = () => {
   }
   return (
     <ScrollView style={styles.container} {...getHeaderInset()}>
+      <Text bold style={styles.headerTitle}>
+        MEDIA
+      </Text>
       {isLive ? (
         <View>
           <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
@@ -141,7 +144,7 @@ const YouTubeDataView = props => {
           onPress={() => console.log('1st')}
           source={img}
           style={props.thumbnailStyle}
-          resizeMode="contain"
+          resizeMode="cover"
         />
         <Text style={[TextStyles.subtitle, { textAlign: 'center' }]}>
           {name}
@@ -161,6 +164,11 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingTop: 32,
     paddingBottom: 8,
+  },
+  headerTitle: {
+    marginLeft: 16,
+    fontSize: 30,
+    color: Colors.red,
   },
   separator: { height: 16 },
   container: {
@@ -203,11 +211,13 @@ const styles = StyleSheet.create({
     flex: 1,
     height: undefined,
     width: (screenWidth - 48) / 2,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   youtubeThumbnailImageLarge: {
     flex: 1,
     height: undefined,
-    width: screenWidth - 16,
+    width: screenWidth - 32,
   },
 });
 
