@@ -1,7 +1,7 @@
 // @flow
 
 import { Platform } from 'react-native';
-import { Header } from 'react-navigation';
+import { Header } from 'react-navigation-stack';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 /**
