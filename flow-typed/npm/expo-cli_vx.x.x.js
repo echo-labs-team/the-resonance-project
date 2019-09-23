@@ -1,4 +1,4 @@
-// flow-typed signature: a0844d62f39d0d0f868540b763145765
+// flow-typed signature: 1f00eb543e0ceb94ec0040e001114008
 // flow-typed version: <<STUB>>/expo-cli_v^3.0.9/flow_v0.104.0
 
 /**
@@ -271,10 +271,6 @@ declare module 'expo-cli/build/commands/google-play/AppSigningOptIn' {
 }
 
 declare module 'expo-cli/build/commands/init' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/install-deprecated' {
   declare module.exports: any;
 }
 
@@ -684,9 +680,6 @@ declare module 'expo-cli/build/commands/google-play/AppSigningOptIn.js' {
 }
 declare module 'expo-cli/build/commands/init.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/init'>;
-}
-declare module 'expo-cli/build/commands/install-deprecated.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/install-deprecated'>;
 }
 declare module 'expo-cli/build/commands/install.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/install'>;

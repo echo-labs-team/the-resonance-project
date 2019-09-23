@@ -1,4 +1,4 @@
-// flow-typed signature: 14ff65983084bef04250e5182c5865be
+// flow-typed signature: d87ef4c42c7ddb43f06c60c664ddd0e6
 // flow-typed version: <<STUB>>/eslint-plugin-flowtype_v^3.9.0/flow_v0.104.0
 
 /**
@@ -59,10 +59,6 @@ declare module 'eslint-plugin-flowtype/dist/rules/arrayStyleComplexType' {
 }
 
 declare module 'eslint-plugin-flowtype/dist/rules/arrayStyleSimpleType' {
-  declare module.exports: any;
-}
-
-declare module 'eslint-plugin-flowtype/dist/rules/arrowParens' {
   declare module.exports: any;
 }
 
@@ -322,9 +318,6 @@ declare module 'eslint-plugin-flowtype/dist/rules/arrayStyleComplexType.js' {
 }
 declare module 'eslint-plugin-flowtype/dist/rules/arrayStyleSimpleType.js' {
   declare module.exports: $Exports<'eslint-plugin-flowtype/dist/rules/arrayStyleSimpleType'>;
-}
-declare module 'eslint-plugin-flowtype/dist/rules/arrowParens.js' {
-  declare module.exports: $Exports<'eslint-plugin-flowtype/dist/rules/arrowParens'>;
 }
 declare module 'eslint-plugin-flowtype/dist/rules/booleanStyle.js' {
   declare module.exports: $Exports<'eslint-plugin-flowtype/dist/rules/booleanStyle'>;

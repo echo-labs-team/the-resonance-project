@@ -1,4 +1,4 @@
-// flow-typed signature: 314dc70f5d35db6326edf4c7aabb80b8
+// flow-typed signature: d2ff7fc4c6a5b17b1cbbba5fcccfa4c7
 // flow-typed version: <<STUB>>/jest-expo_v^34.0.0/flow_v0.104.0
 
 /**
@@ -22,11 +22,27 @@ declare module 'jest-expo' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'jest-expo/android/jest-preset' {
+  declare module.exports: any;
+}
+
 declare module 'jest-expo/bin/jest' {
   declare module.exports: any;
 }
 
+declare module 'jest-expo/ios/jest-preset' {
+  declare module.exports: any;
+}
+
 declare module 'jest-expo/jest-preset' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/node/jest-preset' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/src/getPlatformPreset' {
   declare module.exports: any;
 }
 
@@ -54,12 +70,52 @@ declare module 'jest-expo/src/preset/setup' {
   declare module.exports: any;
 }
 
+declare module 'jest-expo/src/snapshot/createPlatformResolver' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/src/snapshot/resolver.android' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/src/snapshot/resolver.ios' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/src/snapshot/resolver.node' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/src/snapshot/resolver.web' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/universal/jest-preset' {
+  declare module.exports: any;
+}
+
+declare module 'jest-expo/web/jest-preset' {
+  declare module.exports: any;
+}
+
 // Filename aliases
+declare module 'jest-expo/android/jest-preset.js' {
+  declare module.exports: $Exports<'jest-expo/android/jest-preset'>;
+}
 declare module 'jest-expo/bin/jest.js' {
   declare module.exports: $Exports<'jest-expo/bin/jest'>;
 }
+declare module 'jest-expo/ios/jest-preset.js' {
+  declare module.exports: $Exports<'jest-expo/ios/jest-preset'>;
+}
 declare module 'jest-expo/jest-preset.js' {
   declare module.exports: $Exports<'jest-expo/jest-preset'>;
+}
+declare module 'jest-expo/node/jest-preset.js' {
+  declare module.exports: $Exports<'jest-expo/node/jest-preset'>;
+}
+declare module 'jest-expo/src/getPlatformPreset.js' {
+  declare module.exports: $Exports<'jest-expo/src/getPlatformPreset'>;
 }
 declare module 'jest-expo/src/index' {
   declare module.exports: $Exports<'jest-expo/src'>;
@@ -81,4 +137,25 @@ declare module 'jest-expo/src/preset/internalExpoModules.js' {
 }
 declare module 'jest-expo/src/preset/setup.js' {
   declare module.exports: $Exports<'jest-expo/src/preset/setup'>;
+}
+declare module 'jest-expo/src/snapshot/createPlatformResolver.js' {
+  declare module.exports: $Exports<'jest-expo/src/snapshot/createPlatformResolver'>;
+}
+declare module 'jest-expo/src/snapshot/resolver.android.js' {
+  declare module.exports: $Exports<'jest-expo/src/snapshot/resolver.android'>;
+}
+declare module 'jest-expo/src/snapshot/resolver.ios.js' {
+  declare module.exports: $Exports<'jest-expo/src/snapshot/resolver.ios'>;
+}
+declare module 'jest-expo/src/snapshot/resolver.node.js' {
+  declare module.exports: $Exports<'jest-expo/src/snapshot/resolver.node'>;
+}
+declare module 'jest-expo/src/snapshot/resolver.web.js' {
+  declare module.exports: $Exports<'jest-expo/src/snapshot/resolver.web'>;
+}
+declare module 'jest-expo/universal/jest-preset.js' {
+  declare module.exports: $Exports<'jest-expo/universal/jest-preset'>;
+}
+declare module 'jest-expo/web/jest-preset.js' {
+  declare module.exports: $Exports<'jest-expo/web/jest-preset'>;
 }
