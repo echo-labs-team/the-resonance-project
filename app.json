@@ -4,8 +4,11 @@
     "slug": "echo",
     "scheme": "echo",
     "privacy": "public",
-    "sdkVersion": "33.0.0",
-    "platforms": ["ios", "android"],
+    "sdkVersion": "34.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -17,7 +20,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.echo.church",
@@ -26,8 +31,8 @@
     },
     "isDetached": true,
     "detach": {
-      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.11.2-sdk33.0.0-76da9dd8-735b-43b3-9682-b386811f4e5f.tar.gz",
-      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.11.4-sdk33.0.0-6a4f0f3e-1f1b-4c33-9155-d0237f6d7c34.tar.gz"
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.12.4-sdk34.0.0-ee3e7450-9ec2-4836-8c8c-335483e62917.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.12.2-sdk34.0.0-767c7d3b-87b6-4f80-a9af-92ce67e2a49d.tar.gz"
     },
     "android": {
       "package": "com.echo.church",

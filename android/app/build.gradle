@@ -35,8 +35,14 @@ android {
     versionCode 1
     versionName '1.0.0'
     ndk {
-      abiFilters 'armeabi-v7a', 'x86'
-    } 
+      // We use different `abiFilters` for distributing
+      // to be able to bundle old, incompatible SDKs.
+
+
+      
+      abiFilters 'armeabi-v7a', 'x86', 'arm64-v8a', 'x86_64'
+      
+    }
     multiDexEnabled true
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     // Deprecated. Used by net.openid:appauth
@@ -67,6 +73,7 @@ android {
     release {
       minifyEnabled true
       proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+      consumerProguardFiles 'proguard-rules.pro'
       signingConfig signingConfigs.release
     }
   }
@@ -91,7 +98,7 @@ devicefarm {
 
 configurations.all {
   resolutionStrategy {
-    force 'org.webkit:android-jsc:r241213'
+    force 'org.webkit:android-jsc:r245459'
   }
 }
 
@@ -104,8 +111,6 @@ apply from: 'expo.gradle'
 apply from: "../../node_modules/react-native-unimodules/gradle.groovy"
 
 dependencies {
-    implementation project(':react-native-youtube')
-    implementation project(':react-native-svg')
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
   implementation 'com.android.support:multidex:1.0.1'
@@ -175,7 +180,7 @@ dependencies {
   testImplementation 'com.android.support.test:rules:1.0.2-alpha1'
 
   
-  implementation('host.exp.exponent:expoview:33.0.0@aar') {
+  implementation('host.exp.exponent:expoview:34.0.0@aar') {
     transitive = true
     exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     exclude group: 'com.squareup.okhttp3', module: 'okhttp-urlconnection'
@@ -184,7 +189,7 @@ dependencies {
 
 
   
-  api 'org.webkit:android-jsc:r241213' // needs to be before react-native
+  api 'org.webkit:android-jsc:r245459' // needs to be before react-native
   api 'com.facebook.react:react-native:33.0.0'
   
 
@@ -197,12 +202,9 @@ dependencies {
       configuration: 'api',
       target       : 'react-native',
       exclude      : [
-        // You can exclude unneeded modules here.
-        // By default we exclude FaceDetector
-        // and Stripe payments APIs.
-        'unimodules-face-detector-interface',
-        'expo-face-detector',
-        'expo-payments-stripe'
+        // You can exclude unneeded modules here, eg.
+        // 'unimodules-face-detector-interface',
+        // 'expo-face-detector'
 
         // Adding a name here will also remove the package
         // from auto-generated BasePackageList.java

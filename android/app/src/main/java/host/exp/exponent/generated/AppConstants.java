@@ -11,7 +11,7 @@ import host.exp.exponent.Constants;
 @DoNotStrip
 public class AppConstants {
 
-  public static final String VERSION_NAME = "2.11.4";
+  public static final String VERSION_NAME = "1.0.0";
   public static String INITIAL_URL = "exp://exp.host/@echo.church/echo";
   public static final String SHELL_APP_SCHEME = "echo";
   public static final String RELEASE_CHANNEL = "default";
