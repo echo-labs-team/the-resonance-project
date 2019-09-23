@@ -4,7 +4,7 @@ platform :ios, '10.0'
 target 'echo-church' do
   pod 'ExpoKit',
     :git => "http://github.com/expo/expo.git",
-    :tag => "ios/2.11.2",
+    :tag => "ios/2.12.4",
     :subspecs => [
       "Core"
     ],
@@ -15,7 +15,8 @@ target 'echo-church' do
   use_unimodules!(
     modules_paths: ['../node_modules'],
     exclude: [
-      'expo-face-detector',
+      'expo-bluetooth',
+      'expo-in-app-purchases',
       'expo-payments-stripe',
     ],
   )
@@ -50,9 +51,7 @@ target 'echo-church' do
   pod 'glog',
     :podspec => "../node_modules/react-native/third-party-podspecs/glog.podspec",
     :inhibit_warnings => true
-  pod 'XCDYouTubeKit', '~> 2.8'
 
-  pod 'RCTYouTube', :path => '../node_modules/react-native-youtube'
 
   post_install do |installer|
     installer.pods_project.main_group.tab_width = '2';
@@ -74,11 +73,11 @@ target 'echo-church' do
       end
 
 
-      if ['Amplitude-iOS','Analytics','AppAuth','Branch','CocoaLumberjack','FBSDKCoreKit','FBSDKLoginKit','FBSDKShareKit','GPUImage','JKBigInteger2'].include? pod_name
+
       target_installation_result.native_target.build_configurations.each do |config|
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '10.0'
       end
-      end
+
 
       # Can't specify this in the React podspec because we need to use those podspecs for detached
       # projects which don't reference ExponentCPP.

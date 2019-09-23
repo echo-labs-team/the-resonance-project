@@ -113,6 +113,9 @@
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
     <!-- WHEN_PREPARING_SHELL_REMOVE_FROM_HERE -->
     <!-- ADD DEV SETTINGS HERE -->
+    <!-- BEGIN_SDK_34 -->
+    <activity android:name="abi34_0_0.com.facebook.react.devsupport.DevSettingsActivity"/>
+    <!-- END_SDK_34 -->
     <!-- BEGIN_SDK_33 -->
     <activity android:name="abi33_0_0.com.facebook.react.devsupport.DevSettingsActivity"/>
     <!-- END_SDK_33 -->
@@ -168,10 +171,22 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="expo.modules.payments.stripe.03d759a2-64d3-42c4-8b95-4aa4429a1c01" />
+            <data android:scheme="expo.modules.payments.stripe.6b993a4a-b236-4062-9254-dead9c37c16e" />
         </intent-filter>
     </activity>
     <!-- Versioned Activity for Stripe -->
+	<activity
+		android:exported="true"
+		android:launchMode="singleTask"
+		android:name="abi34_0_0.expo.modules.payments.stripe.RedirectUriReceiver"
+		android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+		<intent-filter>
+			<action android:name="android.intent.action.VIEW" />
+	      <category android:name="android.intent.category.DEFAULT" />
+	      <category android:name="android.intent.category.BROWSABLE" />
+	      <data android:scheme="abi34_0_0.expo.modules.payments.stripe" />
+		</intent-filter>
+	</activity>
 	<activity
 		android:exported="true"
 		android:launchMode="singleTask"
@@ -340,7 +355,7 @@
     <!-- BEGIN GOOGLE MAPS CONFIG -->
     <meta-data
       android:name="com.google.android.geo.API_KEY"
-      android:value="AIzaSyCPyKmt6in3JwAsogYikNNjor8qgU9stRQ"/>
+      android:value="AIzaSyDh7eDB9snEFSYtf-k0gfxA45HFoR0L--I"/>
     <!-- END GOOGLE MAPS CONFIG -->
 
     <!-- ADD BRANCH CONFIG HERE -->
@@ -348,7 +363,7 @@
     <!-- The Facebook SDK runs FacebookInitProvider on startup and crashes if there isn't an ID here -->
     <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb0"/>
 
-    <meta-data android:name="standaloneStripeScheme" android:value="03d759a2-64d3-42c4-8b95-4aa4429a1c01" />
+    <meta-data android:name="standaloneStripeScheme" android:value="6b993a4a-b236-4062-9254-dead9c37c16e" />
   </application>
 
 </manifest>
