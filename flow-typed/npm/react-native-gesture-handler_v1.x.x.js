@@ -1,5 +1,5 @@
-// flow-typed signature: d1990265c86009e1e061e30253882588
-// flow-typed version: 773d6936e4/react-native-gesture-handler_v1.x.x/flow_>=v0.104.x
+// flow-typed signature: 6a23c8ddaf07480ea74ff74320570ac1
+// flow-typed version: a5104a7a2f/react-native-gesture-handler_v1.x.x/flow_>=v0.104.x
 
 // Since now there is no possibility to import types from other libraries I had to use such a crutch
 declare module 'react-native-gesture-handler/@react-native' {
@@ -384,6 +384,7 @@ declare module 'react-native-gesture-handler/GestureHandler' {
     shouldCancelWhenOutside?: boolean,
     minPointers?: number,
     hitSlop?: HitSlop,
+    children?: React$Node,
   |}>;
 
   /////////////////////////////////////////////////////////////////////////////
