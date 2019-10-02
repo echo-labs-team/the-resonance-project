@@ -14,8 +14,8 @@
 	<key>STANDALONE_CONTEXT_TYPE</key>
 	<string>user</string>
 	<key>TEMPORARY_SDK_VERSION</key>
-	<string>34.0.0</string>
+	<string>35.0.0</string>
 	<key>developmentUrl</key>
-	<string>echo://192.168.86.84:19000</string>
+	<string>echo://192.168.8.41:19000</string>
 </dict>
 </plist>
