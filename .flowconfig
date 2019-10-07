@@ -5,6 +5,8 @@
 .*/node_modules/.*\(lib\|test\).*\.json$
 .*/node_modules/jest-*/*
 .*/node_modules/@expo/xdl/*
+.*/android/*
+.*/ios/*
 
 [include]
 

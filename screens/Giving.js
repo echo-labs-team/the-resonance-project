@@ -24,7 +24,8 @@ function getPushPayCampus(campus) {
 const GivingScreen = () => {
   const handleGive = campus => {
     WebBrowser.openBrowserAsync(
-      `https://pushpay.com/g/${getPushPayCampus(campus)}`
+      `https://pushpay.com/g/${getPushPayCampus(campus)}`,
+      { toolbarColor: Colors.darkestGray }
     );
   };
 

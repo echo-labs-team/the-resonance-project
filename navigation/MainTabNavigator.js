@@ -215,8 +215,7 @@ export default createMaterialTopTabNavigator(
         includeFontPadding: false,
       },
       indicatorStyle: {
-        marginBottom: 16,
-        backgroundColor: Colors.red,
+        display: 'none',
       },
     },
   }
