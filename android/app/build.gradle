@@ -178,7 +178,7 @@ dependencies {
 
   
   api 'org.webkit:android-jsc:r245459' // needs to be before react-native
-  api 'com.facebook.react:react-native:33.0.0'
+  api 'com.facebook.react:react-native:35.0.0'
   
 
 
