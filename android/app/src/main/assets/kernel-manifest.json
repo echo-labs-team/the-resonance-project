@@ -71,7 +71,7 @@
   "sdkVersion": "UNVERSIONED",
   "slug": "home",
   "updates": { "checkAutomatically": "ON_LOAD", "fallbackToCacheTimeout": 0 },
-  "version": "34.0.0",
+  "version": "35.0.0",
   "id": "@exponent/home",
   "revisionId": "34.0.0-r.YEQvPQE7aD",
   "publishedTime": "2019-07-16T06:10:17.284Z",
