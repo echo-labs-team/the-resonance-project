@@ -4,7 +4,7 @@ platform :ios, '10.0'
 target 'echo-church' do
   pod 'ExpoKit',
     :git => "http://github.com/expo/expo.git",
-    :tag => "ios/2.12.4",
+    :tag => "ios/2.13.0",
     :subspecs => [
       "Core"
     ],
