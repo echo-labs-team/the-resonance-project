@@ -37,12 +37,12 @@ const MediaScreen = () => {
     setLive(true);
   }
 
-  if (data.length < 2) {
+  if (data.length === 0) {
     const new_data = collectChannelData();
-    setData(new_data);
-  } else if (isLoading) {
-    setLoading(false);
+    setData(new_data)
+    setLoading(false)
   }
+
   if (isLoading) {
     return (
       <View style={styles.container}>
@@ -131,8 +131,9 @@ const PastSeriesSection = props => {
 
 const YouTubeDataView = props => {
   const item = props.data;
-  const name = item['snippet']['localized']['title'];
-  const img = item['snippet']['thumbnails']['maxres'];
+  const name = item.snippet.localized.title;
+  const img = item.snippet.thumbnails.maxres;
+  console.log(img)
   return (
     <TouchableOpacity
       onPress={() => {
@@ -142,7 +143,7 @@ const YouTubeDataView = props => {
       <View style={props.style}>
         <Image
           onPress={() => console.log('1st')}
-          source={img}
+          source={{uri: img.url}}
           style={props.thumbnailStyle}
           resizeMode="cover"
         />
