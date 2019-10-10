@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   View,
@@ -10,6 +10,7 @@ import {
   Image,
   TouchableHighlight,
   TouchableOpacity,
+  SafeAreaView,
 } from 'react-native';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
@@ -26,7 +27,25 @@ const screenHeight = Dimensions.get('window').height;
 const MediaScreen = () => {
   const [isLive, setLive] = useState(false);
   const [isLoading, setLoading] = useState(true);
+  const [isError, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [data, setData] = useState([]);
+
+  if (data.length === 0 && !isError) {
+    collectChannelData()
+      .then((new_data) => {
+        setData(new_data)
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error)
+        setError(true)
+        // setErrorMessage(error.message)
+        setErrorMessage("Make sure you're connected to the internet.")
+        setLoading(false)
+      })
+  }
+
   const date = new Date();
   if (
     !isLive &&
@@ -37,69 +56,89 @@ const MediaScreen = () => {
     setLive(true);
   }
 
-  if (data.length === 0) {
-    const new_data = collectChannelData();
-    setData(new_data)
-    setLoading(false)
-  }
-
   if (isLoading) {
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container} {...getHeaderInset()}>
+        <Text bold style={styles.headerTitle}>
+          MEDIA
+        </Text>
         <Spinner />
-      </View>
+      </SafeAreaView>
     );
-  }
-  return (
-    <ScrollView style={styles.container} {...getHeaderInset()}>
-      <Text bold style={styles.headerTitle}>
-        MEDIA
-      </Text>
-      {isLive ? (
-        <View>
-          <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
-          <WebView
-            javaScriptEnabled={true}
-            style={styles.largeCard}
-            source={{ uri: 'https://echochurchlive.churchonline.org' }}
-          />
+  } else if(isError) {
+    return (
+      <SafeAreaView style={styles.container} {...getHeaderInset()}>
+        <Text bold style={styles.headerTitle}>
+          MEDIA
+        </Text>
+        <View style={[styles.container, { alignItems:'center', justifyContent:'center', padding: 16}]} >
+          <Text style={
+            [TextStyles.title, { textAlign:'center' }]
+          }> Oh no! There as an error connecting to YouTube :(</Text>
+          <Text style={[TextStyles.body, { textAlign:'center', color:Colors.darkGray}]}>{errorMessage}</Text>
           <Button
-            title={'Notes'}
+            title={'Retry'}
             style={styles.notesButton}
-            onPress={() =>
-              Linking.openURL('https://www.bible.com/events/652292')
-            }
+            onPress={() => {
+              setError(false);
+              setLoading(true);
+            }}
           />
         </View>
-      ) : (
-        <View />
-      )}
-      <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
-      <YouTubeDataView
-        style={styles.currentSeriesCard}
-        data={data[0]}
-        thumbnailStyle={styles.youtubeThumbnailImageLarge}
-      />
-      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
-      <PastSeriesSection data={data.slice(1, data.length)} />
-      <Text style={styles.sectionHeaderText}>RESOURCES</Text>
-      <Button
-        title={'RightNow Media'}
-        style={styles.notesButton}
-        onPress={() =>
-          Linking.openURL(
-            'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
-          )
-        }
-      />
-    </ScrollView>
-  );
+      </SafeAreaView>
+    )
+  } else {
+    return (
+      <ScrollView style={styles.container} {...getHeaderInset()}>
+        <Text bold style={styles.headerTitle}>
+          MEDIA
+        </Text>
+        {isLive ? (
+          <View>
+            <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
+            <WebView
+              javaScriptEnabled={true}
+              style={styles.largeCard}
+              source={{ url: 'https://echochurchlive.churchonline.org' }}
+            />
+            <Button
+              title={'Notes'}
+              style={styles.notesButton}
+              onPress={() =>
+                Linking.openURL('https://www.bible.com/events/652292')
+              }
+            />
+          </View>
+        ) : (
+          <View />
+        )}
+        <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
+        <YouTubeDataView
+          style={styles.currentSeriesCard}
+          data={data[0]}
+          thumbnailStyle={styles.youtubeThumbnailImageLarge}
+        />
+        <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+        <PastSeriesSection data={data.slice(1, data.length)} />
+        <Text style={styles.sectionHeaderText}>RESOURCES</Text>
+        <Button
+          title={'RightNow Media'}
+          style={styles.notesButton}
+          onPress={() =>
+            Linking.openURL(
+              'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
+            )
+          }
+        />
+      </ScrollView>
+    );
+  }
 };
 
 const takeToItem = item => {
   console.log('you pressed');
-  const name = item['snippet']['localized']['title'];
-  const url = 'https://www.youtube.com/playlist?list=' + item['id'];
+  const name = item.title;
+  const url = 'https://www.youtube.com/playlist?list=' + item.id;
   console.log(name);
   console.log(url);
   Linking.openURL(url);
@@ -107,21 +146,29 @@ const takeToItem = item => {
 
 const PastSeriesSection = props => {
   data = props.data;
+  if(data === null || data.length === 0) {
+    return (<View />);
+  }
   return (
     <View style={{ flex: 1 }}>
       <FlatList
-        keyExtractor={obj => obj['snippet']['localized']['title']}
+        keyExtractor={obj => obj.title}
         data={data}
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         numColumns={2}
         renderItem={({ index, item }) => {
-          return (
-            <YouTubeDataView
-              style={styles.smallCard}
-              data={item}
-              thumbnailStyle={styles.youtubeThumbnailImageSmall}
-            />
-          );
+          if(item) {
+            return (
+              <YouTubeDataView
+                style={styles.smallCard}
+                data={item}
+                thumbnailStyle={styles.youtubeThumbnailImageSmall}
+              />
+            );
+          } else {
+            return <View />
+          }
+          
         }}
         style={styles.list}
       />
@@ -131,8 +178,8 @@ const PastSeriesSection = props => {
 
 const YouTubeDataView = props => {
   const item = props.data;
-  const name = item.snippet.localized.title;
-  const img = item.snippet.thumbnails.maxres;
+  const name = item.title;
+  const img = item.thumbnails.maxres;
   console.log(img)
   return (
     <TouchableOpacity
@@ -188,6 +235,10 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     borderRadius: 8,
   },
+  errorMessage: {
+    color: Colors.white,
+    textAlign: 'center',
+  },
   list: {
     paddingTop: 0,
     paddingHorizontal: 0,
@@ -219,6 +270,7 @@ const styles = StyleSheet.create({
     flex: 1,
     height: undefined,
     width: screenWidth - 32,
+    overflow: 'hidden',
   },
 });
 

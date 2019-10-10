@@ -9,68 +9,55 @@ const PLAYLIST_NAME_AVOID_LIST = [
   'Family Ministry',
   'Latest for Echo.Church',
 ];
+const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw'; // This is Echo.Church's channel ID
+const API_KEY = Keys.YOUTUBE_API_KEY;
 
-collectChannelData = () => {
+collectChannelData = async () => {
   let good_items = new Array();
-  // const API_KEY = Keys.YOUTUBE_API_KEY;
-  const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw';
-  let NEXT_PAGE_TOKEN = null;
+  let next_page_token = null;
+  do {
+    let url = `https://www.googleapis.com/youtube/v3/playlists?part=id%2CcontentDetails%2Csnippet`
+    url += next_page_token ? `&pageToken=${next_page_token}` : ``
+    url += `&channelId=${CHANNEL_ID}&key=${API_KEY}`
+    try {
+      response = await fetch(url)
+    } catch (error) {
+      throw Error(error);
+      return null;
+    }
+    
+    json = await response.json()
 
-  // do {
-  //   let url = `https://www.googleapis.com/youtube/v3/playlists?part=id%2CcontentDetails%2Csnippet`
-  //   url += NEXT_PAGE_TOKEN ? `&pageToken=${NEXT_PAGE_TOKEN}` : ``
-  //   url += `&channelId=${CHANNEL_ID}&key=${API_KEY}`
-  //   // console.log("fetching " + url)
-  //   response = await fetch(url);
-  //   json = await response.json()
-  //   console.log(json)
-  //   if (!("items" in json) || ("error" in json)){
-  //     throw Error(json["error"]["errors"][0]["message"] || "No message");
-  //   }
-  //   all_items = json["items"]
-  //   all_items.forEach((item) => {
-  //     if(PLAYLIST_NAME_AVOID_LIST.includes(item["snippet"]["localized"]["title"])) {
-  //       return
-  //     }
-  //     good_items.push(item);
-  //   })
-  //   NEXT_PAGE_TOKEN = json["nextPageToken"]
-  // } while (NEXT_PAGE_TOKEN)
+    if (!("items" in json) || ("error" in json)){
+      throw Error(json.error.errors[0].message || "No message");
+      return null;
+    }
+    json.items.forEach((item) => {
+      if(PLAYLIST_NAME_AVOID_LIST.includes(item.snippet.localized.title)) {
+        return
+      }
+      tiny_item = {
+        publishDate:item.snippet.publishedAt,
+        title:item.snippet.localized.title,
+        thumbnails:item.snippet.thumbnails,
+        id: item.id
+      };
+      good_items.push(tiny_item);
+    })
+    next_page_token = json["nextPageToken"]
+  } while (next_page_token)
 
-  good_items = test_json_items;
-  // console.log("-------Start good items------")
-  // console.log(good_items)
-  // console.log("-------End good items------")
+  // good_items = test_json_items;
   good_items.sort((a, b) => {
-    const a_date = new Date(a['snippet']['publishedAt']);
-    const b_date = new Date(b['snippet']['publishedAt']);
+    const a_date = new Date(a.publishDate);
+    const b_date = new Date(b.publishDate);
     return a_date > b_date ? -1 : a_date < b_date ? 1 : 0;
   });
   good_items.forEach(item => {
-    console.log(item['snippet']['localized']['title']);
+    console.log(item.title);
   });
-  // console.log(good_items)
+
   return good_items;
-};
-
-fetchChannelData = async props => {
-  const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw';
-  const response = await fetch(
-    `https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULT}&part=snippet%2CcontentDetails&key=${API_KEY}`
-  );
-};
-
-fetchPlaylistData = async playlist_id => {
-  const MAX_RESULT = 10; // props.max
-
-  const PLAYLIST_ID = 'PL8cDVrurCVqNX0hof1GEmDbIVSHP4xMUs'; // props.playlist_id
-  const API_KEY = Keys.YOUTUBE_API_KEY2;
-  // const response = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?playlistId=${PLAYLIST_ID}&maxResults=${MAX_RESULT}&part=snippet%2CcontentDetails&key=${API_KEY}`);
-  // console.log(json)
-  // console.log("---------------------")
-  // console.log(json["items"][0])
-  // collectChannelData()
-  return { hello: 'world' }; //await response.json();
 };
 
 const test_json_items = [
@@ -628,4 +615,4 @@ const test_json_items = [
     }
   ];
 
-export default fetchPlaylistData;
+export default collectChannelData;
