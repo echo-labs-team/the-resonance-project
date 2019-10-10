@@ -1,4 +1,4 @@
 export default {
-  YOUTUBE_API_KEY: 'AIzaSyDV_Eje5uoyQ8k7hwWYbqiPUuLac7QjeV0',
+  YOUTUBE_API_KEY: 'AIzaSyCdVIPC3tHFhpXNUkwiC07-mxJegZD4Ng8',
   YOUTUBE_API_KEY2: 'AIzaSyBmMLrbOd2ebPgkrNZjtB4TWOVAGveBP0c',
 };

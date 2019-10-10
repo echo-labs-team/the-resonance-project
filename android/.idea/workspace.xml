@@ -1,47 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="519e5c2a-10dd-4747-87d8-18e64db3f532" name="Default Changelist" comment="">
+    <list default="true" id="0afcf30c-3f0f-453f-8cdd-fcf3287cfdf3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileContent/fileContent.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileContent/fileContent.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/classAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/jarAnalysis.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/javaCompile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/javaCompile/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10.2/taskHistory/taskHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/android.iml" beforeDir="false" afterPath="$PROJECT_DIR$/android.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/google-services.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/google-services.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/proguard-rules.pro" beforeDir="false" afterPath="$PROJECT_DIR$/app/proguard-rules.pro" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/assets/kernel-manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/assets/kernel-manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/MainApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/MainApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/generated/AppConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/generated/AppConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/generated/BasePackageList.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/generated/BasePackageList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/generated/DetachBuildConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/host/exp/exponent/generated/DetachBuildConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../app.json" beforeDir="false" afterPath="$PROJECT_DIR$/../app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flow-typed/npm/eslint-plugin-flowtype_vx.x.x.js" beforeDir="false" afterPath="$PROJECT_DIR$/../flow-typed/npm/eslint-plugin-flowtype_vx.x.x.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flow-typed/npm/expo-cli_vx.x.x.js" beforeDir="false" afterPath="$PROJECT_DIR$/../flow-typed/npm/expo-cli_vx.x.x.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../flow-typed/npm/jest-expo_vx.x.x.js" beforeDir="false" afterPath="$PROJECT_DIR$/../flow-typed/npm/jest-expo_vx.x.x.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../flow-typed/npm/react-native-svg_vx.x.x.js" beforeDir="false" afterPath="$PROJECT_DIR$/../flow-typed/npm/react-native-svg_vx.x.x.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/Podfile" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Podfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/Podfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church.xcodeproj/project.pbxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcodeproj/project.xcworkspace/xcuserdata/philliptrent.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcodeproj/xcshareddata/xcschemes/echo-church.xcscheme" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church.xcodeproj/xcshareddata/xcschemes/echo-church.xcscheme" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church.xcworkspace/xcshareddata/WorkspaceSettings.xcsettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcworkspace/xcuserdata/dquock.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcworkspace/xcuserdata/philliptrent.xcuserdatad/UserInterfaceState.xcuserstate" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church.xcworkspace/xcuserdata/philliptrent.xcuserdatad/UserInterfaceState.xcuserstate" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church.xcworkspace/xcuserdata/philliptrent.xcuserdatad/WorkspaceSettings.xcsettings" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon1024x1024.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon1024x1024.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon20x20@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon20x20@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon20x20@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon20x20@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon29x29@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon29x29@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon29x29@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon29x29@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon40x40@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon40x40@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon40x40@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon40x40@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon60x60@2x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon60x60@2x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon60x60@3x.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon60x60@3x.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon76x76@2x~ipad.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon76x76@2x~ipad.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon76x76~ipad.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon76x76~ipad.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon83.5x83.5@2x~ipad.png" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/AppIcon83.5x83.5@2x~ipad.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/Contents.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Assets.xcassets/AppIcon.appiconset/Contents.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXBuildConstants.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXBuildConstants.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXBuildConstants.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXBuildConstants.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXBuildConstants.plist.bak" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXBuildConstants.plist.bak" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXSDKVersions.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Supporting/EXSDKVersions.plist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ios/echo-church/Supporting/Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Supporting/Info.plist" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../ios/echo-church/Supporting/sdkVersions.json" beforeDir="false" afterPath="$PROJECT_DIR$/../ios/echo-church/Supporting/sdkVersions.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
@@ -67,9 +76,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="ProjectFrameBounds" fullScreen="true">
+  <component name="ProjectFrameBounds">
+    <option name="y" value="23" />
     <option name="width" value="1440" />
-    <option name="height" value="900" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -77,8 +87,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView" />
       <pane id="Scope" />
     </panes>
@@ -87,7 +97,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="android.sdk.path" value="$USER_HOME$/Library/Android/sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -168,40 +178,39 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="519e5c2a-10dd-4747-87d8-18e64db3f532" name="Default Changelist" comment="" />
-      <created>1569198541755</created>
+      <changelist id="0afcf30c-3f0f-453f-8cdd-fcf3287cfdf3" name="Default Changelist" comment="" />
+      <created>1570407415124</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1569198541755</updated>
+      <updated>1570407415124</updated>
     </task>
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="0" />
+    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <layout>
-      <window_info id="Capture Tool" />
-      <window_info content_ui="combo" id="Project" visible="true" weight="0.3204578" />
+      <window_info active="true" content_ui="combo" id="Project" visible="true" weight="0.3297568" />
       <window_info id="Structure" side_tool="true" />
       <window_info id="Build Variants" side_tool="true" />
       <window_info id="Image Layers" />
       <window_info id="Designer" />
-      <window_info id="Resources Explorer" weight="0.3298969" />
+      <window_info id="Resources Explorer" />
+      <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Run" />
       <window_info anchor="bottom" id="Logcat" />
+      <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="TODO" />
       <window_info anchor="bottom" id="Android Profiler" />
       <window_info anchor="bottom" id="Debug" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info active="true" anchor="bottom" id="Build" visible="true" weight="0.2951807" />
+      <window_info anchor="bottom" id="Build" visible="true" weight="0.3299363" />
       <window_info anchor="right" id="Device File Explorer" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" />
       <window_info anchor="right" id="Gradle" />
       <window_info anchor="right" id="Theme Preview" />
-      <window_info anchor="right" id="Assistant" visible="true" weight="0.3204578" />
       <window_info anchor="right" id="Palette&#9;" />
     </layout>
   </component>
