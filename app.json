@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Echo.Church",
+    "name": "Echo.Church.Test",
     "slug": "echo",
     "scheme": "echo",
     "privacy": "public",
@@ -20,14 +20,12 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["./assets/"],
     "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "com.echo.church",
-      "publishBundlePath": "ios/echo-church/Supporting/shell-app.bundle",
-      "publishManifestPath": "ios/echo-church/Supporting/shell-app-manifest.json"
+      "supportsTablet": false,
+      "bundleIdentifier": "com.echo.church.test",
+      "publishBundlePath": "ios/echo-church-test/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/echo-church-test/Supporting/shell-app-manifest.json"
     },
     "isDetached": true,
     "detach": {
