@@ -28,22 +28,22 @@ const MediaScreen = () => {
   const [isLive, setLive] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState([]);
 
   if (data.length === 0 && !isError) {
     collectChannelData()
-      .then((new_data) => {
-        setData(new_data)
+      .then(new_data => {
+        setData(new_data);
         setLoading(false);
       })
-      .catch((error) => {
-        console.log(error)
-        setError(true)
+      .catch(error => {
+        console.log(error);
+        setError(true);
         // setErrorMessage(error.message)
-        setErrorMessage("Make sure you're connected to the internet.")
-        setLoading(false)
-      })
+        setErrorMessage("Make sure you're connected to the internet.");
+        setLoading(false);
+      });
   }
 
   const date = new Date();
@@ -65,17 +65,30 @@ const MediaScreen = () => {
         <Spinner />
       </SafeAreaView>
     );
-  } else if(isError) {
+  } else if (isError) {
     return (
       <SafeAreaView style={styles.container} {...getHeaderInset()}>
         <Text bold style={styles.headerTitle}>
           MEDIA
         </Text>
-        <View style={[styles.container, { alignItems:'center', justifyContent:'center', padding: 16}]} >
-          <Text style={
-            [TextStyles.title, { textAlign:'center' }]
-          }> Oh no! There as an error connecting to YouTube :(</Text>
-          <Text style={[TextStyles.body, { textAlign:'center', color:Colors.darkGray}]}>{errorMessage}</Text>
+        <View
+          style={[
+            styles.container,
+            { alignItems: 'center', justifyContent: 'center', padding: 16 },
+          ]}
+        >
+          <Text style={[TextStyles.title, { textAlign: 'center' }]}>
+            {' '}
+            Oh no! There as an error connecting to YouTube :(
+          </Text>
+          <Text
+            style={[
+              TextStyles.body,
+              { textAlign: 'center', color: Colors.darkGray },
+            ]}
+          >
+            {errorMessage}
+          </Text>
           <Button
             title={'Retry'}
             style={styles.notesButton}
@@ -86,7 +99,7 @@ const MediaScreen = () => {
           />
         </View>
       </SafeAreaView>
-    )
+    );
   } else {
     return (
       <ScrollView style={styles.container} {...getHeaderInset()}>
@@ -121,15 +134,17 @@ const MediaScreen = () => {
         <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
         <PastSeriesSection data={data.slice(1, data.length)} />
         <Text style={styles.sectionHeaderText}>RESOURCES</Text>
-        <Button
-          title={'RightNow Media'}
-          style={styles.notesButton}
-          onPress={() =>
+        <TouchableHighlight onPress={() =>
             Linking.openURL(
               'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
             )
-          }
+          }>
+        <Image
+          source={require('../assets/images/rightnow_media.jpg')}
+          style={[styles.youtubeThumbnailImageLarge, { height: screenWidth/2, marginLeft: 16, marginBottom: 16, }]}
+          resizeMode="cover"
         />
+        </TouchableHighlight>
       </ScrollView>
     );
   }
@@ -146,8 +161,8 @@ const takeToItem = item => {
 
 const PastSeriesSection = props => {
   data = props.data;
-  if(data === null || data.length === 0) {
-    return (<View />);
+  if (data === null || data.length === 0) {
+    return <View />;
   }
   return (
     <View style={{ flex: 1 }}>
@@ -157,7 +172,7 @@ const PastSeriesSection = props => {
         ItemSeparatorComponent={() => <View style={styles.separator} />}
         numColumns={2}
         renderItem={({ index, item }) => {
-          if(item) {
+          if (item) {
             return (
               <YouTubeDataView
                 style={styles.smallCard}
@@ -166,9 +181,8 @@ const PastSeriesSection = props => {
               />
             );
           } else {
-            return <View />
+            return <View />;
           }
-          
         }}
         style={styles.list}
       />
@@ -180,7 +194,7 @@ const YouTubeDataView = props => {
   const item = props.data;
   const name = item.title;
   const img = item.thumbnails.maxres;
-  console.log(img)
+  console.log(img);
   return (
     <TouchableOpacity
       onPress={() => {
@@ -190,7 +204,7 @@ const YouTubeDataView = props => {
       <View style={props.style}>
         <Image
           onPress={() => console.log('1st')}
-          source={{uri: img.url}}
+          source={{ uri: img.url }}
           style={props.thumbnailStyle}
           resizeMode="cover"
         />
@@ -268,6 +282,7 @@ const styles = StyleSheet.create({
   },
   youtubeThumbnailImageLarge: {
     flex: 1,
+    borderRadius: 8,
     height: undefined,
     width: screenWidth - 32,
     overflow: 'hidden',

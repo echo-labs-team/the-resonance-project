@@ -5,4 +5,5 @@ include ':app'
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
 
 // Include unimodules.
-includeUnimodulesProjects()
+includeUnimodulesProjects(
+)
