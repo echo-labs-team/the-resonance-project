@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Echo.Church.Test",
+    "name": "Echo.Church",
     "slug": "echo",
     "scheme": "echo",
     "privacy": "public",
@@ -9,7 +9,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "splash": {
@@ -23,7 +23,7 @@
     "assetBundlePatterns": ["./assets/"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.echo.church.test",
+      "bundleIdentifier": "com.echurchapps.southbayc",
       "publishBundlePath": "ios/echo-church-test/Supporting/shell-app.bundle",
       "publishManifestPath": "ios/echo-church-test/Supporting/shell-app-manifest.json"
     },

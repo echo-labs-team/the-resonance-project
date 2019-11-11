@@ -25,7 +25,7 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 const MediaScreen = () => {
-  const [isLive, setLive] = useState(false);
+  const [isLive, setLive] = useState(true);
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -110,6 +110,7 @@ const MediaScreen = () => {
           <View>
             <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
             <WebView
+              useWebKit={true}
               javaScriptEnabled={true}
               style={styles.largeCard}
               source={{ url: 'https://echochurchlive.churchonline.org' }}
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   },
   largeCard: {
     width: screenWidth - 32,
-    height: 550,
+    height: screenHeight - 128,
     marginLeft: 16,
     borderRadius: 8,
   },
