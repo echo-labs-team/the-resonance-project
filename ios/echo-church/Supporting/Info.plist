@@ -5,19 +5,19 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>Echo.Church.Test</string>
+	<string>Echo.Church</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.echo.church.test</string>
+	<string>com.echurchapps.southbayc</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Echo.Church.Test</string>
+	<string>Echo.Church</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+	<string>2.0.0</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -31,7 +31,7 @@
 			<string>OAuthRedirect</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.echo.church.test</string>
+				<string>com.echurchapps.southbayc</string>
 			</array>
 		</dict>
 	</array>
@@ -61,23 +61,23 @@
 		<true/>
 	</dict>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Allow Echo.Church.Test to access your calendar</string>
+	<string>Allow Echo.Church to access your calendar</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Allow Echo.Church.Test to use your camera</string>
+	<string>Allow Echo.Church to use your camera</string>
 	<key>NSContactsUsageDescription</key>
-	<string>Allow Echo.Church.Test to access your contacts</string>
+	<string>Allow Echo.Church to access your contacts</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Allow Echo.Church.Test to use your location</string>
+	<string>Allow Echo.Church to use your location</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>Allow Echo.Church.Test to access your microphone</string>
+	<string>Allow Echo.Church to access your microphone</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Allow Echo.Church.Test to access your device's accelerometer</string>
+	<string>Allow Echo.Church to access your device's accelerometer</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Give Echo.Church.Test permission to save photos</string>
+	<string>Give Echo.Church permission to save photos</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Give Echo.Church.Test permission to access your photos</string>
+	<string>Give Echo.Church permission to access your photos</string>
 	<key>NSRemindersUsageDescription</key>
-	<string>Allow Echo.Church.Test to access your reminders</string>
+	<string>Allow Echo.Church to access your reminders</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -89,6 +89,9 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

@@ -27,7 +27,7 @@
     "expo-blur": "^7.0.0",
     "expo-font": "^7.0.0",
     "expo-web-browser": "^7.0.0",
-    "expokit": "^35.0.1",
+    "expokit": "^35.0.3",
     "react": "^16.10.2",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-dropdownalert": "^4.1.0",

@@ -19,7 +19,7 @@ PODS:
   - EXAppLoaderProvider (7.0.0)
   - EXBlur (7.0.0):
     - UMCore
-  - EXConstants (7.0.0):
+  - EXConstants (7.0.1):
     - UMConstantsInterface
     - UMCore
   - EXFileSystem (7.0.0):
@@ -30,7 +30,7 @@ PODS:
     - UMFontInterface
   - EXKeepAwake (7.0.0):
     - UMCore
-  - EXLinearGradient (7.0.0):
+  - EXLinearGradient (7.0.1):
     - UMCore
   - EXLocation (7.0.0):
     - UMCore
@@ -197,7 +197,7 @@ DEPENDENCIES:
   - EXAppLoaderProvider (from `../node_modules/expo-app-loader-provider/ios`)
   - EXBlur (from `../node_modules/expo-blur/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXFileSystem (from `../node_modules/expo/node_modules/expo-file-system/ios`)
+  - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - EXKeepAwake (from `../node_modules/expo-keep-awake/ios`)
   - EXLinearGradient (from `../node_modules/expo-linear-gradient/ios`)
@@ -223,20 +223,20 @@ DEPENDENCIES:
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
-  - UMConstantsInterface (from `../node_modules/expo/node_modules/unimodules-constants-interface/ios`)
+  - UMConstantsInterface (from `../node_modules/unimodules-constants-interface/ios`)
   - "UMCore (from `../node_modules/@unimodules/core/ios`)"
-  - UMFaceDetectorInterface (from `../node_modules/expo/node_modules/unimodules-face-detector-interface/ios`)
+  - UMFaceDetectorInterface (from `../node_modules/unimodules-face-detector-interface/ios`)
   - UMFileSystemInterface (from `../node_modules/unimodules-file-system-interface/ios`)
   - UMFontInterface (from `../node_modules/unimodules-font-interface/ios`)
-  - UMImageLoaderInterface (from `../node_modules/expo/node_modules/unimodules-image-loader-interface/ios`)
+  - UMImageLoaderInterface (from `../node_modules/unimodules-image-loader-interface/ios`)
   - UMPermissionsInterface (from `../node_modules/unimodules-permissions-interface/ios`)
   - "UMReactNativeAdapter (from `../node_modules/@unimodules/react-native-adapter/ios`)"
-  - UMSensorsInterface (from `../node_modules/expo/node_modules/unimodules-sensors-interface/ios`)
+  - UMSensorsInterface (from `../node_modules/unimodules-sensors-interface/ios`)
   - UMTaskManagerInterface (from `../node_modules/unimodules-task-manager-interface/ios`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - Amplitude-iOS
     - Analytics
     - AppAuth
@@ -270,7 +270,7 @@ EXTERNAL SOURCES:
     path: "../node_modules/expo-constants/ios"
   EXFileSystem:
     :path: !ruby/object:Pathname
-    path: "../node_modules/expo/node_modules/expo-file-system/ios"
+    path: "../node_modules/expo-file-system/ios"
   EXFont:
     :path: !ruby/object:Pathname
     path: "../node_modules/expo-font/ios"
@@ -309,13 +309,13 @@ EXTERNAL SOURCES:
     path: "../node_modules/unimodules-camera-interface/ios"
   UMConstantsInterface:
     :path: !ruby/object:Pathname
-    path: "../node_modules/expo/node_modules/unimodules-constants-interface/ios"
+    path: "../node_modules/unimodules-constants-interface/ios"
   UMCore:
     :path: !ruby/object:Pathname
     path: "../node_modules/@unimodules/core/ios"
   UMFaceDetectorInterface:
     :path: !ruby/object:Pathname
-    path: "../node_modules/expo/node_modules/unimodules-face-detector-interface/ios"
+    path: "../node_modules/unimodules-face-detector-interface/ios"
   UMFileSystemInterface:
     :path: !ruby/object:Pathname
     path: "../node_modules/unimodules-file-system-interface/ios"
@@ -324,7 +324,7 @@ EXTERNAL SOURCES:
     path: "../node_modules/unimodules-font-interface/ios"
   UMImageLoaderInterface:
     :path: !ruby/object:Pathname
-    path: "../node_modules/expo/node_modules/unimodules-image-loader-interface/ios"
+    path: "../node_modules/unimodules-image-loader-interface/ios"
   UMPermissionsInterface:
     :path: !ruby/object:Pathname
     path: "../node_modules/unimodules-permissions-interface/ios"
@@ -333,7 +333,7 @@ EXTERNAL SOURCES:
     path: "../node_modules/@unimodules/react-native-adapter/ios"
   UMSensorsInterface:
     :path: !ruby/object:Pathname
-    path: "../node_modules/expo/node_modules/unimodules-sensors-interface/ios"
+    path: "../node_modules/unimodules-sensors-interface/ios"
   UMTaskManagerInterface:
     :path: !ruby/object:Pathname
     path: "../node_modules/unimodules-task-manager-interface/ios"
@@ -356,11 +356,11 @@ SPEC CHECKSUMS:
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   EXAppLoaderProvider: 98f3e889fa48b441b19c64f19193c82ebb1c15ca
   EXBlur: 2e830c1d47ccaf4a83742d4a1895e0d878af2869
-  EXConstants: 11210104ab59ee1cdfb79b0466add077f59c9218
+  EXConstants: db705745139c4c674b1a54ddce94766d9ddf8387
   EXFileSystem: 217d1480b63c595d0620e64d6a6845dc52229bbd
   EXFont: ce93c38bb43624eac43d283ca42e6e09496342b6
   EXKeepAwake: 97c48386fa562a57956c99a1b66b422de1fa3a19
-  EXLinearGradient: 31c43522ab53d432907e0aacac445d6f4e5b1275
+  EXLinearGradient: ac8c71b16c1996624f1c41475bb987221574f830
   EXLocation: 89ec75877fcf40b3dfeca428c898d25fce299fb3
   EXPermissions: b4e5d6e134317bfb29bed37998b7c0deab318e6d
   ExpoKit: d37511523ce8713562617db20f52cb2db07a7a91
@@ -394,6 +394,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 8f2117979aacb688fe304f834ff8800fadc320bb
   yoga: 92b2102c3d373d1a790db4ab761d2b0ffc634f64
 
-PODFILE CHECKSUM: 857608e1d120b25c10c43dfd4b43e89a5d66ac45
+PODFILE CHECKSUM: 7912d739e2c8fb176dc137233e4389422b349545
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.7.5

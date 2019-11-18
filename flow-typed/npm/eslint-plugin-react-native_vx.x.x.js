@@ -1,4 +1,4 @@
-// flow-typed signature: a4a54efb45c83a72bb938ebd4e7d0845
+// flow-typed signature: 20d2771cb6b3a29f096709080178c1e3
 // flow-typed version: <<STUB>>/eslint-plugin-react-native_v^3.7.0/flow_v0.104.0
 
 /**
@@ -31,6 +31,10 @@ declare module 'eslint-plugin-react-native/lib/rules/no-inline-styles' {
 }
 
 declare module 'eslint-plugin-react-native/lib/rules/no-raw-text' {
+  declare module.exports: any;
+}
+
+declare module 'eslint-plugin-react-native/lib/rules/no-single-element-style-arrays' {
   declare module.exports: any;
 }
 
@@ -73,6 +77,9 @@ declare module 'eslint-plugin-react-native/lib/rules/no-inline-styles.js' {
 }
 declare module 'eslint-plugin-react-native/lib/rules/no-raw-text.js' {
   declare module.exports: $Exports<'eslint-plugin-react-native/lib/rules/no-raw-text'>;
+}
+declare module 'eslint-plugin-react-native/lib/rules/no-single-element-style-arrays.js' {
+  declare module.exports: $Exports<'eslint-plugin-react-native/lib/rules/no-single-element-style-arrays'>;
 }
 declare module 'eslint-plugin-react-native/lib/rules/no-unused-styles.js' {
   declare module.exports: $Exports<'eslint-plugin-react-native/lib/rules/no-unused-styles'>;

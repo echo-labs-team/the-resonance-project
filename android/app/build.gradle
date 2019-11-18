@@ -29,11 +29,11 @@ android {
   }
 
   defaultConfig {
-    applicationId 'com.echo.church'
+    applicationId 'com.echurchapps.southbayc'
     minSdkVersion safeExtGet("minSdkVersion", 21)
     targetSdkVersion safeExtGet("targetSdkVersion", 28)
     versionCode 1
-    versionName '1.0.0'
+    versionName '2.0.0'
 
     multiDexEnabled true
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

@@ -1,4 +1,4 @@
-// flow-typed signature: 110005f99694fe387d5e45b621a5a0ab
+// flow-typed signature: 9765b44be792c8216370e8e6553f9d2e
 // flow-typed version: <<STUB>>/react-native-modal_v^11.1.0/flow_v0.104.0
 
 /**
@@ -22,28 +22,42 @@ declare module 'react-native-modal' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
-declare module 'react-native-modal/src' {
+declare module 'react-native-modal/dist' {
   declare module.exports: any;
 }
 
-declare module 'react-native-modal/src/index.style' {
+declare module 'react-native-modal/dist/modal' {
   declare module.exports: any;
 }
 
-declare module 'react-native-modal/src/utils' {
+declare module 'react-native-modal/dist/modal.style' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-modal/dist/types' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-modal/dist/utils' {
   declare module.exports: any;
 }
 
 // Filename aliases
-declare module 'react-native-modal/src/index' {
-  declare module.exports: $Exports<'react-native-modal/src'>;
+declare module 'react-native-modal/dist/index' {
+  declare module.exports: $Exports<'react-native-modal/dist'>;
 }
-declare module 'react-native-modal/src/index.js' {
-  declare module.exports: $Exports<'react-native-modal/src'>;
+declare module 'react-native-modal/dist/index.js' {
+  declare module.exports: $Exports<'react-native-modal/dist'>;
 }
-declare module 'react-native-modal/src/index.style.js' {
-  declare module.exports: $Exports<'react-native-modal/src/index.style'>;
+declare module 'react-native-modal/dist/modal.js' {
+  declare module.exports: $Exports<'react-native-modal/dist/modal'>;
 }
-declare module 'react-native-modal/src/utils.js' {
-  declare module.exports: $Exports<'react-native-modal/src/utils'>;
+declare module 'react-native-modal/dist/modal.style.js' {
+  declare module.exports: $Exports<'react-native-modal/dist/modal.style'>;
+}
+declare module 'react-native-modal/dist/types.js' {
+  declare module.exports: $Exports<'react-native-modal/dist/types'>;
+}
+declare module 'react-native-modal/dist/utils.js' {
+  declare module.exports: $Exports<'react-native-modal/dist/utils'>;
 }
