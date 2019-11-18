@@ -1,1 +1,6 @@
-{"isShell":true,"manifestUrl":"exp://exp.host/@echo.church/echo","releaseChannel":"development","isManifestVerificationBypassed":true}
+{
+  "releaseChannel": "development",
+  "manifestUrl": "exp://exp.host/@echo.church/echo",
+  "isManifestVerificationBypassed": true,
+  "isShell": true
+}

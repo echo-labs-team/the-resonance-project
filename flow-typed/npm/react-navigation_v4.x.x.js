@@ -1,5 +1,5 @@
-// flow-typed signature: 0ab75afac04b51c17fe92c3a01cbc4d3
-// flow-typed version: 536c492332/react-navigation_v4.x.x/flow_>=v0.104.x
+// flow-typed signature: 2f68f3597d70aadb9da3fb85b4193dc0
+// flow-typed version: ab8203bb4a/react-navigation_v4.x.x/flow_>=v0.104.x
 
 // @flow
 
@@ -219,7 +219,7 @@ declare module 'react-navigation' {
 
   declare export type NavigationScreenOptionsGetter<Options: {...}> = (
     navigation: NavigationScreenProp<NavigationRoute>,
-    ncreenProps: ?NavigationScreenProps,
+    screenProps: ?NavigationScreenProps,
     theme: SupportedThemes,
   ) => Options;
 
@@ -637,7 +637,7 @@ declare module 'react-navigation' {
     headerTitleAllowFontScaling?: boolean,
     headerTintColor?: string,
     headerLeft?: ((props: _HeaderBackButtonProps) => React$Node) | React$Node,
-    headerBackTitle?: string,
+    headerBackTitle?: ?string,
     headerBackImage?: (props: {|
       tintColor?: string,
       title?: ?string,

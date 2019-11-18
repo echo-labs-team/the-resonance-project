@@ -87,10 +87,6 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   });
 
   useEffect(() => {
-    console.log('applied filters', filters);
-  }, [filters]);
-
-  useEffect(() => {
     const getGroups = async () => {
       try {
         const fetchedGroups = (await getOpenGroups()) || [];
