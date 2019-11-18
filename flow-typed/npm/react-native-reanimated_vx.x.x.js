@@ -1,4 +1,4 @@
-// flow-typed signature: e5f2f518e6d59581c7dfd50f6722430b
+// flow-typed signature: c384ee7cf5c912634a248da5e6b9009f
 // flow-typed version: <<STUB>>/react-native-reanimated_v^1.1.0/flow_v0.104.0
 
 /**
@@ -106,6 +106,10 @@ declare module 'react-native-reanimated/src/core/AnimatedCall' {
   declare module.exports: any;
 }
 
+declare module 'react-native-reanimated/src/core/AnimatedCallFunc' {
+  declare module.exports: any;
+}
+
 declare module 'react-native-reanimated/src/core/AnimatedClock' {
   declare module.exports: any;
 }
@@ -134,11 +138,19 @@ declare module 'react-native-reanimated/src/core/AnimatedEvent' {
   declare module.exports: any;
 }
 
+declare module 'react-native-reanimated/src/core/AnimatedFunction' {
+  declare module.exports: any;
+}
+
 declare module 'react-native-reanimated/src/core/AnimatedNode' {
   declare module.exports: any;
 }
 
 declare module 'react-native-reanimated/src/core/AnimatedOperator' {
+  declare module.exports: any;
+}
+
+declare module 'react-native-reanimated/src/core/AnimatedParam' {
   declare module.exports: any;
 }
 
@@ -346,6 +358,9 @@ declare module 'react-native-reanimated/src/core/AnimatedBlock.js' {
 declare module 'react-native-reanimated/src/core/AnimatedCall.js' {
   declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedCall'>;
 }
+declare module 'react-native-reanimated/src/core/AnimatedCallFunc.js' {
+  declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedCallFunc'>;
+}
 declare module 'react-native-reanimated/src/core/AnimatedClock.js' {
   declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedClock'>;
 }
@@ -367,11 +382,17 @@ declare module 'react-native-reanimated/src/core/AnimatedDebug.js' {
 declare module 'react-native-reanimated/src/core/AnimatedEvent.js' {
   declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedEvent'>;
 }
+declare module 'react-native-reanimated/src/core/AnimatedFunction.js' {
+  declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedFunction'>;
+}
 declare module 'react-native-reanimated/src/core/AnimatedNode.js' {
   declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedNode'>;
 }
 declare module 'react-native-reanimated/src/core/AnimatedOperator.js' {
   declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedOperator'>;
+}
+declare module 'react-native-reanimated/src/core/AnimatedParam.js' {
+  declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedParam'>;
 }
 declare module 'react-native-reanimated/src/core/AnimatedProps.js' {
   declare module.exports: $Exports<'react-native-reanimated/src/core/AnimatedProps'>;
