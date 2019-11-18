@@ -23,7 +23,11 @@ const PrayerRequestsScreen = () => {
         <Button
           title="Submit Your Prayer Request"
           style={styles.button}
-          onPress={() => WebBrowser.openBrowserAsync('https://echo.church')}
+          onPress={() =>
+            WebBrowser.openBrowserAsync('https://echo.church', {
+              toolbarColor: Colors.darkestGray,
+            })
+          }
         />
       </View>
     </ScrollView>

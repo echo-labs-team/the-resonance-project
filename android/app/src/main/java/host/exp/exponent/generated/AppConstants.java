@@ -23,9 +23,20 @@ public class AppConstants {
   static {
     List<Constants.EmbeddedResponse> embeddedResponses = new ArrayList<>();
 
+<<<<<<< HEAD
     // ADD EMBEDDED RESPONSES HERE
     // START EMBEDDED RESPONSES
     // END EMBEDDED RESPONSES
+=======
+    
+        
+        
+        // ADD EMBEDDED RESPONSES HERE
+        // START EMBEDDED RESPONSES
+        embeddedResponses.add(new Constants.EmbeddedResponse("https://exp.host/@echo.church/echo", "assets://shell-app-manifest.json", "application/json"));
+        embeddedResponses.add(new Constants.EmbeddedResponse("https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F4024b97aea5859fb1895d220bef70238-35.0.0-android.js", "assets://shell-app.bundle", "application/javascript"));
+        // END EMBEDDED RESPONSES
+>>>>>>> 240b1e87e2518f0d5a74a3fdef2664fb1d47a26a
     EMBEDDED_RESPONSES = embeddedResponses;
   }
 

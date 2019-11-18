@@ -56,7 +56,8 @@ const VolunteerScreen = () => {
           style={styles.button}
           onPress={() =>
             WebBrowser.openBrowserAsync(
-              'https://docs.google.com/forms/d/1IdaVDIAr7AlDqH2QQ7kMm2k4txQKox7aPl7C12fz-0Q/viewform'
+              'https://docs.google.com/forms/d/1IdaVDIAr7AlDqH2QQ7kMm2k4txQKox7aPl7C12fz-0Q/viewform',
+              { toolbarColor: Colors.darkestGray }
             )
           }
         />
