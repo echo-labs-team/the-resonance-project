@@ -25,7 +25,7 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 const MediaScreen = () => {
-  const [isLive, setLive] = useState(true);
+  const [isLive, setLive] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -152,11 +152,8 @@ const MediaScreen = () => {
 };
 
 const takeToItem = item => {
-  console.log('you pressed');
   const name = item.title;
   const url = 'https://www.youtube.com/playlist?list=' + item.id;
-  console.log(name);
-  console.log(url);
   Linking.openURL(url);
 };
 
@@ -195,7 +192,6 @@ const YouTubeDataView = props => {
   const item = props.data;
   const name = item.title;
   const img = item.thumbnails.maxres;
-  console.log(img);
   return (
     <TouchableOpacity
       onPress={() => {
@@ -204,7 +200,6 @@ const YouTubeDataView = props => {
     >
       <View style={props.style}>
         <Image
-          onPress={() => console.log('1st')}
           source={{ uri: img.url }}
           style={props.thumbnailStyle}
           resizeMode="cover"
