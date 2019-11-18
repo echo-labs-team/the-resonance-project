@@ -58,10 +58,6 @@ export default ({
 }) => {
   const [filters, setFilters] = useState(appliedFilters);
 
-  useEffect(() => {
-    console.log('modal: selected filters', filters);
-  }, [filters]);
-
   const handleCancel = () => {
     setFilters(appliedFilters);
     setIsVisible(false);

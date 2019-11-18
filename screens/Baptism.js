@@ -42,7 +42,8 @@ const BaptismScreen = () => {
           style={styles.button}
           onPress={() =>
             WebBrowser.openBrowserAsync(
-              'https://goo.gl/forms/Lc8g3MU0CCxjea9e2'
+              'https://goo.gl/forms/Lc8g3MU0CCxjea9e2',
+              { toolbarColor: Colors.darkestGray }
             )
           }
         />
