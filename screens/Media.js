@@ -135,16 +135,21 @@ const MediaScreen = () => {
         <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
         <PastSeriesSection data={data.slice(1, data.length)} />
         <Text style={styles.sectionHeaderText}>RESOURCES</Text>
-        <TouchableHighlight onPress={() =>
+        <TouchableHighlight
+          onPress={() =>
             Linking.openURL(
               'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
             )
-          }>
-        <Image
-          source={require('../assets/images/rightnow_media.jpg')}
-          style={[styles.youtubeThumbnailImageLarge, { height: screenWidth/2, marginLeft: 16, marginBottom: 16, }]}
-          resizeMode="cover"
-        />
+          }
+        >
+          <Image
+            source={require('../assets/images/rightnow_media.jpg')}
+            style={[
+              styles.youtubeThumbnailImageLarge,
+              { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
+            ]}
+            resizeMode="cover"
+          />
         </TouchableHighlight>
       </ScrollView>
     );
