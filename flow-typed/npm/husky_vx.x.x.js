@@ -1,4 +1,4 @@
-// flow-typed signature: 7274beda6042e9e6a98864a6d9501026
+// flow-typed signature: 01f7182b57dfd29f5e4f3cfffbab336b
 // flow-typed version: <<STUB>>/husky_v^3.0.0/flow_v0.104.0
 
 /**
@@ -23,6 +23,10 @@ declare module 'husky' {
  * needed.
  */
 declare module 'husky/husky' {
+  declare module.exports: any;
+}
+
+declare module 'husky/lib/checkGitDirEnv' {
   declare module.exports: any;
 }
 
@@ -77,6 +81,9 @@ declare module 'husky/run' {
 // Filename aliases
 declare module 'husky/husky.js' {
   declare module.exports: $Exports<'husky/husky'>;
+}
+declare module 'husky/lib/checkGitDirEnv.js' {
+  declare module.exports: $Exports<'husky/lib/checkGitDirEnv'>;
 }
 declare module 'husky/lib/debug.js' {
   declare module.exports: $Exports<'husky/lib/debug'>;

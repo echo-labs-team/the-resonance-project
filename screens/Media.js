@@ -110,6 +110,7 @@ const MediaScreen = () => {
           <View>
             <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
             <WebView
+              useWebKit={true}
               javaScriptEnabled={true}
               style={styles.largeCard}
               source={{ url: 'https://echochurchlive.churchonline.org' }}
@@ -134,16 +135,21 @@ const MediaScreen = () => {
         <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
         <PastSeriesSection data={data.slice(1, data.length)} />
         <Text style={styles.sectionHeaderText}>RESOURCES</Text>
-        <TouchableHighlight onPress={() =>
+        <TouchableHighlight
+          onPress={() =>
             Linking.openURL(
               'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
             )
-          }>
-        <Image
-          source={require('../assets/images/rightnow_media.jpg')}
-          style={[styles.youtubeThumbnailImageLarge, { height: screenWidth/2, marginLeft: 16, marginBottom: 16, }]}
-          resizeMode="cover"
-        />
+          }
+        >
+          <Image
+            source={require('../assets/images/rightnow_media.jpg')}
+            style={[
+              styles.youtubeThumbnailImageLarge,
+              { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
+            ]}
+            resizeMode="cover"
+          />
         </TouchableHighlight>
       </ScrollView>
     );
@@ -151,11 +157,8 @@ const MediaScreen = () => {
 };
 
 const takeToItem = item => {
-  console.log('you pressed');
   const name = item.title;
   const url = 'https://www.youtube.com/playlist?list=' + item.id;
-  console.log(name);
-  console.log(url);
   Linking.openURL(url);
 };
 
@@ -194,7 +197,6 @@ const YouTubeDataView = props => {
   const item = props.data;
   const name = item.title;
   const img = item.thumbnails.maxres;
-  console.log(img);
   return (
     <TouchableOpacity
       onPress={() => {
@@ -203,7 +205,6 @@ const YouTubeDataView = props => {
     >
       <View style={props.style}>
         <Image
-          onPress={() => console.log('1st')}
           source={{ uri: img.url }}
           style={props.thumbnailStyle}
           resizeMode="cover"
@@ -239,7 +240,7 @@ const styles = StyleSheet.create({
   },
   largeCard: {
     width: screenWidth - 32,
-    height: 550,
+    height: screenHeight - 128,
     marginLeft: 16,
     borderRadius: 8,
   },
