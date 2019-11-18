@@ -8,42 +8,64 @@ import {
   Image,
   FlatList,
   RefreshControl,
+  TouchableHighlight,
+  Linking,
 } from 'react-native';
 import Colors from '../constants/Colors';
+import { getHeaderInset } from '../utils/header';
+import { getInstagramPosts } from '../data/instagram';
+import { getBlogPosts } from '../data/blogPosts';
 import TextStyles from '../constants/TextStyles';
 import Text from '../components/Text';
-import { getSomething } from '../data/wordpress';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
+
+type PostType =
+  | 'INSTAGRAM'
+  | 'BLOG'
+  | 'MESSAGE_SERIES'
+  | 'EVENTS'
+  | 'ANNOUNCEMENTS';
+
+type CardProps = {
+  type: PostType,
+  url: string,
+  image: string,
+  title: string,
+};
 
 const HomeScreen = () => {
   const [cardData, setCardData] = useState([
-    { title: 'loading1' },
-    { title: 'loading2' },
-    { title: 'loading3' },
-    { title: 'loading4' },
-    { title: 'loading5' },
-    { title: 'loading6' },
-    { title: 'loading7' },
-    { title: 'loading8' },
+    { url: 'loading1' },
+    { url: 'loading2' },
+    { url: 'loading3' },
+    { url: 'loading4' },
+    { url: 'loading5' },
+    { url: 'loading6' },
+    { url: 'loading7' },
+    { url: 'loading8' },
   ]);
   const [refreshing, setRefreshing] = useState(false);
 
   // fetch data on mount
   useEffect(() => {
-    getNewData();
-  }, []);
+    const getPosts = async () => {
+      const igPosts = await getInstagramPosts();
+      const blogPosts = await getBlogPosts();
 
-  async function getNewData() {
-    const data = await getSomething();
+      setCardData([...igPosts, ...blogPosts]);
+      setRefreshing(false);
+    };
 
-    setTimeout(() => {
-      setCardData(data);
-    }, 2000);
-  }
+    if (refreshing) {
+      getPosts();
+      return;
+    }
+
+    getPosts();
+  }, [refreshing]);
 
   const refresh = () => {
     setRefreshing(true);
-    getNewData().then(() => setRefreshing(false));
   };
 
   return (
@@ -51,13 +73,15 @@ const HomeScreen = () => {
       <ScrollView
         refreshControl={
           <RefreshControl
+            tintColor={Colors.red}
+            colors={[Colors.red]}
             refreshing={refreshing}
             onRefresh={refresh}
-            style={{ marginTop: 100, marginBottom: -60 }}
           />
         }
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
+        {...getHeaderInset()}
       >
         <View style={styles.welcomeContainer}>
           <Image
@@ -68,14 +92,16 @@ const HomeScreen = () => {
 
         {cardData && (
           <FlatList
-            keyExtractor={({ title }) => title}
+            keyExtractor={({ url = '' }) => url.slice(-10)}
             data={cardData}
             ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item }) => {
-              if (item.title.includes('loading')) {
+            renderItem={({ item = {} }: { item: CardProps }) => {
+              const { url = '' } = item;
+
+              if (url.includes('loading')) {
                 return <HomeCardPlaceholder />;
               }
-              return <Card data={item} />;
+              return <Card {...item} />;
             }}
           />
         )}
@@ -88,53 +114,47 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-const Card = ({ data }) => {
-  const icon = {
+function getIcon(type: PostType) {
+  if (type === 'INSTAGRAM') {
+    return {
+      uri:
+        'https://www.instagram.com/static/images/ico/apple-touch-icon-76x76-precomposed.png/4272e394f5ad.png',
+    };
+  }
+
+  return {
     BLOG: require('../assets/icons/Blog.png'),
-    'MESSAGE SERIES': require('../assets/icons/Message.png'),
+    MESSAGE_SERIES: require('../assets/icons/Message.png'),
     EVENTS: require('../assets/icons/Events.png'),
-    ANNOUNCEMENT: require('../assets/icons/Announcements.png'),
-  }[data.type];
+    ANNOUNCEMENTS: require('../assets/icons/Announcements.png'),
+  }[type];
+}
+
+const Card = ({ type, url, image, title }: CardProps) => {
+  const icon = getIcon(type);
 
   return (
-    <View style={styles.card}>
-      <Image
-        source={data.image}
-        style={{
-          width: undefined,
-          height: 200,
-          resizeMode: 'cover',
-        }}
-      />
-      <View style={styles.cardTypeView}>
-        <Image source={icon} style={styles.cardTypeIcon} />
-        <Text bold style={styles.cardTypeText}>
-          {data.type}
-        </Text>
+    <TouchableHighlight
+      underlayColor={Colors.darkBlue}
+      style={styles.card}
+      onPress={() => Linking.openURL(url)}
+    >
+      <View>
+        <Image source={{ uri: image }} style={styles.image} />
+        <View style={styles.cardTypeView}>
+          <Image source={icon} style={styles.cardTypeIcon} />
+          <Text bold style={styles.cardTypeText}>
+            {type}
+          </Text>
+        </View>
+        {title && (
+          <Text style={[TextStyles.body, styles.title]} numberOfLines={3}>
+            {title}
+          </Text>
+        )}
       </View>
-      <Text
-        style={[TextStyles.title, { paddingHorizontal: 8, paddingTop: 8 }]}
-        adjustsFontSizeToFit
-        numberOfLines={1}
-      >
-        {data.title}
-      </Text>
-      <Text style={styles.cardSubtitleText}>
-        {`${data.author} | ${formatDate(data.date)}`}
-      </Text>
-      <Text style={[TextStyles.body, { padding: 8 }]} numberOfLines={3}>
-        {data.body}
-      </Text>
-    </View>
+    </TouchableHighlight>
   );
-};
-
-const formatDate = date => {
-  return date.toLocaleString('en-us', {
-    month: 'long',
-    year: 'numeric',
-    day: 'numeric',
-  });
 };
 
 const styles = StyleSheet.create({
@@ -144,7 +164,8 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 10,
-    paddingBottom: 60,
+    paddingBottom: 20,
+    marginTop: -20,
   },
   welcomeContainer: {
     alignItems: 'center',
@@ -160,15 +181,18 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     overflow: 'hidden',
   },
-  cardSubtitleText: {
-    fontSize: 14,
-    paddingLeft: 8,
-    paddingTop: 8,
-    color: Colors.white,
+  image: {
+    width: undefined,
+    height: 200,
+    resizeMode: 'cover',
   },
   cardTypeIcon: {
     width: 16,
     height: 16,
+  },
+  title: {
+    paddingHorizontal: 8,
+    paddingVertical: 8,
   },
   cardTypeText: {
     fontSize: 13,
