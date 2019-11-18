@@ -64,7 +64,8 @@ const MissionsScreen = () => {
           style={styles.button}
           onPress={() =>
             WebBrowser.openBrowserAsync(
-              'https://docs.google.com/forms/d/e/1FAIpQLSd2IHpjbRbd-rqy_tpLc2_Wyex9RBgDpCD_KG6FZgXQJxhCLw/viewform'
+              'https://docs.google.com/forms/d/e/1FAIpQLSd2IHpjbRbd-rqy_tpLc2_Wyex9RBgDpCD_KG6FZgXQJxhCLw/viewform',
+              { toolbarColor: Colors.darkestGray }
             )
           }
         />
@@ -73,7 +74,8 @@ const MissionsScreen = () => {
           style={styles.button}
           onPress={() =>
             WebBrowser.openBrowserAsync(
-              'https://docs.google.com/forms/d/e/1FAIpQLSdiu651dbn1PzjxrVpkhHQlfxwJj9reWWIwIx3fhVFdSv3YvA/viewform'
+              'https://docs.google.com/forms/d/e/1FAIpQLSdiu651dbn1PzjxrVpkhHQlfxwJj9reWWIwIx3fhVFdSv3YvA/viewform',
+              { toolbarColor: Colors.darkestGray }
             )
           }
         />
@@ -82,7 +84,8 @@ const MissionsScreen = () => {
           style={styles.button}
           onPress={() =>
             WebBrowser.openBrowserAsync(
-              'https://pushpay.com/pay/echochurchpayments'
+              'https://pushpay.com/pay/echochurchpayments',
+              { toolbarColor: Colors.darkestGray }
             )
           }
         />
