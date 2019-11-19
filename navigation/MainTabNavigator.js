@@ -57,11 +57,7 @@ const defaultHeaderNavigationOptions = {
 
 // need to hide the `StatusBar` on the home screen
 const defaultTabBarOnPress = ({ navigation, defaultHandler }) => {
-  StatusBar.setHidden(
-    navigation.state.routeName === 'HomeStack' ||
-      navigation.state.routeName === 'GroupsStack',
-    'fade'
-  );
+  StatusBar.setHidden(navigation.state.routeName === 'HomeStack', 'fade');
   defaultHandler();
 };
 

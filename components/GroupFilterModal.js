@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   // needed to allow scrolling on android
   contentContainer: {
     flexGrow: 3,
-    height: '50%',
+    height: '40%',
   },
   dragBar: {
     width: 100,
