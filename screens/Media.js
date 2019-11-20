@@ -12,13 +12,13 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+// import YouTube from 'react-native-youtube';
+import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
-import YouTube from 'react-native-youtube';
-import fetchPlaylistData from '../data/youtube';
 import Spinner from '../components/Spinner';
 
 const screenWidth = Dimensions.get('window').width;
@@ -31,22 +31,26 @@ const MediaScreen = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState([]);
 
-  if (data.length === 0 && !isError) {
-    collectChannelData()
-      .then(new_data => {
-        setData(new_data);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.log(error);
-        setError(true);
-        // setErrorMessage(error.message)
-        setErrorMessage("Make sure you're connected to the internet.");
-        setLoading(false);
-      });
+  useEffect(() => {
+    getVideos();
+  }, []);
+
+  async function getVideos() {
+    try {
+      const fetchedVideos = (await collectChannelData()) || [];
+
+      setData(fetchedVideos);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error getting media', err);
+      setError(true);
+      setErrorMessage("Make sure you're connected to the internet.");
+      setLoading(false);
+    }
   }
 
   const date = new Date();
+
   if (
     !isLive &&
     date.getDay() === 0 &&
@@ -65,7 +69,9 @@ const MediaScreen = () => {
         <Spinner />
       </SafeAreaView>
     );
-  } else if (isError) {
+  }
+
+  if (isError) {
     return (
       <SafeAreaView style={styles.container} {...getHeaderInset()}>
         <Text bold style={styles.headerTitle}>
@@ -79,7 +85,7 @@ const MediaScreen = () => {
         >
           <Text style={[TextStyles.title, { textAlign: 'center' }]}>
             {' '}
-            Oh no! There as an error connecting to YouTube :(
+            Oh no! There was an error connecting to YouTube 😞
           </Text>
           <Text
             style={[
@@ -95,78 +101,77 @@ const MediaScreen = () => {
             onPress={() => {
               setError(false);
               setLoading(true);
+              getVideos();
             }}
           />
         </View>
       </SafeAreaView>
     );
-  } else {
-    return (
-      <ScrollView style={styles.container} {...getHeaderInset()}>
-        <Text bold style={styles.headerTitle}>
-          MEDIA
-        </Text>
-        {isLive ? (
-          <View>
-            <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
-            <WebView
-              useWebKit={true}
-              javaScriptEnabled={true}
-              style={styles.largeCard}
-              source={{ url: 'https://echochurchlive.churchonline.org' }}
-            />
-            <Button
-              title={'Notes'}
-              style={styles.notesButton}
-              onPress={() =>
-                Linking.openURL('https://www.bible.com/events/652292')
-              }
-            />
-          </View>
-        ) : (
-          <View />
-        )}
-        <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
-        <YouTubeDataView
-          style={styles.currentSeriesCard}
-          data={data[0]}
-          thumbnailStyle={styles.youtubeThumbnailImageLarge}
-        />
-        <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
-        <PastSeriesSection data={data.slice(1, data.length)} />
-        <Text style={styles.sectionHeaderText}>RESOURCES</Text>
-        <TouchableHighlight
-          onPress={() =>
-            Linking.openURL(
-              'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
-            )
-          }
-        >
-          <Image
-            source={require('../assets/images/rightnow_media.jpg')}
-            style={[
-              styles.youtubeThumbnailImageLarge,
-              { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
-            ]}
-            resizeMode="cover"
-          />
-        </TouchableHighlight>
-      </ScrollView>
-    );
   }
+
+  return (
+    <ScrollView style={styles.container} {...getHeaderInset()}>
+      <Text bold style={styles.headerTitle}>
+        MEDIA
+      </Text>
+      {isLive ? (
+        <View>
+          <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
+          <WebView
+            useWebKit={true}
+            javaScriptEnabled={true}
+            style={styles.largeCard}
+            source={{ url: 'https://echochurchlive.churchonline.org' }}
+          />
+          <Button
+            title={'Notes'}
+            style={styles.notesButton}
+            onPress={() =>
+              Linking.openURL('https://www.bible.com/events/652292')
+            }
+          />
+        </View>
+      ) : (
+        <View />
+      )}
+      <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
+      <YouTubeDataView
+        style={styles.currentSeriesCard}
+        data={data[0]}
+        thumbnailStyle={styles.youtubeThumbnailImageLarge}
+      />
+      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+      <PastSeriesSection data={data.slice(1, data.length)} />
+      <Text style={styles.sectionHeaderText}>RESOURCES</Text>
+      <TouchableHighlight
+        onPress={() =>
+          Linking.openURL(
+            'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
+          )
+        }
+      >
+        <Image
+          source={require('../assets/images/rightnow_media.jpg')}
+          style={[
+            styles.youtubeThumbnailImageLarge,
+            { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
+          ]}
+          resizeMode="cover"
+        />
+      </TouchableHighlight>
+    </ScrollView>
+  );
 };
 
-const takeToItem = item => {
-  const name = item.title;
-  const url = 'https://www.youtube.com/playlist?list=' + item.id;
-  Linking.openURL(url);
+const takeToItem = ({ id } = {}) => {
+  Linking.openURL(`https://www.youtube.com/playlist?list=${id}`);
 };
 
-const PastSeriesSection = props => {
-  data = props.data;
+const PastSeriesSection = ({ data }) => {
   if (data === null || data.length === 0) {
     return <View />;
   }
+
   return (
     <View style={{ flex: 1 }}>
       <FlatList
@@ -183,9 +188,8 @@ const PastSeriesSection = props => {
                 thumbnailStyle={styles.youtubeThumbnailImageSmall}
               />
             );
-          } else {
-            return <View />;
           }
+          return <View />;
         }}
         style={styles.list}
       />
@@ -193,24 +197,23 @@ const PastSeriesSection = props => {
   );
 };
 
-const YouTubeDataView = props => {
-  const item = props.data;
-  const name = item.title;
-  const img = item.thumbnails.maxres;
+const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
+  const { title, thumbnails: { maxres = {} } = {} } = data;
+
   return (
     <TouchableOpacity
       onPress={() => {
-        takeToItem(item);
+        takeToItem(data);
       }}
     >
-      <View style={props.style}>
+      <View style={style}>
         <Image
-          source={{ uri: img.url }}
-          style={props.thumbnailStyle}
+          source={{ uri: maxres.url }}
+          style={thumbnailStyle}
           resizeMode="cover"
         />
         <Text style={[TextStyles.subtitle, { textAlign: 'center' }]}>
-          {name}
+          {title}
         </Text>
       </View>
     </TouchableOpacity>

@@ -69,44 +69,42 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            tintColor={Colors.red}
-            colors={[Colors.red]}
-            refreshing={refreshing}
-            onRefresh={refresh}
-          />
-        }
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-        {...getHeaderInset()}
-      >
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={require('../assets/images/echo_logo.png')}
-            style={styles.welcomeImage}
-          />
-        </View>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          tintColor={Colors.red}
+          colors={[Colors.red]}
+          refreshing={refreshing}
+          onRefresh={refresh}
+        />
+      }
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      {...getHeaderInset()}
+    >
+      <View style={styles.welcomeContainer}>
+        <Image
+          source={require('../assets/images/echo_logo.png')}
+          style={styles.welcomeImage}
+        />
+      </View>
 
-        {cardData && (
-          <FlatList
-            keyExtractor={({ url = '' }) => url.slice(-10)}
-            data={cardData}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item = {} }: { item: CardProps }) => {
-              const { url = '' } = item;
+      {cardData && (
+        <FlatList
+          keyExtractor={({ url = '' }) => url.slice(-10)}
+          data={cardData}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={({ item = {} }: { item: CardProps }) => {
+            const { url = '' } = item;
 
-              if (url.includes('loading')) {
-                return <HomeCardPlaceholder />;
-              }
-              return <Card {...item} />;
-            }}
-          />
-        )}
-      </ScrollView>
-    </View>
+            if (url.includes('loading')) {
+              return <HomeCardPlaceholder />;
+            }
+            return <Card {...item} />;
+          }}
+        />
+      )}
+    </ScrollView>
   );
 };
 

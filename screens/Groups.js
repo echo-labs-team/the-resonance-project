@@ -14,6 +14,7 @@ import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import { getOpenGroups, getCategories } from '../data/groups';
 import Text from '../components/Text';
+import Button from '../components/Button';
 import GroupCardPlaceholder from '../components/GroupCardPlaceholder';
 import GroupCardDetails from '../components/GroupCardDetails';
 import SearchBar from '../components/SearchBar';
@@ -46,9 +47,10 @@ function useDebounce(value, delay) {
 function useQuery(groups) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 500);
-  const queriedGroups = [...groups].filter(
-    ({ groupname = '' }: { groupname?: string }) =>
-      groupname.toLowerCase().includes(debouncedQuery.toLowerCase())
+  const queriedGroups = [
+    ...groups,
+  ].filter(({ groupname = '' }: { groupname?: string }) =>
+    groupname.toLowerCase().includes(debouncedQuery.toLowerCase())
   );
 
   return [query, setQuery, queriedGroups];
@@ -66,6 +68,12 @@ const Card = ({ navigation, item }) => {
   );
 };
 
+const initialFilters = {
+  Campus: [],
+  Day: [],
+  Categories: [],
+};
+
 const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   const [groups, setGroups] = useState([
     { uuid: 'loading1' },
@@ -80,11 +88,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   const [categories, setCategories] = useState([]);
   const [query, setQuery, queriedGroups] = useQuery(groups);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
-  const [filters, setFilters] = useState({
-    Campus: [],
-    Day: [],
-    Categories: [],
-  });
+  const [filters, setFilters] = useState(initialFilters);
 
   useEffect(() => {
     const getGroups = async () => {
@@ -145,6 +149,56 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
     );
   };
 
+  const data = query ? queriedGroups : groups.filter(filterGroups);
+
+  const showFilterModal = () => setIsFilterModalVisible(true);
+
+  const renderNoResults = () => {
+    if (query) {
+      return (
+        <View style={styles.noResults}>
+          <Text bold style={styles.noResultsHeader}>
+            No results
+          </Text>
+          <Text style={styles.noResultsText}>
+            Try clearing your search or searching for something like
+            &quot;Alpha&quot;
+          </Text>
+          <Button
+            title="Clear Search"
+            style={styles.button}
+            onPress={() => {
+              setQuery('');
+            }}
+          />
+          <Button
+            title="Try Alpha"
+            style={styles.button}
+            onPress={() => {
+              setQuery('Alpha');
+            }}
+          />
+        </View>
+      );
+    }
+
+    return (
+      <View style={styles.noResults}>
+        <Text bold style={styles.noResultsHeader}>
+          No results
+        </Text>
+        <Text style={[styles.noResultsText, styles.noResults]}>
+          Try removing some of the filters that you&apos;ve applied
+        </Text>
+        <Button
+          title="Change Filters"
+          style={styles.button}
+          onPress={showFilterModal}
+        />
+      </View>
+    );
+  };
+
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -156,44 +210,33 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         <Text bold style={styles.headerTitle}>
           GROUPS
         </Text>
-        <FlatList
-          keyExtractor={({ uuid }) => uuid}
-          data={
-            query
-              ? [{ uuid: 'searchbar' }, ...queriedGroups]
-              : [{ uuid: 'searchbar' }, ...groups.filter(filterGroups)]
-          }
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({ index, item }) => {
-            if (index === 0) {
+
+        <View style={styles.searchBar}>
+          <SearchBar value={query} onChangeText={value => setQuery(value)} />
+          <TouchableOpacity onPress={showFilterModal}>
+            <Text style={styles.filter}>Filter</Text>
+          </TouchableOpacity>
+        </View>
+
+        {data.length ? (
+          <FlatList
+            keyExtractor={({ uuid }) => uuid}
+            data={data}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            renderItem={({ item }) => {
               return (
-                <View style={styles.container}>
-                  <SearchBar
-                    value={query}
-                    onChangeText={value => setQuery(value)}
-                  />
-                  <TouchableOpacity
-                    onPress={() => setIsFilterModalVisible(true)}
-                  >
-                    <Text
-                      style={{ padding: 10, fontSize: 22, color: Colors.gray }}
-                    >
-                      Filter
-                    </Text>
-                  </TouchableOpacity>
+                <View style={styles.cardShadow}>
+                  <BlurView tint="dark" intensity={100} style={styles.card}>
+                    <Card navigation={navigation} item={item} />
+                  </BlurView>
                 </View>
               );
-            }
-            return (
-              <View style={styles.cardShadow}>
-                <BlurView tint="dark" intensity={100} style={styles.card}>
-                  <Card navigation={navigation} item={item} />
-                </BlurView>
-              </View>
-            );
-          }}
-          style={styles.list}
-        />
+            }}
+            style={styles.list}
+          />
+        ) : (
+          renderNoResults()
+        )}
       </ScrollView>
 
       <GroupFilterModal
@@ -216,8 +259,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.black,
   },
-  container: {
-    marginTop: 20,
+  searchBar: {
+    paddingHorizontal: 10,
+    marginVertical: 20,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -235,6 +279,11 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
+  filter: {
+    padding: 10,
+    fontSize: 22,
+    color: Colors.gray,
+  },
   list: {
     paddingHorizontal: 10,
   },
@@ -249,6 +298,18 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
   },
+  noResults: { paddingHorizontal: 20 },
+  noResultsHeader: {
+    fontSize: 24,
+    textAlign: 'center',
+    color: Colors.gray,
+  },
+  noResultsText: {
+    fontSize: 18,
+    textAlign: 'center',
+    color: Colors.gray,
+  },
+  button: { marginTop: 20 },
 });
 
 export default GroupsScreen;
