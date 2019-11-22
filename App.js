@@ -12,7 +12,6 @@ export default props => {
   const loadResourcesAsync = async () => {
     return Promise.all([
       Asset.loadAsync([
-        require('./assets/images/echo_logo.png'),
         require('./assets/images/activate.png'),
         require('./assets/images/baptism.jpg'),
         require('./assets/images/volunteer.jpg'),
