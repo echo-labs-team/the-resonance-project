@@ -8,7 +8,10 @@ import {
   ImageBackground,
   FlatList,
   TouchableOpacity,
+  RefreshControl,
+  AsyncStorage,
 } from 'react-native';
+// import AsyncStorage from '@react-native-community/async-storage';
 import { BlurView } from 'expo-blur';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
@@ -19,6 +22,14 @@ import GroupCardPlaceholder from '../components/GroupCardPlaceholder';
 import GroupCardDetails from '../components/GroupCardDetails';
 import SearchBar from '../components/SearchBar';
 import GroupFilterModal from '../components/GroupFilterModal';
+import Error from '../components/GroupsError';
+import Spinner from '../components/Spinner';
+
+const storeGroupsData = async groups => {
+  await AsyncStorage.setItem('@groups', JSON.stringify(groups)).catch(err =>
+    console.error(err)
+  );
+};
 
 function useDebounce(value, delay) {
   // State and setters for debounced value
@@ -89,18 +100,32 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   const [query, setQuery, queriedGroups] = useQuery(groups);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [filters, setFilters] = useState(initialFilters);
+  const [refreshing, setRefreshing] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [tryAgain, setTryAgain] = useState(false);
 
   useEffect(() => {
     const getGroups = async () => {
       try {
+        const storedGroupsData = await AsyncStorage.getItem(
+          '@groups'
+        ).catch(err => console.error(err));
+
+        if (storedGroupsData) {
+          setGroups(JSON.parse(storedGroupsData));
+        }
+
         const fetchedGroups = (await getOpenGroups()) || [];
 
         setGroups(fetchedGroups);
+        storeGroupsData(fetchedGroups);
       } catch (err) {
         console.error('Error getting open groups', err);
-        setGroups([]);
-        // setHasError(true);
+        setHasError(true);
       }
+
+      setRefreshing(false);
+      setTryAgain(false);
     };
     const getGroupCategories = async () => {
       const fetchedCategories =
@@ -111,8 +136,13 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
       setCategories(fetchedCategories);
     };
 
+    if (refreshing || tryAgain) {
+      Promise.all([getGroups(), getGroupCategories()]);
+      return;
+    }
+
     Promise.all([getGroups(), getGroupCategories()]);
-  }, [setGroups, setCategories]);
+  }, [setGroups, setCategories, refreshing, tryAgain]);
 
   const filterGroups = ({
     campus = '',
@@ -206,36 +236,58 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         style={styles.backgroundImage}
       />
 
-      <ScrollView style={{ flex: 1 }} {...getHeaderInset()}>
+      {tryAgain && <Spinner />}
+
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            tintColor={Colors.gray}
+            colors={[Colors.gray]}
+            refreshing={refreshing}
+            onRefresh={() => setRefreshing(true)}
+          />
+        }
+        style={{ flex: 1 }}
+        {...getHeaderInset()}
+      >
         <Text bold style={styles.headerTitle}>
           GROUPS
         </Text>
 
-        <View style={styles.searchBar}>
-          <SearchBar value={query} onChangeText={value => setQuery(value)} />
-          <TouchableOpacity onPress={showFilterModal}>
-            <Text style={styles.filter}>Filter</Text>
-          </TouchableOpacity>
-        </View>
-
-        {data.length ? (
-          <FlatList
-            keyExtractor={({ uuid }) => uuid}
-            data={data}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item }) => {
-              return (
-                <View style={styles.cardShadow}>
-                  <BlurView tint="dark" intensity={100} style={styles.card}>
-                    <Card navigation={navigation} item={item} />
-                  </BlurView>
-                </View>
-              );
-            }}
-            style={styles.list}
-          />
+        {hasError ? (
+          <Error tryAgain={() => setTryAgain(true)} />
         ) : (
-          renderNoResults()
+          <>
+            <View style={styles.searchBar}>
+              <SearchBar
+                value={query}
+                onChangeText={value => setQuery(value)}
+              />
+              <TouchableOpacity onPress={showFilterModal}>
+                <Text style={styles.filter}>Filter</Text>
+              </TouchableOpacity>
+            </View>
+
+            {data.length ? (
+              <FlatList
+                keyExtractor={({ uuid }) => uuid}
+                data={data}
+                ItemSeparatorComponent={() => <View style={styles.separator} />}
+                renderItem={({ item }) => {
+                  return (
+                    <View style={styles.cardShadow}>
+                      <BlurView tint="dark" intensity={100} style={styles.card}>
+                        <Card navigation={navigation} item={item} />
+                      </BlurView>
+                    </View>
+                  );
+                }}
+                style={styles.list}
+              />
+            ) : (
+              renderNoResults()
+            )}
+          </>
         )}
       </ScrollView>
 
