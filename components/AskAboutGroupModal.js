@@ -80,7 +80,7 @@ export default props => {
   };
 
   return (
-    <ModalSheet buttonTitle="Ask a question" success={success}>
+    <ModalSheet buttonTitle="Ask a Question" success={success}>
       {loading && <Spinner />}
 
       <View style={{ flex: 1 }}>
