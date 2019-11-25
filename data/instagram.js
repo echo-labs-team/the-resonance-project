@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as Amplitude from 'expo-analytics-amplitude';
 
 export async function getInstagramPosts() {
   let instagramPosts = [];
@@ -27,7 +28,7 @@ export async function getInstagramPosts() {
     } = profile;
 
     instagramPosts = mediaEdges
-      .splice(0, 5)
+      .splice(0, 6)
       .map(({ node = {} } = {}) => {
         const {
           __typename,
@@ -54,6 +55,11 @@ export async function getInstagramPosts() {
       .filter(Boolean);
   } catch (err) {
     console.error(err.toString());
+    Amplitude.logEventWithProperties('errorLoadingInstagramPosts', {
+      app: 'mobile',
+      mainTray: 'Home',
+      error: err.toString(),
+    });
   }
 
   return instagramPosts;

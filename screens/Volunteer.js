@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
@@ -54,12 +55,17 @@ const VolunteerScreen = () => {
         <Button
           title="Sign Up to Serve"
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              connect: 'Volunteer Signup',
+            });
+
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/1IdaVDIAr7AlDqH2QQ7kMm2k4txQKox7aPl7C12fz-0Q/viewform',
               { toolbarColor: Colors.darkestGray }
-            )
-          }
+            );
+          }}
         />
       </View>
     </ScrollView>

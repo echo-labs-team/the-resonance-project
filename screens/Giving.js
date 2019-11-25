@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView, ImageBackground } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
@@ -23,6 +24,11 @@ function getPushPayCampus(campus) {
 
 const GivingScreen = () => {
   const handleGive = campus => {
+    Amplitude.logEventWithProperties('mobileEngagementAction', {
+      app: 'mobile',
+      giving: campus,
+    });
+
     WebBrowser.openBrowserAsync(
       `https://pushpay.com/g/${getPushPayCampus(campus)}`,
       { toolbarColor: Colors.darkestGray }

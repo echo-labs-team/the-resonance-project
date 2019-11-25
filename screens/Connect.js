@@ -10,6 +10,7 @@ import {
   TouchableHighlight,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
@@ -37,7 +38,16 @@ const EngageScreen = ({ navigation }: { navigation: Object }) => {
           keyExtractor={({ value }) => value}
           data={items}
           renderItem={({ item: { value, page } = {} }) => (
-            <TouchableHighlight onPress={() => navigation.navigate(page)}>
+            <TouchableHighlight
+              onPress={() => {
+                Amplitude.logEventWithProperties('mobilePageView', {
+                  app: 'mobile',
+                  connect: page,
+                });
+
+                navigation.navigate(page);
+              }}
+            >
               <View style={styles.item}>
                 <Text style={styles.text}>{value}</Text>
                 <Feather
