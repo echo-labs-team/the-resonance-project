@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import * as Amplitude from 'expo-analytics-amplitude';
 // import YouTube from 'react-native-youtube';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
@@ -23,6 +24,10 @@ import Spinner from '../components/Spinner';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+const trackingOptions = {
+  app: 'mobile',
+  mainTray: 'Media',
+};
 
 const MediaScreen = () => {
   const [isLive, setLive] = useState(false);
@@ -43,9 +48,12 @@ const MediaScreen = () => {
       setLoading(false);
     } catch (err) {
       console.error('Error getting media', err);
+
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");
       setLoading(false);
+
+      Amplitude.logEventWithProperties('errorLoadingMedia', trackingOptions);
     }
   }
 
@@ -101,6 +109,10 @@ const MediaScreen = () => {
             onPress={() => {
               setError(false);
               setLoading(true);
+              Amplitude.logEventWithProperties(
+                'tryReloadingMedia',
+                trackingOptions
+              );
               getVideos();
             }}
           />
@@ -126,9 +138,14 @@ const MediaScreen = () => {
           <Button
             title={'Notes'}
             style={styles.notesButton}
-            onPress={() =>
-              Linking.openURL('https://www.bible.com/events/652292')
-            }
+            onPress={() => {
+              Amplitude.logEventWithProperties('mobileEngagementAction', {
+                app: 'mobile',
+                media: 'Notes',
+              });
+
+              Linking.openURL('https://www.bible.com/events/652292');
+            }}
           />
         </View>
       ) : (
@@ -144,11 +161,16 @@ const MediaScreen = () => {
       <PastSeriesSection data={data.slice(1, data.length)} />
       <Text style={styles.sectionHeaderText}>RESOURCES</Text>
       <TouchableHighlight
-        onPress={() =>
+        onPress={() => {
+          Amplitude.logEventWithProperties('mobileEngagementAction', {
+            app: 'mobile',
+            media: 'rightnow media',
+          });
+
           Linking.openURL(
             'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
-          )
-        }
+          );
+        }}
       >
         <Image
           source={require('../assets/images/rightnow_media.jpg')}
@@ -164,6 +186,11 @@ const MediaScreen = () => {
 };
 
 const takeToItem = ({ id } = {}) => {
+  Amplitude.logEventWithProperties('mobileEngagementAction', {
+    app: 'mobile',
+    media: 'videoPlay',
+  });
+
   Linking.openURL(`https://www.youtube.com/playlist?list=${id}`);
 };
 

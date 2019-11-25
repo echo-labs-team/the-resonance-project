@@ -11,6 +11,7 @@ import {
   TouchableHighlight,
   Linking,
 } from 'react-native';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import { getInstagramPosts } from '../data/instagram';
@@ -30,11 +31,16 @@ type PostType =
   | 'EVENTS'
   | 'ANNOUNCEMENTS';
 
-type CardProps = {
+type CardProps = {|
   type: PostType,
   url: string,
   image: string,
   title: string,
+|};
+
+const trackingOptions = {
+  app: 'mobile',
+  mainTray: 'Home',
 };
 
 const HomeScreen = () => {
@@ -56,18 +62,30 @@ const HomeScreen = () => {
     const getPosts = async () => {
       const igPosts = (await getInstagramPosts()) || [];
       const blogPosts = (await getBlogPosts()) || [];
+      const posts = [...igPosts, ...blogPosts];
 
-      setCardData([...igPosts, ...blogPosts]);
+      if (!posts.length) {
+        Amplitude.logEventWithProperties('noPostsLoaded', trackingOptions);
+      }
+
+      setCardData(posts);
       setRefreshing(false);
       setTryAgain(false);
     };
 
     if (refreshing || tryAgain) {
+      if (tryAgain) {
+        Amplitude.logEventWithProperties('tryReloadingPosts', trackingOptions);
+      }
+
       getPosts();
       return;
     }
 
     getPosts();
+
+    // log `Home` page  view event on initial load
+    Amplitude.logEventWithProperties('mobilePageView', trackingOptions);
   }, [refreshing, tryAgain]);
 
   const refresh = () => {
@@ -92,9 +110,7 @@ const HomeScreen = () => {
 
       <View style={styles.logoContainer}>
         <EchoLogo width={40} height={40} color={Colors.red} />
-        <Text style={{ marginLeft: 10, fontSize: 26, color: Colors.white }}>
-          ECHO.CHURCH
-        </Text>
+        <Text style={styles.logo}>ECHO.CHURCH</Text>
       </View>
 
       {cardData.length ? (
@@ -193,6 +209,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  logo: {
+    marginLeft: 10,
+    fontSize: 26,
+    color: Colors.white,
   },
   card: {
     flex: 1,
