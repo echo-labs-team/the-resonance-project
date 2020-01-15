@@ -7,7 +7,7 @@
     "tunnel": "expo start --tunnel",
     "eject": "expo eject",
     "postinstall": "flow-typed install",
-    "publish": "expo optimize && expo publish --release-channel=development",
+    "publish": "expo optimize && expo publish --release-channel=default",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll=false",
     "test:watch": "node ./node_modules/jest/bin/jest.js --watchAll",
     "lint": "eslint .",
