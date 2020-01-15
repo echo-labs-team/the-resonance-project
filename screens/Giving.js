@@ -67,11 +67,6 @@ const GivingScreen = () => {
           onPress={() => handleGive('FMT')}
           style={styles.button}
         />
-        <Button
-          title="Online"
-          onPress={() => handleGive()}
-          style={styles.button}
-        />
       </ScrollView>
     </View>
   );

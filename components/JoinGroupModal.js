@@ -74,7 +74,7 @@ export default props => {
   };
 
   return (
-    <ModalSheet buttonTitle="Sign up" success={success}>
+    <ModalSheet buttonTitle="Sign Up" success={success}>
       {loading && <Spinner />}
 
       <View style={{ flex: 1 }}>

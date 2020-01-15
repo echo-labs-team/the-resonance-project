@@ -7,15 +7,16 @@ import {
   StyleSheet,
   View,
   ImageBackground,
+  Share,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
+import Button from '../components/Button';
 import { styles as groupStyles } from '../components/GroupCardDetails';
 import {
-  getCampusCode,
   getMeetingFrequency,
   getMeetingDay,
   getMeetingTime,
@@ -54,12 +55,40 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
       name: '',
     },
     hasChildcare = false,
+    categories: { CustomeCategories = [] } = {},
+    openDate: { startDate = [], endDate = [] } = {},
   } = navigation.getParam('group', {});
 
+  const isWomenOnly = CustomeCategories.includes('Women Only');
+  const isMenOnly = CustomeCategories.includes('Men Only');
   const isOnline = location.isOnline === 'true';
   const shouldShowLocation = isOnline || location.name || location.description;
   const shouldShowAddress = !isOnline && location?.address?.address1;
   const shouldShowLeaders = leaders.length > 0;
+  const [startYear, startMonth, startDay] = startDate;
+  const [endYear, endMonth, endDay] = endDate;
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        title: 'Echo Groups',
+        message: `Check out this Echo Group: ${title}`,
+        url: `https://groups.echo.church/group/${uuid}`,
+      });
+
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -67,6 +96,7 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
         source={require('../assets/images/groups_bg.png')}
         style={styles.backgroundImage}
       />
+
       <ScrollView
         ref={scrollViewRef}
         style={styles.container}
@@ -99,6 +129,21 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
             {campus}
           </Text>
         </View>
+
+        {isWomenOnly && (
+          <View style={[groupStyles.details, { marginBottom: 16 }]}>
+            <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
+              👩 WOMEN ONLY
+            </Text>
+          </View>
+        )}
+        {isMenOnly && (
+          <View style={[groupStyles.details, { marginBottom: 16 }]}>
+            <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
+              👨 MEN ONLY
+            </Text>
+          </View>
+        )}
 
         {shouldShowLocation && (
           <Location isOnline={isOnline} location={location} />
@@ -134,8 +179,19 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
           {description}
         </Text>
 
+        {startMonth && (
+          <Text
+            style={[groupStyles.description, { padding: 0, marginBottom: 20 }]}
+          >{`This semester runs from ${startMonth}/${startDay}/${startYear} to ${endMonth}/${endDay}/${endYear}`}</Text>
+        )}
+
         <SignUp groupID={uuid} showSuccess={showSuccess} />
         <Ask groupID={uuid} showSuccess={showSuccess} />
+        <Button
+          icon={<Feather name={'share'} size={24} color={Colors.gray} />}
+          title="Share"
+          onPress={onShare}
+        />
 
         <View style={{ marginBottom: 40 }} />
 
@@ -163,13 +219,9 @@ GroupDetails.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
-  header: {
-    fontFamily: 'NunitoSans-Regular',
-    fontSize: 26,
-    color: Colors.red,
-  },
   mainContainer: {
     flex: 1,
+    position: 'relative',
     backgroundColor: Colors.black,
   },
   backgroundImage: {

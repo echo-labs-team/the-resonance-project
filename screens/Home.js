@@ -17,6 +17,10 @@ import { getInstagramPosts } from '../data/instagram';
 import { getBlogPosts } from '../data/blogPosts';
 import TextStyles from '../constants/TextStyles';
 import Text from '../components/Text';
+import Button from '../components/Button';
+import Spinner from '../components/Spinner';
+import EchoLogo from '../components/EchoLogo';
+import ServiceTimes from '../components/ServiceTimes';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
 type PostType =
@@ -45,68 +49,85 @@ const HomeScreen = () => {
     { url: 'loading8' },
   ]);
   const [refreshing, setRefreshing] = useState(false);
+  const [tryAgain, setTryAgain] = useState(false);
 
   // fetch data on mount
   useEffect(() => {
     const getPosts = async () => {
-      const igPosts = await getInstagramPosts();
-      const blogPosts = await getBlogPosts();
+      const igPosts = (await getInstagramPosts()) || [];
+      const blogPosts = (await getBlogPosts()) || [];
 
       setCardData([...igPosts, ...blogPosts]);
       setRefreshing(false);
+      setTryAgain(false);
     };
 
-    if (refreshing) {
+    if (refreshing || tryAgain) {
       getPosts();
       return;
     }
 
     getPosts();
-  }, [refreshing]);
+  }, [refreshing, tryAgain]);
 
   const refresh = () => {
     setRefreshing(true);
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            tintColor={Colors.red}
-            colors={[Colors.red]}
-            refreshing={refreshing}
-            onRefresh={refresh}
-          />
-        }
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-        {...getHeaderInset()}
-      >
-        <View style={styles.welcomeContainer}>
-          <Image
-            source={require('../assets/images/echo_logo.png')}
-            style={styles.welcomeImage}
-          />
-        </View>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          tintColor={Colors.red}
+          colors={[Colors.red]}
+          refreshing={refreshing}
+          onRefresh={refresh}
+        />
+      }
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      {...getHeaderInset()}
+    >
+      {tryAgain && <Spinner />}
 
-        {cardData && (
-          <FlatList
-            keyExtractor={({ url = '' }) => url.slice(-10)}
-            data={cardData}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({ item = {} }: { item: CardProps }) => {
-              const { url = '' } = item;
+      <View style={styles.logoContainer}>
+        <EchoLogo width={40} height={40} color={Colors.red} />
+        <Text style={{ marginLeft: 10, fontSize: 26, color: Colors.white }}>
+          ECHO.CHURCH
+        </Text>
+      </View>
 
-              if (url.includes('loading')) {
-                return <HomeCardPlaceholder />;
-              }
-              return <Card {...item} />;
-            }}
-          />
-        )}
-      </ScrollView>
-    </View>
+      {cardData.length ? (
+        <FlatList
+          keyExtractor={({ url = '' }) => url.slice(-10)}
+          data={cardData}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={({
+            item = {},
+            index,
+          }: {
+            item: CardProps,
+            index: number,
+          }) => {
+            const { url = '' } = item;
+
+            if (url.includes('loading')) {
+              return <HomeCardPlaceholder />;
+            }
+            return [
+              <Card key={`card${index}`} {...item} />,
+              index === 0 ? <ServiceTimes key="serviceTimes" /> : null,
+            ];
+          }}
+        />
+      ) : (
+        <>
+          <ServiceTimes />
+          <Text style={styles.error}>No posts were found... 🤔</Text>
+          <Button title="Try Again" onPress={() => setTryAgain(true)} />
+        </>
+      )}
+    </ScrollView>
   );
 };
 
@@ -167,13 +188,11 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     marginTop: -20,
   },
-  welcomeContainer: {
-    alignItems: 'center',
+  logoContainer: {
     marginBottom: 10,
-  },
-  welcomeImage: {
-    width: 250,
-    resizeMode: 'contain',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   card: {
     flex: 1,
@@ -207,6 +226,12 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 16,
+  },
+  error: {
+    marginBottom: 10,
+    fontSize: 20,
+    textAlign: 'center',
+    color: Colors.gray,
   },
 });
 
