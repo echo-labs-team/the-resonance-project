@@ -5,6 +5,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
+import * as Amplitude from 'expo-analytics-amplitude';
 
 import Colors from '../constants/Colors';
 import EchoLogo from '../components/EchoLogo';
@@ -56,9 +57,17 @@ const defaultHeaderNavigationOptions = {
 };
 
 // need to hide the `StatusBar` on the home screen
-const defaultTabBarOnPress = ({ navigation, defaultHandler }) => {
-  StatusBar.setHidden(navigation.state.routeName === 'HomeStack', 'fade');
+const defaultTabBarOnPress = ({
+  navigation: { state: { routeName } = {} } = {},
+  defaultHandler,
+}) => {
+  StatusBar.setHidden(routeName === 'HomeStack', 'fade');
   defaultHandler();
+
+  Amplitude.logEventWithProperties('mobilePageView', {
+    app: 'mobile',
+    mainTray: routeName.replace('Stack', ''),
+  });
 };
 
 const HomeStack = createStackNavigator({

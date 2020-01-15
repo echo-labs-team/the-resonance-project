@@ -1,6 +1,7 @@
 // @flow
 
 import axios from 'axios';
+import * as Amplitude from 'expo-analytics-amplitude';
 import config from './config';
 
 // get the service endpoint based on the environment
@@ -42,22 +43,26 @@ export async function getOpenGroups(): Object {
     })) || {};
 
   if (!body) {
-    // amplitude.getInstance().logEvent('error', {
-    //   message: errorMessage,
-    //   type: errorType,
-    //   stack: stackTrace,
-    // });
+    Amplitude.logEventWithProperties('errorLoadingGroups', {
+      app: 'mobile',
+      mainTray: 'Groups',
+      message: errorMessage,
+      type: errorType,
+      stack: stackTrace,
+    });
     throw Error(errorMessage);
   }
 
   const groups = JSON.parse(body);
 
   if (!Array.isArray(groups)) {
-    // amplitude.getInstance().logEvent('error', {
-    //   message: errorMessage,
-    //   type: errorType,
-    //   stack: stackTrace,
-    // });
+    Amplitude.logEventWithProperties('errorParsingGroups', {
+      app: 'mobile',
+      mainTray: 'Groups',
+      message: errorMessage,
+      type: errorType,
+      stack: stackTrace,
+    });
     throw Error(errorMessage);
   }
 
@@ -101,11 +106,13 @@ export async function getCategories(): Promise<Array<any>> {
   const success = statusCode === 200;
 
   if (!success) {
-    // amplitude.getInstance().logEvent('error', {
-    //   message: errorMessage,
-    //   type: errorType,
-    //   stack: stackTrace,
-    // });
+    Amplitude.logEventWithProperties('errorLoadingGroupCategories', {
+      app: 'mobile',
+      mainTray: 'Groups',
+      message: errorMessage,
+      type: errorType,
+      stack: stackTrace,
+    });
     return [];
   }
 
@@ -144,11 +151,13 @@ export async function askQuestion(
   const success = statusCode === 200;
 
   if (!success) {
-    // amplitude.getInstance().logEvent('error', {
-    //   message: errorMessage,
-    //   type: errorType,
-    //   stack: stackTrace,
-    // });
+    Amplitude.logEventWithProperties('errorAskingQuestion', {
+      app: 'mobile',
+      mainTray: 'Groups',
+      message: errorMessage,
+      type: errorType,
+      stack: stackTrace,
+    });
   }
 
   return success;
@@ -162,7 +171,7 @@ export async function joinGroup(
 ): Promise<boolean> {
   const {
     data: {
-      errorMessage = 'Error asking question',
+      errorMessage = 'Error joining group',
       errorType,
       stackTrace,
       statusCode,
@@ -183,11 +192,13 @@ export async function joinGroup(
   const success = statusCode === 200;
 
   if (!success) {
-    // amplitude.getInstance().logEvent('error', {
-    //   message: errorMessage,
-    //   type: errorType,
-    //   stack: stackTrace,
-    // });
+    Amplitude.logEventWithProperties('errorJoiningGroup', {
+      app: 'mobile',
+      mainTray: 'Groups',
+      message: errorMessage,
+      type: errorType,
+      stack: stackTrace,
+    });
   }
 
   return success;

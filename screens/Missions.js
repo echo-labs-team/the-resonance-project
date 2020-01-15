@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
@@ -62,32 +63,47 @@ const MissionsScreen = () => {
         <Button
           title="Get More Information"
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              connect: 'Missions More Info',
+            });
+
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/e/1FAIpQLSd2IHpjbRbd-rqy_tpLc2_Wyex9RBgDpCD_KG6FZgXQJxhCLw/viewform',
               { toolbarColor: Colors.darkestGray }
-            )
-          }
+            );
+          }}
         />
         <Button
           title="Join a Mission"
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              connect: 'Missions Signup',
+            });
+
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/e/1FAIpQLSdiu651dbn1PzjxrVpkhHQlfxwJj9reWWIwIx3fhVFdSv3YvA/viewform',
               { toolbarColor: Colors.darkestGray }
-            )
-          }
+            );
+          }}
         />
         <Button
           title="Fund a Mission"
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              connect: 'Missions Fund',
+            });
+
             WebBrowser.openBrowserAsync(
               'https://pushpay.com/pay/echochurchpayments',
               { toolbarColor: Colors.darkestGray }
-            )
-          }
+            );
+          }}
         />
       </View>
     </ScrollView>

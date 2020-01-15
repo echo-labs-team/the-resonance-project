@@ -5,6 +5,7 @@ import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as Icon from '@expo/vector-icons';
 import AppNavigator from './navigation/AppNavigator';
+import Colors from './constants/Colors';
 
 export default props => {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
@@ -67,5 +68,6 @@ export default props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: Colors.black,
   },
 });
