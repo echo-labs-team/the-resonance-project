@@ -1,3 +1,4 @@
+import { get } from 'axios';
 import Keys from '../constants/Keys';
 
 const PLAYLIST_NAME_AVOID_LIST = [
@@ -11,53 +12,64 @@ const PLAYLIST_NAME_AVOID_LIST = [
 ];
 const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw'; // This is Echo.Church's channel ID
 const API_KEY = Keys.YOUTUBE_API_KEY;
+const url =
+  'https://www.googleapis.com/youtube/v3/playlists?part=id%2CcontentDetails%2Csnippet';
 
-collectChannelData = async () => {
-  let good_items = new Array();
-  let next_page_token = null;
-  do {
-    let url = `https://www.googleapis.com/youtube/v3/playlists?part=id%2CcontentDetails%2Csnippet`;
-    url += next_page_token ? `&pageToken=${next_page_token}` : ``;
-    url += `&channelId=${CHANNEL_ID}&key=${API_KEY}`;
-    try {
-      response = await fetch(url);
-    } catch (error) {
-      throw Error(error);
-      return null;
-    }
+const fetchVideos = async (nextPage, videos = []) => {
+  const { data = {} } =
+    (await get(url, {
+      params: {
+        channelId: CHANNEL_ID,
+        key: API_KEY,
+        pageToken: nextPage,
+      },
+    })) || {};
+  const { items = [], nextPageToken } = data;
 
-    json = await response.json();
+  const moreVideos = items
+    .map((item = {}) => {
+      const {
+        id,
+        snippet: { publishedAt, localized = {}, thumbnails } = {},
+      } = item;
 
-    if (!('items' in json) || 'error' in json) {
-      throw Error(json.error.errors[0].message || 'No message');
-      return null;
-    }
-    json.items.forEach(item => {
-      if (PLAYLIST_NAME_AVOID_LIST.includes(item.snippet.localized.title)) {
-        return;
+      if (PLAYLIST_NAME_AVOID_LIST.includes(localized.title)) {
+        return false;
       }
-      tiny_item = {
-        publishDate: item.snippet.publishedAt,
-        title: item.snippet.localized.title,
-        thumbnails: item.snippet.thumbnails,
-        id: item.id,
-      };
-      good_items.push(tiny_item);
-    });
-    next_page_token = json['nextPageToken'];
-  } while (next_page_token);
 
-  // good_items = test_json_items;
-  good_items.sort((a, b) => {
+      return {
+        id,
+        publishDate: publishedAt,
+        title: localized.title,
+        thumbnails,
+      };
+    })
+    .filter(Boolean);
+
+  if (nextPageToken) {
+    return fetchVideos(nextPageToken, [...videos, ...moreVideos]);
+  }
+
+  return [...videos, ...moreVideos];
+};
+
+const collectChannelData = async () => {
+  const videos = await fetchVideos();
+
+  return videos.sort((a, b) => {
     const a_date = new Date(a.publishDate);
     const b_date = new Date(b.publishDate);
-    return a_date > b_date ? -1 : a_date < b_date ? 1 : 0;
-  });
-  good_items.forEach(item => {
-    console.log(item.title);
-  });
 
-  return good_items;
+    if (a_date > b_date) {
+      return -1;
+    }
+
+    if (a_date < b_date) {
+      return 1;
+    }
+
+    return 0;
+  });
 };
 
 const test_json_items = [

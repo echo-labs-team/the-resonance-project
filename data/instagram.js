@@ -40,16 +40,16 @@ export async function getInstagramPosts() {
         const title = caption.split('-');
 
         // Process only if is an image
-        if (__typename !== 'GraphImage') {
-          return null;
+        if (__typename === 'GraphImage' || __typename === 'GraphSidecar') {
+          return {
+            type: 'INSTAGRAM',
+            url: `https://www.instagram.com/p/${shortcode}`,
+            image: thumbnail_src,
+            title: title.join(''),
+          };
         }
 
-        return {
-          type: 'INSTAGRAM',
-          url: `https://www.instagram.com/p/${shortcode}`,
-          image: thumbnail_src,
-          title: title.join(''),
-        };
+        return null;
       })
       .filter(Boolean);
   } catch (err) {
