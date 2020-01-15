@@ -5,7 +5,6 @@ import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import Text from '../components/Text';
 import Colors from '../constants/Colors';
 import {
-  getCampusCode,
   getMeetingFrequency,
   getMeetingDay,
   getMeetingTime,
@@ -17,7 +16,7 @@ export default ({
 }: {
   navigation: { navigate: Function },
   item: {
-    groupname: string,
+    name: string,
     campus: string,
     frequency: string,
     interval: string,
@@ -28,7 +27,7 @@ export default ({
   },
 }) => {
   const {
-    groupname = '',
+    name = '',
     campus,
     frequency,
     interval,
@@ -38,9 +37,11 @@ export default ({
     description,
   } = item;
 
-  const titleParts = groupname.split('-');
+  const titleParts = name.split('-');
 
-  titleParts.shift();
+  if (titleParts.length > 1) {
+    titleParts.shift();
+  }
 
   const title = titleParts.join(' ').trim();
 

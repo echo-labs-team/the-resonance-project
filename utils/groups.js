@@ -65,11 +65,13 @@ export const getMeetingDay = (
   }
 };
 
-export const getMeetingTime = (time: string = '') => {
-  const [hours, minutes] = time
-    .split('(')[0]
-    .trim()
-    .split(':');
+export const getMeetingTime = (meetingTime: string) => {
+  if (!meetingTime) {
+    return null;
+  }
+
+  const [time] = meetingTime.split(' ');
+  const [hours, minutes] = time.split(':');
   const hrs = parseInt(hours, 10);
 
   let h = hrs % 12;
@@ -77,5 +79,6 @@ export const getMeetingTime = (time: string = '') => {
   if (h === 0) {
     h = 12;
   }
+
   return `${h}:${minutes}${hrs < 12 ? 'am' : 'pm'}`;
 };
