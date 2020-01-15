@@ -55,18 +55,19 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
       name: '',
     },
     hasChildcare = false,
-    categories: { CustomeCategories = [] } = {},
-    openDate: { startDate = [], endDate = [] } = {},
+    categories = [],
+    openDate: {
+      startDate: { formatted: startDate = '' } = {},
+      endDate: { formatted: endDate = '' } = {},
+    } = {},
   } = navigation.getParam('group', {});
 
-  const isWomenOnly = CustomeCategories.includes('Women Only');
-  const isMenOnly = CustomeCategories.includes('Men Only');
+  const isWomenOnly = categories.includes('Women Only');
+  const isMenOnly = categories.includes('Men Only');
   const isOnline = location.isOnline === 'true';
   const shouldShowLocation = isOnline || location.name || location.description;
   const shouldShowAddress = !isOnline && location?.address?.address1;
   const shouldShowLeaders = leaders.length > 0;
-  const [startYear, startMonth, startDay] = startDate;
-  const [endYear, endMonth, endDay] = endDate;
 
   const onShare = async () => {
     try {
@@ -156,7 +157,7 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
             <Text bold style={{ fontSize: 18, color: Colors.gray }}>
               Leaders
             </Text>
-            {leaders.map(({ Name: name }) => (
+            {leaders.map(({ name }) => (
               <Text key={name} style={{ fontSize: 16, color: Colors.gray }}>
                 {name}
               </Text>
@@ -179,10 +180,11 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
           {description}
         </Text>
 
-        {startMonth && (
+        {startDate && (
           <Text
             style={[groupStyles.description, { padding: 0, marginBottom: 20 }]}
-          >{`This semester runs from ${startMonth}/${startDay}/${startYear} to ${endMonth}/${endDay}/${endYear}`}</Text>
+          >{`This semester runs from 
+${startDate} to ${endDate}`}</Text>
         )}
 
         <SignUp groupID={uuid} showSuccess={showSuccess} />

@@ -58,10 +58,8 @@ function useDebounce(value, delay) {
 function useQuery(groups) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 500);
-  const queriedGroups = [
-    ...groups,
-  ].filter(({ groupname = '' }: { groupname?: string }) =>
-    groupname.toLowerCase().includes(debouncedQuery.toLowerCase())
+  const queriedGroups = [...groups].filter(({ name = '' }: { name?: string }) =>
+    name.toLowerCase().includes(debouncedQuery.toLowerCase())
   );
 
   return [query, setQuery, queriedGroups];
@@ -70,7 +68,7 @@ function useQuery(groups) {
 const Card = ({ navigation, item }) => {
   return (
     <View>
-      {item.uuid.includes('loading') ? (
+      {item?.uuid?.toString().includes('loading') ? (
         <GroupCardPlaceholder />
       ) : (
         <GroupCardDetails navigation={navigation} item={item} />
@@ -147,33 +145,39 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   const filterGroups = ({
     campus = '',
     daysOfWeek = [],
-    categories: { CustomeCategories = [] } = {},
+    categories: groupCategories = [],
   }: {
     campus?: string,
     daysOfWeek?: Array<string>,
     dayOfMonth?: string,
-    categories?: { CustomeCategories: Array<string> },
+    categories?: Array<string>,
   } = {}) => {
-    const { Campus = [], Day = [], Categories = [] } = filters;
+    const {
+      Campus: campusFilter = [],
+      Day: dayFilter = [],
+      Categories: categoriesFilter = [],
+    } = filters;
 
-    if (!Campus.length && !Day.length && !Categories.length) {
+    if (!campusFilter.length && !dayFilter.length && !categoriesFilter.length) {
       return true;
     }
 
     return (
-      (Campus.length
-        ? Campus.map(c => c.toLowerCase()).includes(campus.toLowerCase())
+      (campusFilter.length
+        ? campusFilter.map(c => c.toLowerCase()).includes(campus?.toLowerCase())
         : true) &&
-      (Day.length
-        ? Day.some(day =>
-            daysOfWeek.map(dow => dow.toLowerCase()).includes(day.toLowerCase())
+      (dayFilter.length
+        ? dayFilter.some(day =>
+            daysOfWeek
+              .map(dow => dow.toLowerCase())
+              .includes(day?.toLowerCase())
           )
         : true) &&
-      (Categories.length
-        ? Categories.some(category =>
-            CustomeCategories.map(cat => cat.toLowerCase()).includes(
-              category.toLowerCase()
-            )
+      (categoriesFilter.length
+        ? categoriesFilter.some(category =>
+            groupCategories
+              .map(cat => cat.toLowerCase())
+              .includes(category?.toLowerCase())
           )
         : true)
     );
@@ -270,7 +274,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
 
             {data.length ? (
               <FlatList
-                keyExtractor={({ uuid }) => uuid}
+                keyExtractor={({ uuid }) => uuid.toString()}
                 data={data}
                 ItemSeparatorComponent={() => <View style={styles.separator} />}
                 renderItem={({ item }) => {
