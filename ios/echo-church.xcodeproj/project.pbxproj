@@ -396,6 +396,7 @@
 				DEVELOPMENT_TEAM = CYZ6V3K643;
 				INFOPLIST_FILE = "$(SRCROOT)/echo-church/Supporting/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 20191120105200;
 				PRODUCT_BUNDLE_IDENTIFIER = com.echurchapps.southbayc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -410,6 +411,7 @@
 				DEVELOPMENT_TEAM = CYZ6V3K643;
 				INFOPLIST_FILE = "$(SRCROOT)/echo-church/Supporting/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 20191120105200;
 				PRODUCT_BUNDLE_IDENTIFIER = com.echurchapps.southbayc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
