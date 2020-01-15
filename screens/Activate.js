@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
@@ -26,12 +27,17 @@ const ActivateScreen = () => {
         <Button
           title="RSVP Here"
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              connect: 'Activate Signup',
+            });
+
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/e/1FAIpQLSdZ1EBI_kCqt8xtK1n1PBfcBUlHFPl45o-9Ls3O2srwejpjGw/viewform?vc=0&c=0&w=1',
               { toolbarColor: Colors.darkestGray }
-            )
-          }
+            );
+          }}
         />
       </View>
     </ScrollView>

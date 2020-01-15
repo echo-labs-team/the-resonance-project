@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
@@ -40,12 +41,17 @@ const BaptismScreen = () => {
         <Button
           title="I Want to Be Baptized"
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              connect: 'Baptism Signup',
+            });
+
             WebBrowser.openBrowserAsync(
               'https://goo.gl/forms/Lc8g3MU0CCxjea9e2',
               { toolbarColor: Colors.darkestGray }
-            )
-          }
+            );
+          }}
         />
       </View>
     </ScrollView>

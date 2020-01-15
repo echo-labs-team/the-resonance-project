@@ -1,4 +1,5 @@
 import axios from 'axios';
+import * as Amplitude from 'expo-analytics-amplitude';
 
 export async function getBlogPosts() {
   const { data: posts = [] } =
@@ -25,7 +26,14 @@ export async function getBlogPosts() {
               title,
             };
           })
-          .catch(err => console.error(err.toString()));
+          .catch(err => {
+            console.error(err.toString());
+            Amplitude.logEventWithProperties('errorLoadingBlogPosts', {
+              app: 'mobile',
+              mainTray: 'Home',
+              error: err.toString(),
+            });
+          });
       }
     )
   );

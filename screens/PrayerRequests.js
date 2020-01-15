@@ -1,6 +1,7 @@
 import React from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
@@ -23,11 +24,16 @@ const PrayerRequestsScreen = () => {
         <Button
           title="Submit Your Prayer Request"
           style={styles.button}
-          onPress={() =>
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              connect: 'Prayer Signup',
+            });
+
             WebBrowser.openBrowserAsync('https://echo.church', {
               toolbarColor: Colors.darkestGray,
-            })
-          }
+            });
+          }}
         />
       </View>
     </ScrollView>
