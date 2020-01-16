@@ -168,7 +168,7 @@ dependencies {
   testImplementation 'com.android.support.test:rules:1.0.2-alpha1'
 
   
-  implementation('host.exp.exponent:expoview:35.0.0@aar') {
+  implementation('host.exp.exponent:expoview:36.0.0@aar') {
     transitive = true
     exclude group: 'com.squareup.okhttp3', module: 'okhttp'
     exclude group: 'com.squareup.okhttp3', module: 'okhttp-urlconnection'
@@ -178,7 +178,7 @@ dependencies {
 
   
   api 'org.webkit:android-jsc:r245459' // needs to be before react-native
-  api 'com.facebook.react:react-native:33.0.0'
+  api 'com.facebook.react:react-native:36.0.0'
   
 
 

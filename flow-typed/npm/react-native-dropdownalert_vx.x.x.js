@@ -1,4 +1,4 @@
-// flow-typed signature: 7b1aec559a7abb51e5acf8f49df6eaa3
+// flow-typed signature: f416526e72c41e8834d297f60c8e1784
 // flow-typed version: <<STUB>>/react-native-dropdownalert_v^4.1.0/flow_v0.112.0
 
 /**
@@ -22,6 +22,10 @@ declare module 'react-native-dropdownalert' {
  * require those files directly. Feel free to delete any files that aren't
  * needed.
  */
+declare module 'react-native-dropdownalert/babel.config' {
+  declare module.exports: any;
+}
+
 declare module 'react-native-dropdownalert/CancelButton' {
   declare module.exports: any;
 }
@@ -38,11 +42,18 @@ declare module 'react-native-dropdownalert/imageview' {
   declare module.exports: any;
 }
 
+declare module 'react-native-dropdownalert/jest.config' {
+  declare module.exports: any;
+}
+
 declare module 'react-native-dropdownalert/TextView' {
   declare module.exports: any;
 }
 
 // Filename aliases
+declare module 'react-native-dropdownalert/babel.config.js' {
+  declare module.exports: $Exports<'react-native-dropdownalert/babel.config'>;
+}
 declare module 'react-native-dropdownalert/CancelButton.js' {
   declare module.exports: $Exports<'react-native-dropdownalert/CancelButton'>;
 }
@@ -54,6 +65,9 @@ declare module 'react-native-dropdownalert/DropdownAlert.js' {
 }
 declare module 'react-native-dropdownalert/imageview.js' {
   declare module.exports: $Exports<'react-native-dropdownalert/imageview'>;
+}
+declare module 'react-native-dropdownalert/jest.config.js' {
+  declare module.exports: $Exports<'react-native-dropdownalert/jest.config'>;
 }
 declare module 'react-native-dropdownalert/TextView.js' {
   declare module.exports: $Exports<'react-native-dropdownalert/TextView'>;
