@@ -11,7 +11,7 @@ const PLAYLIST_NAME_AVOID_LIST = [
   'Latest for Echo.Church',
 ];
 const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw'; // This is Echo.Church's channel ID
-const API_KEY = Keys.YOUTUBE_API_KEY;
+const API_KEY = Keys.YOUTUBE_RELEASE_API_KEY;
 const url =
   'https://www.googleapis.com/youtube/v3/playlists?part=id%2CcontentDetails%2Csnippet';
 

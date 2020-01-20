@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
   },
   serviceTime: {
     marginRight: 30,
-    alignItems: 'center',
   },
   serviceTimeText: {
     fontSize: 18,
