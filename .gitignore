@@ -1,5 +1,7 @@
 ios/Podfiles/Pods/**/*
 
+constants/Keys.js
+
 node_modules/**/*
 .expo/*
 .expo-shared/*
