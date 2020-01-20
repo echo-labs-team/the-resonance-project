@@ -1,6 +1,6 @@
 ios/Podfiles/Pods/**/*
 
-constants/Keys.js
+constants/Keys*
 
 node_modules/**/*
 .expo/*
