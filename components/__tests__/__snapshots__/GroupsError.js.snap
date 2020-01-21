@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GroupsError/> render a group error 1`] = `
+<View
+  style={
+    Object {
+      "justifyContent": "center",
+      "padding": 40,
+    }
+  }
+>
+  <Text
+    allowFontScaling={false}
+    light={true}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Light",
+        },
+        Object {
+          "color": "#fff",
+          "fontSize": 24,
+          "marginBottom": 20,
+          "textAlign": "center",
+        },
+      ]
+    }
+  >
+    Something went wrong...
+  </Text>
+</View>
+`;
+
+exports[`<GroupsError/> render a group error with a Try Again CTA 1`] = `
+<View
+  style={
+    Object {
+      "justifyContent": "center",
+      "padding": 40,
+    }
+  }
+>
+  <Text
+    allowFontScaling={false}
+    light={true}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Light",
+        },
+        Object {
+          "color": "#fff",
+          "fontSize": 24,
+          "marginBottom": 20,
+          "textAlign": "center",
+        },
+      ]
+    }
+  >
+    Something went wrong...
+  </Text>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "backgroundColor": "#313d48",
+          "borderRadius": 6,
+          "paddingHorizontal": 24,
+          "paddingVertical": 16,
+        },
+        Object {},
+      ]
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#fff",
+              "fontSize": 18,
+              "textAlign": "center",
+            },
+            Object {},
+          ]
+        }
+      >
+        Try Again
+      </Text>
+    </View>
+  </View>
+</View>
+`;

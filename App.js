@@ -4,8 +4,15 @@ import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as Icon from '@expo/vector-icons';
+import * as Amplitude from 'expo-analytics-amplitude';
 import AppNavigator from './navigation/AppNavigator';
 import Colors from './constants/Colors';
+
+// if in development mode, override amplitude tracking
+if (__DEV__) {
+  Amplitude.logEventWithProperties = (name, data) =>
+    console.log(`[amplitude]: ${name} -`, data);
+}
 
 export default props => {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
