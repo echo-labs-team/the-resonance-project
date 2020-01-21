@@ -8,8 +8,8 @@
     "eject": "expo eject",
     "postinstall": "flow-typed install",
     "publish": "expo optimize && expo publish --release-channel=default",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll=false",
-    "test:watch": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "test": "node ./node_modules/jest-expo/bin/jest.js --watchAll=false",
+    "test:watch": "node ./node_modules/jest-expo/bin/jest.js --watchAll",
     "lint": "eslint .",
     "flow": "flow",
     "format": "prettier --write \"**/*.js\"",
@@ -64,12 +64,14 @@
     "jest-expo": "^36.0.0",
     "lint-staged": "^9.1.0",
     "prettier": "^1.17.1",
-    "react-devtools": "^4.2.1"
+    "react-devtools": "^4.2.1",
+    "react-native-testing-library": "^1.12.0",
+    "react-test-renderer": "^16.12.0"
   },
   "private": true,
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "lint-staged && npm test"
     }
   },
   "lint-staged": {

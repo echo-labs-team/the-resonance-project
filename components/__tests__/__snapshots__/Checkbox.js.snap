@@ -1,0 +1,618 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Checkbox/> render a checked checkbox 1`] = `
+<RNSVGSvgView
+  align="xMidYMid"
+  bbHeight={18}
+  bbWidth={18}
+  focusable={false}
+  height={18}
+  meetOrSlice={0}
+  minX={0}
+  minY={0}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+        "borderWidth": 0,
+      },
+      Object {
+        "fill": "#b8bab8",
+        "position": "relative",
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round",
+        "transform": Array [
+          Object {
+            "scale": 1.5,
+          },
+        ],
+        "zIndex": 1,
+      },
+      Object {
+        "opacity": 1,
+      },
+      Object {
+        "flex": 0,
+        "height": 18,
+        "width": 18,
+      },
+    ]
+  }
+  vbHeight={18}
+  vbWidth={18}
+  width={18}
+>
+  <RNSVGGroup
+    fill={
+      Array [
+        0,
+        4290296504,
+      ]
+    }
+    fillOpacity={1}
+    fillRule={1}
+    font={Object {}}
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+    opacity={1}
+    originX={0}
+    originY={0}
+    propList={
+      Array [
+        "fill",
+        "strokeLinecap",
+        "strokeLinejoin",
+      ]
+    }
+    rotation={0}
+    scaleX={1}
+    scaleY={1}
+    skewX={0}
+    skewY={0}
+    stroke={null}
+    strokeDasharray={null}
+    strokeDashoffset={null}
+    strokeLinecap={1}
+    strokeLinejoin={1}
+    strokeMiterlimit={4}
+    strokeOpacity={1}
+    strokeWidth={1}
+    vectorEffect={0}
+    x={0}
+    y={0}
+  >
+    <RNSVGPath
+      d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+      fill={
+        Array [
+          0,
+          4278190080,
+        ]
+      }
+      fillOpacity={1}
+      fillRule={1}
+      matrix={
+        Array [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+        ]
+      }
+      opacity={1}
+      originX={0}
+      originY={0}
+      propList={
+        Array [
+          "stroke",
+          "strokeWidth",
+          "strokeDasharray",
+          "strokeDashoffset",
+        ]
+      }
+      rotation={0}
+      scaleX={1}
+      scaleY={1}
+      skewX={0}
+      skewY={0}
+      stroke={
+        Array [
+          0,
+          4290296504,
+        ]
+      }
+      strokeDasharray={
+        Array [
+          60,
+          60,
+        ]
+      }
+      strokeDashoffset={null}
+      strokeLinecap={0}
+      strokeLinejoin={0}
+      strokeMiterlimit={4}
+      strokeOpacity={1}
+      strokeWidth={1.5}
+      vectorEffect={0}
+      x={0}
+      y={0}
+    />
+    <RNSVGPath
+      d="M1 9 7 14 15 4"
+      fill={
+        Array [
+          0,
+          4278190080,
+        ]
+      }
+      fillOpacity={1}
+      fillRule={1}
+      matrix={
+        Array [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+        ]
+      }
+      opacity={1}
+      originX={0}
+      originY={0}
+      propList={
+        Array [
+          "stroke",
+          "strokeWidth",
+          "strokeDasharray",
+          "strokeDashoffset",
+        ]
+      }
+      rotation={0}
+      scaleX={1}
+      scaleY={1}
+      skewX={0}
+      skewY={0}
+      stroke={
+        Array [
+          0,
+          4280363313,
+        ]
+      }
+      strokeDasharray={
+        Array [
+          22,
+          22,
+        ]
+      }
+      strokeDashoffset={42}
+      strokeLinecap={0}
+      strokeLinejoin={0}
+      strokeMiterlimit={4}
+      strokeOpacity={1}
+      strokeWidth={2}
+      vectorEffect={0}
+      x={0}
+      y={0}
+    />
+  </RNSVGGroup>
+</RNSVGSvgView>
+`;
+
+exports[`<Checkbox/> render an unchecked checkbox 1`] = `
+<RNSVGSvgView
+  align="xMidYMid"
+  bbHeight={18}
+  bbWidth={18}
+  focusable={false}
+  height={18}
+  meetOrSlice={0}
+  minX={0}
+  minY={0}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+        "borderWidth": 0,
+      },
+      Object {
+        "fill": "none",
+        "position": "relative",
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round",
+        "transform": Array [
+          Object {
+            "scale": 1.5,
+          },
+        ],
+        "zIndex": 1,
+      },
+      Object {
+        "opacity": 1,
+      },
+      Object {
+        "flex": 0,
+        "height": 18,
+        "width": 18,
+      },
+    ]
+  }
+  vbHeight={18}
+  vbWidth={18}
+  width={18}
+>
+  <RNSVGGroup
+    fill={null}
+    fillOpacity={1}
+    fillRule={1}
+    font={Object {}}
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+    opacity={1}
+    originX={0}
+    originY={0}
+    propList={
+      Array [
+        "fill",
+        "strokeLinecap",
+        "strokeLinejoin",
+      ]
+    }
+    rotation={0}
+    scaleX={1}
+    scaleY={1}
+    skewX={0}
+    skewY={0}
+    stroke={null}
+    strokeDasharray={null}
+    strokeDashoffset={null}
+    strokeLinecap={1}
+    strokeLinejoin={1}
+    strokeMiterlimit={4}
+    strokeOpacity={1}
+    strokeWidth={1}
+    vectorEffect={0}
+    x={0}
+    y={0}
+  >
+    <RNSVGPath
+      d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+      fill={
+        Array [
+          0,
+          4278190080,
+        ]
+      }
+      fillOpacity={1}
+      fillRule={1}
+      matrix={
+        Array [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+        ]
+      }
+      opacity={1}
+      originX={0}
+      originY={0}
+      propList={
+        Array [
+          "stroke",
+          "strokeWidth",
+          "strokeDasharray",
+          "strokeDashoffset",
+        ]
+      }
+      rotation={0}
+      scaleX={1}
+      scaleY={1}
+      skewX={0}
+      skewY={0}
+      stroke={
+        Array [
+          0,
+          4290296504,
+        ]
+      }
+      strokeDasharray={
+        Array [
+          60,
+          60,
+        ]
+      }
+      strokeDashoffset={null}
+      strokeLinecap={0}
+      strokeLinejoin={0}
+      strokeMiterlimit={4}
+      strokeOpacity={1}
+      strokeWidth={1.5}
+      vectorEffect={0}
+      x={0}
+      y={0}
+    />
+    <RNSVGPath
+      d="M1 9 7 14 15 4"
+      fill={
+        Array [
+          0,
+          4278190080,
+        ]
+      }
+      fillOpacity={1}
+      fillRule={1}
+      matrix={
+        Array [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+        ]
+      }
+      opacity={1}
+      originX={0}
+      originY={0}
+      propList={
+        Array [
+          "stroke",
+          "strokeWidth",
+          "strokeDasharray",
+          "strokeDashoffset",
+        ]
+      }
+      rotation={0}
+      scaleX={1}
+      scaleY={1}
+      skewX={0}
+      skewY={0}
+      stroke={
+        Array [
+          0,
+          4280363313,
+        ]
+      }
+      strokeDasharray={
+        Array [
+          22,
+          22,
+        ]
+      }
+      strokeDashoffset={66}
+      strokeLinecap={0}
+      strokeLinejoin={0}
+      strokeMiterlimit={4}
+      strokeOpacity={1}
+      strokeWidth={2}
+      vectorEffect={0}
+      x={0}
+      y={0}
+    />
+  </RNSVGGroup>
+</RNSVGSvgView>
+`;
+
+exports[`<Checkbox/> render an unchecked checkbox by default 1`] = `
+<RNSVGSvgView
+  align="xMidYMid"
+  bbHeight={18}
+  bbWidth={18}
+  focusable={false}
+  height={18}
+  meetOrSlice={0}
+  minX={0}
+  minY={0}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "transparent",
+        "borderWidth": 0,
+      },
+      Object {
+        "fill": "none",
+        "position": "relative",
+        "strokeLinecap": "round",
+        "strokeLinejoin": "round",
+        "transform": Array [
+          Object {
+            "scale": 1.5,
+          },
+        ],
+        "zIndex": 1,
+      },
+      Object {
+        "opacity": 1,
+      },
+      Object {
+        "flex": 0,
+        "height": 18,
+        "width": 18,
+      },
+    ]
+  }
+  vbHeight={18}
+  vbWidth={18}
+  width={18}
+>
+  <RNSVGGroup
+    fill={null}
+    fillOpacity={1}
+    fillRule={1}
+    font={Object {}}
+    matrix={
+      Array [
+        1,
+        0,
+        0,
+        1,
+        0,
+        0,
+      ]
+    }
+    opacity={1}
+    originX={0}
+    originY={0}
+    propList={
+      Array [
+        "fill",
+        "strokeLinecap",
+        "strokeLinejoin",
+      ]
+    }
+    rotation={0}
+    scaleX={1}
+    scaleY={1}
+    skewX={0}
+    skewY={0}
+    stroke={null}
+    strokeDasharray={null}
+    strokeDashoffset={null}
+    strokeLinecap={1}
+    strokeLinejoin={1}
+    strokeMiterlimit={4}
+    strokeOpacity={1}
+    strokeWidth={1}
+    vectorEffect={0}
+    x={0}
+    y={0}
+  >
+    <RNSVGPath
+      d="M1,9 L1,3.5 C1,2 2,1 3.5,1 L14.5,1 C16,1 17,2 17,3.5 L17,14.5 C17,16 16,17 14.5,17 L3.5,17 C2,17 1,16 1,14.5 L1,9 Z"
+      fill={
+        Array [
+          0,
+          4278190080,
+        ]
+      }
+      fillOpacity={1}
+      fillRule={1}
+      matrix={
+        Array [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+        ]
+      }
+      opacity={1}
+      originX={0}
+      originY={0}
+      propList={
+        Array [
+          "stroke",
+          "strokeWidth",
+          "strokeDasharray",
+          "strokeDashoffset",
+        ]
+      }
+      rotation={0}
+      scaleX={1}
+      scaleY={1}
+      skewX={0}
+      skewY={0}
+      stroke={
+        Array [
+          0,
+          4290296504,
+        ]
+      }
+      strokeDasharray={
+        Array [
+          60,
+          60,
+        ]
+      }
+      strokeDashoffset={null}
+      strokeLinecap={0}
+      strokeLinejoin={0}
+      strokeMiterlimit={4}
+      strokeOpacity={1}
+      strokeWidth={1.5}
+      vectorEffect={0}
+      x={0}
+      y={0}
+    />
+    <RNSVGPath
+      d="M1 9 7 14 15 4"
+      fill={
+        Array [
+          0,
+          4278190080,
+        ]
+      }
+      fillOpacity={1}
+      fillRule={1}
+      matrix={
+        Array [
+          1,
+          0,
+          0,
+          1,
+          0,
+          0,
+        ]
+      }
+      opacity={1}
+      originX={0}
+      originY={0}
+      propList={
+        Array [
+          "stroke",
+          "strokeWidth",
+          "strokeDasharray",
+          "strokeDashoffset",
+        ]
+      }
+      rotation={0}
+      scaleX={1}
+      scaleY={1}
+      skewX={0}
+      skewY={0}
+      stroke={
+        Array [
+          0,
+          4280363313,
+        ]
+      }
+      strokeDasharray={
+        Array [
+          22,
+          22,
+        ]
+      }
+      strokeDashoffset={66}
+      strokeLinecap={0}
+      strokeLinejoin={0}
+      strokeMiterlimit={4}
+      strokeOpacity={1}
+      strokeWidth={2}
+      vectorEffect={0}
+      x={0}
+      y={0}
+    />
+  </RNSVGGroup>
+</RNSVGSvgView>
+`;

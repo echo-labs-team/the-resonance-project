@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GroupAddress/> render group address 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 16,
+    }
+  }
+>
+  <Text
+    allowFontScaling={false}
+    bold={true}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Bold",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 18,
+        },
+      ]
+    }
+  >
+    Address
+  </Text>
+  <View
+    accessible={true}
+    focusable={true}
+    isTVSelectable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "borderRadius": 4,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flex": 1,
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View>
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "fontFamily": "NunitoSans-Regular",
+              },
+              Object {
+                "color": "#b8bab8",
+                "fontSize": 18,
+              },
+            ]
+          }
+        >
+          1180 Murphy Ave
+        </Text>
+        <Text
+          allowFontScaling={false}
+          style={
+            Array [
+              Object {
+                "fontFamily": "NunitoSans-Regular",
+              },
+              Object {
+                "color": "#b8bab8",
+                "fontSize": 18,
+              },
+            ]
+          }
+        >
+          San Jose
+          , 
+          CA
+           
+          95131
+        </Text>
+      </View>
+      <View
+        style={
+          Object {
+            "marginLeft": "auto",
+          }
+        }
+      >
+        <Text />
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -1,18 +1,45 @@
-import 'react-native';
 import React from 'react';
-import renderer from 'react-test-renderer';
-import NavigationTestUtils from 'react-navigation/NavigationTestUtils';
+import { View, Text } from 'react-native';
+import { render, fireEvent } from 'react-native-testing-library';
 import Button from '../Button';
 
-describe('App snapshot', () => {
-  jest.useFakeTimers();
-  beforeEach(() => {
-    NavigationTestUtils.resetInternalState();
+describe('<Button/>', () => {
+  test('render the button', async () => {
+    const { toJSON } = render(<Button title="Button" />);
+
+    expect(toJSON()).toMatchSnapshot();
   });
 
-  it('renders the button', async () => {
-    const tree = renderer.create(<Button title="Button" />).toJSON();
+  test('render the button with style', async () => {
+    const styles = { backgroundColor: 'black' };
+    const { toJSON } = render(
+      <Button title="Button" style={styles} textStyle={styles} />
+    );
 
-    expect(tree).toMatchSnapshot();
+    expect(toJSON()).toMatchSnapshot();
+  });
+
+  test('render the button with an icon', async () => {
+    const { toJSON } = render(
+      <Button
+        title="Button"
+        icon={
+          <View>
+            <Text>Icon</Text>
+          </View>
+        }
+      />
+    );
+
+    expect(toJSON()).toMatchSnapshot();
+  });
+
+  test('render the button and press it', async () => {
+    const mockPress = jest.fn();
+    const { getByText } = render(<Button title="Button" onPress={mockPress} />);
+
+    fireEvent.press(getByText('Button'));
+
+    expect(mockPress).toBeCalled();
   });
 });
