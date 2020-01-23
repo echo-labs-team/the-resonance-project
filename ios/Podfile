@@ -4,7 +4,7 @@ platform :ios, '10.0'
 target 'echo-church' do
   pod 'ExpoKit',
     :git => "http://github.com/expo/expo.git",
-    :tag => "ios/2.14.1",
+    :tag => "ios/2.14.3",
     :subspecs => [
       "Core"
     ],
@@ -21,10 +21,9 @@ target 'echo-church' do
     ],
   )
 
-  # Install React Native and its dependencies
-  require_relative '../node_modules/react-native/scripts/autolink-ios.rb'
-  use_react_native!
-
+ # Install React Native and its dependencies
+ require_relative '../node_modules/react-native/scripts/autolink-ios.rb'
+ use_react_native!
 
   post_install do |installer|
     installer.pods_project.main_group.tab_width = '2';
@@ -63,7 +62,7 @@ target 'echo-church' do
 
       # Build React Native with RCT_DEV enabled and RCT_ENABLE_INSPECTOR and
       # RCT_ENABLE_PACKAGER_CONNECTION disabled
-      next unless pod_name == 'React'
+      next unless pod_name.start_with?('React')
       target_installation_result.native_target.build_configurations.each do |config|
         config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
         config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'RCT_DEV=1'
