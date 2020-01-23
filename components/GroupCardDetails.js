@@ -18,7 +18,7 @@ export default ({
   item: {
     name: string,
     campus: string,
-    frequency: string,
+    frequency: number,
     interval: string,
     daysOfWeek: Array<string>,
     dayOfMonth: string,

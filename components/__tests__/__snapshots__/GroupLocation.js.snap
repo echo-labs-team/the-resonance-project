@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GroupLocation/> render a group with a location 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 16,
+    }
+  }
+>
+  <Text
+    allowFontScaling={false}
+    bold={true}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Bold",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 18,
+        },
+      ]
+    }
+  >
+    Location
+  </Text>
+  <Text
+    allowFontScaling={false}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Regular",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 16,
+        },
+      ]
+    }
+  >
+    Starbucks
+  </Text>
+  <Text
+    allowFontScaling={false}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Regular",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 16,
+          "marginTop": 10,
+        },
+      ]
+    }
+  >
+    Table in the back with all the coffee
+  </Text>
+</View>
+`;
+
+exports[`<GroupLocation/> render a group with a location, but no description 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 16,
+    }
+  }
+>
+  <Text
+    allowFontScaling={false}
+    bold={true}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Bold",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 18,
+        },
+      ]
+    }
+  >
+    Location
+  </Text>
+  <Text
+    allowFontScaling={false}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Regular",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 16,
+        },
+      ]
+    }
+  >
+    Starbucks
+  </Text>
+</View>
+`;
+
+exports[`<GroupLocation/> render an online group 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 16,
+    }
+  }
+>
+  <Text
+    allowFontScaling={false}
+    bold={true}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Bold",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 18,
+        },
+      ]
+    }
+  >
+    Location
+  </Text>
+  <Text
+    allowFontScaling={false}
+    style={
+      Array [
+        Object {
+          "fontFamily": "NunitoSans-Regular",
+        },
+        Object {
+          "color": "#b8bab8",
+          "fontSize": 16,
+        },
+      ]
+    }
+  >
+    Online
+  </Text>
+</View>
+`;
