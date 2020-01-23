@@ -1,13 +1,43 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
+import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
+import htmlParser from 'fast-html-parser';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
 const MissionsScreen = () => {
+  const [missions, setMissions] = useState('');
+
+  useEffect(() => {
+    const getMissionsContent = async () => {
+      // get data from the missions page in WordPress
+      const { data = [] } =
+        (await axios.get(
+          'http://echo.church/wp-json/wp/v2/pages?slug=missions'
+        )) || {};
+      const [{ content: { rendered = '' } = {} } = {}] = data;
+
+      // parse the HTML that we get back
+      const $ = htmlParser.parse(rendered);
+
+      // get all the headers, which are the different mission trips
+      const [, ...headers] = $.querySelectorAll('#global h2');
+      const places = headers.map(({ childNodes = [] }) => {
+        const [{ structuredText: header } = {}] = childNodes;
+
+        return header;
+      });
+
+      setMissions(places.join(', '));
+    };
+
+    getMissionsContent();
+  }, []);
+
   return (
     <ScrollView style={styles.mainContainer} {...getHeaderInset()}>
       <Image
@@ -27,37 +57,7 @@ const MissionsScreen = () => {
           Some of our current mission trips
         </Text>
         <Text bold style={styles.subHeading}>
-          BRAZIL
-        </Text>
-        <Text style={[styles.subHeading, { marginTop: 0 }]}>
-          July 24 – August 1, 2019
-        </Text>
-        <Text style={styles.content}>
-          An opportunity to serve local churches in a very under-resourced area
-          in the northeast of Brazil. Hear stories, play with children, and
-          participate in projects that help release kids from poverty and set
-          them up to succeed in life.
-        </Text>
-
-        <Text bold style={styles.subHeading}>
-          MEXICO
-        </Text>
-        <Text style={[styles.subHeading, { marginTop: 0 }]}>
-          July 28 – August 3, 2019
-        </Text>
-        <Text style={styles.content}>
-          {`Help build a house for our partners who run a teen drug rehab center, serve children at an orphanage dedicated to sexually abused children, and share God's love in practical ways to people in our target village.`}
-        </Text>
-
-        <Text bold style={styles.subHeading}>
-          SOUTH EAST ASIA
-        </Text>
-        <Text style={[styles.subHeading, { marginTop: 0 }]}>Early 2020</Text>
-        <Text style={styles.content}>
-          Use your business skills or passion for coffee (marketing, design,
-          web...) to help our partners in South East Asia build a coffee
-          business used as a bridge to take the message of Jesus in one of the
-          most unreached countries in the world.
+          {missions}
         </Text>
 
         <Button
@@ -69,40 +69,9 @@ const MissionsScreen = () => {
               connect: 'Missions More Info',
             });
 
-            WebBrowser.openBrowserAsync(
-              'https://docs.google.com/forms/d/e/1FAIpQLSd2IHpjbRbd-rqy_tpLc2_Wyex9RBgDpCD_KG6FZgXQJxhCLw/viewform',
-              { toolbarColor: Colors.darkestGray }
-            );
-          }}
-        />
-        <Button
-          title="Join a Mission"
-          style={styles.button}
-          onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              connect: 'Missions Signup',
+            WebBrowser.openBrowserAsync('https://echo.church/missions/', {
+              toolbarColor: Colors.darkestGray,
             });
-
-            WebBrowser.openBrowserAsync(
-              'https://docs.google.com/forms/d/e/1FAIpQLSdiu651dbn1PzjxrVpkhHQlfxwJj9reWWIwIx3fhVFdSv3YvA/viewform',
-              { toolbarColor: Colors.darkestGray }
-            );
-          }}
-        />
-        <Button
-          title="Fund a Mission"
-          style={styles.button}
-          onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              connect: 'Missions Fund',
-            });
-
-            WebBrowser.openBrowserAsync(
-              'https://pushpay.com/pay/echochurchpayments',
-              { toolbarColor: Colors.darkestGray }
-            );
           }}
         />
       </View>
@@ -145,7 +114,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.gray,
   },
-  button: { marginVertical: 10 },
+  button: { marginVertical: 20 },
 });
 
 export default MissionsScreen;
