@@ -10,14 +10,17 @@ import {
   RefreshControl,
   TouchableHighlight,
   Linking,
+  LayoutAnimation,
 } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import * as WebBrowser from 'expo-web-browser';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import { getInstagramPosts } from '../data/instagram';
 import { getBlogPosts } from '../data/blogPosts';
+import { getVerseOfTheDay } from '../data/verseOfTheDay';
 import TextStyles from '../constants/TextStyles';
 import Text from '../components/Text';
 import Button from '../components/Button';
@@ -29,9 +32,9 @@ import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 type PostType =
   | 'INSTAGRAM'
   | 'BLOG'
-  | 'MESSAGE_SERIES'
   | 'EVENTS'
-  | 'ANNOUNCEMENTS';
+  | 'ANNOUNCEMENTS'
+  | 'VERSE OF THE DAY';
 
 type CardProps = {|
   type: PostType,
@@ -45,6 +48,9 @@ const trackingOptions = {
   mainTray: 'Home',
 };
 
+// initial scroll offset to use when tracking scroll direction
+let scrollOffset = 0;
+
 const HomeScreen = () => {
   const [cardData, setCardData] = useState([
     { url: 'loading1' },
@@ -57,6 +63,7 @@ const HomeScreen = () => {
     { url: 'loading8' },
   ]);
   const [refreshing, setRefreshing] = useState(false);
+  const [showServiceTimes, setShowServiceTimes] = useState(true);
   const [tryAgain, setTryAgain] = useState(false);
 
   // fetch data on mount
@@ -64,13 +71,16 @@ const HomeScreen = () => {
     const getPosts = async () => {
       const igPosts = (await getInstagramPosts()) || [];
       const blogPosts = (await getBlogPosts()) || [];
+      const verseOfTheDay = (await getVerseOfTheDay()) || {};
       const posts = [...igPosts, ...blogPosts];
 
       if (!posts.length) {
         Amplitude.logEventWithProperties('noPostsLoaded', trackingOptions);
       }
 
-      setCardData(posts);
+      const [firstPost, ...restOfPosts] = posts;
+
+      setCardData([firstPost, verseOfTheDay, ...(restOfPosts || [])]);
       setRefreshing(false);
       setTryAgain(false);
     };
@@ -94,6 +104,20 @@ const HomeScreen = () => {
     setRefreshing(true);
   };
 
+  const handleScroll = event => {
+    const currentOffset = event.nativeEvent.contentOffset.y;
+    const shouldShowServiceTimes =
+      currentOffset <= 0 || currentOffset < scrollOffset;
+
+    if (shouldShowServiceTimes !== showServiceTimes) {
+      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+      setShowServiceTimes(shouldShowServiceTimes);
+    }
+
+    // Update your scroll position
+    scrollOffset = currentOffset;
+  };
+
   return (
     <>
       <ScrollView
@@ -105,6 +129,8 @@ const HomeScreen = () => {
             onRefresh={refresh}
           />
         }
+        onScroll={handleScroll}
+        scrollEventThrottle={300}
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
         {...getHeaderInset()}
@@ -145,7 +171,7 @@ const HomeScreen = () => {
         )}
       </ScrollView>
 
-      <ServiceTimes />
+      {showServiceTimes && <ServiceTimes />}
     </>
   );
 };
@@ -164,9 +190,13 @@ function getIcon(type: PostType) {
 
   return {
     BLOG: require('../assets/icons/Blog.png'),
-    MESSAGE_SERIES: require('../assets/icons/Message.png'),
     EVENTS: require('../assets/icons/Events.png'),
     ANNOUNCEMENTS: require('../assets/icons/Announcements.png'),
+    'VERSE OF THE DAY': {
+      expoIcon: (
+        <MaterialCommunityIcons name={'bible'} size={24} color={Colors.white} />
+      ),
+    },
   }[type];
 }
 
@@ -191,11 +221,20 @@ const Card = ({ type, url, image, title }: CardProps) => {
           source={{ uri: image }}
           style={[
             styles.image,
-            { height: type === 'INSTAGRAM' ? Layout.window.width - 20 : 200 },
+            {
+              height:
+                type === 'INSTAGRAM' || type === 'VERSE OF THE DAY'
+                  ? Layout.window.width - 20
+                  : 200,
+            },
           ]}
         />
         <View style={styles.cardTypeView}>
-          <Image source={icon} style={styles.cardTypeIcon} />
+          {icon.expoIcon ? (
+            icon.expoIcon
+          ) : (
+            <Image source={icon} style={styles.cardTypeIcon} />
+          )}
           <Text bold style={styles.cardTypeText}>
             {type}
           </Text>
@@ -259,6 +298,7 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     paddingRight: 16,
     flexDirection: 'row',
+    alignItems: 'center',
   },
   separator: {
     height: 16,
