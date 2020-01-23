@@ -33,12 +33,7 @@ const defaultHeaderNavigationOptions = {
     shadowColor: 'transparent',
     borderBottomWidth: 0,
   },
-  headerBackground:
-    Platform.OS === 'ios' ? (
-      <BlurView style={{ flex: 1 }} tint="dark" intensity={98} />
-    ) : (
-      <View style={{ flex: 1, backgroundColor: 'rgba(0,0,0,0.8)' }} />
-    ),
+  headerBackground: <BlurView style={{ flex: 1 }} tint="dark" intensity={98} />,
   headerTitleStyle: {
     position: 'absolute',
     left: 0,

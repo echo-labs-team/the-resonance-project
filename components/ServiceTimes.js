@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
+import { BlurView } from 'expo-blur';
 import Text from '../components/Text';
 import Colors from '../constants/Colors';
 
@@ -14,8 +15,10 @@ export default () => {
   }, []);
 
   return (
-    <>
-      <Text style={styles.title}>LOCATIONS & SERVICE TIMES</Text>
+    <BlurView tint="dark" intensity={98} style={styles.container}>
+      <Text bold style={styles.title}>
+        LOCATIONS & SERVICE TIMES
+      </Text>
       <ScrollView ref={scrollViewRef} horizontal style={styles.serviceTimes}>
         <View style={styles.serviceTime}>
           <Text style={styles.serviceTimeText}>Fremont | 48989 Milmont Dr</Text>
@@ -42,14 +45,19 @@ export default () => {
           <Text style={styles.serviceTimeText}>9:30AM • 11:00AM</Text>
         </View>
       </ScrollView>
-    </>
+    </BlurView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    position: 'absolute',
+    bottom: 0,
+  },
   title: {
     paddingHorizontal: 20,
-    marginTop: 20,
     marginBottom: 10,
     fontSize: 20,
     textAlign: 'center',
@@ -58,7 +66,6 @@ const styles = StyleSheet.create({
   serviceTimes: {
     paddingVertical: 10,
     paddingHorizontal: 20,
-    marginBottom: 30,
     borderRadius: 8,
     backgroundColor: Colors.darkestGray,
   },
