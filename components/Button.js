@@ -17,9 +17,7 @@ export default ({
     underlayColor={Colors.blue}
   >
     <View style={styles.wrapper}>
-      <View style={{ marginLeft: icon ? -10 : 0, marginRight: icon ? 10 : 0 }}>
-        {icon}
-      </View>
+      {icon && <View style={{ marginLeft: -10, marginRight: 10 }}>{icon}</View>}
       <Text style={[styles.text, textStyle]}>{title}</Text>
     </View>
   </TouchableHighlight>

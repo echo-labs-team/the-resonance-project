@@ -1,0 +1,87 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Text/> render text 1`] = `
+<Text
+  allowFontScaling={false}
+  style={
+    Array [
+      Object {
+        "fontFamily": "NunitoSans-Regular",
+      },
+      undefined,
+    ]
+  }
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with a bold font 1`] = `
+<Text
+  allowFontScaling={false}
+  bold={true}
+  style={
+    Array [
+      Object {
+        "fontFamily": "NunitoSans-Bold",
+      },
+      undefined,
+    ]
+  }
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with a light font 1`] = `
+<Text
+  allowFontScaling={false}
+  light={true}
+  style={
+    Array [
+      Object {
+        "fontFamily": "NunitoSans-Light",
+      },
+      undefined,
+    ]
+  }
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with extra props 1`] = `
+<Text
+  allowFontScaling={false}
+  disabled={true}
+  style={
+    Array [
+      Object {
+        "fontFamily": "NunitoSans-Regular",
+      },
+      undefined,
+    ]
+  }
+  testID="text-with-some-props"
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with style 1`] = `
+<Text
+  allowFontScaling={false}
+  style={
+    Array [
+      Object {
+        "fontFamily": "NunitoSans-Regular",
+      },
+      Object {
+        "fontSize": 30,
+      },
+    ]
+  }
+>
+  🔥
+</Text>
+`;

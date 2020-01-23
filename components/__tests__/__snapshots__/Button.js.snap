@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App snapshot renders the button 1`] = `
+exports[`<Button/> render the button 1`] = `
 <View
   accessible={true}
+  focusable={true}
   isTVSelectable={true}
+  onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
   onResponderRelease={[Function]}
@@ -13,29 +15,158 @@ exports[`App snapshot renders the button 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": "#183f50",
+        "backgroundColor": "#313d48",
         "borderRadius": 6,
         "paddingHorizontal": 24,
         "paddingVertical": 16,
-        "width": "100%",
       },
       Object {},
     ]
   }
 >
-  <Text
+  <View
     style={
-      Array [
-        Object {
-          "color": "#fff",
-          "fontSize": 16,
-          "textAlign": "center",
-        },
-        Object {},
-      ]
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
     }
   >
-    BUTTON
-  </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#fff",
+            "fontSize": 18,
+            "textAlign": "center",
+          },
+          Object {},
+        ]
+      }
+    >
+      Button
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`<Button/> render the button with an icon 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  isTVSelectable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#313d48",
+        "borderRadius": 6,
+        "paddingHorizontal": 24,
+        "paddingVertical": 16,
+      },
+      Object {},
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "marginLeft": -10,
+          "marginRight": 10,
+        }
+      }
+    >
+      <View>
+        <Text>
+          Icon
+        </Text>
+      </View>
+    </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#fff",
+            "fontSize": 18,
+            "textAlign": "center",
+          },
+          Object {},
+        ]
+      }
+    >
+      Button
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`<Button/> render the button with style 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  isTVSelectable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#313d48",
+        "borderRadius": 6,
+        "paddingHorizontal": 24,
+        "paddingVertical": 16,
+      },
+      Object {
+        "backgroundColor": "black",
+      },
+    ]
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#fff",
+            "fontSize": 18,
+            "textAlign": "center",
+          },
+          Object {
+            "backgroundColor": "black",
+          },
+        ]
+      }
+    >
+      Button
+    </Text>
+  </View>
 </View>
 `;

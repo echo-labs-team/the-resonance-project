@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Platform,
-  StyleSheet,
-  View,
-  TouchableHighlight,
-  Linking,
-} from 'react-native';
+import { View, TouchableHighlight, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import Text from './Text';
@@ -19,8 +13,6 @@ export default ({ location = {} }) => {
       city = '',
       postalCode = '',
       stProvince = '',
-      latitude,
-      longitude,
     },
   } = location;
   const addressItems = [
