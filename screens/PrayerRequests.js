@@ -30,9 +30,10 @@ const PrayerRequestsScreen = () => {
               connect: 'Prayer Signup',
             });
 
-            WebBrowser.openBrowserAsync('https://echo.church', {
-              toolbarColor: Colors.darkestGray,
-            });
+            WebBrowser.openBrowserAsync(
+              'https://docs.google.com/forms/d/e/1FAIpQLScXKoHyYZnqe7HgI0W9ZYYZllrXkDLXQv8pJKmH15oOyRrG0Q/viewform',
+              { toolbarColor: Colors.darkestGray }
+            );
           }}
         />
       </View>
