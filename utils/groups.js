@@ -1,29 +1,11 @@
 // @flow
 
-export const getCampusCode = (campus: string = '') => {
-  switch (campus) {
-    case 'NORTH SAN JOSE':
-      return 'NSJ';
-
-    case 'SOUTH SAN JOSE':
-      return 'SSJ';
-
-    case 'SUNNYVALE':
-      return 'SVL';
-
-    case 'FREMONT':
-      return 'FMT';
-
-    default:
-  }
-};
-
 export const getMeetingFrequency = (
-  frequency: string = '',
+  frequency: number = 1,
   interval: string = ''
 ) => {
   if (interval.toLowerCase() === 'weekly') {
-    if (frequency === '1') {
+    if (Number(frequency) === 1) {
       return 'Every week';
     }
 
@@ -31,7 +13,7 @@ export const getMeetingFrequency = (
   }
 
   if (interval.toLowerCase() === 'monthly') {
-    if (frequency === '1') {
+    if (Number(frequency) === 1) {
       return 'Every month';
     }
 
@@ -39,7 +21,7 @@ export const getMeetingFrequency = (
   }
 };
 
-const getGetOrdinal = (n: number) => {
+export const getGetOrdinal = (n: number) => {
   const s = ['th', 'st', 'nd', 'rd'];
   const v = n % 100;
 

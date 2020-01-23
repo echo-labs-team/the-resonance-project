@@ -12,6 +12,8 @@ import {
   Linking,
 } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
+import * as WebBrowser from 'expo-web-browser';
+import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import { getInstagramPosts } from '../data/instagram';
@@ -93,57 +95,58 @@ const HomeScreen = () => {
   };
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          tintColor={Colors.red}
-          colors={[Colors.red]}
-          refreshing={refreshing}
-          onRefresh={refresh}
-        />
-      }
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-      {...getHeaderInset()}
-    >
-      {tryAgain && <Spinner />}
+    <>
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            tintColor={Colors.red}
+            colors={[Colors.red]}
+            refreshing={refreshing}
+            onRefresh={refresh}
+          />
+        }
+        style={styles.container}
+        contentContainerStyle={styles.contentContainer}
+        {...getHeaderInset()}
+      >
+        {tryAgain && <Spinner />}
 
-      <View style={styles.logoContainer}>
-        <EchoLogo width={40} height={40} color={Colors.red} />
-        <Text style={styles.logo}>ECHO.CHURCH</Text>
-      </View>
+        <View style={styles.logoContainer}>
+          <EchoLogo width={40} height={40} color={Colors.red} />
+          <Text style={styles.logo}>ECHO.CHURCH</Text>
+        </View>
 
-      {cardData.length ? (
-        <FlatList
-          keyExtractor={({ url = '' }) => url.slice(-10)}
-          data={cardData}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({
-            item = {},
-            index,
-          }: {
-            item: CardProps,
-            index: number,
-          }) => {
-            const { url = '' } = item;
+        {cardData.length ? (
+          <FlatList
+            keyExtractor={({ url = '' }) => url.slice(-10)}
+            data={cardData}
+            ItemSeparatorComponent={() => <View style={styles.separator} />}
+            renderItem={({
+              item = {},
+              index,
+            }: {
+              item: CardProps,
+              index: number,
+            }) => {
+              const { url = '' } = item;
 
-            if (url.includes('loading')) {
-              return <HomeCardPlaceholder />;
-            }
-            return [
-              <Card key={`card${index}`} {...item} />,
-              index === 0 ? <ServiceTimes key="serviceTimes" /> : null,
-            ];
-          }}
-        />
-      ) : (
-        <>
-          <ServiceTimes />
-          <Text style={styles.error}>No posts were found... 🤔</Text>
-          <Button title="Try Again" onPress={() => setTryAgain(true)} />
-        </>
-      )}
-    </ScrollView>
+              if (url.includes('loading')) {
+                return <HomeCardPlaceholder />;
+              }
+              return <Card key={`card${index}`} {...item} />;
+            }}
+          />
+        ) : (
+          <>
+            <ServiceTimes />
+            <Text style={styles.error}>No posts were found... 🤔</Text>
+            <Button title="Try Again" onPress={() => setTryAgain(true)} />
+          </>
+        )}
+      </ScrollView>
+
+      <ServiceTimes />
+    </>
   );
 };
 
@@ -174,10 +177,23 @@ const Card = ({ type, url, image, title }: CardProps) => {
     <TouchableHighlight
       underlayColor={Colors.darkBlue}
       style={styles.card}
-      onPress={() => Linking.openURL(url)}
+      onPress={() => {
+        if (type === 'BLOG') {
+          return WebBrowser.openBrowserAsync(url, {
+            toolbarColor: Colors.darkestGray,
+          });
+        }
+        Linking.openURL(url);
+      }}
     >
       <View>
-        <Image source={{ uri: image }} style={styles.image} />
+        <Image
+          source={{ uri: image }}
+          style={[
+            styles.image,
+            { height: type === 'INSTAGRAM' ? Layout.window.width - 20 : 200 },
+          ]}
+        />
         <View style={styles.cardTypeView}>
           <Image source={icon} style={styles.cardTypeIcon} />
           <Text bold style={styles.cardTypeText}>
@@ -201,7 +217,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 10,
-    paddingBottom: 20,
+    paddingBottom: 120,
     marginTop: -20,
   },
   logoContainer: {
@@ -223,7 +239,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: undefined,
-    height: 200,
     resizeMode: 'cover',
   },
   cardTypeIcon: {

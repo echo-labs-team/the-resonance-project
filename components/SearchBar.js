@@ -24,6 +24,7 @@ export default ({
         style={styles.icon}
       />
       <TextInput
+        testID="search-bar-input"
         style={[textStyles.body, styles.input]}
         keyboardAppearance="dark"
         returnKeyType="search"
