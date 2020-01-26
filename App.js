@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import {
+  AsyncStorage,
+  Platform,
+  StatusBar,
+  StyleSheet,
+  UIManager,
+  View,
+} from 'react-native';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
@@ -8,10 +15,20 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import AppNavigator from './navigation/AppNavigator';
 import Colors from './constants/Colors';
 
-// if in development mode, override amplitude tracking
 if (__DEV__) {
+  // override amplitude tracking
   Amplitude.logEventWithProperties = (name, data) =>
     console.log(`[amplitude]: ${name} -`, data);
+
+  // Erase all AsyncStorage
+  AsyncStorage.clear();
+}
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
 export default props => {
