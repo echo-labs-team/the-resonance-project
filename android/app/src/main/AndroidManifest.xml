@@ -5,11 +5,11 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <permission
-    android:name="com.echurchapps.southbayc.permission.C2D_MESSAGE"
+    android:name="com.echurchapps.permission.C2D_MESSAGE"
     android:protectionLevel="signature"/>
 
   <!-- These are required permissions to make the app run -->
-  <uses-permission android:name="com.echurchapps.southbayc.permission.C2D_MESSAGE" />
+  <uses-permission android:name="com.echurchapps.permission.C2D_MESSAGE" />
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -113,6 +113,9 @@
     <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
     <!-- WHEN_PREPARING_SHELL_REMOVE_FROM_HERE -->
     <!-- ADD DEV SETTINGS HERE -->
+    <!-- BEGIN_SDK_36 -->
+    <activity android:name="abi36_0_0.com.facebook.react.devsupport.DevSettingsActivity"/>
+    <!-- END_SDK_36 -->
     <!-- BEGIN_SDK_35 -->
     <activity android:name="abi35_0_0.com.facebook.react.devsupport.DevSettingsActivity"/>
     <!-- END_SDK_35 -->
@@ -125,33 +128,14 @@
     <!-- WHEN_PREPARING_SHELL_REMOVE_TO_HERE -->
 
     <activity
-      android:name=".ExponentDevActivity"
-      android:exported="true"
-      android:label="@string/dev_activity_name"
-      android:screenOrientation="portrait"
-      android:theme="@style/Theme.Exponent.Dark"
-      android:windowSoftInputMode="adjustPan">
-    </activity>
-
-    <activity
-      android:name=".oauth.OAuthWebViewActivity"
-      android:screenOrientation="portrait"
-      android:theme="@style/Theme.Exponent.Light">
-    </activity>
-
-    <activity
         android:name="net.openid.appauth.RedirectUriReceiverActivity"
         tools:node="replace">
       <intent-filter>
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.echurchapps.southbayc" android:path="oauthredirect"/>
+        <data android:scheme="com.echurchapps" android:path="oauthredirect"/>
       </intent-filter>
-    </activity>
-
-    <activity
-      android:name=".oauth.OAuthResultActivity">
     </activity>
 
     <!-- START OF STRIPE SCHEMES -->
@@ -164,24 +148,38 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="expo.modules.payments.stripe.f3ee5c6e-aab7-4b9c-814f-b471bc8eeeba" />
+            <data android:scheme="expo.modules.payments.stripe.f5a94190-a4db-457e-845e-ffdfbcad2b26" />
         </intent-filter>
     </activity>
     <!-- Versioned Activity for Stripe -->
-		<!-- BEGIN_SDK_abi35_0_0 -->
+    <!-- BEGIN_SDK_36 -->
+    <activity
+      android:exported="true"
+      android:launchMode="singleTask"
+      android:name="abi36_0_0.expo.modules.payments.stripe.RedirectUriReceiver"
+      android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:scheme="abi36_0_0.expo.modules.payments.stripe" />
+      </intent-filter>
+    </activity>
+    <!-- END_SDK_36 -->
+		<!-- BEGIN_SDK_35 -->
 		<activity
 			android:exported="true"
 			android:launchMode="singleTask"
-			android:name="abiabi35_0_0.expo.modules.payments.stripe.RedirectUriReceiver"
+			android:name="abi35_0_0.expo.modules.payments.stripe.RedirectUriReceiver"
 			android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
 					<category android:name="android.intent.category.DEFAULT" />
 					<category android:name="android.intent.category.BROWSABLE" />
-					<data android:scheme="abiabi35_0_0.expo.modules.payments.stripe" />
+					<data android:scheme="abi35_0_0.expo.modules.payments.stripe" />
 			</intent-filter>
 		</activity>
-		<!-- END_SDK_abi35_0_0 -->
+		<!-- END_SDK_35 -->
     <!-- BEGIN_SDK_34 -->
     <activity
       android:exported="true"
@@ -211,10 +209,6 @@
     </activity>
     <!-- END_SDK_33 -->
     <!-- END OF STRIPE SCHEMES -->
-
-    <activity
-      android:name=".chrometabs.ChromeTabsManagerActivity">
-    </activity>
 
     <activity
       android:name=".experience.ErrorActivity"
@@ -282,7 +276,7 @@
         <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
         <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 
-        <category android:name="com.echurchapps.southbayc"/>
+        <category android:name="com.echurchapps"/>
       </intent-filter>
     </receiver>
 
@@ -349,14 +343,20 @@
     <meta-data
       android:name="com.google.android.gms.ads.APPLICATION_ID"
       android:value="ca-app-pub-3940256099942544~3347511713"/>
+    <meta-data android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT" android:value="true"/>
     <!-- END GOOGLE MOBILE ADS CONFIG -->
 
     <!-- ADD BRANCH CONFIG HERE -->
 
-    <!-- The Facebook SDK runs FacebookInitProvider on startup and crashes if there isn't an ID here -->
-    <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="fb0"/>
+    <!-- ADD FACEBOOK APP ID CONFIG HERE -->
+    <!-- ADD FACEBOOK APP DISPLAY NAME CONFIG HERE -->
+    <!-- Tags below need to be in one line with no whitespace after android:value -->
+    <!-- in order for XDL to be able to replace values in them -->
+    <meta-data android:name="com.facebook.sdk.AutoLogAppEventsEnabled" android:value="false"/>
+    <meta-data android:name="com.facebook.sdk.AutoInitEnabled" android:value="false"/>
+    <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled" android:value="false"/>
 
-    <meta-data android:name="standaloneStripeScheme" android:value="f3ee5c6e-aab7-4b9c-814f-b471bc8eeeba" />
+    <meta-data android:name="standaloneStripeScheme" android:value="f5a94190-a4db-457e-845e-ffdfbcad2b26" />
   </application>
 
 </manifest>

@@ -6,5 +6,5 @@
   "STANDALONE_CONTEXT_TYPE": "user",
   "TEMPORARY_SDK_VERSION": "36.0.0",
   "EXPO_RUNTIME_VERSION": "36.0.0",
-  "developmentUrl": "echo://10.0.0.168:19000"
+  "developmentUrl": "echo://10.190.106.103:19000"
 }

@@ -20,7 +20,7 @@
     "backgroundColor": "#000000"
   },
   "android": {
-    "package": "com.echurchapps.southbayc",
+    "package": "com.echurchapps",
     "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
     "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
   },
@@ -54,6 +54,7 @@
     "react-native-svg",
     "react-native-unimodules",
     "react-native-youtube",
+    "react-native-webview",
     "react-navigation",
     "react-navigation-drawer",
     "react-navigation-stack",
@@ -62,11 +63,11 @@
   ],
   "bundledAssets": [],
   "id": "@echo.church/echo",
-  "releaseId": "a5b6814f-165d-41ff-bd69-2f5476a286fb",
-  "revisionId": "2.0.0-r.r1uM7cUZL",
-  "publishedTime": "2020-01-23T03:29:19.999Z",
-  "commitTime": "2020-01-23T03:29:20.017Z",
-  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F2.0.0%2F29609252d2f9315a1a2af9868a42c455-36.0.0-ios.js",
+  "releaseId": "94db751d-55a0-4eec-8b5e-716c153b8d41",
+  "revisionId": "2.0.0-r.H1q_RdsWU",
+  "publishedTime": "2020-01-26T21:00:49.764Z",
+  "commitTime": "2020-01-26T21:00:51.189Z",
+  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F2.0.0%2Fec01286b8f131b194b5327814163ee0a-36.0.0-ios.js",
   "releaseChannel": "default",
   "hostUri": "exp.host/@echo.church/echo"
 }

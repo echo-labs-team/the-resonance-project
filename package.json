@@ -41,6 +41,7 @@
     "react-native-svg": "9.13.3",
     "react-native-unimodules": "^0.7.0",
     "react-native-youtube": "^2.0.0",
+    "react-native-webview": "^8.0.0",
     "react-navigation": "^4.0.3",
     "react-navigation-drawer": "^2.1.2",
     "react-navigation-stack": "^1.5.5",

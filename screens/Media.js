@@ -3,7 +3,6 @@ import {
   ScrollView,
   View,
   StyleSheet,
-  WebView,
   Linking,
   Dimensions,
   FlatList,
@@ -12,6 +11,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from 'react-native';
+import WebView from 'react-native-webview';
 import * as Amplitude from 'expo-analytics-amplitude';
 // import YouTube from 'react-native-youtube';
 import collectChannelData from '../data/youtube';
