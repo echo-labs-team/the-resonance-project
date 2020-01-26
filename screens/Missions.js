@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, Image } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  View,
+  Image,
+  AsyncStorage,
+} from 'react-native';
+import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -9,11 +16,25 @@ import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
+const storeMissionsData = async missions => {
+  await AsyncStorage.setItem('@missions', missions).catch(err =>
+    console.error(err)
+  );
+};
+
 const MissionsScreen = () => {
   const [missions, setMissions] = useState('');
 
   useEffect(() => {
     const getMissionsContent = async () => {
+      const storedMissionsData = await AsyncStorage.getItem(
+        '@missions'
+      ).catch(err => console.error(err));
+
+      if (storedMissionsData) {
+        setMissions(storedMissionsData);
+      }
+
       // get data from the missions page in WordPress
       const { data = [] } =
         (await axios.get(
@@ -26,13 +47,16 @@ const MissionsScreen = () => {
 
       // get all the headers, which are the different mission trips
       const [, ...headers] = $.querySelectorAll('#global h2');
-      const places = headers.map(({ childNodes = [] }) => {
-        const [{ structuredText: header } = {}] = childNodes;
+      const places = headers
+        .map(({ childNodes = [] }) => {
+          const [{ structuredText: header } = {}] = childNodes;
 
-        return header;
-      });
+          return header;
+        })
+        .join(', ');
 
-      setMissions(places.join(', '));
+      setMissions(places);
+      storeMissionsData(places);
     };
 
     getMissionsContent();
@@ -56,9 +80,19 @@ const MissionsScreen = () => {
         <Text bold style={[styles.heading, { fontSize: 24 }]}>
           Some of our current mission trips
         </Text>
-        <Text bold style={styles.subHeading}>
-          {missions}
-        </Text>
+        {missions ? (
+          <Text bold style={styles.subHeading}>
+            {missions}
+          </Text>
+        ) : (
+          <Placeholder
+            Animation={props => (
+              <Fade {...props} style={{ backgroundColor: Colors.darkGray }} />
+            )}
+          >
+            <PlaceholderLine height={40} style={styles.loader} />
+          </Placeholder>
+        )}
 
         <Button
           title="Get More Information"
@@ -98,6 +132,11 @@ const styles = StyleSheet.create({
     height: 250,
   },
   container: { paddingVertical: 20, paddingHorizontal: 16 },
+  loader: {
+    marginTop: 10,
+    marginBottom: 20,
+    backgroundColor: Colors.darkestGray,
+  },
   heading: {
     marginTop: 10,
     marginBottom: 20,
