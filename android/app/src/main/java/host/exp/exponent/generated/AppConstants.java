@@ -11,10 +11,10 @@ import host.exp.exponent.Constants;
 @DoNotStrip
 public class AppConstants {
 
-  public static final String VERSION_NAME = "2.0.0";
+  public static final String VERSION_NAME = "1.0.0";
   public static String INITIAL_URL = "exp://exp.host/@echo.church/echo";
   public static final String SHELL_APP_SCHEME = "echo";
-  public static final String RELEASE_CHANNEL = "default";
+  public static final String RELEASE_CHANNEL = "release";
   public static boolean SHOW_LOADING_VIEW_IN_SHELL_APP = true;
   public static boolean ARE_REMOTE_UPDATES_ENABLED = true;
   public static final List<Constants.EmbeddedResponse> EMBEDDED_RESPONSES;
@@ -24,11 +24,10 @@ public class AppConstants {
     List<Constants.EmbeddedResponse> embeddedResponses = new ArrayList<>();
 
     
-        
         // ADD EMBEDDED RESPONSES HERE
         // START EMBEDDED RESPONSES
         embeddedResponses.add(new Constants.EmbeddedResponse("https://exp.host/@echo.church/echo", "assets://shell-app-manifest.json", "application/json"));
-        embeddedResponses.add(new Constants.EmbeddedResponse("https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F2.0.0%2F03a651c783e9b9dade711f9750cfe0f7-36.0.0-android.js", "assets://shell-app.bundle", "application/javascript"));
+        embeddedResponses.add(new Constants.EmbeddedResponse("https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F0d5a17a39a28c6c58b47071b6ff2d285-36.0.0-android.js", "assets://shell-app.bundle", "application/javascript"));
         // END EMBEDDED RESPONSES
     EMBEDDED_RESPONSES = embeddedResponses;
   }

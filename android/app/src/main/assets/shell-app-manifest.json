@@ -1,7 +1,7 @@
 {
   "ios": {
     "supportsTablet": false,
-    "bundleIdentifier": "com.echurchapps.southbayc",
+    "bundleIdentifier": "com.echo.church.app",
     "publishBundlePath": "ios/echo-church/Supporting/shell-app.bundle",
     "publishManifestPath": "ios/echo-church/Supporting/shell-app-manifest.json"
   },
@@ -10,7 +10,7 @@
   "slug": "echo",
   "detach": {
     "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.14.3-sdk36.0.0-00f587c0-b8c9-4b6b-88f6-2ccd4f20dc9c.tar.gz",
-    "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.13.0-sdk35.0.0-b816b7af-88da-4ca9-87a5-7438f0c21b6e.tar.gz"
+    "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.14.0-sdk36.0.0-fb8689e6-fd42-4b18-b01f-ac2ef3bc8681.tar.gz"
   },
   "scheme": "echo",
   "splash": {
@@ -20,7 +20,7 @@
     "backgroundColor": "#000000"
   },
   "android": {
-    "package": "com.echurchapps.southbayc",
+    "package": "com.echo.church.app",
     "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
     "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
   },
@@ -28,7 +28,7 @@
   "locales": {},
   "privacy": "public",
   "updates": { "fallbackToCacheTimeout": 0 },
-  "version": "2.0.0",
+  "version": "1.0.0",
   "platforms": ["ios", "android"],
   "isDetached": true,
   "sdkVersion": "36.0.0",
@@ -43,6 +43,7 @@
     "expo-font",
     "expo-web-browser",
     "expokit",
+    "fast-html-parser",
     "react",
     "react-native",
     "react-native-dropdownalert",
@@ -52,6 +53,7 @@
     "react-native-reanimated",
     "react-native-svg",
     "react-native-unimodules",
+    "react-native-webview",
     "react-native-youtube",
     "react-navigation",
     "react-navigation-drawer",
@@ -61,11 +63,11 @@
   ],
   "bundledAssets": [],
   "id": "@echo.church/echo",
-  "releaseId": "d3a3370d-a296-4166-97b6-72a06f69c435",
-  "revisionId": "2.0.0-r.Skdb3t8WL",
-  "publishedTime": "2020-01-23T02:59:11.680Z",
-  "commitTime": "2020-01-23T02:59:11.733Z",
-  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F2.0.0%2F03a651c783e9b9dade711f9750cfe0f7-36.0.0-android.js",
-  "releaseChannel": "default",
-  "hostUri": "exp.host/@echo.church/echo"
+  "releaseId": "29e6cdfc-a4af-49b0-aef7-d0d4d79ea69b",
+  "revisionId": "1.0.0-r.Hy7SBaob8",
+  "publishedTime": "2020-01-27T02:04:42.875Z",
+  "commitTime": "2020-01-27T02:04:42.904Z",
+  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F0d5a17a39a28c6c58b47071b6ff2d285-36.0.0-android.js",
+  "releaseChannel": "release",
+  "hostUri": "exp.host/@echo.church/echo?release-channel=release"
 }
