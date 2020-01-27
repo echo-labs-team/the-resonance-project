@@ -1,6 +1,6 @@
 {
   "isShell": true,
   "manifestUrl": "exp://exp.host/@echo.church/echo",
-  "releaseChannel": "default",
+  "releaseChannel": "release",
   "isManifestVerificationBypassed": true
 }
