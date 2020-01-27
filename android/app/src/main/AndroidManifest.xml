@@ -5,11 +5,11 @@
   xmlns:tools="http://schemas.android.com/tools">
 
   <permission
-    android:name="com.echurchapps.permission.C2D_MESSAGE"
+    android:name="com.echo.church.app.permission.C2D_MESSAGE"
     android:protectionLevel="signature"/>
 
   <!-- These are required permissions to make the app run -->
-  <uses-permission android:name="com.echurchapps.permission.C2D_MESSAGE" />
+  <uses-permission android:name="com.echo.church.app.permission.C2D_MESSAGE" />
   <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.INTERNET" />
@@ -134,7 +134,7 @@
         <action android:name="android.intent.action.VIEW"/>
         <category android:name="android.intent.category.DEFAULT"/>
         <category android:name="android.intent.category.BROWSABLE"/>
-        <data android:scheme="com.echurchapps" android:path="oauthredirect"/>
+        <data android:scheme="com.echo.church.app" android:path="oauthredirect"/>
       </intent-filter>
     </activity>
 
@@ -148,7 +148,7 @@
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
-            <data android:scheme="expo.modules.payments.stripe.f5a94190-a4db-457e-845e-ffdfbcad2b26" />
+            <data android:scheme="expo.modules.payments.stripe.84cf93c6-2f5f-4ec0-8fa5-a005cb5ae5b6" />
         </intent-filter>
     </activity>
     <!-- Versioned Activity for Stripe -->
@@ -276,7 +276,7 @@
         <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
         <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
 
-        <category android:name="com.echurchapps"/>
+        <category android:name="com.echo.church.app"/>
       </intent-filter>
     </receiver>
 
@@ -356,7 +356,7 @@
     <meta-data android:name="com.facebook.sdk.AutoInitEnabled" android:value="false"/>
     <meta-data android:name="com.facebook.sdk.AdvertiserIDCollectionEnabled" android:value="false"/>
 
-    <meta-data android:name="standaloneStripeScheme" android:value="f5a94190-a4db-457e-845e-ffdfbcad2b26" />
+    <meta-data android:name="standaloneStripeScheme" android:value="84cf93c6-2f5f-4ec0-8fa5-a005cb5ae5b6" />
   </application>
 
 </manifest>
