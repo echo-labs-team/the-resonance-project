@@ -16,6 +16,6 @@
 	<key>TEMPORARY_SDK_VERSION</key>
 	<string>36.0.0</string>
 	<key>developmentUrl</key>
-	<string>echo://10.190.106.103:19000</string>
+	<string>echo://10.190.106.103:80</string>
 </dict>
 </plist>
