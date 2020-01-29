@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, View } from 'react-native';
+import { StyleSheet, StatusBar, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import { Entypo, Feather } from '@expo/vector-icons';
@@ -8,6 +8,7 @@ import { ifIphoneX } from 'react-native-iphone-x-helper';
 import * as Amplitude from 'expo-analytics-amplitude';
 
 import Colors from '../constants/Colors';
+import isTheWeekend from '../utils/isTheWeekend';
 import EchoLogo from '../components/EchoLogo';
 import ConnectLogo from '../components/ConnectLogo';
 import GroupsLogo from '../components/GroupsLogo';
@@ -16,6 +17,7 @@ import HomeScreen from '../screens/Home';
 import MediaScreen from '../screens/Media';
 
 import ConnectScreen from '../screens/Connect';
+import LocationsScreen from '../screens/Locations';
 import ActivateScreen from '../screens/Activate';
 import BaptismScreen from '../screens/Baptism';
 import VolunteerScreen from '../screens/Volunteer';
@@ -70,13 +72,13 @@ const HomeStack = createStackNavigator({
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
+  tabBarLabel: 'Echo',
   tabBarIcon: ({ focused }) => (
     <EchoLogo
       width={28}
       height={28}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ alignSelf: 'center' }}
+      style={styles.icon}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -96,7 +98,7 @@ MediaStack.navigationOptions = {
       name={'controller-play'}
       size={30}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ alignSelf: 'center' }}
+      style={styles.icon}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -105,6 +107,10 @@ MediaStack.navigationOptions = {
 const ConnectStack = createStackNavigator({
   Connect: {
     screen: ConnectScreen,
+    navigationOptions: defaultHeaderNavigationOptions,
+  },
+  Locations: {
+    screen: LocationsScreen,
     navigationOptions: defaultHeaderNavigationOptions,
   },
   Activate: {
@@ -132,12 +138,13 @@ const ConnectStack = createStackNavigator({
 ConnectStack.navigationOptions = {
   tabBarLabel: 'Connect',
   tabBarIcon: ({ focused }) => (
-    <ConnectLogo
-      width={36}
-      height={36}
-      color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ alignSelf: 'center', marginTop: -4 }}
-    />
+    <View style={[styles.icon, { marginTop: isTheWeekend ? -12 : -4 }]}>
+      <ConnectLogo
+        width={isTheWeekend ? 48 : 38}
+        height={isTheWeekend ? 48 : 38}
+        color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
+      />
+    </View>
   ),
   tabBarOnPress: defaultTabBarOnPress,
 };
@@ -160,7 +167,7 @@ GroupsStack.navigationOptions = {
       width={36}
       height={36}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ alignSelf: 'center', marginTop: -4 }}
+      style={[styles.icon, { marginTop: -4 }]}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -180,7 +187,7 @@ GivingStack.navigationOptions = {
       name={'gift'}
       size={22}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={{ alignSelf: 'center' }}
+      style={styles.icon}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -195,6 +202,7 @@ export default createMaterialTopTabNavigator(
     GivingStack,
   },
   {
+    initialRouteName: isTheWeekend ? 'ConnectStack' : 'HomeStack',
     tabBarPosition: 'bottom',
     animationEnabled: false,
     swipeEnabled: false,
@@ -220,3 +228,7 @@ export default createMaterialTopTabNavigator(
     },
   }
 );
+
+const styles = StyleSheet.create({
+  icon: { alignSelf: 'center' },
+});

@@ -13,11 +13,13 @@ import {
 } from 'react-native';
 import WebView from 'react-native-webview';
 import * as Amplitude from 'expo-analytics-amplitude';
+import { MaterialIcons } from '@expo/vector-icons';
 // import YouTube from 'react-native-youtube';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
 import { getHeaderInset } from '../utils/header';
+import isTheWeekend from '../utils/isTheWeekend';
 import Text from '../components/Text';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
@@ -30,7 +32,6 @@ const trackingOptions = {
 };
 
 const MediaScreen = () => {
-  const [isLive, setLive] = useState(false);
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -55,17 +56,6 @@ const MediaScreen = () => {
 
       Amplitude.logEventWithProperties('errorLoadingMedia', trackingOptions);
     }
-  }
-
-  const date = new Date();
-
-  if (
-    !isLive &&
-    date.getDay() === 0 &&
-    date.getHours() >= 10 &&
-    date.getHours() <= 12
-  ) {
-    setLive(true);
   }
 
   if (isLoading) {
@@ -126,37 +116,43 @@ const MediaScreen = () => {
       <Text bold style={styles.headerTitle}>
         MEDIA
       </Text>
-      {isLive ? (
-        <View>
+      {isTheWeekend && (
+        <>
           <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
           <WebView
-            useWebKit={true}
-            javaScriptEnabled={true}
+            javaScriptEnabled
+            allowsInlineMediaPlayback
+            startInLoadingState
+            renderLoading={() => <Spinner />}
+            injectedJavaScript={`(function() { document.getElementsByClassName('menu')[0].style.display = 'none' })();`}
             style={styles.largeCard}
-            source={{ url: 'https://echochurchlive.churchonline.org' }}
+            source={{ uri: 'https://echochurchlive.churchonline.org' }}
           />
-          <Button
-            title={'Notes'}
-            style={styles.notesButton}
-            onPress={() => {
-              Amplitude.logEventWithProperties('mobileEngagementAction', {
-                app: 'mobile',
-                media: 'Notes',
-              });
-
-              Linking.openURL('https://www.bible.com/events/652292');
-            }}
-          />
-        </View>
-      ) : (
-        <View />
+        </>
       )}
+
       <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
       <YouTubeDataView
         style={styles.currentSeriesCard}
         data={data[0]}
         thumbnailStyle={styles.youtubeThumbnailImageLarge}
       />
+      <Button
+        icon={
+          <MaterialIcons name={'speaker-notes'} size={24} color={Colors.gray} />
+        }
+        title="Message Notes"
+        style={styles.notesButton}
+        onPress={() => {
+          Amplitude.logEventWithProperties('mobileEngagementAction', {
+            app: 'mobile',
+            media: 'Notes',
+          });
+
+          Linking.openURL('https://echo.church/messagenotes');
+        }}
+      />
+
       <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
       <PastSeriesSection data={data.slice(1, data.length)} />
       <Text style={styles.sectionHeaderText}>RESOURCES</Text>
