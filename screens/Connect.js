@@ -9,19 +9,33 @@ import {
   FlatList,
   TouchableHighlight,
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
+import Button from '../components/Button';
 
 const items = [
+  { value: 'LOCATIONS', page: 'Locations' },
   { value: 'ACTIVATE', page: 'Activate' },
   { value: 'BAPTISM', page: 'Baptism' },
   { value: 'VOLUNTEER', page: 'Volunteer' },
   { value: 'PRAYER REQUESTS', page: 'PrayerRequests' },
   { value: 'MISSIONS', page: 'Missions' },
 ];
+
+function openConnectionCard() {
+  Amplitude.logEventWithProperties('mobileEngagementAction', {
+    app: 'mobile',
+    connect: 'connection card',
+  });
+
+  WebBrowser.openBrowserAsync('https://echo.church/connectioncard', {
+    toolbarColor: Colors.darkestGray,
+  });
+}
 
 const EngageScreen = ({ navigation }: { navigation: Object }) => {
   return (
@@ -39,12 +53,12 @@ const EngageScreen = ({ navigation }: { navigation: Object }) => {
           data={items}
           renderItem={({ item: { value, page } = {} }) => (
             <TouchableHighlight
+              underlayColor="transparent"
               onPress={() => {
                 Amplitude.logEventWithProperties('mobilePageView', {
                   app: 'mobile',
                   connect: page,
                 });
-
                 navigation.navigate(page);
               }}
             >
@@ -61,6 +75,19 @@ const EngageScreen = ({ navigation }: { navigation: Object }) => {
           style={styles.list}
         />
       </ScrollView>
+
+      <Button
+        icon={
+          <MaterialCommunityIcons
+            name={'account-heart'}
+            size={28}
+            color={Colors.gray}
+          />
+        }
+        title="Connection Card"
+        style={styles.connectionCard}
+        onPress={openConnectionCard}
+      />
     </View>
   );
 };
@@ -88,8 +115,8 @@ const styles = StyleSheet.create({
     left: 0,
   },
   list: {
-    paddingTop: 20,
     paddingHorizontal: 10,
+    paddingBottom: 20,
   },
   item: {
     flexDirection: 'row',
@@ -102,6 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: Colors.white,
   },
+  connectionCard: { marginHorizontal: 10, marginBottom: 20 },
 });
 
 export default EngageScreen;

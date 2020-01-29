@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 export default () => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color={Colors.red} />
+      <ActivityIndicator size="large" color={Colors.gray} />
     </View>
   );
 };
