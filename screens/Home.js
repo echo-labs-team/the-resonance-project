@@ -26,7 +26,6 @@ import Text from '../components/Text';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import EchoLogo from '../components/EchoLogo';
-import ServiceTimes from '../components/ServiceTimes';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
 type PostType =
@@ -48,9 +47,6 @@ const trackingOptions = {
   mainTray: 'Home',
 };
 
-// initial scroll offset to use when tracking scroll direction
-let scrollOffset = 0;
-
 const HomeScreen = () => {
   const [cardData, setCardData] = useState([
     { url: 'loading1' },
@@ -63,7 +59,6 @@ const HomeScreen = () => {
     { url: 'loading8' },
   ]);
   const [refreshing, setRefreshing] = useState(false);
-  const [showServiceTimes, setShowServiceTimes] = useState(true);
   const [tryAgain, setTryAgain] = useState(false);
 
   // fetch data on mount
@@ -104,75 +99,54 @@ const HomeScreen = () => {
     setRefreshing(true);
   };
 
-  const handleScroll = event => {
-    const currentOffset = event.nativeEvent.contentOffset.y;
-    const shouldShowServiceTimes =
-      currentOffset <= 0 || currentOffset < scrollOffset;
-
-    if (shouldShowServiceTimes !== showServiceTimes) {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      setShowServiceTimes(shouldShowServiceTimes);
-    }
-
-    // Update your scroll position
-    scrollOffset = currentOffset;
-  };
-
   return (
-    <>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            tintColor={Colors.red}
-            colors={[Colors.red]}
-            refreshing={refreshing}
-            onRefresh={refresh}
-          />
-        }
-        onScroll={handleScroll}
-        scrollEventThrottle={300}
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-        {...getHeaderInset()}
-      >
-        {tryAgain && <Spinner />}
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          tintColor={Colors.gray}
+          colors={[Colors.gray]}
+          refreshing={refreshing}
+          onRefresh={refresh}
+        />
+      }
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      {...getHeaderInset()}
+    >
+      {tryAgain && <Spinner />}
 
-        <View style={styles.logoContainer}>
-          <EchoLogo width={40} height={40} color={Colors.red} />
-          <Text style={styles.logo}>ECHO.CHURCH</Text>
-        </View>
+      <View style={styles.logoContainer}>
+        <EchoLogo width={40} height={40} color={Colors.red} />
+        <Text style={styles.logo}>ECHO.CHURCH</Text>
+      </View>
 
-        {cardData.length ? (
-          <FlatList
-            keyExtractor={({ url = '' }) => url.slice(-10)}
-            data={cardData}
-            ItemSeparatorComponent={() => <View style={styles.separator} />}
-            renderItem={({
-              item = {},
-              index,
-            }: {
-              item: CardProps,
-              index: number,
-            }) => {
-              const { url = '' } = item;
+      {cardData.length ? (
+        <FlatList
+          keyExtractor={({ url = '' }) => url.slice(-10)}
+          data={cardData}
+          ItemSeparatorComponent={() => <View style={styles.separator} />}
+          renderItem={({
+            item = {},
+            index,
+          }: {
+            item: CardProps,
+            index: number,
+          }) => {
+            const { url = '' } = item;
 
-              if (url.includes('loading')) {
-                return <HomeCardPlaceholder />;
-              }
-              return <Card key={`card${index}`} {...item} />;
-            }}
-          />
-        ) : (
-          <>
-            <ServiceTimes />
-            <Text style={styles.error}>No posts were found... 🤔</Text>
-            <Button title="Try Again" onPress={() => setTryAgain(true)} />
-          </>
-        )}
-      </ScrollView>
-
-      {showServiceTimes && <ServiceTimes />}
-    </>
+            if (url.includes('loading')) {
+              return <HomeCardPlaceholder />;
+            }
+            return <Card key={`card${index}`} {...item} />;
+          }}
+        />
+      ) : (
+        <>
+          <Text style={styles.error}>No posts were found... 🤔</Text>
+          <Button title="Try Again" onPress={() => setTryAgain(true)} />
+        </>
+      )}
+    </ScrollView>
   );
 };
 
@@ -256,7 +230,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 10,
-    paddingBottom: 120,
     marginTop: -20,
   },
   logoContainer: {
