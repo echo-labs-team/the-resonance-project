@@ -65,8 +65,10 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
   const isWomenOnly = categories.includes('Women Only');
   const isMenOnly = categories.includes('Men Only');
   const isOnline = location.isOnline === 'true';
-  const shouldShowLocation = isOnline || location.name || location.description;
-  const shouldShowAddress = !isOnline && location?.address?.address1;
+  const shouldShowLocation = Boolean(
+    isOnline || location.name || location.description
+  );
+  const shouldShowAddress = Boolean(!isOnline && location?.address?.address1);
   const shouldShowLeaders = leaders.length > 0;
 
   const onShare = async () => {
