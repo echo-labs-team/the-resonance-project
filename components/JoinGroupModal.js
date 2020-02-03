@@ -1,8 +1,11 @@
-import React, { useReducer } from 'react';
-import { StyleSheet, View, TextInput } from 'react-native';
+import React, { useReducer, useRef } from 'react';
+import { StyleSheet, Platform, View, TextInput } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+import DropdownAlert from 'react-native-dropdownalert';
 import Text from './Text';
 import Button from './Button';
 import Colors from '../constants/Colors';
+import { isEmailValid } from '../utils/groups';
 import { joinGroup } from '../data/groups';
 import ModalSheet from './ModalSheet';
 import Spinner from '../components/Spinner';
@@ -52,8 +55,25 @@ export default props => {
     { loading, success, firstName, lastName, email },
     dispatch,
   ] = useReducer(reducer, initialState);
+  const dropdownAlertRef = useRef(null);
 
   const handleSignUp = () => {
+    if (!firstName || !lastName || !email) {
+      return dropdownAlertRef.current.alertWithType(
+        'warn',
+        '😮',
+        `Make sure you've filled out everything`
+      );
+    }
+
+    if (!isEmailValid(email)) {
+      return dropdownAlertRef.current.alertWithType(
+        'error',
+        '🤔',
+        'Make sure your email is correct'
+      );
+    }
+
     dispatch({ type: 'setLoading', value: true });
 
     joinGroup(props.groupID, firstName, lastName, email)
@@ -77,12 +97,10 @@ export default props => {
     <ModalSheet buttonTitle="Sign Up" success={success}>
       {loading && <Spinner />}
 
-      <View style={{ flex: 1 }}>
-        <Text style={{ marginBottom: 40, fontSize: 30, color: Colors.white }}>
-          Sign up
-        </Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>Sign up</Text>
 
-        <Text style={{ marginBottom: 30, fontSize: 18, color: Colors.gray }}>
+        <Text style={styles.info}>
           {`The group leaders will reach out to you with more info once you've joined`}
         </Text>
 
@@ -121,17 +139,38 @@ export default props => {
           onChangeText={value => dispatch({ type: 'setEmail', value })}
           style={styles.input}
         />
-        <View
-          style={{ flex: 1, marginVertical: 10, justifyContent: 'flex-end' }}
-        >
+        <View style={styles.submitButton}>
           <Button title="Sign Up" onPress={handleSignUp} />
         </View>
       </View>
+
+      {/* $FlowFixMe */}
+      <DropdownAlert
+        ref={dropdownAlertRef}
+        wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
+        renderImage={() => (
+          <AntDesign
+            name={'warning'}
+            size={30}
+            color={Colors.white}
+            style={{ padding: 8, alignSelf: 'center' }}
+          />
+        )}
+        zIndex={1}
+      />
     </ModalSheet>
   );
 };
 
 const styles = StyleSheet.create({
+  container: { flex: 1 },
+  title: { marginBottom: 40, fontSize: 30, color: Colors.white },
+  info: {
+    marginBottom: 30,
+    fontSize: 18,
+    color: Colors.gray,
+    textAlign: 'center',
+  },
   input: {
     paddingVertical: 10,
     paddingHorizontal: 8,
@@ -141,4 +180,5 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.gray,
   },
+  submitButton: { flex: 1, marginVertical: 10, justifyContent: 'flex-end' },
 });
