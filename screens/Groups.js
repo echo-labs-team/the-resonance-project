@@ -59,7 +59,7 @@ function useQuery(groups) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 500);
   const queriedGroups = [...groups].filter(({ name = '' }: { name?: string }) =>
-    name.toLowerCase().includes(debouncedQuery.toLowerCase())
+    name?.toLowerCase().includes(debouncedQuery?.toLowerCase())
   );
 
   return [query, setQuery, queriedGroups];
@@ -101,6 +101,8 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [tryAgain, setTryAgain] = useState(false);
+  const numberOfFiltersApplied =
+    filters.Campus.length + filters.Categories.length + filters.Day.length;
 
   useEffect(() => {
     const getGroups = async () => {
@@ -164,19 +166,21 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
 
     return (
       (campusFilter.length
-        ? campusFilter.map(c => c.toLowerCase()).includes(campus?.toLowerCase())
+        ? campusFilter
+            .map(c => c?.toLowerCase())
+            .includes(campus?.toLowerCase())
         : true) &&
       (dayFilter.length
         ? dayFilter.some(day =>
             daysOfWeek
-              .map(dow => dow.toLowerCase())
+              .map(dow => dow?.toLowerCase())
               .includes(day?.toLowerCase())
           )
         : true) &&
       (categoriesFilter.length
         ? categoriesFilter.some(category =>
             groupCategories
-              .map(cat => cat.toLowerCase())
+              .map(cat => cat?.toLowerCase())
               .includes(category?.toLowerCase())
           )
         : true)
@@ -269,6 +273,13 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
               />
               <TouchableOpacity onPress={showFilterModal}>
                 <Text style={styles.filter}>Filter</Text>
+                {numberOfFiltersApplied > 0 && (
+                  <View style={styles.badge}>
+                    <Text light style={styles.badgeCount}>
+                      {numberOfFiltersApplied}
+                    </Text>
+                  </View>
+                )}
               </TouchableOpacity>
             </View>
 
@@ -340,6 +351,18 @@ const styles = StyleSheet.create({
     fontSize: 22,
     color: Colors.gray,
   },
+  badge: {
+    width: 20,
+    height: 20,
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.blue,
+    borderRadius: 10,
+  },
+  badgeCount: { color: Colors.white, textAlign: 'center' },
   list: {
     paddingHorizontal: 10,
   },

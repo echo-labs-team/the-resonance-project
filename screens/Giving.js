@@ -1,40 +1,27 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, ImageBackground } from 'react-native';
-import * as WebBrowser from 'expo-web-browser';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  ImageBackground,
+  Linking,
+} from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
-function getPushPayCampus(campus) {
-  switch (campus) {
-    case 'NSJ':
-      return 'echochurchnorth';
-    case 'SSJ':
-      return 'echochurchsouth';
-    case 'SVL':
-      return 'echochurchsunnyvale';
-    case 'FMT':
-      return 'echochurchfremont';
-    default:
-      return 'echochurchonline';
-  }
-}
+const handleGive = campus => {
+  Amplitude.logEventWithProperties('mobileEngagementAction', {
+    app: 'mobile',
+    giving: campus,
+  });
+
+  Linking.openURL(`https://pushpay.com/g/${campus}`);
+};
 
 const GivingScreen = () => {
-  const handleGive = campus => {
-    Amplitude.logEventWithProperties('mobileEngagementAction', {
-      app: 'mobile',
-      giving: campus,
-    });
-
-    WebBrowser.openBrowserAsync(
-      `https://pushpay.com/g/${getPushPayCampus(campus)}`,
-      { toolbarColor: Colors.darkestGray }
-    );
-  };
-
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -55,22 +42,22 @@ const GivingScreen = () => {
 
         <Button
           title="North San Jose"
-          onPress={() => handleGive('NSJ')}
+          onPress={() => handleGive('echochurchnorth')}
           style={styles.button}
         />
         <Button
           title="South San Jose"
-          onPress={() => handleGive('SSJ')}
+          onPress={() => handleGive('echochurchsouth')}
           style={styles.button}
         />
         <Button
           title="Sunnyvale"
-          onPress={() => handleGive('SVL')}
+          onPress={() => handleGive('echochurchsunnyvale')}
           style={styles.button}
         />
         <Button
           title="Fremont"
-          onPress={() => handleGive('FMT')}
+          onPress={() => handleGive('echochurchfremont')}
           style={styles.button}
         />
       </ScrollView>
