@@ -212,6 +212,7 @@ ${startDate} to ${endDate}`}</Text>
               style={{ padding: 8, alignSelf: 'center' }}
             />
           )}
+          zIndex={1}
         />
       </ScrollView>
     </View>
