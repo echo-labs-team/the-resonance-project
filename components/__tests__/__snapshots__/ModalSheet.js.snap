@@ -18,6 +18,7 @@ Array [
         Object {
           "backgroundColor": "#313d48",
           "borderRadius": 6,
+          "minHeight": 40,
           "paddingHorizontal": 24,
           "paddingVertical": 16,
         },
@@ -255,6 +256,7 @@ Array [
         Object {
           "backgroundColor": "#313d48",
           "borderRadius": 6,
+          "minHeight": 40,
           "paddingHorizontal": 24,
           "paddingVertical": 16,
         },
@@ -492,6 +494,7 @@ Array [
         Object {
           "backgroundColor": "#313d48",
           "borderRadius": 6,
+          "minHeight": 40,
           "paddingHorizontal": 24,
           "paddingVertical": 16,
         },
@@ -750,6 +753,7 @@ Array [
         Object {
           "backgroundColor": "#313d48",
           "borderRadius": 6,
+          "minHeight": 40,
           "paddingHorizontal": 24,
           "paddingVertical": 16,
         },
