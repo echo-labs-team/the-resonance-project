@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import {
+  Platform,
   StyleSheet,
   ScrollView,
   View,
@@ -10,7 +11,6 @@ import {
   RefreshControl,
   TouchableHighlight,
   Linking,
-  LayoutAnimation,
 } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import * as WebBrowser from 'expo-web-browser';
@@ -22,6 +22,7 @@ import { getInstagramPosts } from '../data/instagram';
 import { getBlogPosts } from '../data/blogPosts';
 import { getVerseOfTheDay } from '../data/verseOfTheDay';
 import TextStyles from '../constants/TextStyles';
+import AnimateChildrenIn from '../components/AnimateChildrenIn';
 import Text from '../components/Text';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
@@ -101,6 +102,7 @@ const HomeScreen = () => {
 
   return (
     <ScrollView
+      {...getHeaderInset()}
       refreshControl={
         <RefreshControl
           tintColor={Colors.gray}
@@ -111,14 +113,18 @@ const HomeScreen = () => {
       }
       style={styles.container}
       contentContainerStyle={styles.contentContainer}
-      {...getHeaderInset()}
     >
       {tryAgain && <Spinner />}
 
-      <View style={styles.logoContainer}>
+      <AnimateChildrenIn
+        type="slide-top"
+        durationMs={500}
+        delayMs={300}
+        style={styles.logoContainer}
+      >
         <EchoLogo width={40} height={40} color={Colors.red} />
         <Text style={styles.logo}>ECHO.CHURCH</Text>
-      </View>
+      </AnimateChildrenIn>
 
       {cardData.length ? (
         <FlatList
@@ -230,7 +236,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 10,
-    marginTop: -20,
+    marginTop: Platform.OS === 'ios' ? -20 : 0,
   },
   logoContainer: {
     marginBottom: 10,

@@ -17,6 +17,7 @@ exports[`<Button/> render the button 1`] = `
       Object {
         "backgroundColor": "#313d48",
         "borderRadius": 6,
+        "minHeight": 40,
         "paddingHorizontal": 24,
         "paddingVertical": 16,
       },
@@ -68,6 +69,7 @@ exports[`<Button/> render the button with an icon 1`] = `
       Object {
         "backgroundColor": "#313d48",
         "borderRadius": 6,
+        "minHeight": 40,
         "paddingHorizontal": 24,
         "paddingVertical": 16,
       },
@@ -133,6 +135,7 @@ exports[`<Button/> render the button with style 1`] = `
       Object {
         "backgroundColor": "#313d48",
         "borderRadius": 6,
+        "minHeight": 40,
         "paddingHorizontal": 24,
         "paddingVertical": 16,
       },

@@ -75,6 +75,7 @@ exports[`<GroupsError/> render a group error with a Try Again CTA 1`] = `
         Object {
           "backgroundColor": "#313d48",
           "borderRadius": 6,
+          "minHeight": 40,
           "paddingHorizontal": 24,
           "paddingVertical": 16,
         },

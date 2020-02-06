@@ -14,6 +14,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
+import AnimateChildrenIn from '../components/AnimateChildrenIn';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
@@ -37,7 +38,7 @@ function openConnectionCard() {
   });
 }
 
-const EngageScreen = ({ navigation }: { navigation: Object }) => {
+const ConnectScreen = ({ navigation }: { navigation: Object }) => {
   return (
     <View style={styles.mainContainer}>
       <ImageBackground
@@ -45,35 +46,37 @@ const EngageScreen = ({ navigation }: { navigation: Object }) => {
         style={styles.backgroundImage}
       />
       <ScrollView style={{ flex: 1 }} {...getHeaderInset()}>
-        <Text bold style={styles.headerTitle}>
-          CONNECT
-        </Text>
-        <FlatList
-          keyExtractor={({ value }) => value}
-          data={items}
-          renderItem={({ item: { value, page } = {} }) => (
-            <TouchableHighlight
-              underlayColor="transparent"
-              onPress={() => {
-                Amplitude.logEventWithProperties('mobilePageView', {
-                  app: 'mobile',
-                  connect: page,
-                });
-                navigation.navigate(page);
-              }}
-            >
-              <View style={styles.item}>
-                <Text style={styles.text}>{value}</Text>
-                <Feather
-                  name={'chevron-right'}
-                  size={26}
-                  color={Colors.white}
-                />
-              </View>
-            </TouchableHighlight>
-          )}
-          style={styles.list}
-        />
+        <AnimateChildrenIn delayMs={300} durationMs={750}>
+          <Text bold style={styles.headerTitle}>
+            CONNECT
+          </Text>
+          <FlatList
+            keyExtractor={({ value }) => value}
+            data={items}
+            renderItem={({ item: { value, page } = {} }) => (
+              <TouchableHighlight
+                underlayColor="transparent"
+                onPress={() => {
+                  Amplitude.logEventWithProperties('mobilePageView', {
+                    app: 'mobile',
+                    connect: page,
+                  });
+                  navigation.navigate(page);
+                }}
+              >
+                <View style={styles.item}>
+                  <Text style={styles.text}>{value}</Text>
+                  <Feather
+                    name={'chevron-right'}
+                    size={26}
+                    color={Colors.white}
+                  />
+                </View>
+              </TouchableHighlight>
+            )}
+            style={styles.list}
+          />
+        </AnimateChildrenIn>
       </ScrollView>
 
       <Button
@@ -92,7 +95,7 @@ const EngageScreen = ({ navigation }: { navigation: Object }) => {
   );
 };
 
-EngageScreen.navigationOptions = {
+ConnectScreen.navigationOptions = {
   header: null,
 };
 
@@ -132,4 +135,4 @@ const styles = StyleSheet.create({
   connectionCard: { marginHorizontal: 10, marginBottom: 20 },
 });
 
-export default EngageScreen;
+export default ConnectScreen;
