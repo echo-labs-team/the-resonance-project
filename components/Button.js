@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
+    minHeight: 40,
     backgroundColor: Colors.darkGray,
     borderRadius: 6,
     paddingHorizontal: 24,

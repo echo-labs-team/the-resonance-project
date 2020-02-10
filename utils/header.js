@@ -12,7 +12,7 @@ const BASE_HEADER_HEIGHT = Header.HEIGHT + 20; // add 20 extra padding
 const HEADER_HEIGHT =
   Platform.OS === 'ios'
     ? BASE_HEADER_HEIGHT + NOTCH_HEIGHT
-    : BASE_HEADER_HEIGHT + 20;
+    : BASE_HEADER_HEIGHT + 4;
 
 /**
  * This gets the inset styling that's needed for a `ScrollView` or a component
