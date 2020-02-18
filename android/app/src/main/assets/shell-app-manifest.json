@@ -15,7 +15,7 @@
   "scheme": "echo",
   "splash": {
     "image": "./assets/images/splash.png",
-    "imageUrl": "https://d1wp6m56sqw74a.cloudfront.net/~assets/16da3d52cace588c7bffcd6747f537dd",
+    "imageUrl": "https://d1wp6m56sqw74a.cloudfront.net/~assets/140d37145b40b921bbe01dc718d24c5b",
     "resizeMode": "contain",
     "backgroundColor": "#000000"
   },
@@ -28,7 +28,7 @@
   "locales": {},
   "privacy": "public",
   "updates": { "fallbackToCacheTimeout": 0 },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "platforms": ["ios", "android"],
   "isDetached": true,
   "sdkVersion": "36.0.0",
@@ -63,11 +63,11 @@
   ],
   "bundledAssets": [],
   "id": "@echo.church/echo",
-  "releaseId": "29e6cdfc-a4af-49b0-aef7-d0d4d79ea69b",
-  "revisionId": "1.0.0-r.Hy7SBaob8",
-  "publishedTime": "2020-01-27T02:04:42.875Z",
-  "commitTime": "2020-01-27T02:04:42.904Z",
-  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F0d5a17a39a28c6c58b47071b6ff2d285-36.0.0-android.js",
+  "releaseId": "ee3127db-244b-42d0-89e8-5279704a43a0",
+  "revisionId": "1.0.0-r.SJbeyTu7L",
+  "publishedTime": "2020-02-18T01:33:29.263Z",
+  "commitTime": "2020-02-18T01:33:29.293Z",
+  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2Fe9dde14a4f5c70121ac690d0e473e394-36.0.0-android.js",
   "releaseChannel": "release",
   "hostUri": "exp.host/@echo.church/echo?release-channel=release"
 }

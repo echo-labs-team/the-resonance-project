@@ -15,7 +15,7 @@
   "scheme": "echo",
   "splash": {
     "image": "./assets/images/splash.png",
-    "imageUrl": "https://d1wp6m56sqw74a.cloudfront.net/~assets/16da3d52cace588c7bffcd6747f537dd",
+    "imageUrl": "https://d1wp6m56sqw74a.cloudfront.net/~assets/140d37145b40b921bbe01dc718d24c5b",
     "resizeMode": "contain",
     "backgroundColor": "#000000"
   },
@@ -63,11 +63,11 @@
   ],
   "bundledAssets": [],
   "id": "@echo.church/echo",
-  "releaseId": "278409f6-b9cc-4c09-b0f0-f6ce9c82a32f",
-  "revisionId": "1.0.0-r.Hy7SBaob8",
-  "publishedTime": "2020-01-27T02:04:42.875Z",
-  "commitTime": "2020-01-27T02:04:42.904Z",
-  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2Fe5118f560a65c0c4156010a5d367495f-36.0.0-ios.js",
+  "releaseId": "2c201acd-7f77-4649-97d6-0c7e4571c91f",
+  "revisionId": "1.0.0-r.SJbeyTu7L",
+  "publishedTime": "2020-02-18T01:33:29.263Z",
+  "commitTime": "2020-02-18T01:33:29.293Z",
+  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F1cf4c44b8546ed27698541c8f83e14de-36.0.0-ios.js",
   "releaseChannel": "release",
   "hostUri": "exp.host/@echo.church/echo?release-channel=release"
 }
