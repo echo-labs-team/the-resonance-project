@@ -1,0 +1,28 @@
+🤜 🤛 CONNECT:
+  - screens/Connect.js
+  - screens/Activate.js
+  - screens/Baptism.js
+  - screens/Locations.js
+  - components/ServiceTimes.js
+  - screens/Missions.js
+  - screens/PrayerRequests.js
+  - screens/Volunteer.js
+💰 GIVING:
+  - screens/Giving.js
+👥 GROUPS:
+  - data/groups.js
+  - screens/Groups.js
+  - screens/GroupDetails.js
+  - utils/groups.js
+  - components/Group*.js
+  - components/AskAboutGroupModal.js
+  - components/JoinGroupModal.js
+🏠 HOME:
+  - data/blogPosts.js
+  - data/instagram.js
+  - data/verseOfTheDay.js
+  - screens/Home.js
+  - components/HomeCardPlaceholder.js
+📽 MEDIA:
+  - data/youtube.js
+  - screens/Media.js
