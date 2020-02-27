@@ -196,9 +196,10 @@ Array [
         style={
           Object {
             "backgroundColor": "#212931",
-            "borderRadius": 10,
+            "borderTopLeftRadius": 10,
+            "borderTopRightRadius": 10,
             "height": "85%",
-            "paddingBottom": 40,
+            "paddingBottom": 20,
             "paddingHorizontal": 16,
             "paddingTop": 10,
             "position": "relative",
@@ -434,9 +435,10 @@ Array [
         style={
           Object {
             "backgroundColor": "#212931",
-            "borderRadius": 10,
+            "borderTopLeftRadius": 10,
+            "borderTopRightRadius": 10,
             "height": "85%",
-            "paddingBottom": 40,
+            "paddingBottom": 20,
             "paddingHorizontal": 16,
             "paddingTop": 10,
             "position": "relative",
@@ -693,9 +695,10 @@ Array [
         style={
           Object {
             "backgroundColor": "#212931",
-            "borderRadius": 10,
+            "borderTopLeftRadius": 10,
+            "borderTopRightRadius": 10,
             "height": "85%",
-            "paddingBottom": 40,
+            "paddingBottom": 20,
             "paddingHorizontal": 16,
             "paddingTop": 10,
             "position": "relative",
@@ -931,9 +934,10 @@ Array [
         style={
           Object {
             "backgroundColor": "#212931",
-            "borderRadius": 10,
+            "borderTopLeftRadius": 10,
+            "borderTopRightRadius": 10,
             "height": "85%",
-            "paddingBottom": 40,
+            "paddingBottom": 20,
             "paddingHorizontal": 16,
             "paddingTop": 10,
             "position": "relative",

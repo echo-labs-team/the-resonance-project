@@ -2,17 +2,12 @@
 
 import { Platform } from 'react-native';
 import { Header } from 'react-navigation-stack';
-import { ifIphoneX } from 'react-native-iphone-x-helper';
-
-const NOTCH_HEIGHT = ifIphoneX() ? 25 : 0;
 
 // $FlowIgnore: we will remove the HEIGHT static soon enough
-const BASE_HEADER_HEIGHT = Header.HEIGHT + 20; // add 20 extra padding
+const BASE_HEADER_HEIGHT = Header.HEIGHT;
 
 const HEADER_HEIGHT =
-  Platform.OS === 'ios'
-    ? BASE_HEADER_HEIGHT + NOTCH_HEIGHT
-    : BASE_HEADER_HEIGHT + 4;
+  Platform.OS === 'ios' ? BASE_HEADER_HEIGHT : BASE_HEADER_HEIGHT + 4;
 
 /**
  * This gets the inset styling that's needed for a `ScrollView` or a component

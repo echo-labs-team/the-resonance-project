@@ -28,7 +28,7 @@ export async function getInstagramPosts() {
     } = profile;
 
     instagramPosts = mediaEdges
-      .splice(0, 6)
+      .slice(0, 6)
       .map(({ node = {} } = {}) => {
         const {
           __typename,
@@ -62,5 +62,5 @@ export async function getInstagramPosts() {
     });
   }
 
-  return instagramPosts;
+  return instagramPosts.slice(0, 3);
 }

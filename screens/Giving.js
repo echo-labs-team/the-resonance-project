@@ -1,14 +1,15 @@
 import React from 'react';
 import {
-  StyleSheet,
-  View,
-  ScrollView,
   ImageBackground,
   Linking,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
 } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
@@ -28,39 +29,41 @@ const GivingScreen = () => {
         source={require('../assets/images/giving_bg.png')}
         style={styles.backgroundImage}
       />
-      <ScrollView style={styles.container} {...getHeaderInset()}>
-        <Text bold style={styles.headerTitle}>
-          GIVING
-        </Text>
-        <Text style={styles.header}>Changing lives together</Text>
-        <Text style={styles.content}>
-          We believe that Christians ought to be the most generous people on
-          Earth, because our God is a generous God — giving to us sacrificially
-          over and over again. By contributing financially, you can be a part of
-          changing people’s lives forever.
-        </Text>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ScrollView style={styles.container}>
+          <Text bold style={styles.headerTitle}>
+            GIVING
+          </Text>
+          <Text style={styles.header}>Changing lives together</Text>
+          <Text style={styles.content}>
+            We believe that Christians ought to be the most generous people on
+            Earth, because our God is a generous God — giving to us
+            sacrificially over and over again. By contributing financially, you
+            can be a part of changing people’s lives forever.
+          </Text>
 
-        <Button
-          title="North San Jose"
-          onPress={() => handleGive('echochurchnorth')}
-          style={styles.button}
-        />
-        <Button
-          title="South San Jose"
-          onPress={() => handleGive('echochurchsouth')}
-          style={styles.button}
-        />
-        <Button
-          title="Sunnyvale"
-          onPress={() => handleGive('echochurchsunnyvale')}
-          style={styles.button}
-        />
-        <Button
-          title="Fremont"
-          onPress={() => handleGive('echochurchfremont')}
-          style={styles.button}
-        />
-      </ScrollView>
+          <Button
+            title="North San Jose"
+            onPress={() => handleGive('echochurchnorth')}
+            style={styles.button}
+          />
+          <Button
+            title="South San Jose"
+            onPress={() => handleGive('echochurchsouth')}
+            style={styles.button}
+          />
+          <Button
+            title="Sunnyvale"
+            onPress={() => handleGive('echochurchsunnyvale')}
+            style={styles.button}
+          />
+          <Button
+            title="Fremont"
+            onPress={() => handleGive('echochurchfremont')}
+            style={styles.button}
+          />
+        </ScrollView>
+      </SafeAreaView>
     </View>
   );
 };
@@ -79,6 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   headerTitle: {
+    marginTop: Platform.OS === 'ios' ? 10 : 30,
     fontSize: 30,
     color: Colors.red,
   },

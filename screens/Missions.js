@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
+  AsyncStorage,
+  Image,
+  Platform,
   ScrollView,
   StyleSheet,
   View,
-  Image,
-  AsyncStorage,
 } from 'react-native';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 import axios from 'axios';
@@ -78,7 +79,7 @@ const MissionsScreen = () => {
         </Text>
 
         <Text bold style={[styles.heading, { fontSize: 24 }]}>
-          Some of our current mission trips
+          Current mission trips
         </Text>
         {missions ? (
           <Text bold style={styles.subHeading}>
@@ -95,7 +96,7 @@ const MissionsScreen = () => {
         )}
 
         <Button
-          title="Get More Information"
+          title="Learn More"
           style={styles.button}
           onPress={() => {
             Amplitude.logEventWithProperties('mobileEngagementAction', {
@@ -103,9 +104,12 @@ const MissionsScreen = () => {
               connect: 'Missions More Info',
             });
 
-            WebBrowser.openBrowserAsync('https://echo.church/missions/', {
-              toolbarColor: Colors.darkestGray,
-            });
+            WebBrowser.openBrowserAsync(
+              'https://echo.church/missions/#global',
+              {
+                toolbarColor: Colors.darkestGray,
+              }
+            );
           }}
         />
       </View>
@@ -125,6 +129,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.darkestGray,
   },
   image: {
@@ -138,9 +143,9 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkestGray,
   },
   heading: {
-    marginTop: 10,
-    marginBottom: 20,
+    marginVertical: 10,
     fontSize: 30,
+    lineHeight: 32,
     color: Colors.white,
   },
   subHeading: {

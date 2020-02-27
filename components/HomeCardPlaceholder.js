@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 import Colors from '../constants/Colors';
 
-export default () => (
+export default ({ style }) => (
   <Placeholder
     Animation={props => (
       <Fade {...props} style={{ backgroundColor: Colors.darkGray }} />
@@ -12,6 +12,7 @@ export default () => (
       borderRadius: 8,
       backgroundColor: Colors.darkestGray,
       overflow: 'hidden',
+      ...style,
     }}
   >
     <PlaceholderLine

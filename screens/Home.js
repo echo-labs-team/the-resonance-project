@@ -1,16 +1,13 @@
-// @flow
-
 import React, { useState, useEffect } from 'react';
 import {
-  Platform,
-  StyleSheet,
-  ScrollView,
-  View,
   Image,
-  FlatList,
-  RefreshControl,
-  TouchableHighlight,
   Linking,
+  Platform,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  TouchableHighlight,
+  View,
 } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import * as WebBrowser from 'expo-web-browser';
@@ -28,20 +25,6 @@ import Button from '../components/Button';
 import Spinner from '../components/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
-
-type PostType =
-  | 'INSTAGRAM'
-  | 'BLOG'
-  | 'EVENTS'
-  | 'ANNOUNCEMENTS'
-  | 'VERSE OF THE DAY';
-
-type CardProps = {|
-  type: PostType,
-  url: string,
-  image: string,
-  title: string,
-|};
 
 const trackingOptions = {
   app: 'mobile',
@@ -127,25 +110,17 @@ const HomeScreen = () => {
       </AnimateChildrenIn>
 
       {cardData.length ? (
-        <FlatList
-          keyExtractor={({ url = '' }) => url.slice(-10)}
-          data={cardData}
-          ItemSeparatorComponent={() => <View style={styles.separator} />}
-          renderItem={({
-            item = {},
-            index,
-          }: {
-            item: CardProps,
-            index: number,
-          }) => {
-            const { url = '' } = item;
-
-            if (url.includes('loading')) {
-              return <HomeCardPlaceholder />;
-            }
-            return <Card key={`card${index}`} {...item} />;
-          }}
-        />
+        cardData.map((item, index) => {
+          if (item?.url?.includes('loading')) {
+            return (
+              <HomeCardPlaceholder
+                key={`placeholder${index}`}
+                style={{ marginBottom: 16 }}
+              />
+            );
+          }
+          return <Card key={`card${index}`} {...item} />;
+        })
       ) : (
         <>
           <Text style={styles.error}>No posts were found... 🤔</Text>
@@ -160,7 +135,7 @@ HomeScreen.navigationOptions = {
   header: null,
 };
 
-function getIcon(type: PostType) {
+function getIcon(type) {
   if (type === 'INSTAGRAM') {
     return {
       uri:
@@ -180,7 +155,7 @@ function getIcon(type: PostType) {
   }[type];
 }
 
-const Card = ({ type, url, image, title }: CardProps) => {
+const Card = ({ type, url, image, title }) => {
   const icon = getIcon(type);
 
   return (
@@ -251,6 +226,7 @@ const styles = StyleSheet.create({
   },
   card: {
     flex: 1,
+    marginBottom: 16,
     backgroundColor: Colors.darkestGray,
     borderRadius: 8,
     overflow: 'hidden',
@@ -278,9 +254,6 @@ const styles = StyleSheet.create({
     paddingRight: 16,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  separator: {
-    height: 16,
   },
   error: {
     marginBottom: 10,

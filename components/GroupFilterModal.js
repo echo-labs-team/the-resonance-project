@@ -5,7 +5,6 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  Platform,
   StyleSheet,
   View,
   SectionList,
@@ -14,6 +13,7 @@ import {
 } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
+import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import Text from './Text';
 import Button from './Button';
@@ -160,7 +160,11 @@ export default ({
         />
 
         <View style={styles.button}>
-          <Button title="Apply" onPress={handleApply} />
+          <Button
+            title="Apply"
+            style={{ width: '50%' }}
+            onPress={handleApply}
+          />
         </View>
       </View>
     </Modal>
@@ -171,29 +175,26 @@ const dragBarColor = 'rgba(255,255,255,0.3)';
 
 const styles = StyleSheet.create({
   modal: {
-    marginTop: 100,
-    marginBottom: 0,
-    marginHorizontal: 0,
+    margin: 0,
     justifyContent: 'flex-end',
   },
   closeButton: { alignSelf: 'flex-end' },
   container: {
-    flex: 1,
-    paddingTop: 20,
-    paddingBottom: 40,
+    height: '85%',
+    paddingTop: 10,
+    paddingBottom: 20,
+    paddingHorizontal: 16,
     position: 'relative',
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     backgroundColor: Colors.darkerGray,
   },
   // needed to allow scrolling on android
-  contentContainer: {
-    flexGrow: 3,
-    height: '40%',
-  },
+  contentContainer: { flexGrow: 1, marginBottom: 66 },
   dragBar: {
     width: 100,
     height: 6,
-    marginBottom: 30,
+    marginBottom: 10,
     alignSelf: 'center',
     borderRadius: 6,
     backgroundColor: dragBarColor,
@@ -234,9 +235,14 @@ const styles = StyleSheet.create({
     color: Colors.gray,
   },
   button: {
+    width: Layout.window.width,
+    paddingTop: 14,
+    position: 'absolute',
+    bottom: 20,
     flex: 1,
-    paddingHorizontal: 16,
-    marginTop: Platform.OS === 'ios' ? 10 : 40,
-    justifyContent: 'flex-end',
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderColor: Colors.darkGray,
+    backgroundColor: Colors.darkerGray,
   },
 });

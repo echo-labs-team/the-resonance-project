@@ -21,7 +21,7 @@ if (__DEV__) {
     console.log(`[amplitude]: ${name} -`, data);
 
   // Erase all AsyncStorage
-  AsyncStorage.clear();
+  AsyncStorage.multiRemove(['@groups', '@missions']);
 }
 
 if (
