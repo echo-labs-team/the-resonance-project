@@ -12,6 +12,7 @@ exports[`<GroupsError/> render a group error 1`] = `
   <Text
     allowFontScaling={false}
     light={true}
+    selectable={true}
     style={
       Array [
         Object {
@@ -43,6 +44,7 @@ exports[`<GroupsError/> render a group error with a Try Again CTA 1`] = `
   <Text
     allowFontScaling={false}
     light={true}
+    selectable={true}
     style={
       Array [
         Object {

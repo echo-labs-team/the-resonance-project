@@ -2,19 +2,19 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  StyleSheet,
-  ScrollView,
-  View,
-  ImageBackground,
-  FlatList,
-  TouchableOpacity,
-  RefreshControl,
   AsyncStorage,
+  FlatList,
+  ImageBackground,
+  Platform,
+  RefreshControl,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 // import AsyncStorage from '@react-native-community/async-storage';
 import { BlurView } from 'expo-blur';
 import Colors from '../constants/Colors';
-import { getHeaderInset } from '../utils/header';
 import { getOpenGroups, getCategories } from '../data/groups';
 import Text from '../components/Text';
 import Button from '../components/Button';
@@ -246,18 +246,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
 
       {tryAgain && <Spinner />}
 
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            tintColor={Colors.gray}
-            colors={[Colors.gray]}
-            refreshing={refreshing}
-            onRefresh={() => setRefreshing(true)}
-          />
-        }
-        style={{ flex: 1 }}
-        {...getHeaderInset()}
-      >
+      <SafeAreaView style={{ flex: 1 }}>
         <Text bold style={styles.headerTitle}>
           GROUPS
         </Text>
@@ -271,7 +260,10 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
                 value={query}
                 onChangeText={value => setQuery(value)}
               />
-              <TouchableOpacity onPress={showFilterModal}>
+              <TouchableOpacity
+                style={{ width: 80, height: 40 }}
+                onPress={showFilterModal}
+              >
                 <Text style={styles.filter}>Filter</Text>
                 {numberOfFiltersApplied > 0 && (
                   <View style={styles.badge}>
@@ -287,7 +279,6 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
               <FlatList
                 keyExtractor={({ uuid }) => uuid.toString()}
                 data={data}
-                ItemSeparatorComponent={() => <View style={styles.separator} />}
                 renderItem={({ item }) => {
                   return (
                     <View style={styles.cardShadow}>
@@ -297,6 +288,14 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
                     </View>
                   );
                 }}
+                refreshControl={
+                  <RefreshControl
+                    tintColor={Colors.gray}
+                    colors={[Colors.gray]}
+                    refreshing={refreshing}
+                    onRefresh={() => setRefreshing(true)}
+                  />
+                }
                 style={styles.list}
               />
             ) : (
@@ -304,7 +303,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
             )}
           </>
         )}
-      </ScrollView>
+      </SafeAreaView>
 
       <GroupFilterModal
         categories={categories}
@@ -327,13 +326,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   searchBar: {
+    paddingBottom: 10,
     paddingHorizontal: 10,
-    marginVertical: 20,
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center',
   },
   headerTitle: {
+    marginTop: Platform.OS === 'ios' ? 10 : 30,
     marginLeft: 16,
     fontSize: 30,
     color: Colors.red,
@@ -364,10 +363,12 @@ const styles = StyleSheet.create({
   },
   badgeCount: { color: Colors.white, textAlign: 'center' },
   list: {
+    height: '100%',
     paddingHorizontal: 10,
+    marginTop: 40,
   },
-  separator: { height: 20 },
   card: {
+    marginBottom: 16,
     borderRadius: 16,
   },
   cardShadow: {

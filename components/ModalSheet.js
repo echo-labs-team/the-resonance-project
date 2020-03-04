@@ -75,10 +75,11 @@ const styles = StyleSheet.create({
   container: {
     height: '85%',
     paddingTop: 10,
-    paddingBottom: 40,
+    paddingBottom: 20,
     paddingHorizontal: 16,
     position: 'relative',
-    borderRadius: 10,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
     backgroundColor: Colors.darkerGray,
   },
   // needed to allow scrolling on android

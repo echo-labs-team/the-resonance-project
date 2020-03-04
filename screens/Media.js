@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import {
-  ScrollView,
-  View,
-  StyleSheet,
-  Linking,
   Dimensions,
-  FlatList,
   Image,
+  Linking,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
-  SafeAreaView,
+  View,
 } from 'react-native';
 import WebView from 'react-native-webview';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -18,7 +18,6 @@ import { MaterialIcons } from '@expo/vector-icons';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
-import { getHeaderInset } from '../utils/header';
 import isTheWeekend from '../utils/isTheWeekend';
 import Text from '../components/Text';
 import Button from '../components/Button';
@@ -60,7 +59,7 @@ const MediaScreen = () => {
 
   if (isLoading) {
     return (
-      <SafeAreaView style={styles.container} {...getHeaderInset()}>
+      <SafeAreaView style={styles.container}>
         <Text bold style={styles.headerTitle}>
           MEDIA
         </Text>
@@ -71,7 +70,7 @@ const MediaScreen = () => {
 
   if (isError) {
     return (
-      <SafeAreaView style={styles.container} {...getHeaderInset()}>
+      <SafeAreaView style={styles.container}>
         <Text bold style={styles.headerTitle}>
           MEDIA
         </Text>
@@ -112,72 +111,78 @@ const MediaScreen = () => {
   }
 
   return (
-    <ScrollView style={styles.container} {...getHeaderInset()}>
-      <Text bold style={styles.headerTitle}>
-        MEDIA
-      </Text>
-      {isTheWeekend && (
-        <>
-          <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
-          <WebView
-            javaScriptEnabled
-            allowsInlineMediaPlayback
-            startInLoadingState
-            renderLoading={() => <Spinner />}
-            injectedJavaScript={`(function() { document.getElementsByClassName('menu')[0].style.display = 'none' })();`}
-            style={styles.largeCard}
-            source={{ uri: 'https://echochurchlive.churchonline.org' }}
-          />
-        </>
-      )}
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.container}>
+        <Text bold style={styles.headerTitle}>
+          MEDIA
+        </Text>
+        {isTheWeekend && (
+          <>
+            <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
+            <WebView
+              javaScriptEnabled
+              allowsInlineMediaPlayback
+              startInLoadingState
+              renderLoading={() => <Spinner />}
+              injectedJavaScript={`(function() { document.getElementsByClassName('menu')[0].style.display = 'none' })();`}
+              style={styles.largeCard}
+              source={{ uri: 'https://echochurchlive.churchonline.org' }}
+            />
+          </>
+        )}
 
-      <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
-      <YouTubeDataView
-        style={styles.currentSeriesCard}
-        data={data[0]}
-        thumbnailStyle={styles.youtubeThumbnailImageLarge}
-      />
-      <Button
-        icon={
-          <MaterialIcons name={'speaker-notes'} size={24} color={Colors.gray} />
-        }
-        title="Message Notes"
-        style={styles.notesButton}
-        onPress={() => {
-          Amplitude.logEventWithProperties('mobileEngagementAction', {
-            app: 'mobile',
-            media: 'Notes',
-          });
-
-          Linking.openURL('https://echo.church/messagenotes');
-        }}
-      />
-
-      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
-      <PastSeriesSection data={data.slice(1, data.length)} />
-      <Text style={styles.sectionHeaderText}>RESOURCES</Text>
-      <TouchableHighlight
-        onPress={() => {
-          Amplitude.logEventWithProperties('mobileEngagementAction', {
-            app: 'mobile',
-            media: 'rightnow media',
-          });
-
-          Linking.openURL(
-            'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
-          );
-        }}
-      >
-        <Image
-          source={require('../assets/images/rightnow_media.jpg')}
-          style={[
-            styles.youtubeThumbnailImageLarge,
-            { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
-          ]}
-          resizeMode="cover"
+        <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
+        <YouTubeDataView
+          style={styles.currentSeriesCard}
+          data={data[0]}
+          thumbnailStyle={styles.youtubeThumbnailImageLarge}
         />
-      </TouchableHighlight>
-    </ScrollView>
+        <Button
+          icon={
+            <MaterialIcons
+              name={'speaker-notes'}
+              size={24}
+              color={Colors.gray}
+            />
+          }
+          title="Message Notes"
+          style={styles.notesButton}
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              media: 'Notes',
+            });
+
+            Linking.openURL('https://echo.church/messagenotes');
+          }}
+        />
+
+        <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+        <PastSeriesSection data={data.slice(1, data.length)} />
+        <Text style={styles.sectionHeaderText}>RESOURCES</Text>
+        <TouchableHighlight
+          onPress={() => {
+            Amplitude.logEventWithProperties('mobileEngagementAction', {
+              app: 'mobile',
+              media: 'rightnow media',
+            });
+
+            Linking.openURL(
+              'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
+            );
+          }}
+        >
+          <Image
+            source={require('../assets/images/rightnow_media.jpg')}
+            style={[
+              styles.youtubeThumbnailImageLarge,
+              { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
+            ]}
+            resizeMode="cover"
+          />
+        </TouchableHighlight>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
@@ -192,30 +197,24 @@ const takeToItem = ({ id } = {}) => {
 
 const PastSeriesSection = ({ data }) => {
   if (data === null || data.length === 0) {
-    return <View />;
+    return null;
   }
 
   return (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        keyExtractor={obj => obj.title}
-        data={data}
-        ItemSeparatorComponent={() => <View style={styles.separator} />}
-        numColumns={2}
-        renderItem={({ index, item }) => {
-          if (item) {
-            return (
-              <YouTubeDataView
-                style={styles.smallCard}
-                data={item}
-                thumbnailStyle={styles.youtubeThumbnailImageSmall}
-              />
-            );
-          }
-          return <View />;
-        }}
-        style={styles.list}
-      />
+    <View style={styles.list}>
+      {data.map(item => {
+        if (item) {
+          return (
+            <YouTubeDataView
+              key={item.title}
+              data={item}
+              thumbnailStyle={styles.youtubeThumbnailImageSmall}
+              style={styles.smallCard}
+            />
+          );
+        }
+        return null;
+      })}
     </View>
   );
 };
@@ -235,7 +234,12 @@ const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
           style={thumbnailStyle}
           resizeMode="cover"
         />
-        <Text style={[TextStyles.subtitle, { textAlign: 'center' }]}>
+        <Text
+          style={[
+            TextStyles.subtitle,
+            { textAlign: 'center', color: Colors.gray },
+          ]}
+        >
           {title}
         </Text>
       </View>
@@ -255,11 +259,11 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   headerTitle: {
+    marginTop: Platform.OS === 'ios' ? 10 : 30,
     marginLeft: 16,
     fontSize: 30,
     color: Colors.red,
   },
-  separator: { height: 16 },
   container: {
     flex: 1,
     backgroundColor: Colors.headerBackground,
@@ -276,25 +280,16 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     borderRadius: 8,
   },
-  errorMessage: {
-    color: Colors.white,
-    textAlign: 'center',
-  },
   list: {
-    paddingTop: 0,
-    paddingHorizontal: 0,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   smallCard: {
     width: (screenWidth - 48) / 2,
     height: (screenWidth - 48) / 3,
+    marginBottom: 16,
     marginLeft: 16,
     borderRadius: 0,
-  },
-  pastSeries: {
-    width: screenWidth - 32,
-    aspectRatio: 2 / 3,
-    marginLeft: 16,
-    borderRadius: 8,
   },
   notesButton: {
     margin: 16,

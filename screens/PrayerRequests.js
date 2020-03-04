@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Image } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
@@ -22,7 +22,7 @@ const PrayerRequestsScreen = () => {
         </Text>
 
         <Button
-          title="Submit Your Prayer Request"
+          title="Submit Prayer Request"
           style={styles.button}
           onPress={() => {
             Amplitude.logEventWithProperties('mobileEngagementAction', {
@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.darkestGray,
   },
   image: {
@@ -61,9 +62,9 @@ const styles = StyleSheet.create({
   },
   container: { paddingVertical: 20, paddingHorizontal: 16 },
   heading: {
-    marginTop: 10,
-    marginBottom: 20,
+    marginVertical: 10,
     fontSize: 30,
+    lineHeight: 32,
     color: Colors.white,
   },
   content: {

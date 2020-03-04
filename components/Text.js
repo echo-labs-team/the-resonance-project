@@ -17,8 +17,9 @@ export default props => {
 
   return (
     <Text
-      {...props}
       allowFontScaling={false}
+      selectable
+      {...props}
       style={[{ fontFamily: `NunitoSans-${fontWeight}` }, props.style]}
     >
       {props.children}

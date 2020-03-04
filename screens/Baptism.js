@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Image } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
@@ -39,7 +39,7 @@ const BaptismScreen = () => {
         </Text>
 
         <Button
-          title="I Want to Be Baptized"
+          title="I'm Interested"
           style={styles.button}
           onPress={() => {
             Amplitude.logEventWithProperties('mobileEngagementAction', {
@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.darkestGray,
   },
   image: {
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
   heading: {
     marginVertical: 10,
     fontSize: 30,
+    lineHeight: 32,
     color: Colors.white,
   },
   subHeading: {
