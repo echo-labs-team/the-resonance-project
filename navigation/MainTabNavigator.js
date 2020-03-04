@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, StatusBar, View } from 'react-native';
+import { StyleSheet, StatusBar, View, Platform } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
-import { ifIphoneX } from 'react-native-iphone-x-helper';
 import * as Amplitude from 'expo-analytics-amplitude';
 
 import Colors from '../constants/Colors';
@@ -35,7 +34,13 @@ const defaultHeaderNavigationOptions = {
     shadowColor: 'transparent',
     borderBottomWidth: 0,
   },
-  headerBackground: <BlurView style={{ flex: 1 }} tint="dark" intensity={98} />,
+  headerBackground: (
+    <BlurView
+      style={{ flex: 1 }}
+      tint="dark"
+      intensity={Platform.OS === 'ios' ? 100 : 175}
+    />
+  ),
   headerTitleStyle: {
     position: 'absolute',
     left: 0,
@@ -72,13 +77,13 @@ const HomeStack = createStackNavigator({
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Echo',
+  tabBarLabel: 'ECHO',
   tabBarIcon: ({ focused }) => (
     <EchoLogo
-      width={28}
-      height={28}
+      width={30}
+      height={30}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={styles.icon}
+      style={[styles.icon, { marginTop: -4 }]}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -92,13 +97,13 @@ const MediaStack = createStackNavigator({
 });
 
 MediaStack.navigationOptions = {
-  tabBarLabel: 'Media',
+  tabBarLabel: 'MEDIA',
   tabBarIcon: ({ focused }) => (
     <Entypo
       name={'controller-play'}
       size={30}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={styles.icon}
+      style={[styles.icon, { marginTop: -4 }]}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -136,12 +141,12 @@ const ConnectStack = createStackNavigator({
 });
 
 ConnectStack.navigationOptions = {
-  tabBarLabel: 'Connect',
+  tabBarLabel: 'CONNECT',
   tabBarIcon: ({ focused }) => (
-    <View style={[styles.icon, { marginTop: isTheWeekend ? -12 : -4 }]}>
+    <View style={[styles.icon, { marginTop: isTheWeekend ? -10 : -4 }]}>
       <ConnectLogo
-        width={isTheWeekend ? 48 : 38}
-        height={isTheWeekend ? 48 : 38}
+        width={isTheWeekend ? 50 : 40}
+        height={isTheWeekend ? 50 : 40}
         color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       />
     </View>
@@ -161,11 +166,11 @@ const GroupsStack = createStackNavigator({
 });
 
 GroupsStack.navigationOptions = {
-  tabBarLabel: 'Groups',
+  tabBarLabel: 'GROUPS',
   tabBarIcon: ({ focused }) => (
     <GroupsLogo
-      width={36}
-      height={36}
+      width={38}
+      height={38}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       style={[styles.icon, { marginTop: -4 }]}
     />
@@ -181,19 +186,19 @@ const GivingStack = createStackNavigator({
 });
 
 GivingStack.navigationOptions = {
-  tabBarLabel: 'Giving',
+  tabBarLabel: 'GIVING',
   tabBarIcon: ({ focused }) => (
     <Feather
       name={'gift'}
-      size={22}
+      size={24}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={styles.icon}
+      style={[styles.icon, { marginTop: -4 }]}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
 };
 
-export default createMaterialTopTabNavigator(
+export default createBottomTabNavigator(
   {
     HomeStack,
     MediaStack,
@@ -203,27 +208,18 @@ export default createMaterialTopTabNavigator(
   },
   {
     initialRouteName: isTheWeekend ? 'ConnectStack' : 'HomeStack',
-    tabBarPosition: 'bottom',
-    animationEnabled: false,
-    swipeEnabled: false,
-    lazy: false,
-    optimizationsEnabled: true,
     tabBarOptions: {
       activeTintColor: Colors.tabIconSelected,
       inactiveTintColor: Colors.tabIconDefault,
-      showIcon: true,
-      showLabel: true,
       style: {
-        paddingBottom: ifIphoneX ? 16 : 0,
+        paddingTop: 10,
+        borderTopColor: 'transparent',
         backgroundColor: Colors.tabBar,
       },
       labelStyle: {
         fontFamily: 'NunitoSans-Regular',
-        fontSize: 9,
+        fontSize: 10,
         includeFontPadding: false,
-      },
-      indicatorStyle: {
-        display: 'none',
       },
     },
   }

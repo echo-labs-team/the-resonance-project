@@ -10,7 +10,7 @@ const textStyles = StyleSheet.create({
   },
   subtitle: {
     textAlign: 'left',
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: 'NunitoSans-Bold',
     color: Colors.white,
   },
@@ -21,4 +21,5 @@ const textStyles = StyleSheet.create({
     color: Colors.white,
   },
 });
+
 export default textStyles;

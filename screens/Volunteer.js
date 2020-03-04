@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Image } from 'react-native';
+import { Platform, ScrollView, StyleSheet, View, Image } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
@@ -53,7 +53,7 @@ const VolunteerScreen = () => {
         <Text style={styles.listItem}>{'\u2022 Connections'}</Text>
 
         <Button
-          title="Sign Up to Serve"
+          title="Sign Up"
           style={styles.button}
           onPress={() => {
             Amplitude.logEventWithProperties('mobileEngagementAction', {
@@ -84,13 +84,17 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.darkestGray,
   },
   image: {
     width: '100%',
     height: 300,
   },
-  container: { paddingVertical: 20, paddingHorizontal: 16 },
+  container: {
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+  },
   heading: {
     marginVertical: 10,
     fontSize: 30,

@@ -1,11 +1,12 @@
 import React from 'react';
 import {
+  Image,
+  Linking,
+  Platform,
   ScrollView,
   StyleSheet,
-  View,
-  Image,
   TouchableHighlight,
-  Linking,
+  View,
 } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
@@ -110,6 +111,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
+    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.black,
   },
   image: {
@@ -118,11 +120,14 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
     backgroundColor: Colors.white,
   },
-  container: { paddingVertical: 20, paddingHorizontal: 16 },
+  container: {
+    paddingVertical: 20,
+    paddingHorizontal: 16,
+  },
   heading: {
-    marginTop: 10,
-    marginBottom: 20,
+    marginVertical: 10,
     fontSize: 30,
+    lineHeight: 32,
     color: Colors.white,
     textAlign: 'center',
   },

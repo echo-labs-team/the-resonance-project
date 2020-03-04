@@ -56,7 +56,7 @@ export default ({
       }
     >
       <View style={styles.group}>
-        <Text light adjustsFontSizeToFit numberOfLines={1} style={styles.title}>
+        <Text light adjustsFontSizeToFit numberOfLines={2} style={styles.title}>
           {title}
         </Text>
 
@@ -99,8 +99,10 @@ export const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   title: {
+    marginTop: 16,
     marginBottom: 10,
     fontSize: 28,
+    lineHeight: 30,
     color: Colors.white,
   },
   details: {
