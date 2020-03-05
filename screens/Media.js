@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import {
+  AsyncStorage,
   Dimensions,
   Image,
   Linking,
-  Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -30,7 +30,14 @@ const trackingOptions = {
   mainTray: 'Media',
 };
 
+const storeMediaData = async data => {
+  await AsyncStorage.setItem('@media', JSON.stringify(data)).catch(err =>
+    console.error(err)
+  );
+};
+
 const MediaScreen = () => {
+  const insets = useSafeArea();
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -42,10 +49,20 @@ const MediaScreen = () => {
 
   async function getVideos() {
     try {
+      const storedMedia = await AsyncStorage.getItem('@media').catch(err =>
+        console.error(err)
+      );
+
+      if (storedMedia) {
+        setData(JSON.parse(storedMedia));
+        setLoading(false);
+      }
+
       const fetchedVideos = (await collectChannelData()) || [];
 
       setData(fetchedVideos);
       setLoading(false);
+      storeMediaData(fetchedVideos);
     } catch (err) {
       console.error('Error getting media', err);
 
@@ -59,18 +76,18 @@ const MediaScreen = () => {
 
   if (isLoading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={{ flex: 1, paddingTop: insets.top }}>
         <Text bold style={styles.headerTitle}>
           MEDIA
         </Text>
         <Spinner />
-      </SafeAreaView>
+      </View>
     );
   }
 
   if (isError) {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={{ flex: 1, paddingTop: insets.top }}>
         <Text bold style={styles.headerTitle}>
           MEDIA
         </Text>
@@ -106,83 +123,79 @@ const MediaScreen = () => {
             }}
           />
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.container}>
-        <Text bold style={styles.headerTitle}>
-          MEDIA
-        </Text>
-        {isTheWeekend && (
-          <>
-            <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
-            <WebView
-              javaScriptEnabled
-              allowsInlineMediaPlayback
-              startInLoadingState
-              renderLoading={() => <Spinner />}
-              injectedJavaScript={`(function() { document.getElementsByClassName('menu')[0].style.display = 'none' })();`}
-              style={styles.largeCard}
-              source={{ uri: 'https://echochurchlive.churchonline.org' }}
-            />
-          </>
-        )}
-
-        <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
-        <YouTubeDataView
-          style={styles.currentSeriesCard}
-          data={data[0]}
-          thumbnailStyle={styles.youtubeThumbnailImageLarge}
-        />
-        <Button
-          icon={
-            <MaterialIcons
-              name={'speaker-notes'}
-              size={24}
-              color={Colors.gray}
-            />
-          }
-          title="Message Notes"
-          style={styles.notesButton}
-          onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              media: 'Notes',
-            });
-
-            Linking.openURL('https://echo.church/messagenotes');
-          }}
-        />
-
-        <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
-        <PastSeriesSection data={data.slice(1, data.length)} />
-        <Text style={styles.sectionHeaderText}>RESOURCES</Text>
-        <TouchableHighlight
-          onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              media: 'rightnow media',
-            });
-
-            Linking.openURL(
-              'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
-            );
-          }}
-        >
-          <Image
-            source={require('../assets/images/rightnow_media.jpg')}
-            style={[
-              styles.youtubeThumbnailImageLarge,
-              { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
-            ]}
-            resizeMode="cover"
+    <ScrollView style={[styles.container, { paddingTop: insets.top }]}>
+      <Text bold style={styles.headerTitle}>
+        MEDIA
+      </Text>
+      {isTheWeekend && (
+        <>
+          <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
+          <WebView
+            javaScriptEnabled
+            allowsInlineMediaPlayback
+            startInLoadingState
+            renderLoading={() => <Spinner />}
+            injectedJavaScript={`(function() { document.getElementsByClassName('menu')[0].style.display = 'none' })();`}
+            style={styles.largeCard}
+            source={{ uri: 'https://echochurchlive.churchonline.org' }}
           />
-        </TouchableHighlight>
-      </ScrollView>
-    </SafeAreaView>
+        </>
+      )}
+
+      <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
+      <YouTubeDataView
+        style={styles.currentSeriesCard}
+        data={data[0]}
+        thumbnailStyle={styles.youtubeThumbnailImageLarge}
+      />
+      <Button
+        icon={
+          <MaterialIcons name={'speaker-notes'} size={24} color={Colors.gray} />
+        }
+        title="Message Notes"
+        style={styles.notesButton}
+        onPress={() => {
+          Amplitude.logEventWithProperties('mobileEngagementAction', {
+            app: 'mobile',
+            media: 'Notes',
+          });
+
+          Linking.openURL('https://echo.church/messagenotes');
+        }}
+      />
+
+      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+      <PastSeriesSection data={data.slice(1, data.length)} />
+
+      <Text style={styles.sectionHeaderText}>RESOURCES</Text>
+      <TouchableHighlight
+        style={{ marginBottom: insets.bottom + 16 }}
+        onPress={() => {
+          Amplitude.logEventWithProperties('mobileEngagementAction', {
+            app: 'mobile',
+            media: 'rightnow media',
+          });
+
+          Linking.openURL(
+            'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
+          );
+        }}
+      >
+        <Image
+          source={require('../assets/images/rightnow_media.jpg')}
+          style={[
+            styles.youtubeThumbnailImageLarge,
+            { height: screenWidth / 2, marginLeft: 16, marginBottom: 16 },
+          ]}
+          resizeMode="cover"
+        />
+      </TouchableHighlight>
+    </ScrollView>
   );
 };
 
@@ -259,7 +272,7 @@ const styles = StyleSheet.create({
     paddingBottom: 8,
   },
   headerTitle: {
-    marginTop: Platform.OS === 'ios' ? 10 : 30,
+    marginTop: 10,
     marginLeft: 16,
     fontSize: 30,
     color: Colors.red,

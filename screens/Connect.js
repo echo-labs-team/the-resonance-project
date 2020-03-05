@@ -4,15 +4,15 @@ import React from 'react';
 import {
   FlatList,
   ImageBackground,
-  Platform,
-  SafeAreaView,
   StyleSheet,
   TouchableHighlight,
   View,
 } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
+import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import Text from '../components/Text';
 import Button from '../components/Button';
@@ -38,43 +38,40 @@ function openConnectionCard() {
 }
 
 const ConnectScreen = ({ navigation }: { navigation: Object }) => {
+  const insets = useSafeArea();
+
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
       <ImageBackground
         source={require('../assets/images/connect_bg.png')}
         style={styles.backgroundImage}
       />
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text bold style={styles.headerTitle}>
-          CONNECT
-        </Text>
-        <FlatList
-          keyExtractor={({ value }) => value}
-          data={items}
-          renderItem={({ item: { value, page } = {} }) => (
-            <TouchableHighlight
-              underlayColor="transparent"
-              onPress={() => {
-                Amplitude.logEventWithProperties('mobilePageView', {
-                  app: 'mobile',
-                  connect: page,
-                });
-                navigation.navigate(page);
-              }}
-            >
-              <View style={styles.item}>
-                <Text style={styles.text}>{value}</Text>
-                <Feather
-                  name={'chevron-right'}
-                  size={26}
-                  color={Colors.white}
-                />
-              </View>
-            </TouchableHighlight>
-          )}
-          style={styles.list}
-        />
-      </SafeAreaView>
+
+      <Text bold style={styles.headerTitle}>
+        CONNECT
+      </Text>
+      <FlatList
+        keyExtractor={({ value }) => value}
+        data={items}
+        renderItem={({ item: { value, page } = {} }) => (
+          <TouchableHighlight
+            underlayColor="transparent"
+            onPress={() => {
+              Amplitude.logEventWithProperties('mobilePageView', {
+                app: 'mobile',
+                connect: page,
+              });
+              navigation.navigate(page);
+            }}
+          >
+            <View style={styles.item}>
+              <Text style={styles.text}>{value}</Text>
+              <Feather name={'chevron-right'} size={26} color={Colors.white} />
+            </View>
+          </TouchableHighlight>
+        )}
+        style={styles.list}
+      />
 
       <Button
         icon={
@@ -102,14 +99,14 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   headerTitle: {
-    marginTop: Platform.OS === 'ios' ? 10 : 30,
+    marginTop: 10,
     marginLeft: 16,
     fontSize: 30,
     color: Colors.red,
   },
   backgroundImage: {
     width: '100%',
-    height: '100%',
+    height: Layout.window.height,
     flex: 1,
     position: 'absolute',
     top: 0,

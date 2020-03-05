@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
-import {
-  AsyncStorage,
-  Platform,
-  StatusBar,
-  StyleSheet,
-  UIManager,
-  View,
-} from 'react-native';
+import { AsyncStorage, Platform, StatusBar, UIManager } from 'react-native';
 import { AppLoading } from 'expo';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as Icon from '@expo/vector-icons';
 import * as Amplitude from 'expo-analytics-amplitude';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './navigation/AppNavigator';
-import Colors from './constants/Colors';
+
+// init with the dev app https://analytics.amplitude.com/echo-church-app-dev
+Amplitude.initialize('915eae61254cd5eaec60df02369eff57');
 
 if (__DEV__) {
   // override amplitude tracking
@@ -21,7 +17,7 @@ if (__DEV__) {
     console.log(`[amplitude]: ${name} -`, data);
 
   // Erase all AsyncStorage
-  AsyncStorage.multiRemove(['@groups', '@missions']);
+  AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
 }
 
 if (
@@ -75,7 +71,7 @@ export default props => {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaProvider>
       <StatusBar
         hidden={true}
         animated
@@ -85,13 +81,6 @@ export default props => {
         translucent
       />
       <AppNavigator />
-    </View>
+    </SafeAreaProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Colors.black,
-  },
-});
