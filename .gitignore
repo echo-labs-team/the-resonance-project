@@ -1,4 +1,7 @@
 ios/Podfiles/Pods/**/*
+ios/Podfile.lock
+
+package-lock.json
 
 constants/Keys*
 
