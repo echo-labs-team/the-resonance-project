@@ -2,19 +2,20 @@
 
 import React, { useRef } from 'react';
 import {
-  SafeAreaView,
+  ImageBackground,
   Platform,
   ScrollView,
+  Share,
   StyleSheet,
   View,
-  ImageBackground,
-  Share,
 } from 'react-native';
-import { Header } from 'react-navigation-stack';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Hyperlink from 'react-native-hyperlink';
+import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
+import { getHeaderInset } from '../utils/header';
 import Text from '../components/Text';
 import Button from '../components/Button';
 import { styles as groupStyles } from '../components/GroupCardDetails';
@@ -29,6 +30,7 @@ import SignUp from '../components/JoinGroupModal';
 import Ask from '../components/AskAboutGroupModal';
 
 const GroupDetails = ({ navigation }: { navigation: Object }) => {
+  const insets = useSafeArea();
   const scrollViewRef = useRef(null);
   const dropdownAlertRef = useRef(null);
 
@@ -96,134 +98,130 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
       <ImageBackground
         source={require('../assets/images/groups_bg.png')}
         style={styles.backgroundImage}
       />
 
-      <SafeAreaView style={{ flex: 1 }}>
-        <ScrollView ref={scrollViewRef} style={styles.container}>
-          <Text
-            light
-            adjustsFontSizeToFit
-            numberOfLines={2}
-            style={groupStyles.title}
-          >
-            {title}
+      <ScrollView
+        ref={scrollViewRef}
+        style={styles.container}
+        {...getHeaderInset()}
+      >
+        <Text
+          light
+          adjustsFontSizeToFit
+          numberOfLines={2}
+          style={groupStyles.title}
+        >
+          {title}
+        </Text>
+
+        <View style={groupStyles.when}>
+          <Text style={groupStyles.detail}>
+            {getMeetingFrequency(frequency, interval)} on{' '}
+            <Text bold style={[groupStyles.detail, groupStyles.b]}>
+              {getMeetingDay(daysOfWeek, dayOfMonth)}
+            </Text>{' '}
+            at{' '}
+            <Text bold style={[groupStyles.detail, groupStyles.b]}>
+              {getMeetingTime(meetingTime)}
+            </Text>
           </Text>
+        </View>
 
-          <View style={groupStyles.when}>
-            <Text style={groupStyles.detail}>
-              {getMeetingFrequency(frequency, interval)} on{' '}
-              <Text bold style={[groupStyles.detail, groupStyles.b]}>
-                {getMeetingDay(daysOfWeek, dayOfMonth)}
-              </Text>{' '}
-              at{' '}
-              <Text bold style={[groupStyles.detail, groupStyles.b]}>
-                {getMeetingTime(meetingTime)}
-              </Text>
-            </Text>
-          </View>
+        <View style={[groupStyles.details, { marginBottom: 16 }]}>
+          <Text bold style={[groupStyles.detail, { fontSize: 18 }]}>
+            {campus}
+          </Text>
+        </View>
 
+        {isWomenOnly && (
           <View style={[groupStyles.details, { marginBottom: 16 }]}>
-            <Text bold style={[groupStyles.detail, { fontSize: 18 }]}>
-              {campus}
+            <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
+              👩 WOMEN ONLY
             </Text>
           </View>
+        )}
+        {isMenOnly && (
+          <View style={[groupStyles.details, { marginBottom: 16 }]}>
+            <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
+              👨 MEN ONLY
+            </Text>
+          </View>
+        )}
 
-          {isWomenOnly && (
-            <View style={[groupStyles.details, { marginBottom: 16 }]}>
-              <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
-                👩 WOMEN ONLY
-              </Text>
-            </View>
-          )}
-          {isMenOnly && (
-            <View style={[groupStyles.details, { marginBottom: 16 }]}>
-              <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
-                👨 MEN ONLY
-              </Text>
-            </View>
-          )}
+        {shouldShowLocation && (
+          <Location isOnline={isOnline} location={location} />
+        )}
 
-          {shouldShowLocation && (
-            <Location isOnline={isOnline} location={location} />
-          )}
+        {shouldShowAddress && <Address location={location} />}
 
-          {shouldShowAddress && <Address location={location} />}
-
-          {shouldShowLeaders && (
-            <View style={{ marginBottom: 16 }}>
-              <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-                Leaders
-              </Text>
-              {leaders.map(({ name }) => (
-                <Text key={name} style={{ fontSize: 16, color: Colors.gray }}>
-                  {name}
-                </Text>
-              ))}
-            </View>
-          )}
-
+        {shouldShowLeaders && (
           <View style={{ marginBottom: 16 }}>
             <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-              Childcare
+              Leaders
             </Text>
-            <Text style={{ fontSize: 16, color: Colors.gray }}>
-              {hasChildcare ? 'Provided' : 'Not Provided'}
-            </Text>
+            {leaders.map(({ name }) => (
+              <Text key={name} style={{ fontSize: 16, color: Colors.gray }}>
+                {name}
+              </Text>
+            ))}
           </View>
+        )}
 
-          {/* make any links clickable */}
-          <Hyperlink linkDefault>
-            <Text
-              style={[
-                groupStyles.description,
-                { padding: 0, marginBottom: 20 },
-              ]}
-            >
-              {description}
-            </Text>
-          </Hyperlink>
+        <View style={{ marginBottom: 16 }}>
+          <Text bold style={{ fontSize: 18, color: Colors.gray }}>
+            Childcare
+          </Text>
+          <Text style={{ fontSize: 16, color: Colors.gray }}>
+            {hasChildcare ? 'Provided' : 'Not Provided'}
+          </Text>
+        </View>
 
-          {startDate && (
-            <Text
-              style={[
-                groupStyles.description,
-                { padding: 0, marginBottom: 20 },
-              ]}
-            >{`This semester runs from 
+        {/* make any links clickable */}
+        <Hyperlink linkDefault>
+          <Text
+            style={[groupStyles.description, { padding: 0, marginBottom: 20 }]}
+          >
+            {description}
+          </Text>
+        </Hyperlink>
+
+        {startDate && (
+          <Text
+            style={[groupStyles.description, { padding: 0, marginBottom: 20 }]}
+          >{`This semester runs from 
 ${startDate} to ${endDate}`}</Text>
+        )}
+
+        <SignUp groupID={uuid} showSuccess={showSuccess} />
+        <Ask groupID={uuid} showSuccess={showSuccess} />
+        <Button
+          icon={<Feather name={'share'} size={24} color={Colors.gray} />}
+          title="Share"
+          onPress={onShare}
+        />
+
+        <View style={{ marginBottom: 40 }} />
+
+        {/* $FlowFixMe */}
+        <DropdownAlert
+          ref={dropdownAlertRef}
+          successColor={Colors.blue}
+          wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
+          renderImage={() => (
+            <Feather
+              name={'check-circle'}
+              size={30}
+              color={Colors.white}
+              style={{ padding: 8, alignSelf: 'center' }}
+            />
           )}
-
-          <SignUp groupID={uuid} showSuccess={showSuccess} />
-          <Ask groupID={uuid} showSuccess={showSuccess} />
-          <Button
-            icon={<Feather name={'share'} size={24} color={Colors.gray} />}
-            title="Share"
-            onPress={onShare}
-          />
-
-          <View style={{ marginBottom: 40 }} />
-
-          {/* $FlowFixMe */}
-          <DropdownAlert
-            ref={dropdownAlertRef}
-            successColor={Colors.blue}
-            wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
-            renderImage={() => (
-              <Feather
-                name={'check-circle'}
-                size={30}
-                color={Colors.white}
-                style={{ padding: 8, alignSelf: 'center' }}
-              />
-            )}
-            zIndex={1}
-          />
-        </ScrollView>
-      </SafeAreaView>
+          zIndex={1}
+        />
+      </ScrollView>
     </View>
   );
 };
@@ -235,13 +233,12 @@ GroupDetails.navigationOptions = {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 0 : 44,
     position: 'relative',
     backgroundColor: Colors.black,
   },
   backgroundImage: {
     width: '100%',
-    height: '100%',
+    height: Layout.window.height,
     flex: 1,
     position: 'absolute',
     top: 0,
@@ -251,7 +248,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 16,
-    marginTop: Header.HEIGHT - 20,
   },
 });
 

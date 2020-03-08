@@ -1,5 +1,6 @@
 import React from 'react';
-import { Platform, ScrollView, StyleSheet, View, Image } from 'react-native';
+import { ScrollView, StyleSheet, View, Image } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
@@ -8,13 +9,18 @@ import Text from '../components/Text';
 import Button from '../components/Button';
 
 const VolunteerScreen = () => {
+  const insets = useSafeArea();
+
   return (
-    <ScrollView style={styles.mainContainer} {...getHeaderInset()}>
+    <ScrollView
+      style={[styles.mainContainer, { paddingTop: insets.top }]}
+      {...getHeaderInset()}
+    >
       <Image
         source={require('../assets/images/volunteer.jpg')}
         style={styles.image}
       />
-      <View style={styles.container}>
+      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <Text style={styles.heading}>Volunteering</Text>
 
         <Text style={styles.subHeading}>Attend One Serve One</Text>
@@ -84,7 +90,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.darkestGray,
   },
   image: {
@@ -116,7 +121,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: Colors.gray,
   },
-  button: { marginTop: 20, marginBottom: 10 },
+  button: { marginVertical: 20 },
 });
 
 export default VolunteerScreen;

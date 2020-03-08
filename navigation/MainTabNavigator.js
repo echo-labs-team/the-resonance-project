@@ -54,7 +54,7 @@ const defaultHeaderNavigationOptions = {
   headerBackTitle: null,
   headerLeftContainerStyle: {
     alignSelf: 'flex-end',
-    marginLeft: 16,
+    marginLeft: Platform.OS === 'ios' ? 16 : 0,
   },
 };
 

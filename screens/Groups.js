@@ -5,15 +5,15 @@ import {
   AsyncStorage,
   FlatList,
   ImageBackground,
-  Platform,
   RefreshControl,
-  SafeAreaView,
   StyleSheet,
   TouchableOpacity,
   View,
 } from 'react-native';
 // import AsyncStorage from '@react-native-community/async-storage';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
+import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { getOpenGroups, getCategories } from '../data/groups';
 import Text from '../components/Text';
@@ -84,6 +84,7 @@ const initialFilters = {
 };
 
 const GroupsScreen = ({ navigation }: { navigation: Object }) => {
+  const insets = useSafeArea();
   const [groups, setGroups] = useState([
     { uuid: 'loading1' },
     { uuid: 'loading2' },
@@ -238,7 +239,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   };
 
   return (
-    <View style={styles.mainContainer}>
+    <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
       <ImageBackground
         source={require('../assets/images/groups_bg.png')}
         style={styles.backgroundImage}
@@ -246,64 +247,59 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
 
       {tryAgain && <Spinner />}
 
-      <SafeAreaView style={{ flex: 1 }}>
-        <Text bold style={styles.headerTitle}>
-          GROUPS
-        </Text>
+      <Text bold style={styles.headerTitle}>
+        GROUPS
+      </Text>
 
-        {hasError ? (
-          <Error tryAgain={() => setTryAgain(true)} />
-        ) : (
-          <>
-            <View style={styles.searchBar}>
-              <SearchBar
-                value={query}
-                onChangeText={value => setQuery(value)}
-              />
-              <TouchableOpacity
-                style={{ width: 80, height: 40 }}
-                onPress={showFilterModal}
-              >
-                <Text style={styles.filter}>Filter</Text>
-                {numberOfFiltersApplied > 0 && (
-                  <View style={styles.badge}>
-                    <Text light style={styles.badgeCount}>
-                      {numberOfFiltersApplied}
-                    </Text>
+      {hasError ? (
+        <Error tryAgain={() => setTryAgain(true)} />
+      ) : (
+        <>
+          <View style={styles.searchBar}>
+            <SearchBar value={query} onChangeText={value => setQuery(value)} />
+            <TouchableOpacity
+              style={{ width: 80, height: 40 }}
+              onPress={showFilterModal}
+            >
+              <Text style={styles.filter}>Filter</Text>
+              {numberOfFiltersApplied > 0 && (
+                <View style={styles.badge}>
+                  <Text light style={styles.badgeCount}>
+                    {numberOfFiltersApplied}
+                  </Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          </View>
+
+          {data.length ? (
+            <FlatList
+              keyExtractor={({ uuid }) => uuid.toString()}
+              data={data}
+              renderItem={({ item }) => {
+                return (
+                  <View style={styles.cardShadow}>
+                    <BlurView tint="dark" intensity={100} style={styles.card}>
+                      <Card navigation={navigation} item={item} />
+                    </BlurView>
                   </View>
-                )}
-              </TouchableOpacity>
-            </View>
-
-            {data.length ? (
-              <FlatList
-                keyExtractor={({ uuid }) => uuid.toString()}
-                data={data}
-                renderItem={({ item }) => {
-                  return (
-                    <View style={styles.cardShadow}>
-                      <BlurView tint="dark" intensity={100} style={styles.card}>
-                        <Card navigation={navigation} item={item} />
-                      </BlurView>
-                    </View>
-                  );
-                }}
-                refreshControl={
-                  <RefreshControl
-                    tintColor={Colors.gray}
-                    colors={[Colors.gray]}
-                    refreshing={refreshing}
-                    onRefresh={() => setRefreshing(true)}
-                  />
-                }
-                style={styles.list}
-              />
-            ) : (
-              renderNoResults()
-            )}
-          </>
-        )}
-      </SafeAreaView>
+                );
+              }}
+              refreshControl={
+                <RefreshControl
+                  tintColor={Colors.gray}
+                  colors={[Colors.gray]}
+                  refreshing={refreshing}
+                  onRefresh={() => setRefreshing(true)}
+                />
+              }
+              style={styles.list}
+            />
+          ) : (
+            renderNoResults()
+          )}
+        </>
+      )}
 
       <GroupFilterModal
         categories={categories}
@@ -332,14 +328,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   headerTitle: {
-    marginTop: Platform.OS === 'ios' ? 10 : 30,
+    marginTop: 10,
     marginLeft: 16,
     fontSize: 30,
     color: Colors.red,
   },
   backgroundImage: {
     width: '100%',
-    height: '100%',
+    height: Layout.window.height,
     flex: 1,
     position: 'absolute',
     top: 0,
