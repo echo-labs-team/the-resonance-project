@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
+  AsyncStorage,
   Image,
   Linking,
   Platform,
@@ -31,6 +32,12 @@ const trackingOptions = {
   mainTray: 'Home',
 };
 
+const storePostsData = async data => {
+  await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch(err =>
+    console.error(err)
+  );
+};
+
 const HomeScreen = () => {
   const [cardData, setCardData] = useState([
     { url: 'loading1' },
@@ -48,6 +55,18 @@ const HomeScreen = () => {
   // fetch data on mount
   useEffect(() => {
     const getPosts = async () => {
+      try {
+        const storedPosts = await AsyncStorage.getItem('@posts').catch(err =>
+          console.error(err)
+        );
+
+        if (storedPosts) {
+          setCardData(JSON.parse(storedPosts));
+        }
+      } catch (err) {
+        console.error('Error getting stored posts', err);
+      }
+
       const igPosts = (await getInstagramPosts()) || [];
       const blogPosts = (await getBlogPosts()) || [];
       const verseOfTheDay = (await getVerseOfTheDay()) || {};
@@ -58,10 +77,12 @@ const HomeScreen = () => {
       }
 
       const [firstPost, ...restOfPosts] = posts;
+      const allPosts = [firstPost, verseOfTheDay, ...(restOfPosts || [])];
 
-      setCardData([firstPost, verseOfTheDay, ...(restOfPosts || [])]);
+      setCardData(allPosts);
       setRefreshing(false);
       setTryAgain(false);
+      storePostsData(allPosts);
     };
 
     if (refreshing || tryAgain) {
@@ -163,6 +184,8 @@ const Card = ({ type, url, image, title }) => {
       underlayColor={Colors.darkBlue}
       style={styles.card}
       onPress={() => {
+        Amplitude.logEventWithProperties(`OPEN ${type}`, trackingOptions);
+
         if (type === 'BLOG') {
           return WebBrowser.openBrowserAsync(url, {
             toolbarColor: Colors.darkestGray,

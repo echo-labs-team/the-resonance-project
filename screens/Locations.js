@@ -2,12 +2,12 @@ import React from 'react';
 import {
   Image,
   Linking,
-  Platform,
   ScrollView,
   StyleSheet,
   TouchableHighlight,
   View,
 } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
@@ -37,17 +37,27 @@ const openMaps = location => {
       break;
   }
 
+  Amplitude.logEventWithProperties('mobileEngagementAction', {
+    app: 'mobile',
+    connect: `Open Maps for ${location}`,
+  });
+
   Linking.openURL(url);
 };
 
 const LocationsScreen = () => {
+  const insets = useSafeArea();
+
   return (
-    <ScrollView style={styles.mainContainer} {...getHeaderInset()}>
+    <ScrollView
+      style={[styles.mainContainer, { paddingTop: insets.top }]}
+      {...getHeaderInset()}
+    >
       <Image
         source={require('../assets/images/locations.png')}
         style={styles.image}
       />
-      <View style={styles.container}>
+      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <Text style={styles.heading}>
           All Echo.Church locations & regular service times
         </Text>
@@ -111,7 +121,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.black,
   },
   image: {

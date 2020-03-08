@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {
   AsyncStorage,
   Image,
-  Platform,
   ScrollView,
   StyleSheet,
   View,
 } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
@@ -24,6 +24,7 @@ const storeMissionsData = async missions => {
 };
 
 const MissionsScreen = () => {
+  const insets = useSafeArea();
   const [missions, setMissions] = useState('');
 
   useEffect(() => {
@@ -64,12 +65,15 @@ const MissionsScreen = () => {
   }, []);
 
   return (
-    <ScrollView style={styles.mainContainer} {...getHeaderInset()}>
+    <ScrollView
+      style={[styles.mainContainer, { paddingTop: insets.top }]}
+      {...getHeaderInset()}
+    >
       <Image
         source={require('../assets/images/missions.png')}
         style={styles.image}
       />
-      <View style={styles.container}>
+      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
         <Text style={styles.heading}>Echoing Around the World</Text>
         <Text style={styles.content}>
           Mission trips give Echo.Church a chance to serve and encourage our
@@ -129,7 +133,6 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 0 : 20,
     backgroundColor: Colors.darkestGray,
   },
   image: {
