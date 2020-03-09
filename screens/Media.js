@@ -11,7 +11,6 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import WebView from 'react-native-webview';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
 // import YouTube from 'react-native-youtube';
@@ -27,15 +26,13 @@ import * as WebBrowser from 'expo-web-browser';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
-const trackingOptions = {
-  app: 'mobile',
-  mainTray: 'Media',
-};
-
 const storeMediaData = async data => {
   await AsyncStorage.setItem('@media', JSON.stringify(data)).catch(err =>
     console.error(err)
   );
+};
+const getStoredMedia = () => {
+  return AsyncStorage.getItem('@media').catch(err => console.error(err));
 };
 
 const MediaScreen = () => {
@@ -50,9 +47,7 @@ const MediaScreen = () => {
 
   async function getVideos() {
     try {
-      const storedMedia = await AsyncStorage.getItem('@media').catch(err =>
-        console.error(err)
-      );
+      const storedMedia = await getStoredMedia();
 
       if (storedMedia) {
         setData(JSON.parse(storedMedia));
@@ -65,13 +60,10 @@ const MediaScreen = () => {
       setLoading(false);
       storeMediaData(fetchedVideos);
     } catch (err) {
-      console.error('Error getting media', err);
-
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");
       setLoading(false);
-
-      Amplitude.logEventWithProperties('errorLoadingMedia', trackingOptions);
+      Amplitude.logEventWithProperties('ERROR loading media', { error: err });
     }
   }
 
@@ -116,10 +108,6 @@ const MediaScreen = () => {
             onPress={() => {
               setError(false);
               setLoading(true);
-              Amplitude.logEventWithProperties(
-                'tryReloadingMedia',
-                trackingOptions
-              );
               getVideos();
             }}
           />
@@ -162,11 +150,7 @@ const MediaScreen = () => {
         title="Message Notes"
         style={styles.notesButton}
         onPress={() => {
-          Amplitude.logEventWithProperties('mobileEngagementAction', {
-            app: 'mobile',
-            media: 'Notes',
-          });
-
+          Amplitude.logEvent('TAP Message Notes');
           Linking.openURL('https://echo.church/messagenotes');
         }}
       />
@@ -178,10 +162,7 @@ const MediaScreen = () => {
       <TouchableHighlight
         style={{ marginBottom: insets.bottom + 16 }}
         onPress={() => {
-          Amplitude.logEventWithProperties('mobileEngagementAction', {
-            app: 'mobile',
-            media: 'rightnow media',
-          });
+          Amplitude.logEvent('TAP Rightnow Media');
           Linking.openURL(
             'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
           );
@@ -200,10 +181,9 @@ const MediaScreen = () => {
   );
 };
 
-const takeToItem = ({ id } = {}) => {
-  Amplitude.logEventWithProperties('mobileEngagementAction', {
-    app: 'mobile',
-    media: 'videoPlay',
+const takeToItem = ({ id, title } = {}) => {
+  Amplitude.logEventWithProperties('TAP Past Series', {
+    series_name: title,
   });
 
   Linking.openURL(`https://www.youtube.com/playlist?list=${id}`);

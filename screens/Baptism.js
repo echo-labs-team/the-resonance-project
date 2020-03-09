@@ -48,11 +48,7 @@ const BaptismScreen = () => {
           title="I'm Interested"
           style={styles.button}
           onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              connect: 'Baptism Signup',
-            });
-
+            Amplitude.logEvent('TAP Baptism Interested');
             WebBrowser.openBrowserAsync(
               'https://goo.gl/forms/Lc8g3MU0CCxjea9e2',
               { toolbarColor: Colors.darkestGray }

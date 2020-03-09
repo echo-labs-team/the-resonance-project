@@ -27,11 +27,7 @@ const items = [
 ];
 
 function openConnectionCard() {
-  Amplitude.logEventWithProperties('mobileEngagementAction', {
-    app: 'mobile',
-    connect: 'connection card',
-  });
-
+  Amplitude.logEvent('TAP Connection Card');
   WebBrowser.openBrowserAsync('https://echo.church/connectioncard', {
     toolbarColor: Colors.darkestGray,
   });
@@ -57,10 +53,7 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
           <TouchableHighlight
             underlayColor="transparent"
             onPress={() => {
-              Amplitude.logEventWithProperties('mobilePageView', {
-                app: 'mobile',
-                connect: page,
-              });
+              Amplitude.logEvent(`OPEN ${page}`);
               navigation.navigate(page);
             }}
           >

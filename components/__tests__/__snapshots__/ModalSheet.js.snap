@@ -148,51 +148,6 @@ Array [
       swipeThreshold={100}
     >
       <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "flex-start",
-                "padding": 8,
-              },
-              Object {
-                "backgroundColor": "transparent",
-                "borderRadius": 5,
-              },
-              Object {
-                "alignSelf": "flex-end",
-              },
-            ]
-          }
-        >
-          <Text />
-        </View>
-      </View>
-      <View
         style={
           Object {
             "backgroundColor": "#212931",
@@ -386,51 +341,6 @@ Array [
       swipeDirection="down"
       swipeThreshold={100}
     >
-      <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "flex-start",
-                "padding": 8,
-              },
-              Object {
-                "backgroundColor": "transparent",
-                "borderRadius": 5,
-              },
-              Object {
-                "alignSelf": "flex-end",
-              },
-            ]
-          }
-        >
-          <Text />
-        </View>
-      </View>
       <View
         style={
           Object {
@@ -626,72 +536,6 @@ Array [
       swipeThreshold={100}
     >
       <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "flex-start",
-                "padding": 8,
-              },
-              Object {
-                "backgroundColor": "transparent",
-                "borderRadius": 5,
-              },
-              Object {
-                "alignSelf": "flex-end",
-              },
-            ]
-          }
-        >
-          <Text
-            allowFontScaling={false}
-            style={
-              Array [
-                Object {
-                  "color": "#fff",
-                  "fontSize": 26,
-                },
-                Object {
-                  "marginRight": 10,
-                },
-                Object {
-                  "fontFamily": "anticon",
-                  "fontStyle": "normal",
-                  "fontWeight": "normal",
-                },
-                Object {},
-              ]
-            }
-          >
-            
-          </Text>
-        </View>
-      </View>
-      <View
         style={
           Object {
             "backgroundColor": "#212931",
@@ -885,51 +729,6 @@ Array [
       swipeDirection="down"
       swipeThreshold={100}
     >
-      <View
-        accessible={true}
-        focusable={true}
-        isTVSelectable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Array [
-            Object {
-              "overflow": "hidden",
-            },
-            Object {
-              "backgroundColor": "transparent",
-              "borderRadius": 5,
-            },
-          ]
-        }
-      >
-        <View
-          style={
-            Array [
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "flex-start",
-                "padding": 8,
-              },
-              Object {
-                "backgroundColor": "transparent",
-                "borderRadius": 5,
-              },
-              Object {
-                "alignSelf": "flex-end",
-              },
-            ]
-          }
-        >
-          <Text />
-        </View>
-      </View>
       <View
         style={
           Object {
