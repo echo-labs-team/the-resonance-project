@@ -69,7 +69,7 @@ const MediaScreen = () => {
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, paddingTop: insets.top }}>
+      <View style={[styles.container, { flex: 1, paddingTop: insets.top }]}>
         <Text bold style={styles.headerTitle}>
           MEDIA
         </Text>
