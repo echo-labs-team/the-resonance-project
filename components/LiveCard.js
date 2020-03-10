@@ -1,12 +1,12 @@
 import React from 'react';
 import TextStyles from '../constants/TextStyles';
 import Svg, { Circle } from 'react-native-svg';
-import { View, Text, StyleSheet, Animated } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 
-export default ({ width, height, color, style }) => {
+export default ({ style }) => {
   return (
-    <Animated.View style={[style, styles.container]}>
+    <View style={[style, styles.container]}>
       <View style={{ flex: 1 }} />
       <Text style={styles.liveText}>WATCH LIVE</Text>
       <Svg style={styles.circle} viewBox="0 0 100 100">
@@ -20,7 +20,7 @@ export default ({ width, height, color, style }) => {
         />
       </Svg>
       <View style={{ flex: 1 }} />
-    </Animated.View>
+    </View>
   );
 };
 

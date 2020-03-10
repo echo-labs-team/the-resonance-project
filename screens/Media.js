@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AsyncStorage,
   Dimensions,
@@ -9,7 +9,6 @@ import {
   TouchableHighlight,
   TouchableOpacity,
   View,
-  Animated,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
@@ -136,34 +135,17 @@ const MediaScreen = () => {
       </Text>
       {isTheWeekend && (
         <>
-          {/* <Text style={styles.sectionHeaderText}>WATCH NOW</Text> */}
           <TouchableHighlight
             onPress={() => {
-              Amplitude.logEventWithProperties('mobileEngagementAction', {
-                app: 'mobile',
-                connect: 'watch live',
-              });
+              Amplitude.logEvent('TAP Watch Live');
               WebBrowser.openBrowserAsync(
                 'https://echochurchlive.churchonline.org',
                 { toolbarColor: Colors.darkestGray }
               );
             }}
           >
-            <LiveCard
-              style={styles.largeCard}
-              width={styles.largeCard.width}
-              height={styles.largeCard.height}
-            />
+            <LiveCard style={styles.largeCard} />
           </TouchableHighlight>
-          {/* <WebView
-            javaScriptEnabled
-            allowsInlineMediaPlayback
-            startInLoadingState
-            renderLoading={() => <Spinner />}
-            injectedJavaScript={`(function() { document.getElementsByClassName('menu')[0].style.display = 'none' })();`}
-            style={styles.largeCard}
-            source={{ uri: 'https://echochurchlive.churchonline.org' }}
-          /> */}
         </>
       )}
 
