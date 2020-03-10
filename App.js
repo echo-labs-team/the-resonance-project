@@ -12,9 +12,10 @@ import * as Font from 'expo-font';
 import * as Icon from '@expo/vector-icons';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import keys from './constants/Keys';
 import AppNavigator from './navigation/AppNavigator';
 
-Amplitude.initialize('915eae61254cd5eaec60df02369eff57');
+Amplitude.initialize(keys.AMPLITUDE);
 
 if (__DEV__) {
   // override amplitude tracking

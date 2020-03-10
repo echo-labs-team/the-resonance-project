@@ -8,7 +8,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import Button from './Button';
 import Colors from '../constants/Colors';
