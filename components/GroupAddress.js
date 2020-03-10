@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, TouchableHighlight, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import Text from './Text';
 
-export default ({ location = {} }) => {
+export default ({ title, location = {} }) => {
   const {
     address: {
       address1 = '',
@@ -28,6 +29,9 @@ export default ({ location = {} }) => {
   const openMaps = () => {
     const addressString = address1 ? addressItems.join(', ') : '';
 
+    Amplitude.logEventWithProperties('TAP Google Maps Group Address', {
+      group: title,
+    });
     Linking.openURL(
       `https://maps.google.com/?daddr=${encodeURIComponent(addressString)}`
     );

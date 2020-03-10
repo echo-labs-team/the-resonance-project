@@ -34,11 +34,7 @@ const ActivateScreen = () => {
           title="RSVP Here"
           style={styles.button}
           onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              connect: 'Activate Signup',
-            });
-
+            Amplitude.logEvent('TAP Activate RSVP');
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/e/1FAIpQLSdZ1EBI_kCqt8xtK1n1PBfcBUlHFPl45o-9Ls3O2srwejpjGw/viewform?vc=0&c=0&w=1',
               { toolbarColor: Colors.darkestGray }

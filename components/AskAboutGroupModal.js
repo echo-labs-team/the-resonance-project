@@ -2,6 +2,7 @@ import React, { useReducer, useRef } from 'react';
 import { StyleSheet, Platform, View, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Text from './Text';
 import Button from './Button';
 import Colors from '../constants/Colors';
@@ -63,6 +64,12 @@ export default props => {
   ] = useReducer(reducer, initialState);
   const dropdownAlertRef = useRef(null);
 
+  const handleOpenModal = () => {
+    Amplitude.logEventWithProperties('OPEN Group Ask Question', {
+      group: props.title,
+    });
+  };
+
   const handleAsk = () => {
     if (!firstName || !lastName || !email || !question) {
       return dropdownAlertRef.current.alertWithType(
@@ -81,7 +88,9 @@ export default props => {
     }
 
     dispatch({ type: 'setLoading', value: true });
-
+    Amplitude.logEventWithProperties('SUBMIT Group Ask Question', {
+      group: props.title,
+    });
     askQuestion(props.groupID, firstName, lastName, email, question)
       .then(askSuccess => {
         if (askSuccess) {
@@ -94,13 +103,20 @@ export default props => {
         }
       })
       .catch(err => {
-        console.log(err);
         dispatch({ type: 'setLoading', value: false });
+        Amplitude.logEventWithProperties('ERROR Group Ask Question', {
+          group: props.title,
+          error: err,
+        });
       });
   };
 
   return (
-    <ModalSheet buttonTitle="Ask a Question" success={success}>
+    <ModalSheet
+      buttonTitle="Ask a Question"
+      success={success}
+      handleOpenModal={handleOpenModal}
+    >
       {loading && <Spinner />}
 
       <View style={styles.container}>

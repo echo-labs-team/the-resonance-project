@@ -54,11 +54,8 @@ export async function getInstagramPosts() {
       })
       .filter(Boolean);
   } catch (err) {
-    console.error(err.toString());
-    Amplitude.logEventWithProperties('errorLoadingInstagramPosts', {
-      app: 'mobile',
-      mainTray: 'Home',
-      error: err.toString(),
+    Amplitude.logEventWithProperties('ERROR loading instagram posts', {
+      error: err,
     });
   }
 

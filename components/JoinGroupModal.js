@@ -2,6 +2,7 @@ import React, { useReducer, useRef } from 'react';
 import { StyleSheet, Platform, View, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Text from './Text';
 import Button from './Button';
 import Colors from '../constants/Colors';
@@ -57,6 +58,12 @@ export default props => {
   ] = useReducer(reducer, initialState);
   const dropdownAlertRef = useRef(null);
 
+  const handleOpenModal = () => {
+    Amplitude.logEventWithProperties('OPEN Group Sign Up', {
+      group: props.title,
+    });
+  };
+
   const handleSignUp = () => {
     if (!firstName || !lastName || !email) {
       return dropdownAlertRef.current.alertWithType(
@@ -75,7 +82,9 @@ export default props => {
     }
 
     dispatch({ type: 'setLoading', value: true });
-
+    Amplitude.logEventWithProperties('SUBMIT Group Sign Up', {
+      group: props.title,
+    });
     joinGroup(props.groupID, firstName, lastName, email)
       .then(joinGroupSuccess => {
         if (joinGroupSuccess) {
@@ -88,13 +97,20 @@ export default props => {
         }
       })
       .catch(err => {
-        console.log(err);
         dispatch({ type: 'setLoading', value: false });
+        Amplitude.logEventWithProperties('ERROR Group Sign Up', {
+          group: props.title,
+          error: err,
+        });
       });
   };
 
   return (
-    <ModalSheet buttonTitle="Sign Up" success={success}>
+    <ModalSheet
+      buttonTitle="Sign Up"
+      success={success}
+      handleOpenModal={handleOpenModal}
+    >
       {loading && <Spinner />}
 
       <View style={styles.container}>

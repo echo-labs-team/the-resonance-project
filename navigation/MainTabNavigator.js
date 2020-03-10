@@ -63,20 +63,16 @@ const defaultTabBarOnPress = ({
   navigation: { state: { routeName } = {} } = {},
   defaultHandler,
 }) => {
-  StatusBar.setHidden(routeName === 'HomeStack', 'fade');
+  Amplitude.logEvent(`PAGEVIEW ${routeName.replace('Stack', '')} tab`);
+  StatusBar.setHidden(routeName === 'EchoStack', 'fade');
   defaultHandler();
-
-  Amplitude.logEventWithProperties('mobilePageView', {
-    app: 'mobile',
-    mainTray: routeName.replace('Stack', ''),
-  });
 };
 
-const HomeStack = createStackNavigator({
+const EchoStack = createStackNavigator({
   Home: HomeScreen,
 });
 
-HomeStack.navigationOptions = {
+EchoStack.navigationOptions = {
   tabBarLabel: 'ECHO',
   tabBarIcon: ({ focused }) => (
     <EchoLogo
@@ -200,14 +196,14 @@ GivingStack.navigationOptions = {
 
 export default createBottomTabNavigator(
   {
-    HomeStack,
+    EchoStack,
     MediaStack,
     ConnectStack,
     GroupsStack,
     GivingStack,
   },
   {
-    initialRouteName: isTheWeekend ? 'ConnectStack' : 'HomeStack',
+    initialRouteName: isTheWeekend ? 'ConnectStack' : 'EchoStack',
     tabBarOptions: {
       activeTintColor: Colors.tabIconSelected,
       inactiveTintColor: Colors.tabIconDefault,

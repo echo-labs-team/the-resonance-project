@@ -1,24 +1,16 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import Text from '../components/Text';
 import Button from '../components/Button';
 
 // eslint-disable-next-line
 export default ({ tryAgain }) => {
-  useEffect(() => {
-    Amplitude.logEventWithProperties('errorWithGroups', {
-      app: 'mobile',
-      mainTray: 'Groups',
-    });
-  }, []);
-
   const hasTryAgain =
     tryAgain && {}.toString.call(tryAgain) === '[object Function]';
 
   return (
-    <View style={{ padding: 40, justifyContent: 'center' }}>
+    <View style={styles.container}>
       <Text light style={styles.title}>
         Something went wrong...
       </Text>
@@ -28,6 +20,10 @@ export default ({ tryAgain }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    padding: 40,
+    justifyContent: 'center',
+  },
   title: {
     marginBottom: 20,
     fontSize: 24,
