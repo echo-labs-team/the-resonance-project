@@ -139,10 +139,7 @@ const MediaScreen = () => {
           {/* <Text style={styles.sectionHeaderText}>WATCH NOW</Text> */}
           <TouchableHighlight
             onPress={() => {
-              Amplitude.logEventWithProperties('mobileEngagementAction', {
-                app: 'mobile',
-                connect: 'watch live',
-              });
+              Amplitude.logEvent('TAP Watch Live')
               WebBrowser.openBrowserAsync(
                 'https://echochurchlive.churchonline.org',
                 { toolbarColor: Colors.darkestGray }
