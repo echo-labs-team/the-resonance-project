@@ -3,6 +3,7 @@
     "supportsTablet": false,
     "bundleIdentifier": "com.echo.church.app",
     "publishBundlePath": "ios/echo-church/Supporting/shell-app.bundle",
+    "userInterfaceStyle": "dark",
     "publishManifestPath": "ios/echo-church/Supporting/shell-app-manifest.json"
   },
   "icon": "./assets/images/icon.png",
@@ -22,6 +23,7 @@
   "android": {
     "package": "com.echo.church.app",
     "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
+    "userInterfaceStyle": "dark",
     "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
   },
   "iconUrl": "https://d1wp6m56sqw74a.cloudfront.net/~assets/b29adeb977d103ce7d129f35cb782733",
@@ -65,11 +67,11 @@
   ],
   "bundledAssets": [],
   "id": "@echo.church/echo",
-  "releaseId": "a8526ac9-f85e-4aa8-bc52-e66eebb3d3b9",
-  "revisionId": "1.0.0-r.r1xSJfmB8",
-  "publishedTime": "2020-03-09T00:35:03.563Z",
-  "commitTime": "2020-03-09T00:35:03.686Z",
-  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F3b4c2c5ec4114e612957733823141dc3-36.0.0-ios.js",
+  "releaseId": "3ecc8dd1-cba1-47dd-8deb-4e876b212865",
+  "revisionId": "1.0.0-r.H1GhtsVrU",
+  "publishedTime": "2020-03-10T05:46:17.946Z",
+  "commitTime": "2020-03-10T05:46:18.094Z",
+  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2Fe8959fb7a2b0574bda178b55d8daacff-36.0.0-ios.js",
   "releaseChannel": "release",
-  "hostUri": "expo.io/@echo.church/echo?release-channel=release"
+  "hostUri": "exp.host/@echo.church/echo?release-channel=release"
 }
