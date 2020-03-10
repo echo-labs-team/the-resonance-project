@@ -43,7 +43,7 @@
     "react-native-screens": "^2.2.0",
     "react-native-svg": "9.13.3",
     "react-native-unimodules": "^0.7.0",
-    "react-native-webview": "^7.4.3",
+    "react-native-webview": "^8.1.2",
     "react-native-youtube": "^2.0.0",
     "react-navigation": "^4.0.3",
     "react-navigation-stack": "^1.5.5",
