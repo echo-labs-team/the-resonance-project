@@ -16,12 +16,11 @@ const isFeaturedGroup = groupName =>
 
 export async function getOpenGroups(): Object {
   const errorMessage = 'Error fetching groups';
-
   const { data = [] } = (await axios.get(`${baseURL}/groups/open`)) || {};
 
   if (!data || !Array.isArray(data)) {
-    Amplitude.getInstance().logEvent('error', {
-      message: errorMessage,
+    Amplitude.logEventWithProperties('ERROR loading groups', {
+      error: errorMessage,
     });
     throw Error(errorMessage);
   }
@@ -47,16 +46,20 @@ export async function getCategories(): Promise<Array<any>> {
       body,
     } = {},
   } =
-    (await axios.get(
-      'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod/groups/categories'
-    )) || {};
+    (await axios
+      .get(
+        'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod/groups/categories'
+      )
+      .catch(err =>
+        Amplitude.logEventWithProperties('ERROR hitting `/groups/categories`', {
+          error: err,
+        })
+      )) || {};
 
   const success = statusCode === 200;
 
   if (!success) {
-    Amplitude.logEventWithProperties('errorLoadingGroupCategories', {
-      app: 'mobile',
-      mainTray: 'Groups',
+    Amplitude.logEventWithProperties('ERROR loading group categories', {
       message: errorMessage,
       type: errorType,
       stack: stackTrace,

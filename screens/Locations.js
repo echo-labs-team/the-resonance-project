@@ -37,11 +37,7 @@ const openMaps = location => {
       break;
   }
 
-  Amplitude.logEventWithProperties('mobileEngagementAction', {
-    app: 'mobile',
-    connect: `Open Maps for ${location}`,
-  });
-
+  Amplitude.logEvent('OPEN Locations');
   Linking.openURL(url);
 };
 

@@ -14,12 +14,8 @@ import Text from '../components/Text';
 import Button from '../components/Button';
 
 const handleGive = campus => {
-  Amplitude.logEventWithProperties('mobileEngagementAction', {
-    app: 'mobile',
-    giving: campus,
-  });
-
-  Linking.openURL(`https://pushpay.com/g/${campus}`);
+  Amplitude.logEvent(`TAP Giving ${campus}`);
+  Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);
 };
 
 const GivingScreen = () => {
@@ -45,22 +41,22 @@ const GivingScreen = () => {
 
         <Button
           title="North San Jose"
-          onPress={() => handleGive('echochurchnorth')}
+          onPress={() => handleGive('north')}
           style={styles.button}
         />
         <Button
           title="South San Jose"
-          onPress={() => handleGive('echochurchsouth')}
+          onPress={() => handleGive('south')}
           style={styles.button}
         />
         <Button
           title="Sunnyvale"
-          onPress={() => handleGive('echochurchsunnyvale')}
+          onPress={() => handleGive('sunnyvale')}
           style={styles.button}
         />
         <Button
           title="Fremont"
-          onPress={() => handleGive('echochurchfremont')}
+          onPress={() => handleGive('fremont')}
           style={styles.button}
         />
       </ScrollView>

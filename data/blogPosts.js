@@ -5,7 +5,11 @@ export async function getBlogPosts() {
   const { data: posts = [] } =
     (await axios
       .get('http://echo.church/wp-json/wp/v2/posts?per_page=2&orderby=date')
-      .catch(err => console.error(err.toString()))) || {};
+      .catch(err => {
+        Amplitude.logEventWithProperties('ERROR loading blog posts', {
+          error: err,
+        });
+      })) || {};
 
   return Promise.all(
     posts.map(
@@ -27,11 +31,8 @@ export async function getBlogPosts() {
             };
           })
           .catch(err => {
-            console.error(err.toString());
-            Amplitude.logEventWithProperties('errorLoadingBlogPosts', {
-              app: 'mobile',
-              mainTray: 'Home',
-              error: err.toString(),
+            Amplitude.logEventWithProperties('ERROR loading blog post image', {
+              error: err,
             });
           });
       }

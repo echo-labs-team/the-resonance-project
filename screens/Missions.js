@@ -22,6 +22,9 @@ const storeMissionsData = async missions => {
     console.error(err)
   );
 };
+const getStoredMissionsData = () => {
+  return AsyncStorage.getItem('@missions').catch(err => console.error(err));
+};
 
 const MissionsScreen = () => {
   const insets = useSafeArea();
@@ -29,9 +32,7 @@ const MissionsScreen = () => {
 
   useEffect(() => {
     const getMissionsContent = async () => {
-      const storedMissionsData = await AsyncStorage.getItem(
-        '@missions'
-      ).catch(err => console.error(err));
+      const storedMissionsData = await getStoredMissionsData();
 
       if (storedMissionsData) {
         setMissions(storedMissionsData);
@@ -103,11 +104,7 @@ const MissionsScreen = () => {
           title="Learn More"
           style={styles.button}
           onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              connect: 'Missions More Info',
-            });
-
+            Amplitude.logEvent('TAP Missions Learn More');
             WebBrowser.openBrowserAsync(
               'https://echo.church/missions/#global',
               {

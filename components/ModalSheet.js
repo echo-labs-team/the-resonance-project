@@ -8,7 +8,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
 import Button from './Button';
 import Colors from '../constants/Colors';
@@ -16,6 +15,7 @@ import Colors from '../constants/Colors';
 export default ({
   success = false,
   buttonTitle = '🚨 needs a title 🚨',
+  handleOpenModal,
   children,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -33,7 +33,12 @@ export default ({
       <Button
         title={buttonTitle}
         style={styles.button}
-        onPress={() => setIsVisible(true)}
+        onPress={() => {
+          if (handleOpenModal) {
+            handleOpenModal();
+          }
+          setIsVisible(true);
+        }}
       />
       <Modal
         isVisible={isVisible}
@@ -43,15 +48,6 @@ export default ({
         swipeDirection="down"
         style={styles.modal}
       >
-        <AntDesign.Button
-          name={'close'}
-          size={26}
-          backgroundColor="transparent"
-          underlayColor="transparent"
-          color={Colors.white}
-          style={styles.closeButton}
-          onPress={() => setIsVisible(false)}
-        />
         <View style={styles.container}>
           <View style={styles.dragBar} />
           <ScrollView contentContainerStyle={styles.contentContainer}>

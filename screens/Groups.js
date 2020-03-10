@@ -13,6 +13,7 @@ import {
 // import AsyncStorage from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { BlurView } from 'expo-blur';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { getOpenGroups, getCategories } from '../data/groups';
@@ -29,6 +30,9 @@ const storeGroupsData = async groups => {
   await AsyncStorage.setItem('@groups', JSON.stringify(groups)).catch(err =>
     console.error(err)
   );
+};
+const getStoredGroupsData = () => {
+  return AsyncStorage.getItem('@groups').catch(err => console.error(err));
 };
 
 function useDebounce(value, delay) {
@@ -61,6 +65,12 @@ function useQuery(groups) {
   const queriedGroups = [...groups].filter(({ name = '' }: { name?: string }) =>
     name?.toLowerCase().includes(debouncedQuery?.toLowerCase())
   );
+
+  if (query) {
+    Amplitude.logEventWithProperties('SEARCH Groups', {
+      search_text: debouncedQuery,
+    });
+  }
 
   return [query, setQuery, queriedGroups];
 }
@@ -108,9 +118,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
   useEffect(() => {
     const getGroups = async () => {
       try {
-        const storedGroupsData = await AsyncStorage.getItem(
-          '@groups'
-        ).catch(err => console.error(err));
+        const storedGroupsData = await getStoredGroupsData();
 
         if (storedGroupsData) {
           setGroups(JSON.parse(storedGroupsData));
@@ -121,7 +129,6 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         setGroups(fetchedGroups);
         storeGroupsData(fetchedGroups);
       } catch (err) {
-        console.error('Error getting open groups', err);
         setHasError(true);
       }
 
@@ -129,10 +136,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
       setTryAgain(false);
     };
     const getGroupCategories = async () => {
-      const fetchedCategories =
-        (await getCategories().catch(err =>
-          console.error('Error getting categories', err)
-        )) || [];
+      const fetchedCategories = (await getCategories()) || [];
 
       setCategories(fetchedCategories);
     };

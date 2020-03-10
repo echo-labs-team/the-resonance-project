@@ -27,15 +27,13 @@ import Spinner from '../components/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
-const trackingOptions = {
-  app: 'mobile',
-  mainTray: 'Home',
-};
-
 const storePostsData = async data => {
   await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch(err =>
     console.error(err)
   );
+};
+const getStoredPosts = () => {
+  return AsyncStorage.getItem('@posts').catch(err => console.error(err));
 };
 
 const HomeScreen = () => {
@@ -55,16 +53,10 @@ const HomeScreen = () => {
   // fetch data on mount
   useEffect(() => {
     const getPosts = async () => {
-      try {
-        const storedPosts = await AsyncStorage.getItem('@posts').catch(err =>
-          console.error(err)
-        );
+      const storedPosts = await getStoredPosts();
 
-        if (storedPosts) {
-          setCardData(JSON.parse(storedPosts));
-        }
-      } catch (err) {
-        console.error('Error getting stored posts', err);
+      if (storedPosts) {
+        setCardData(JSON.parse(storedPosts));
       }
 
       const igPosts = (await getInstagramPosts()) || [];
@@ -73,7 +65,7 @@ const HomeScreen = () => {
       const posts = [...igPosts, ...blogPosts];
 
       if (!posts.length) {
-        Amplitude.logEventWithProperties('noPostsLoaded', trackingOptions);
+        Amplitude.logEvent('ERROR no posts');
       }
 
       const [firstPost, ...restOfPosts] = posts;
@@ -86,18 +78,11 @@ const HomeScreen = () => {
     };
 
     if (refreshing || tryAgain) {
-      if (tryAgain) {
-        Amplitude.logEventWithProperties('tryReloadingPosts', trackingOptions);
-      }
-
       getPosts();
       return;
     }
 
     getPosts();
-
-    // log `Home` page  view event on initial load
-    Amplitude.logEventWithProperties('mobilePageView', trackingOptions);
   }, [refreshing, tryAgain]);
 
   const refresh = () => {
@@ -184,7 +169,9 @@ const Card = ({ type, url, image, title }) => {
       underlayColor={Colors.darkBlue}
       style={styles.card}
       onPress={() => {
-        Amplitude.logEventWithProperties(`OPEN ${type}`, trackingOptions);
+        Amplitude.logEventWithProperties('TAP post', {
+          post_type: type.toLowerCase(),
+        });
 
         if (type === 'BLOG') {
           return WebBrowser.openBrowserAsync(url, {

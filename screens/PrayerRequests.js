@@ -31,11 +31,7 @@ const PrayerRequestsScreen = () => {
           title="Submit Prayer Request"
           style={styles.button}
           onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              connect: 'Prayer Signup',
-            });
-
+            Amplitude.logEvent('TAP Prayer Request Submit');
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/e/1FAIpQLScXKoHyYZnqe7HgI0W9ZYYZllrXkDLXQv8pJKmH15oOyRrG0Q/viewform',
               { toolbarColor: Colors.darkestGray }

@@ -62,11 +62,7 @@ const VolunteerScreen = () => {
           title="Sign Up"
           style={styles.button}
           onPress={() => {
-            Amplitude.logEventWithProperties('mobileEngagementAction', {
-              app: 'mobile',
-              connect: 'Volunteer Signup',
-            });
-
+            Amplitude.logEvent('TAP Volunteer Sign Up');
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/1IdaVDIAr7AlDqH2QQ7kMm2k4txQKox7aPl7C12fz-0Q/viewform',
               { toolbarColor: Colors.darkestGray }

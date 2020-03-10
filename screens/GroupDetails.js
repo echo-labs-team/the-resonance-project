@@ -13,6 +13,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { Feather } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Hyperlink from 'react-native-hyperlink';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
@@ -76,6 +77,10 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
   const shouldShowLeaders = leaders.length > 0;
 
   const onShare = async () => {
+    Amplitude.logEventWithProperties('TAP Group Share', {
+      group: title,
+    });
+
     try {
       const result = await Share.share({
         title: 'Echo Groups',
@@ -83,17 +88,18 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
         url: `https://groups.echo.church/group/${uuid}`,
       });
 
-      if (result.action === Share.sharedAction) {
-        if (result.activityType) {
-          // shared with activity type of result.activityType
-        } else {
-          // shared
-        }
-      } else if (result.action === Share.dismissedAction) {
-        // dismissed
+      const { action, activityType = 'unknown' } = result;
+
+      if (action === Share.sharedAction) {
+        Amplitude.logEventWithProperties('SHARED Group', {
+          group: title,
+          activityType,
+        });
       }
     } catch (error) {
-      console.log(error.message);
+      Amplitude.logEventWithProperties('ERROR sharing group', {
+        group: title,
+      });
     }
   };
 
@@ -156,7 +162,7 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
           <Location isOnline={isOnline} location={location} />
         )}
 
-        {shouldShowAddress && <Address location={location} />}
+        {shouldShowAddress && <Address title={title} location={location} />}
 
         {shouldShowLeaders && (
           <View style={{ marginBottom: 16 }}>
@@ -196,8 +202,8 @@ const GroupDetails = ({ navigation }: { navigation: Object }) => {
 ${startDate} to ${endDate}`}</Text>
         )}
 
-        <SignUp groupID={uuid} showSuccess={showSuccess} />
-        <Ask groupID={uuid} showSuccess={showSuccess} />
+        <SignUp groupID={uuid} title={title} showSuccess={showSuccess} />
+        <Ask groupID={uuid} title={title} showSuccess={showSuccess} />
         <Button
           icon={<Feather name={'share'} size={24} color={Colors.gray} />}
           title="Share"

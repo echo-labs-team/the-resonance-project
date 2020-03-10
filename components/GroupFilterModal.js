@@ -11,8 +11,8 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 import Modal from 'react-native-modal';
+import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import Text from './Text';
@@ -65,6 +65,7 @@ export default ({
   const handleApply = () => {
     applyFilters(filters);
     setIsVisible(false);
+    Amplitude.logEventWithProperties('APPLY Group Filters', { filters });
   };
 
   return (
