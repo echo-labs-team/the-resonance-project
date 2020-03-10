@@ -1,4 +1,4 @@
-// flow-typed signature: 64eaa83e2dde98a53c81c70596363316
+// flow-typed signature: 7fb4c629cd6e565f18c44a261e0ad014
 // flow-typed version: <<STUB>>/expo-cli_v^3.11.7/flow_v0.112.0
 
 /**
@@ -58,6 +58,10 @@ declare module 'expo-cli/build/appleApi/provisioningProfile' {
   declare module.exports: any;
 }
 
+declare module 'expo-cli/build/appleApi/provisioningProfileAdhoc' {
+  declare module.exports: any;
+}
+
 declare module 'expo-cli/build/appleApi/pushKey' {
   declare module.exports: any;
 }
@@ -102,6 +106,10 @@ declare module 'expo-cli/build/commands/build/BaseBuilder' {
   declare module.exports: any;
 }
 
+declare module 'expo-cli/build/commands/build/BaseBuilder.types' {
+  declare module.exports: any;
+}
+
 declare module 'expo-cli/build/commands/build/BuildError' {
   declare module.exports: any;
 }
@@ -111,38 +119,6 @@ declare module 'expo-cli/build/commands/build/constants' {
 }
 
 declare module 'expo-cli/build/commands/build' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials/constants' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials/generate' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/getFromParams' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/promptForCredentials' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/promptForOverrides' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/build/ios/credentials/revoke' {
   declare module.exports: any;
 }
 
@@ -171,18 +147,6 @@ declare module 'expo-cli/build/commands/client/generateBundleIdentifier' {
 }
 
 declare module 'expo-cli/build/commands/client' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/client/selectAdhocProvisioningProfile' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/client/selectUtils' {
-  declare module.exports: any;
-}
-
-declare module 'expo-cli/build/commands/client/tagger' {
   declare module.exports: any;
 }
 
@@ -422,6 +386,10 @@ declare module 'expo-cli/build/credentials/views/IosProvisioningProfile' {
   declare module.exports: any;
 }
 
+declare module 'expo-cli/build/credentials/views/IosProvisioningProfileAdhoc' {
+  declare module.exports: any;
+}
+
 declare module 'expo-cli/build/credentials/views/IosPushCredentials' {
   declare module.exports: any;
 }
@@ -431,6 +399,10 @@ declare module 'expo-cli/build/credentials/views/Select' {
 }
 
 declare module 'expo-cli/build/credentials/views/SetupIosDist' {
+  declare module.exports: any;
+}
+
+declare module 'expo-cli/build/credentials/views/SetupIosProvisioningProfile' {
   declare module.exports: any;
 }
 
@@ -509,6 +481,9 @@ declare module 'expo-cli/build/appleApi/index.js' {
 declare module 'expo-cli/build/appleApi/provisioningProfile.js' {
   declare module.exports: $Exports<'expo-cli/build/appleApi/provisioningProfile'>;
 }
+declare module 'expo-cli/build/appleApi/provisioningProfileAdhoc.js' {
+  declare module.exports: $Exports<'expo-cli/build/appleApi/provisioningProfileAdhoc'>;
+}
 declare module 'expo-cli/build/appleApi/pushKey.js' {
   declare module.exports: $Exports<'expo-cli/build/appleApi/pushKey'>;
 }
@@ -545,6 +520,9 @@ declare module 'expo-cli/build/commands/build/AndroidBuilder.js' {
 declare module 'expo-cli/build/commands/build/BaseBuilder.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/build/BaseBuilder'>;
 }
+declare module 'expo-cli/build/commands/build/BaseBuilder.types.js' {
+  declare module.exports: $Exports<'expo-cli/build/commands/build/BaseBuilder.types'>;
+}
 declare module 'expo-cli/build/commands/build/BuildError.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/build/BuildError'>;
 }
@@ -556,36 +534,6 @@ declare module 'expo-cli/build/commands/build/index' {
 }
 declare module 'expo-cli/build/commands/build/index.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/build'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/constants.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/constants'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/generate.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/generate'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/index' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/index.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/getFromParams.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/prompt/getFromParams'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/index' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/prompt'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/index.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/prompt'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/promptForCredentials.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/prompt/promptForCredentials'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/prompt/promptForOverrides.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/prompt/promptForOverrides'>;
-}
-declare module 'expo-cli/build/commands/build/ios/credentials/revoke.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/build/ios/credentials/revoke'>;
 }
 declare module 'expo-cli/build/commands/build/ios/IOSBuilder.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/build/ios/IOSBuilder'>;
@@ -610,15 +558,6 @@ declare module 'expo-cli/build/commands/client/index' {
 }
 declare module 'expo-cli/build/commands/client/index.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/client'>;
-}
-declare module 'expo-cli/build/commands/client/selectAdhocProvisioningProfile.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/client/selectAdhocProvisioningProfile'>;
-}
-declare module 'expo-cli/build/commands/client/selectUtils.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/client/selectUtils'>;
-}
-declare module 'expo-cli/build/commands/client/tagger.js' {
-  declare module.exports: $Exports<'expo-cli/build/commands/client/tagger'>;
 }
 declare module 'expo-cli/build/commands/credentials.js' {
   declare module.exports: $Exports<'expo-cli/build/commands/credentials'>;
@@ -806,6 +745,9 @@ declare module 'expo-cli/build/credentials/views/IosDistCert.js' {
 declare module 'expo-cli/build/credentials/views/IosProvisioningProfile.js' {
   declare module.exports: $Exports<'expo-cli/build/credentials/views/IosProvisioningProfile'>;
 }
+declare module 'expo-cli/build/credentials/views/IosProvisioningProfileAdhoc.js' {
+  declare module.exports: $Exports<'expo-cli/build/credentials/views/IosProvisioningProfileAdhoc'>;
+}
 declare module 'expo-cli/build/credentials/views/IosPushCredentials.js' {
   declare module.exports: $Exports<'expo-cli/build/credentials/views/IosPushCredentials'>;
 }
@@ -814,6 +756,9 @@ declare module 'expo-cli/build/credentials/views/Select.js' {
 }
 declare module 'expo-cli/build/credentials/views/SetupIosDist.js' {
   declare module.exports: $Exports<'expo-cli/build/credentials/views/SetupIosDist'>;
+}
+declare module 'expo-cli/build/credentials/views/SetupIosProvisioningProfile.js' {
+  declare module.exports: $Exports<'expo-cli/build/credentials/views/SetupIosProvisioningProfile'>;
 }
 declare module 'expo-cli/build/credentials/views/SetupIosPush.js' {
   declare module.exports: $Exports<'expo-cli/build/credentials/views/SetupIosPush'>;

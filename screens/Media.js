@@ -22,6 +22,8 @@ import isTheWeekend from '../utils/isTheWeekend';
 import Text from '../components/Text';
 import Button from '../components/Button';
 import Spinner from '../components/Spinner';
+import LiveCard from '../components/LiveCard';
+import * as WebBrowser from 'expo-web-browser';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -42,7 +44,6 @@ const MediaScreen = () => {
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState([]);
-
   useEffect(() => {
     getVideos();
   }, []);
@@ -134,22 +135,23 @@ const MediaScreen = () => {
       </Text>
       {isTheWeekend && (
         <>
-          <Text style={styles.sectionHeaderText}>WATCH NOW</Text>
-          <WebView
-            javaScriptEnabled
-            allowsInlineMediaPlayback
-            startInLoadingState
-            renderLoading={() => <Spinner />}
-            injectedJavaScript={`(function() { document.getElementsByClassName('menu')[0].style.display = 'none' })();`}
-            style={styles.largeCard}
-            source={{ uri: 'https://echochurchlive.churchonline.org' }}
-          />
+          <TouchableHighlight
+            onPress={() => {
+              Amplitude.logEvent('TAP Watch Live');
+              WebBrowser.openBrowserAsync(
+                'https://echochurchlive.churchonline.org',
+                { toolbarColor: Colors.darkestGray }
+              );
+            }}
+          >
+            <LiveCard style={styles.largeCard} />
+          </TouchableHighlight>
         </>
       )}
 
       <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
       <YouTubeDataView
-        style={styles.currentSeriesCard}
+        style={styles.largeCard}
         data={data[0]}
         thumbnailStyle={styles.youtubeThumbnailImageLarge}
       />
@@ -180,7 +182,6 @@ const MediaScreen = () => {
             app: 'mobile',
             media: 'rightnow media',
           });
-
           Linking.openURL(
             'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
           );
@@ -283,12 +284,6 @@ const styles = StyleSheet.create({
   },
   largeCard: {
     width: screenWidth - 32,
-    height: screenHeight - 128,
-    marginLeft: 16,
-    borderRadius: 8,
-  },
-  currentSeriesCard: {
-    width: screenWidth - 16,
     height: (screenWidth - 16) / 2,
     marginLeft: 16,
     borderRadius: 8,

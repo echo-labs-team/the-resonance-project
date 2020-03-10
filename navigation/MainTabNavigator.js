@@ -101,9 +101,9 @@ MediaStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <Entypo
       name={'controller-play'}
-      size={30}
+      size={32}
       color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
-      style={[styles.icon, { marginTop: -4 }]}
+      style={[styles.icon, { marginTop: -8 }]}
     />
   ),
   tabBarOnPress: defaultTabBarOnPress,
@@ -143,10 +143,10 @@ const ConnectStack = createStackNavigator({
 ConnectStack.navigationOptions = {
   tabBarLabel: 'CONNECT',
   tabBarIcon: ({ focused }) => (
-    <View style={[styles.icon, { marginTop: isTheWeekend ? -10 : -4 }]}>
+    <View style={[styles.icon, { marginTop: -4 }]}>
       <ConnectLogo
-        width={isTheWeekend ? 50 : 40}
-        height={isTheWeekend ? 50 : 40}
+        width={38}
+        height={38}
         color={focused ? Colors.tabIconSelected : Colors.tabIconDefault}
       />
     </View>

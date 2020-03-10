@@ -77,16 +77,6 @@ export default ({
       propagateSwipe={true}
       style={styles.modal}
     >
-      <AntDesign.Button
-        name={'close'}
-        size={26}
-        backgroundColor="transparent"
-        underlayColor="transparent"
-        color={Colors.white}
-        style={styles.closeButton}
-        onPress={handleCancel}
-      />
-
       <View style={styles.container}>
         <View style={styles.dragBar} />
 
@@ -178,9 +168,8 @@ const styles = StyleSheet.create({
     margin: 0,
     justifyContent: 'flex-end',
   },
-  closeButton: { alignSelf: 'flex-end' },
   container: {
-    height: '85%',
+    height: '95%',
     paddingTop: 10,
     paddingBottom: 20,
     paddingHorizontal: 16,
