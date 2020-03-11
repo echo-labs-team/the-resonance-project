@@ -110,7 +110,12 @@ const MissionsScreen = () => {
               {
                 toolbarColor: Colors.darkestGray,
               }
-            );
+            ).catch(err => {
+              Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                error: err,
+              });
+              WebBrowser.dismissBrowser();
+            });
           }}
         />
       </View>

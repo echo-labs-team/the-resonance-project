@@ -66,7 +66,12 @@ const VolunteerScreen = () => {
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/1IdaVDIAr7AlDqH2QQ7kMm2k4txQKox7aPl7C12fz-0Q/viewform',
               { toolbarColor: Colors.darkestGray }
-            );
+            ).catch(err => {
+              Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                error: err,
+              });
+              WebBrowser.dismissBrowser();
+            });
           }}
         />
       </View>

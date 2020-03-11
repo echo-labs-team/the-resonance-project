@@ -259,7 +259,7 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
         <Error tryAgain={() => setTryAgain(true)} />
       ) : (
         <>
-          <View style={styles.searchBar}>
+          <View style={[styles.searchBar, { flex: data.length ? 1 : 0 }]}>
             <SearchBar value={query} onChangeText={value => setQuery(value)} />
             <TouchableOpacity
               style={{ width: 80, height: 40 }}
@@ -328,7 +328,6 @@ const styles = StyleSheet.create({
   searchBar: {
     paddingBottom: 10,
     paddingHorizontal: 10,
-    flex: 1,
     flexDirection: 'row',
   },
   headerTitle: {
@@ -380,6 +379,7 @@ const styles = StyleSheet.create({
   },
   noResults: { paddingHorizontal: 20 },
   noResultsHeader: {
+    marginTop: 10,
     fontSize: 24,
     textAlign: 'center',
     color: Colors.gray,

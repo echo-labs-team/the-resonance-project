@@ -176,6 +176,11 @@ const Card = ({ type, url, image, title }) => {
         if (type === 'BLOG') {
           return WebBrowser.openBrowserAsync(url, {
             toolbarColor: Colors.darkestGray,
+          }).catch(err => {
+            Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+              error: err,
+            });
+            WebBrowser.dismissBrowser();
           });
         }
         Linking.openURL(url);

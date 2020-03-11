@@ -30,6 +30,11 @@ function openConnectionCard() {
   Amplitude.logEvent('TAP Connection Card');
   WebBrowser.openBrowserAsync('https://echo.church/connectioncard', {
     toolbarColor: Colors.darkestGray,
+  }).catch(err => {
+    Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+      error: err,
+    });
+    WebBrowser.dismissBrowser();
   });
 }
 

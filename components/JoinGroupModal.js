@@ -111,7 +111,7 @@ export default props => {
       success={success}
       handleOpenModal={handleOpenModal}
     >
-      {loading && <Spinner />}
+      {loading && <Spinner style={{ backgroundColor: 'transparent' }} />}
 
       <View style={styles.container}>
         <Text style={styles.title}>Sign up</Text>

@@ -52,7 +52,12 @@ const BaptismScreen = () => {
             WebBrowser.openBrowserAsync(
               'https://goo.gl/forms/Lc8g3MU0CCxjea9e2',
               { toolbarColor: Colors.darkestGray }
-            );
+            ).catch(err => {
+              Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                error: err,
+              });
+              WebBrowser.dismissBrowser();
+            });
           }}
         />
       </View>

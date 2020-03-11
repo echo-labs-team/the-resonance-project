@@ -35,7 +35,12 @@ const PrayerRequestsScreen = () => {
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/e/1FAIpQLScXKoHyYZnqe7HgI0W9ZYYZllrXkDLXQv8pJKmH15oOyRrG0Q/viewform',
               { toolbarColor: Colors.darkestGray }
-            );
+            ).catch(err => {
+              Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                error: err,
+              });
+              WebBrowser.dismissBrowser();
+            });
           }}
         />
       </View>
