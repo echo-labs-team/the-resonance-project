@@ -67,11 +67,11 @@
   ],
   "bundledAssets": [],
   "id": "@echo.church/echo",
-  "releaseId": "3ecc8dd1-cba1-47dd-8deb-4e876b212865",
-  "revisionId": "1.0.0-r.H1GhtsVrU",
-  "publishedTime": "2020-03-10T05:46:17.946Z",
-  "commitTime": "2020-03-10T05:46:18.094Z",
-  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2Fe8959fb7a2b0574bda178b55d8daacff-36.0.0-ios.js",
+  "releaseId": "26320db6-38fd-4d8d-8288-332395814442",
+  "revisionId": "1.0.0-r.rkvKeTrBU",
+  "publishedTime": "2020-03-11T01:35:58.829Z",
+  "commitTime": "2020-03-11T01:35:58.900Z",
+  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F996bb164b57c3fbc54d7a14f9f4c0065-36.0.0-ios.js",
   "releaseChannel": "release",
   "hostUri": "exp.host/@echo.church/echo?release-channel=release"
 }
