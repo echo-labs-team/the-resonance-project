@@ -161,6 +161,20 @@ function getIcon(type) {
   }[type];
 }
 
+function getImageHeight(type, image) {
+  // if we don't have an image, let's not take up space for it
+  if (!image) {
+    return 0;
+  }
+
+  // these images are pretty large
+  if (type === 'INSTAGRAM' || type === 'VERSE OF THE DAY') {
+    return Layout.window.width - 20;
+  }
+
+  return 200;
+}
+
 const Card = ({ type, url, image, title }) => {
   const icon = getIcon(type);
 
@@ -192,10 +206,7 @@ const Card = ({ type, url, image, title }) => {
           style={[
             styles.image,
             {
-              height:
-                type === 'INSTAGRAM' || type === 'VERSE OF THE DAY'
-                  ? Layout.window.width - 20
-                  : 200,
+              height: getImageHeight(type, image),
             },
           ]}
         />
