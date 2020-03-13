@@ -228,14 +228,6 @@ const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
           style={thumbnailStyle}
           resizeMode="cover"
         />
-        <Text
-          style={[
-            TextStyles.subtitle,
-            { textAlign: 'center', color: Colors.gray },
-          ]}
-        >
-          {title}
-        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -264,7 +256,7 @@ const styles = StyleSheet.create({
   },
   largeCard: {
     width: screenWidth - 32,
-    height: (screenWidth - 16) / 2,
+    height: (screenWidth - 32) / 2,
     marginLeft: 16,
     borderRadius: 8,
   },
@@ -274,8 +266,8 @@ const styles = StyleSheet.create({
   },
   smallCard: {
     width: (screenWidth - 48) / 2,
-    height: (screenWidth - 48) / 3,
-    marginBottom: 16,
+    height: (2 * (screenWidth - 48)) / 7,
+    marginBottom: 32,
     marginLeft: 16,
     borderRadius: 0,
   },
