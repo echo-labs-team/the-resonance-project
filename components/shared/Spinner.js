@@ -1,17 +1,16 @@
 import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
-export default () => {
+export default ({ style }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <ActivityIndicator size="large" color={Colors.gray} />
     </View>
   );
 };
 
 const backgroundColor = 'rgba(0,0,0,0.75)';
-
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
