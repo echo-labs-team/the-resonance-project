@@ -5,8 +5,8 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
-import Text from '../components/Text';
-import Button from '../components/Button';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
 
 const PrayerRequestsScreen = () => {
   const insets = useSafeArea();
@@ -35,7 +35,12 @@ const PrayerRequestsScreen = () => {
             WebBrowser.openBrowserAsync(
               'https://docs.google.com/forms/d/e/1FAIpQLScXKoHyYZnqe7HgI0W9ZYYZllrXkDLXQv8pJKmH15oOyRrG0Q/viewform',
               { toolbarColor: Colors.darkestGray }
-            );
+            ).catch(err => {
+              Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                error: err,
+              });
+              WebBrowser.dismissBrowser();
+            });
           }}
         />
       </View>

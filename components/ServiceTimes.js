@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
-import Text from '../components/Text';
+import Text from '../components/shared/Text';
 import Colors from '../constants/Colors';
 
 export default () => {

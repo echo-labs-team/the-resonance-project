@@ -10,8 +10,8 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import Text from '../components/Text';
-import Button from '../components/Button';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
 
 const handleGive = campus => {
   Amplitude.logEvent(`TAP Giving ${campus}`);

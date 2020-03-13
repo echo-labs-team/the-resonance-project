@@ -8,6 +8,7 @@ exports[`<Text/> render text 1`] = `
     Array [
       Object {
         "fontFamily": "NunitoSans-Regular",
+        "fontSize": 16,
       },
       undefined,
     ]
@@ -26,6 +27,7 @@ exports[`<Text/> render text with a bold font 1`] = `
     Array [
       Object {
         "fontFamily": "NunitoSans-Bold",
+        "fontSize": 16,
       },
       undefined,
     ]
@@ -44,6 +46,7 @@ exports[`<Text/> render text with a light font 1`] = `
     Array [
       Object {
         "fontFamily": "NunitoSans-Light",
+        "fontSize": 16,
       },
       undefined,
     ]
@@ -62,6 +65,7 @@ exports[`<Text/> render text with extra props 1`] = `
     Array [
       Object {
         "fontFamily": "NunitoSans-Regular",
+        "fontSize": 16,
       },
       undefined,
     ]
@@ -80,6 +84,7 @@ exports[`<Text/> render text with style 1`] = `
     Array [
       Object {
         "fontFamily": "NunitoSans-Regular",
+        "fontSize": 16,
       },
       Object {
         "fontSize": 30,

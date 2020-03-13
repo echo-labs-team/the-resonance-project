@@ -9,7 +9,7 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, ScrollView, View } from 'react-native';
 import Modal from 'react-native-modal';
-import Button from './Button';
+import Button from './shared/Button';
 import Colors from '../constants/Colors';
 
 export default ({

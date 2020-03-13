@@ -14,8 +14,8 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import Text from '../components/Text';
-import Button from '../components/Button';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
 
 const items = [
   { value: 'LOCATIONS', page: 'Locations' },
@@ -30,6 +30,11 @@ function openConnectionCard() {
   Amplitude.logEvent('TAP Connection Card');
   WebBrowser.openBrowserAsync('https://echo.church/connectioncard', {
     toolbarColor: Colors.darkestGray,
+  }).catch(err => {
+    Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+      error: err,
+    });
+    WebBrowser.dismissBrowser();
   });
 }
 

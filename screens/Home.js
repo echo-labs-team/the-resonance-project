@@ -21,9 +21,9 @@ import { getBlogPosts } from '../data/blogPosts';
 import { getVerseOfTheDay } from '../data/verseOfTheDay';
 import TextStyles from '../constants/TextStyles';
 import AnimateChildrenIn from '../components/AnimateChildrenIn';
-import Text from '../components/Text';
-import Button from '../components/Button';
-import Spinner from '../components/Spinner';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
+import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
@@ -161,6 +161,20 @@ function getIcon(type) {
   }[type];
 }
 
+function getImageHeight(type, image) {
+  // if we don't have an image, let's not take up space for it
+  if (!image) {
+    return 0;
+  }
+
+  // these images are pretty large
+  if (type === 'INSTAGRAM' || type === 'VERSE OF THE DAY') {
+    return Layout.window.width - 20;
+  }
+
+  return 200;
+}
+
 const Card = ({ type, url, image, title }) => {
   const icon = getIcon(type);
 
@@ -176,6 +190,11 @@ const Card = ({ type, url, image, title }) => {
         if (type === 'BLOG') {
           return WebBrowser.openBrowserAsync(url, {
             toolbarColor: Colors.darkestGray,
+          }).catch(err => {
+            Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+              error: err,
+            });
+            WebBrowser.dismissBrowser();
           });
         }
         Linking.openURL(url);
@@ -187,10 +206,7 @@ const Card = ({ type, url, image, title }) => {
           style={[
             styles.image,
             {
-              height:
-                type === 'INSTAGRAM' || type === 'VERSE OF THE DAY'
-                  ? Layout.window.width - 20
-                  : 200,
+              height: getImageHeight(type, image),
             },
           ]}
         />

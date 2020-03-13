@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 
 export default ({
   title = '',

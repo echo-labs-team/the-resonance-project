@@ -15,8 +15,8 @@ import Modal from 'react-native-modal';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import Text from './Text';
-import Button from './Button';
+import Text from './shared/Text';
+import Button from './shared/Button';
 import Checkbox from './Checkbox';
 
 const Item = ({ item, isSelected, onSelected }) => {
