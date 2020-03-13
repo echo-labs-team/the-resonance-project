@@ -11,7 +11,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
-import Text from '../components/Text';
+import Text from '../components/shared/Text';
 
 const openMaps = location => {
   let url = '';

@@ -17,8 +17,8 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
-import Text from '../components/Text';
-import Button from '../components/Button';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
 import { styles as groupStyles } from '../components/GroupCardDetails';
 import {
   getMeetingFrequency,

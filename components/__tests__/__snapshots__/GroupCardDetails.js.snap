@@ -39,6 +39,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
         Array [
           Object {
             "fontFamily": "NunitoSans-Light",
+            "fontSize": 16,
           },
           Object {
             "color": "#fff",
@@ -67,6 +68,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
           Array [
             Object {
               "fontFamily": "NunitoSans-Regular",
+              "fontSize": 16,
             },
             Object {
               "color": "#b8bab8",
@@ -86,6 +88,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
             Array [
               Object {
                 "fontFamily": "NunitoSans-Bold",
+                "fontSize": 16,
               },
               Array [
                 Object {
@@ -112,6 +115,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
             Array [
               Object {
                 "fontFamily": "NunitoSans-Bold",
+                "fontSize": 16,
               },
               Array [
                 Object {
@@ -146,6 +150,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
           Array [
             Object {
               "fontFamily": "NunitoSans-Bold",
+              "fontSize": 16,
             },
             Object {
               "color": "#b8bab8",
@@ -173,6 +178,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
           Array [
             Object {
               "fontFamily": "NunitoSans-Regular",
+              "fontSize": 16,
             },
             Object {
               "color": "#b8bab8",

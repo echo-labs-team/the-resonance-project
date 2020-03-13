@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Colors from '../constants/Colors';
-import Text from './Text';
+import Text from './shared/Text';
 
 export default ({ isOnline = false, location: { name, description } = {} }) => (
   <View style={{ marginBottom: 16 }}>

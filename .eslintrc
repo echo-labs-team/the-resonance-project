@@ -12,7 +12,7 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "react-native", "flowtype"],
+  "plugins": ["react", "react-hooks", "react-native", "flowtype"],
   "env": {
     "react-native/react-native": true,
     "jest": true

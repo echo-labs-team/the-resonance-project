@@ -17,14 +17,14 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { getOpenGroups, getCategories } from '../data/groups';
-import Text from '../components/Text';
-import Button from '../components/Button';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
 import GroupCardPlaceholder from '../components/GroupCardPlaceholder';
 import GroupCardDetails from '../components/GroupCardDetails';
 import SearchBar from '../components/SearchBar';
 import GroupFilterModal from '../components/GroupFilterModal';
 import Error from '../components/GroupsError';
-import Spinner from '../components/Spinner';
+import Spinner from '../components/shared/Spinner';
 
 const storeGroupsData = async groups => {
   await AsyncStorage.setItem('@groups', JSON.stringify(groups)).catch(err =>

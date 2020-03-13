@@ -14,8 +14,8 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import htmlParser from 'fast-html-parser';
 import Colors from '../constants/Colors';
 import { getHeaderInset } from '../utils/header';
-import Text from '../components/Text';
-import Button from '../components/Button';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
 
 const storeMissionsData = async missions => {
   await AsyncStorage.setItem('@missions', missions).catch(err =>

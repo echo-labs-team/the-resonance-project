@@ -21,9 +21,9 @@ import { getBlogPosts } from '../data/blogPosts';
 import { getVerseOfTheDay } from '../data/verseOfTheDay';
 import TextStyles from '../constants/TextStyles';
 import AnimateChildrenIn from '../components/AnimateChildrenIn';
-import Text from '../components/Text';
-import Button from '../components/Button';
-import Spinner from '../components/Spinner';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
+import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 

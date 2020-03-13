@@ -3,13 +3,13 @@ import { StyleSheet, Platform, View, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import * as Amplitude from 'expo-analytics-amplitude';
-import Text from './Text';
-import Button from './Button';
+import Text from './shared/Text';
+import Button from './shared/Button';
 import Colors from '../constants/Colors';
 import { isEmailValid } from '../utils/groups';
 import { joinGroup } from '../data/groups';
 import ModalSheet from './ModalSheet';
-import Spinner from '../components/Spinner';
+import Spinner from './shared/Spinner';
 
 const initialState = {
   loading: false,

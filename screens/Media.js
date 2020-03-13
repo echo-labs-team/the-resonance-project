@@ -17,9 +17,9 @@ import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
 import isTheWeekend from '../utils/isTheWeekend';
-import Text from '../components/Text';
-import Button from '../components/Button';
-import Spinner from '../components/Spinner';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
+import Spinner from '../components/shared/Spinner';
 import LiveCard from '../components/LiveCard';
 import * as WebBrowser from 'expo-web-browser';
 
