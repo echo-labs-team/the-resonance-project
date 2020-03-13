@@ -16,6 +16,7 @@ exports[`<GroupLocation/> render a group with a location 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Bold",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",
@@ -33,6 +34,7 @@ exports[`<GroupLocation/> render a group with a location 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Regular",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",
@@ -50,6 +52,7 @@ exports[`<GroupLocation/> render a group with a location 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Regular",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",
@@ -80,6 +83,7 @@ exports[`<GroupLocation/> render a group with a location, but no description 1`]
       Array [
         Object {
           "fontFamily": "NunitoSans-Bold",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",
@@ -97,6 +101,7 @@ exports[`<GroupLocation/> render a group with a location, but no description 1`]
       Array [
         Object {
           "fontFamily": "NunitoSans-Regular",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",
@@ -126,6 +131,7 @@ exports[`<GroupLocation/> render an online group 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Bold",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",
@@ -143,6 +149,7 @@ exports[`<GroupLocation/> render an online group 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Regular",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",

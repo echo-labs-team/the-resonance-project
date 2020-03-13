@@ -18,7 +18,15 @@ export async function getBlogPosts() {
         title: { rendered: title } = {},
         _links: links = {},
       } = {}) => {
-        const [{ href: imageUrl }] = links['wp:featuredmedia'] || [];
+        const [{ href: imageUrl } = {}] = links['wp:featuredmedia'] || [];
+
+        if (!imageUrl) {
+          return {
+            type: 'BLOG',
+            url: blogUrl,
+            title,
+          };
+        }
 
         return axios
           .get(imageUrl)

@@ -7,6 +7,8 @@ import React from 'react';
 import { Text } from 'react-native';
 
 export default props => {
+  let fontSize = 16;
+
   let fontWeight = 'Regular';
 
   if (props.light) {
@@ -15,12 +17,27 @@ export default props => {
     fontWeight = 'Bold';
   }
 
+  if (props.XL) {
+    fontSize = 30;
+  } else if (props.L) {
+    fontSize = 20;
+  } else if (props.M) {
+    fontSize = 18;
+  } else if (props.S) {
+    fontSize = 14;
+  } else if (props.XS) {
+    fontSize = 12;
+  }
+
   return (
     <Text
       allowFontScaling={false}
       selectable
       {...props}
-      style={[{ fontFamily: `NunitoSans-${fontWeight}` }, props.style]}
+      style={[
+        { fontSize, fontFamily: `NunitoSans-${fontWeight}` },
+        props.style,
+      ]}
     >
       {props.children}
     </Text>
