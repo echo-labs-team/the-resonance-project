@@ -3,7 +3,7 @@
 import React from 'react';
 import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
-import Text from '../components/Text';
+import Text from '../components/shared/Text';
 import Colors from '../constants/Colors';
 import {
   getMeetingFrequency,

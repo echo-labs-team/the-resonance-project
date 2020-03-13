@@ -16,6 +16,7 @@ exports[`<GroupAddress/> render group address 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Bold",
+          "fontSize": 16,
         },
         Object {
           "color": "#b8bab8",
@@ -60,6 +61,7 @@ exports[`<GroupAddress/> render group address 1`] = `
             Array [
               Object {
                 "fontFamily": "NunitoSans-Regular",
+                "fontSize": 16,
               },
               Object {
                 "color": "#b8bab8",
@@ -77,6 +79,7 @@ exports[`<GroupAddress/> render group address 1`] = `
             Array [
               Object {
                 "fontFamily": "NunitoSans-Regular",
+                "fontSize": 16,
               },
               Object {
                 "color": "#b8bab8",

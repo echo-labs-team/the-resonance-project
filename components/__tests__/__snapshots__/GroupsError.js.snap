@@ -17,6 +17,7 @@ exports[`<GroupsError/> render a group error 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Light",
+          "fontSize": 16,
         },
         Object {
           "color": "#fff",
@@ -49,6 +50,7 @@ exports[`<GroupsError/> render a group error with a Try Again CTA 1`] = `
       Array [
         Object {
           "fontFamily": "NunitoSans-Light",
+          "fontSize": 16,
         },
         Object {
           "color": "#fff",

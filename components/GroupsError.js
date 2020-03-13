@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import Colors from '../constants/Colors';
-import Text from '../components/Text';
-import Button from '../components/Button';
+import Text from '../components/shared/Text';
+import Button from './shared/Button';
 
 // eslint-disable-next-line
 export default ({ tryAgain }) => {

@@ -13,19 +13,17 @@ import {
 import { useSafeArea } from 'react-native-safe-area-context';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
-// import YouTube from 'react-native-youtube';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
 import isTheWeekend from '../utils/isTheWeekend';
-import Text from '../components/Text';
-import Button from '../components/Button';
-import Spinner from '../components/Spinner';
+import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
+import Spinner from '../components/shared/Spinner';
 import LiveCard from '../components/LiveCard';
 import * as WebBrowser from 'expo-web-browser';
 
 const screenWidth = Dimensions.get('window').width;
-const screenHeight = Dimensions.get('window').height;
 const storeMediaData = async data => {
   await AsyncStorage.setItem('@media', JSON.stringify(data)).catch(err =>
     console.error(err)
@@ -41,6 +39,7 @@ const MediaScreen = () => {
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState([]);
+
   useEffect(() => {
     getVideos();
   }, []);
@@ -129,7 +128,12 @@ const MediaScreen = () => {
               WebBrowser.openBrowserAsync(
                 'https://echochurchlive.churchonline.org',
                 { toolbarColor: Colors.darkestGray }
-              );
+              ).catch(err => {
+                Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                  error: err,
+                });
+                WebBrowser.dismissBrowser();
+              });
             }}
           >
             <LiveCard style={styles.largeCard} />

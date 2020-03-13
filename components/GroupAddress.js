@@ -3,7 +3,7 @@ import { View, TouchableHighlight, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import Text from './Text';
+import Text from './shared/Text';
 
 export default ({ title, location = {} }) => {
   const {
