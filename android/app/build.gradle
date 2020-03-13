@@ -27,12 +27,19 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
-
+  packagingOptions {
+    pickFirst '**/armeabi-v7a/libc++_shared.so'
+    pickFirst '**/x86/libc++_shared.so'
+    pickFirst '**/arm64-v8a/libc++_shared.so'
+    pickFirst '**/x86_64/libc++_shared.so'
+    pickFirst '**/x86/libjsc.so'
+    pickFirst '**/armeabi-v7a/libjsc.so'
+  }
   defaultConfig {
     applicationId 'com.echo.church.app'
     minSdkVersion safeExtGet("minSdkVersion", 21)
     targetSdkVersion safeExtGet("targetSdkVersion", 28)
-    versionCode 4
+    versionCode 5
     versionName '1.0.0'
 
     multiDexEnabled true
