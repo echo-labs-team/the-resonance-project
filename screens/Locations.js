@@ -37,7 +37,7 @@ const openMaps = location => {
       break;
   }
 
-  Amplitude.logEvent('OPEN Locations');
+  Amplitude.logEventWithProperties('TAP Location', { campus: location });
   Linking.openURL(url);
 };
 
