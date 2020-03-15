@@ -27,32 +27,26 @@ export async function getInstagramPosts() {
       } = {},
     } = profile;
 
-    instagramPosts = mediaEdges
-      .slice(0, 6)
-      .map(({ node = {} } = {}) => {
-        const {
-          __typename,
-          shortcode,
-          thumbnail_src,
-          edge_media_to_caption: { edges: captionEdges = [] } = {},
-        } = node;
-        const [captionEdge = {}] = captionEdges;
-        const { node: { text: caption } = {} } = captionEdge;
-        const title = caption.split('-');
+    instagramPosts = mediaEdges.slice(0, 6).map(({ node = {} } = {}) => {
+      const {
+        shortcode,
+        thumbnail_src,
+        taken_at_timestamp,
+        edge_media_to_caption: { edges: captionEdges = [] } = {},
+      } = node;
+      const date = new Date(taken_at_timestamp * 1000).toLocaleDateString();
+      const [captionEdge = {}] = captionEdges;
+      const { node: { text: caption } = {} } = captionEdge;
+      const title = caption.split('-');
 
-        // Process only if is an image
-        if (__typename === 'GraphImage' || __typename === 'GraphSidecar') {
-          return {
-            type: 'INSTAGRAM',
-            url: `https://www.instagram.com/p/${shortcode}`,
-            image: thumbnail_src,
-            title: title.join(''),
-          };
-        }
-
-        return null;
-      })
-      .filter(Boolean);
+      return {
+        type: 'INSTAGRAM',
+        url: `https://www.instagram.com/p/${shortcode}`,
+        image: thumbnail_src,
+        title: title.join(''),
+        date,
+      };
+    });
   } catch (err) {
     Amplitude.logEventWithProperties('ERROR loading instagram posts', {
       error: err,
