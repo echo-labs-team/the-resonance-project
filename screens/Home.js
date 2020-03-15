@@ -62,19 +62,16 @@ const HomeScreen = () => {
       const igPosts = (await getInstagramPosts()) || [];
       const blogPosts = (await getBlogPosts()) || [];
       const verseOfTheDay = (await getVerseOfTheDay()) || {};
-      const posts = [...igPosts, ...blogPosts];
+      const posts = [...blogPosts, verseOfTheDay, ...igPosts];
 
-      if (!posts.length) {
+      if (!blogPosts.length || !igPosts.length) {
         Amplitude.logEvent('ERROR no posts');
       }
 
-      const [firstPost, ...restOfPosts] = posts;
-      const allPosts = [firstPost, verseOfTheDay, ...(restOfPosts || [])];
-
-      setCardData(allPosts);
+      setCardData(posts);
       setRefreshing(false);
       setTryAgain(false);
-      storePostsData(allPosts);
+      storePostsData(posts);
     };
 
     if (refreshing || tryAgain) {
