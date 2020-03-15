@@ -1,10 +1,9 @@
 // @flow
 
 import { Platform } from 'react-native';
-import { Header } from 'react-navigation-stack';
 
 // $FlowIgnore: we will remove the HEIGHT static soon enough
-const BASE_HEADER_HEIGHT = Header.HEIGHT;
+const BASE_HEADER_HEIGHT = 20;
 
 const HEADER_HEIGHT =
   Platform.OS === 'ios' ? BASE_HEADER_HEIGHT : BASE_HEADER_HEIGHT + 4;

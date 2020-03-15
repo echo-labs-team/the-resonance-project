@@ -11,11 +11,13 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
+import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
+import useHandleTabChange from '../utils/useHandleTabChange';
 import isTheWeekend from '../utils/isTheWeekend';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
@@ -34,7 +36,12 @@ const getStoredMedia = () => {
 };
 
 const MediaScreen = () => {
+  useHandleTabChange('Media');
   const insets = useSafeArea();
+  const ref = React.useRef(null);
+
+  useScrollToTop(ref);
+
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -116,7 +123,10 @@ const MediaScreen = () => {
   }
 
   return (
-    <ScrollView style={[styles.container, { paddingTop: insets.top }]}>
+    <ScrollView
+      ref={ref}
+      style={[styles.container, { paddingTop: insets.top }]}
+    >
       <Text bold style={styles.headerTitle}>
         MEDIA
       </Text>
@@ -235,10 +245,6 @@ const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-MediaScreen.navigationOptions = {
-  header: null,
 };
 
 const styles = StyleSheet.create({
