@@ -62,16 +62,25 @@ const HomeScreen = () => {
       const igPosts = (await getInstagramPosts()) || [];
       const blogPosts = (await getBlogPosts()) || [];
       const verseOfTheDay = (await getVerseOfTheDay()) || {};
-      const posts = [...blogPosts, verseOfTheDay, ...igPosts];
 
       if (!blogPosts.length || !igPosts.length) {
         Amplitude.logEvent('ERROR no posts');
       }
 
-      setCardData(posts);
+      // get all the posts and sort them descending by date
+      const posts = [...blogPosts, ...igPosts].sort(
+        ({ date: firstDate }, { date: secondDate }) =>
+          new Date(secondDate) - new Date(firstDate)
+      );
+      const [firstPost, secondPost, ...restOfPosts] = posts;
+
+      // insert the verse of the day as the third item
+      const allPosts = [firstPost, secondPost, verseOfTheDay, ...restOfPosts];
+
+      setCardData(allPosts);
       setRefreshing(false);
       setTryAgain(false);
-      storePostsData(posts);
+      storePostsData(allPosts);
     };
 
     if (refreshing || tryAgain) {
@@ -172,7 +181,7 @@ function getImageHeight(type, image) {
   return 200;
 }
 
-const Card = ({ type, url, image, title }) => {
+const Card = ({ type, url, image, title, date }) => {
   const icon = getIcon(type);
 
   return (
@@ -208,14 +217,21 @@ const Card = ({ type, url, image, title }) => {
           ]}
         />
         <View style={styles.cardTypeView}>
-          {icon.expoIcon ? (
-            icon.expoIcon
-          ) : (
-            <Image source={icon} style={styles.cardTypeIcon} />
+          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            {icon.expoIcon ? (
+              icon.expoIcon
+            ) : (
+              <Image source={icon} style={styles.cardTypeIcon} />
+            )}
+            <Text bold style={styles.cardTypeText}>
+              {type}
+            </Text>
+          </View>
+          {date && (
+            <Text light style={styles.cardTypeText}>
+              {date}
+            </Text>
           )}
-          <Text bold style={styles.cardTypeText}>
-            {type}
-          </Text>
         </View>
         {title && (
           <Text style={[TextStyles.body, styles.title]} numberOfLines={3}>
@@ -273,10 +289,10 @@ const styles = StyleSheet.create({
   },
   cardTypeView: {
     paddingTop: 16,
-    paddingLeft: 8,
-    paddingRight: 16,
+    paddingHorizontal: 8,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   error: {
     marginBottom: 10,
