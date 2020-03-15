@@ -1,5 +1,8 @@
 import axios from 'axios';
 import * as Amplitude from 'expo-analytics-amplitude';
+import { AllHtmlEntities } from 'html-entities';
+
+const entities = new AllHtmlEntities();
 
 export async function getBlogPosts() {
   const { data: posts = [] } =
@@ -24,7 +27,7 @@ export async function getBlogPosts() {
           return {
             type: 'BLOG',
             url: blogUrl,
-            title,
+            title: entities.decode(title),
           };
         }
 
@@ -35,7 +38,7 @@ export async function getBlogPosts() {
               type: 'BLOG',
               url: blogUrl,
               image,
-              title,
+              title: entities.decode(title),
             };
           })
           .catch(err => {
