@@ -30,5 +30,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: expo/expo-github-action@v5
+      with:
+        expo-version: 3.x
+        expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+        expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
     - run: npm install
     - run: npm run publish
