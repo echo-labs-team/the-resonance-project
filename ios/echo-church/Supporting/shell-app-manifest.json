@@ -46,6 +46,7 @@
     "expo-web-browser",
     "expokit",
     "fast-html-parser",
+    "html-entities",
     "react",
     "react-native",
     "react-native-dropdownalert",
@@ -68,11 +69,11 @@
   ],
   "bundledAssets": [],
   "id": "@echo.church/echo",
-  "releaseId": "1edd4697-9d90-4d70-84f5-4a08b86e9fc6",
-  "revisionId": "1.0.0-r.ryaWN2KSI",
-  "publishedTime": "2020-03-14T01:31:48.837Z",
-  "commitTime": "2020-03-14T01:31:48.874Z",
-  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F0e748f7143f8eefd1921b1a206e3a070-36.0.0-ios.js",
-  "releaseChannel": "release",
-  "hostUri": "exp.host/@echo.church/echo?release-channel=release"
+  "releaseId": "9b557c9e-0072-4870-a81a-034c8ed4aa70",
+  "revisionId": "1.0.0-r.r1yeCB3HI",
+  "publishedTime": "2020-03-16T00:52:54.919Z",
+  "commitTime": "2020-03-16T00:52:55.095Z",
+  "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2Faa78d701ada3aab69a01c6234737585c-36.0.0-ios.js",
+  "releaseChannel": "develop_1_0_1",
+  "hostUri": "exp.host/@echo.church/echo?release-channel=develop_1_0_1"
 }
