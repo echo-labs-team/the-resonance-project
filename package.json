@@ -65,7 +65,7 @@
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "eslint-plugin-react-native": "^3.7.0",
-    "expo-cli": "^3.13.2",
+    "expo-cli": "^3.13.8",
     "flow-bin": "^0.120.1",
     "flow-typed": "^3.0.0",
     "husky": "^4.2.3",
