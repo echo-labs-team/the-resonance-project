@@ -7,6 +7,7 @@ import {
   UIManager,
 } from 'react-native';
 import { AppLoading } from 'expo';
+import { Constants } from 'expo-constants';
 import { Asset } from 'expo-asset';
 import * as Font from 'expo-font';
 import * as Icon from '@expo/vector-icons';
@@ -17,14 +18,29 @@ import AppNavigator from './navigation/AppNavigator';
 
 Amplitude.initialize(keys.AMPLITUDE);
 
-if (__DEV__) {
-  // override amplitude tracking
+const channel = Constants?.manifest?.releaseChannel;
+const emptyStorage = () =>
+  AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
+// override amplitude tracking
+if (channel === null || channel === undefined || channel === '') {
   Amplitude.logEvent = name => console.log(`[amplitude]: ${name}`);
   Amplitude.logEventWithProperties = (name, data) =>
     console.log(`[amplitude]: ${name}\n`, data);
-
-  // Erase all AsyncStorage
-  AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
+  emptyStorage();
+} else if (channel.indexOf('develop') !== -1) {
+  // beta testing from the store--we want to log this to amplitude, but
+  //  separate it out
+  Amplitude.logEvent = name => {
+    name = `BETA ${name}`;
+    console.log(`[amplitude]: ${name}`);
+    Amplitude.logEvent(name);
+  };
+  Amplitude.logEventWithProperties = (name, data) => {
+    name = `BETA ${name}`;
+    console.log(`[amplitude]: ${name}\n`, data);
+    Amplitude.logEventWithProperties(name, data);
+  };
+  emptyStorage();
 }
 
 if (
