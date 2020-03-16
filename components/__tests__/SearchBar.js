@@ -1,14 +1,8 @@
 import React from 'react';
 import { render, fireEvent } from 'react-native-testing-library';
-import NavigationTestUtils from 'react-navigation/NavigationTestUtils';
 import SearchBar from '../SearchBar';
 
 describe('<SearchBar/>', () => {
-  jest.useFakeTimers();
-  beforeEach(() => {
-    NavigationTestUtils.resetInternalState();
-  });
-
   test('render the default search bar', async () => {
     const { toJSON } = render(<SearchBar />);
 

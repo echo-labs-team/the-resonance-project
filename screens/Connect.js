@@ -14,6 +14,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
+import useHandleTabChange from '../utils/useHandleTabChange';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 
@@ -22,7 +23,7 @@ const items = [
   { value: 'ACTIVATE', page: 'Activate' },
   { value: 'BAPTISM', page: 'Baptism' },
   { value: 'VOLUNTEER', page: 'Volunteer' },
-  { value: 'PRAYER REQUESTS', page: 'PrayerRequests' },
+  { value: 'PRAYER REQUESTS', page: 'Prayer Requests' },
   { value: 'MISSIONS', page: 'Missions' },
 ];
 
@@ -39,6 +40,7 @@ function openConnectionCard() {
 }
 
 const ConnectScreen = ({ navigation }: { navigation: Object }) => {
+  useHandleTabChange('Connect');
   const insets = useSafeArea();
 
   return (
@@ -85,10 +87,6 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
       />
     </View>
   );
-};
-
-ConnectScreen.navigationOptions = {
-  header: null,
 };
 
 const styles = StyleSheet.create({

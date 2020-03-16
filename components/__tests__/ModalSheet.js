@@ -5,15 +5,9 @@ import {
   render,
   fireEvent,
 } from 'react-native-testing-library';
-import NavigationTestUtils from 'react-navigation/NavigationTestUtils';
 import ModalSheet from '../ModalSheet';
 
 describe('<ModalSheet/>', () => {
-  jest.useFakeTimers();
-  beforeEach(() => {
-    NavigationTestUtils.resetInternalState();
-  });
-
   test('render the modal sheet with defaults', async () => {
     const { toJSON } = render(<ModalSheet />);
 

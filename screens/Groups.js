@@ -10,12 +10,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-// import AsyncStorage from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
+import { useScrollToTop } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
+import useHandleTabChange from '../utils/useHandleTabChange';
 import { getOpenGroups, getCategories } from '../data/groups';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
@@ -66,22 +67,24 @@ function useQuery(groups) {
     name?.toLowerCase().includes(debouncedQuery?.toLowerCase())
   );
 
-  if (query) {
-    Amplitude.logEventWithProperties('SEARCH Groups', {
-      search_text: debouncedQuery,
-    });
-  }
+  useEffect(() => {
+    if (debouncedQuery) {
+      Amplitude.logEventWithProperties('SEARCH Groups', {
+        search_text: debouncedQuery,
+      });
+    }
+  }, [debouncedQuery]);
 
   return [query, setQuery, queriedGroups];
 }
 
-const Card = ({ navigation, item }) => {
+const Card = ({ item }) => {
   return (
     <View>
       {item?.uuid?.toString().includes('loading') ? (
         <GroupCardPlaceholder />
       ) : (
-        <GroupCardDetails navigation={navigation} item={item} />
+        <GroupCardDetails item={item} />
       )}
     </View>
   );
@@ -93,8 +96,13 @@ const initialFilters = {
   Categories: [],
 };
 
-const GroupsScreen = ({ navigation }: { navigation: Object }) => {
+const GroupsScreen = () => {
+  useHandleTabChange('Groups');
   const insets = useSafeArea();
+  const ref = React.useRef(null);
+
+  useScrollToTop(ref);
+
   const [groups, setGroups] = useState([
     { uuid: 'loading1' },
     { uuid: 'loading2' },
@@ -278,13 +286,14 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
 
           {data.length ? (
             <FlatList
+              ref={ref}
               keyExtractor={({ uuid }) => uuid.toString()}
               data={data}
               renderItem={({ item }) => {
                 return (
                   <View style={styles.cardShadow}>
                     <BlurView tint="dark" intensity={100} style={styles.card}>
-                      <Card navigation={navigation} item={item} />
+                      <Card item={item} />
                     </BlurView>
                   </View>
                 );
@@ -314,10 +323,6 @@ const GroupsScreen = ({ navigation }: { navigation: Object }) => {
       />
     </View>
   );
-};
-
-GroupsScreen.navigationOptions = {
-  header: null,
 };
 
 const styles = StyleSheet.create({

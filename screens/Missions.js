@@ -6,14 +6,13 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { HeaderHeightContext } from '@react-navigation/stack';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
 import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import htmlParser from 'fast-html-parser';
 import Colors from '../constants/Colors';
-import { getHeaderInset } from '../utils/header';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 
@@ -27,7 +26,6 @@ const getStoredMissionsData = () => {
 };
 
 const MissionsScreen = () => {
-  const insets = useSafeArea();
   const [missions, setMissions] = useState('');
 
   useEffect(() => {
@@ -66,73 +64,70 @@ const MissionsScreen = () => {
   }, []);
 
   return (
-    <ScrollView
-      style={[styles.mainContainer, { paddingTop: insets.top }]}
-      {...getHeaderInset()}
-    >
-      <Image
-        source={require('../assets/images/missions.png')}
-        style={styles.image}
-      />
-      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
-        <Text style={styles.heading}>Echoing Around the World</Text>
-        <Text style={styles.content}>
-          Mission trips give Echo.Church a chance to serve and encourage our
-          partner churches and missionaries around the world, as well as an
-          opportunity for our faith to be stretched and our eyes to be opened to
-          what God is doing beyond our region.
-        </Text>
+    <HeaderHeightContext.Consumer>
+      {headerHeight => (
+        <ScrollView
+          style={[styles.mainContainer, { paddingTop: headerHeight }]}
+        >
+          <Image
+            source={require('../assets/images/missions.png')}
+            style={styles.image}
+          />
+          <View style={[styles.container, { paddingBottom: headerHeight }]}>
+            <Text style={styles.heading}>Echoing Around the World</Text>
+            <Text style={styles.content}>
+              Mission trips give Echo.Church a chance to serve and encourage our
+              partner churches and missionaries around the world, as well as an
+              opportunity for our faith to be stretched and our eyes to be
+              opened to what God is doing beyond our region.
+            </Text>
 
-        <Text bold style={[styles.heading, { fontSize: 24 }]}>
-          Current mission trips
-        </Text>
-        {missions ? (
-          <Text bold style={styles.subHeading}>
-            {missions}
-          </Text>
-        ) : (
-          <Placeholder
-            Animation={props => (
-              <Fade {...props} style={{ backgroundColor: Colors.darkGray }} />
+            <Text bold style={[styles.heading, { fontSize: 24 }]}>
+              Current mission trips
+            </Text>
+            {missions ? (
+              <Text bold style={styles.subHeading}>
+                {missions}
+              </Text>
+            ) : (
+              <Placeholder
+                Animation={props => (
+                  <Fade
+                    {...props}
+                    style={{ backgroundColor: Colors.darkGray }}
+                  />
+                )}
+              >
+                <PlaceholderLine height={40} style={styles.loader} />
+              </Placeholder>
             )}
-          >
-            <PlaceholderLine height={40} style={styles.loader} />
-          </Placeholder>
-        )}
 
-        <Button
-          title="Learn More"
-          style={styles.button}
-          onPress={() => {
-            Amplitude.logEvent('TAP Missions Learn More');
-            WebBrowser.openBrowserAsync(
-              'https://echo.church/missions/#global',
-              {
-                toolbarColor: Colors.darkestGray,
-              }
-            ).catch(err => {
-              Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                error: err,
-              });
-              WebBrowser.dismissBrowser();
-            });
-          }}
-        />
-      </View>
-    </ScrollView>
+            <Button
+              title="Learn More"
+              style={styles.button}
+              onPress={() => {
+                Amplitude.logEvent('TAP Missions Learn More');
+                WebBrowser.openBrowserAsync(
+                  'https://echo.church/missions/#global',
+                  {
+                    toolbarColor: Colors.darkestGray,
+                  }
+                ).catch(err => {
+                  Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                    error: err,
+                  });
+                  WebBrowser.dismissBrowser();
+                });
+              }}
+            />
+          </View>
+        </ScrollView>
+      )}
+    </HeaderHeightContext.Consumer>
   );
 };
 
-MissionsScreen.navigationOptions = {
-  headerTitle: () => <Text style={styles.header}>Missions</Text>,
-};
-
 const styles = StyleSheet.create({
-  header: {
-    fontFamily: 'NunitoSans-Regular',
-    fontSize: 26,
-    color: Colors.white,
-  },
   mainContainer: {
     flex: 1,
     backgroundColor: Colors.darkestGray,
