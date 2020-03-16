@@ -14,7 +14,7 @@ describe('<ModalSheet/>', () => {
     expect(toJSON()).toMatchSnapshot();
   });
 
-  test('render the modal sheet and close on success', async () => {
+  test.skip('render the modal sheet and close on success', async () => {
     const { update, toJSON, getByText } = render(
       <ModalSheet buttonTitle="Join Group">
         <View>
