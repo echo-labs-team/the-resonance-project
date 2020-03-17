@@ -80,3 +80,7 @@ Open a bash terminal:
 2. Open Android Studio
 3. Open the-resonance-project/android folder
 4. Click the green play button.
+
+## Documentation 📃
+
+See more of our documentation over at [docs/](https://github.com/echo-labs-team/the-resonance-project/tree/dev/docs)
