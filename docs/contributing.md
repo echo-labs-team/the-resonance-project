@@ -1,7 +1,4 @@
----
-id: contributing
-title: Contributing
----
+# Contributing
 
 ## Prerequisites
 
@@ -13,13 +10,13 @@ title: Contributing
 
 We'll try to keep the `master` branch as a reflection of what's in production. So you should _never_ push directly to `master`.
 
-When sending a pull request, create a feature/fix branch and push that to `origin`. Then you can create a pull request to merge your changes into `master`.
+When sending a pull request, create a feature/fix branch and push that to `origin`. Then you can create a pull request to merge your changes into `dev`.
 
 ## Sending a Pull Request
 
 **Before submitting a pull request**, please make sure the following is done:
 
-1. Fork the repository or checkout the `master` branch and `git pull` to fetch the latest and then create your branch from `master`
+1. Fork the repository or checkout the `dev` branch and `git pull` to fetch the latest and then create your branch from `dev`
 2. Run `yarn` or `npm i` to install dependencies
 3. If you’ve fixed a bug or added code that should be tested, add tests!
 4. Ensure that all tests pass. You can run `npm run test:watch` or `yarn test:watch` to run tests in watch mode.
