@@ -141,7 +141,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={isTheWeekend ? 'Connect' : 'Home'}
+        initialRouteName={'Home'}
         tabBarOptions={{
           activeTintColor: Colors.tabIconSelected,
           inactiveTintColor: Colors.tabIconDefault,
