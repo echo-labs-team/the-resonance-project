@@ -70,7 +70,7 @@
     "flow-typed": "^3.0.0",
     "husky": "^4.2.3",
     "jest-expo": "^36.0.0",
-    "lint-staged": "^9.1.0",
+    "lint-staged": "^10.0.8",
     "prettier": "^1.17.1",
     "react-devtools": "^4.2.1",
     "react-native-testing-library": "^1.12.0",
