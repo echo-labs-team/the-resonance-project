@@ -22,7 +22,7 @@ const channel = Constants?.manifest?.releaseChannel;
 const emptyStorage = () =>
   AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
 // override amplitude tracking
-if (channel === null || channel === undefined || channel === '') {
+if (!channel) {
   Amplitude.logEvent = name => console.log(`[amplitude]: ${name}`);
   Amplitude.logEventWithProperties = (name, data) =>
     console.log(`[amplitude]: ${name}\n`, data);
