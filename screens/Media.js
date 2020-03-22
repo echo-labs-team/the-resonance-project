@@ -125,10 +125,9 @@ const MediaScreen = () => {
           <TouchableHighlight
             onPress={() => {
               Amplitude.logEvent('TAP Watch Live');
-              WebBrowser.openBrowserAsync(
-                'https://echochurchlive.churchonline.org',
-                { toolbarColor: Colors.darkestGray }
-              ).catch(err => {
+              WebBrowser.openBrowserAsync('https://live.echo.church', {
+                toolbarColor: Colors.darkestGray,
+              }).catch(err => {
                 Amplitude.logEventWithProperties('ERROR with WebBrowser', {
                   error: err,
                 });
