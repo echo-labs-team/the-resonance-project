@@ -600,9 +600,8 @@ Array [
         Object {
           "backgroundColor": "#313d48",
           "borderRadius": 6,
-          "minHeight": 40,
+          "minHeight": 60,
           "paddingHorizontal": 24,
-          "paddingVertical": 16,
         },
         Object {
           "marginBottom": 16,
@@ -614,6 +613,7 @@ Array [
       style={
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "center",
         }
