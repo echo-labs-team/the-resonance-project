@@ -14,7 +14,7 @@ import useHandleTabChange from '../utils/useHandleTabChange';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 
-const handleGive = campus => {
+const handleGive = (campus) => {
   Amplitude.logEvent(`TAP Giving ${campus}`);
   Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);
 };

@@ -6,7 +6,7 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-export default props => {
+export default (props) => {
   let fontSize = 16;
 
   let fontWeight = 'Regular';

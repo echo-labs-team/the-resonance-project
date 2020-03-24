@@ -10,7 +10,7 @@ import Button from '../components/shared/Button';
 const PrayerRequestsScreen = () => {
   return (
     <HeaderHeightContext.Consumer>
-      {headerHeight => (
+      {(headerHeight) => (
         <ScrollView
           style={[styles.mainContainer, { paddingTop: headerHeight }]}
         >
@@ -33,7 +33,7 @@ const PrayerRequestsScreen = () => {
                 WebBrowser.openBrowserAsync(
                   'https://docs.google.com/forms/d/e/1FAIpQLScXKoHyYZnqe7HgI0W9ZYYZllrXkDLXQv8pJKmH15oOyRrG0Q/viewform',
                   { toolbarColor: Colors.darkestGray }
-                ).catch(err => {
+                ).catch((err) => {
                   Amplitude.logEventWithProperties('ERROR with WebBrowser', {
                     error: err,
                   });
