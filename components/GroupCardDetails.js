@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { StyleSheet, View, TouchableHighlight } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Text from '../components/shared/Text';
 import Colors from '../constants/Colors';
@@ -12,10 +13,8 @@ import {
 } from '../utils/groups';
 
 export default ({
-  navigation,
   item,
 }: {
-  navigation: { navigate: Function },
   item: {
     name: string,
     campus: string,
@@ -27,6 +26,7 @@ export default ({
     description: string,
   },
 }) => {
+  const navigation = useNavigation();
   const {
     name = '',
     campus,
@@ -37,7 +37,6 @@ export default ({
     meetingTime,
     description,
   } = item;
-
   const titleParts = name.split('-');
 
   if (titleParts.length > 1) {

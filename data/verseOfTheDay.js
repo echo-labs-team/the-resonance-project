@@ -1,5 +1,4 @@
 import axios from 'axios';
-import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 
 export async function getVerseOfTheDay() {
@@ -20,7 +19,7 @@ export async function getVerseOfTheDay() {
           },
         }
       )
-      .catch(err => console.error(err))) || {};
+      .catch((err) => console.error(err))) || {};
   const { image = {}, verse = {} } = data;
 
   return {

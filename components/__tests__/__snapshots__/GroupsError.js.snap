@@ -79,9 +79,8 @@ exports[`<GroupsError/> render a group error with a Try Again CTA 1`] = `
         Object {
           "backgroundColor": "#313d48",
           "borderRadius": 6,
-          "minHeight": 40,
+          "minHeight": 60,
           "paddingHorizontal": 24,
-          "paddingVertical": 16,
         },
         Object {},
       ]
@@ -91,6 +90,7 @@ exports[`<GroupsError/> render a group error with a Try Again CTA 1`] = `
       style={
         Object {
           "alignItems": "center",
+          "flex": 1,
           "flexDirection": "row",
           "justifyContent": "center",
         }

@@ -11,11 +11,13 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
+import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
+import useHandleTabChange from '../utils/useHandleTabChange';
 import isTheWeekend from '../utils/isTheWeekend';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
@@ -24,17 +26,22 @@ import LiveCard from '../components/LiveCard';
 import * as WebBrowser from 'expo-web-browser';
 
 const screenWidth = Dimensions.get('window').width;
-const storeMediaData = async data => {
-  await AsyncStorage.setItem('@media', JSON.stringify(data)).catch(err =>
+const storeMediaData = async (data) => {
+  await AsyncStorage.setItem('@media', JSON.stringify(data)).catch((err) =>
     console.error(err)
   );
 };
 const getStoredMedia = () => {
-  return AsyncStorage.getItem('@media').catch(err => console.error(err));
+  return AsyncStorage.getItem('@media').catch((err) => console.error(err));
 };
 
 const MediaScreen = () => {
+  useHandleTabChange('Media');
   const insets = useSafeArea();
+  const ref = React.useRef(null);
+
+  useScrollToTop(ref);
+
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -116,7 +123,10 @@ const MediaScreen = () => {
   }
 
   return (
-    <ScrollView style={[styles.container, { paddingTop: insets.top }]}>
+    <ScrollView
+      ref={ref}
+      style={[styles.container, { paddingTop: insets.top }]}
+    >
       <Text bold style={styles.headerTitle}>
         MEDIA
       </Text>
@@ -125,10 +135,9 @@ const MediaScreen = () => {
           <TouchableHighlight
             onPress={() => {
               Amplitude.logEvent('TAP Watch Live');
-              WebBrowser.openBrowserAsync(
-                'https://echochurchlive.churchonline.org',
-                { toolbarColor: Colors.darkestGray }
-              ).catch(err => {
+              WebBrowser.openBrowserAsync('https://live.echo.church', {
+                toolbarColor: Colors.darkestGray,
+              }).catch((err) => {
                 Amplitude.logEventWithProperties('ERROR with WebBrowser', {
                   error: err,
                 });
@@ -200,7 +209,7 @@ const PastSeriesSection = ({ data }) => {
 
   return (
     <View style={styles.list}>
-      {data.map(item => {
+      {data.map((item) => {
         if (item) {
           return (
             <YouTubeDataView
@@ -235,10 +244,6 @@ const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
       </View>
     </TouchableOpacity>
   );
-};
-
-MediaScreen.navigationOptions = {
-  header: null,
 };
 
 const styles = StyleSheet.create({

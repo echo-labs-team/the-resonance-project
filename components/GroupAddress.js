@@ -23,7 +23,7 @@ export default ({ title, location = {} }) => {
     city,
     stProvince,
     postalCode,
-  ].filter(item => item);
+  ].filter((item) => item);
   const line1 = [address1, address2, address3].filter(Boolean).join(', ');
 
   const openMaps = () => {

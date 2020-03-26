@@ -17,9 +17,8 @@ exports[`<Button/> render the button 1`] = `
       Object {
         "backgroundColor": "#313d48",
         "borderRadius": 6,
-        "minHeight": 40,
+        "minHeight": 60,
         "paddingHorizontal": 24,
-        "paddingVertical": 16,
       },
       Object {},
     ]
@@ -29,6 +28,7 @@ exports[`<Button/> render the button 1`] = `
     style={
       Object {
         "alignItems": "center",
+        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "center",
       }
@@ -69,9 +69,8 @@ exports[`<Button/> render the button with an icon 1`] = `
       Object {
         "backgroundColor": "#313d48",
         "borderRadius": 6,
-        "minHeight": 40,
+        "minHeight": 60,
         "paddingHorizontal": 24,
-        "paddingVertical": 16,
       },
       Object {},
     ]
@@ -81,6 +80,7 @@ exports[`<Button/> render the button with an icon 1`] = `
     style={
       Object {
         "alignItems": "center",
+        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "center",
       }
@@ -135,9 +135,8 @@ exports[`<Button/> render the button with style 1`] = `
       Object {
         "backgroundColor": "#313d48",
         "borderRadius": 6,
-        "minHeight": 40,
+        "minHeight": 60,
         "paddingHorizontal": 24,
-        "paddingVertical": 16,
       },
       Object {
         "backgroundColor": "black",
@@ -149,6 +148,7 @@ exports[`<Button/> render the button with style 1`] = `
     style={
       Object {
         "alignItems": "center",
+        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "center",
       }

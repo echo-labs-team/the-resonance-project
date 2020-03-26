@@ -1,5 +1,7 @@
 # 🔊 The Resonance Project
 
+![Dev Publish](https://github.com/echo-labs-team/the-resonance-project/workflows/Dev%20Publish/badge.svg?branch=dev)
+
 A React Native application for Echo.Church built by volunteers
 
 <p align="center"><img src="https://echo.church/wp-content/uploads/2018/01/echo_logo_main_header.png" width="300" /></p>
@@ -80,3 +82,7 @@ Open a bash terminal:
 2. Open Android Studio
 3. Open the-resonance-project/android folder
 4. Click the green play button.
+
+## Documentation 📃
+
+See more of our documentation over at [docs/](https://github.com/echo-labs-team/the-resonance-project/tree/dev/docs)
