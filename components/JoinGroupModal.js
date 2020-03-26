@@ -51,7 +51,7 @@ function reducer(state, action) {
   }
 }
 
-export default props => {
+export default (props) => {
   const [
     { loading, success, firstName, lastName, email },
     dispatch,
@@ -86,7 +86,7 @@ export default props => {
       group: props.title,
     });
     joinGroup(props.groupID, firstName, lastName, email)
-      .then(joinGroupSuccess => {
+      .then((joinGroupSuccess) => {
         if (joinGroupSuccess) {
           // close this modal
           dispatch({ type: 'setLoading', value: false });
@@ -96,7 +96,7 @@ export default props => {
           props.showSuccess('Thanks for joining ☺️');
         }
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: 'setLoading', value: false });
         Amplitude.logEventWithProperties('ERROR Group Sign Up', {
           group: props.title,
@@ -128,7 +128,7 @@ export default props => {
           placeholder="First name"
           placeholderTextColor={Colors.gray}
           value={firstName}
-          onChangeText={value => dispatch({ type: 'setFirstName', value })}
+          onChangeText={(value) => dispatch({ type: 'setFirstName', value })}
           style={styles.input}
         />
         <TextInput
@@ -139,7 +139,7 @@ export default props => {
           placeholder="Last name"
           placeholderTextColor={Colors.gray}
           value={lastName}
-          onChangeText={value => dispatch({ type: 'setLastName', value })}
+          onChangeText={(value) => dispatch({ type: 'setLastName', value })}
           style={styles.input}
         />
         <TextInput
@@ -152,7 +152,7 @@ export default props => {
           placeholder="Email"
           placeholderTextColor={Colors.gray}
           value={email}
-          onChangeText={value => dispatch({ type: 'setEmail', value })}
+          onChangeText={(value) => dispatch({ type: 'setEmail', value })}
           style={styles.input}
         />
         <View style={styles.submitButton}>

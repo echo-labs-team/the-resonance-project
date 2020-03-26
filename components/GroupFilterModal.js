@@ -89,7 +89,7 @@ export default ({
         </View>
 
         <SectionList
-          keyExtractor={item => item}
+          keyExtractor={(item) => item}
           sections={[
             {
               title: 'Campus',
@@ -124,8 +124,8 @@ export default ({
               <Item
                 key={item}
                 item={item}
-                isSelected={filters[title].find(filter => filter === item)}
-                onSelected={selected => {
+                isSelected={filters[title].find((filter) => filter === item)}
+                onSelected={(selected) => {
                   if (selected) {
                     // add the item to array of filters
                     setFilters({
@@ -138,7 +138,7 @@ export default ({
                       ...filters,
                       [title]: [
                         ...filters[title].filter(
-                          groupFilter => groupFilter !== item
+                          (groupFilter) => groupFilter !== item
                         ),
                       ],
                     });

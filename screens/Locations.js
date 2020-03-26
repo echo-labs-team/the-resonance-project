@@ -7,13 +7,12 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import { useSafeArea } from 'react-native-safe-area-context';
+import { HeaderHeightContext } from '@react-navigation/stack';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import { getHeaderInset } from '../utils/header';
 import Text from '../components/shared/Text';
 
-const openMaps = location => {
+const openMaps = (location) => {
   let url = '';
 
   switch (location) {
@@ -42,79 +41,77 @@ const openMaps = location => {
 };
 
 const LocationsScreen = () => {
-  const insets = useSafeArea();
-
   return (
-    <ScrollView
-      style={[styles.mainContainer, { paddingTop: insets.top }]}
-      {...getHeaderInset()}
-    >
-      <Image
-        source={require('../assets/images/locations.png')}
-        style={styles.image}
-      />
-      <View style={[styles.container, { paddingBottom: insets.bottom + 16 }]}>
-        <Text style={styles.heading}>
-          All Echo.Church locations & regular service times
-        </Text>
+    <HeaderHeightContext.Consumer>
+      {(headerHeight) => (
+        <ScrollView
+          style={[styles.mainContainer, { paddingTop: headerHeight }]}
+        >
+          <Image
+            source={require('../assets/images/locations.png')}
+            style={styles.image}
+          />
+          <View style={[styles.container, { paddingBottom: headerHeight }]}>
+            <Text style={styles.heading}>
+              All Echo.Church locations & regular service times
+            </Text>
 
-        <View style={styles.location}>
-          <TouchableHighlight
-            underlayColor={Colors.darkBlue}
-            onPress={() => openMaps('NSJ')}
-            style={{ borderRadius: 4 }}
-          >
-            <Text style={styles.content}>North San Jose | 1180 Murphy Ave</Text>
-          </TouchableHighlight>
-          <Text style={styles.subContent}>
-            8:30AM • 10:00AM • 11:30AM • 4:00PM • 5:30PM
-          </Text>
-        </View>
-        <View style={styles.location}>
-          <TouchableHighlight
-            underlayColor={Colors.darkBlue}
-            onPress={() => openMaps('SSJ')}
-            style={{ borderRadius: 4 }}
-          >
-            <Text style={styles.content}>South San Jose | 6150 Snell Ave</Text>
-          </TouchableHighlight>
-          <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
-        </View>
-        <View style={styles.location}>
-          <TouchableHighlight
-            underlayColor={Colors.darkBlue}
-            onPress={() => openMaps('SVL')}
-            style={{ borderRadius: 4 }}
-          >
-            <Text style={styles.content}>Sunnyvale | 1145 E Arques Ave</Text>
-          </TouchableHighlight>
-          <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
-        </View>
-        <View style={styles.location}>
-          <TouchableHighlight
-            underlayColor={Colors.darkBlue}
-            onPress={() => openMaps('FMT')}
-            style={{ borderRadius: 4 }}
-          >
-            <Text style={styles.content}>Fremont | 48989 Milmont Dr</Text>
-          </TouchableHighlight>
-          <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
-        </View>
-      </View>
-    </ScrollView>
+            <View style={styles.location}>
+              <TouchableHighlight
+                underlayColor={Colors.darkBlue}
+                onPress={() => openMaps('NSJ')}
+                style={{ borderRadius: 4 }}
+              >
+                <Text style={styles.content}>
+                  North San Jose | 1180 Murphy Ave
+                </Text>
+              </TouchableHighlight>
+              <Text style={styles.subContent}>
+                8:30AM • 10:00AM • 11:30AM • 4:00PM • 5:30PM
+              </Text>
+            </View>
+            <View style={styles.location}>
+              <TouchableHighlight
+                underlayColor={Colors.darkBlue}
+                onPress={() => openMaps('SSJ')}
+                style={{ borderRadius: 4 }}
+              >
+                <Text style={styles.content}>
+                  South San Jose | 6150 Snell Ave
+                </Text>
+              </TouchableHighlight>
+              <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
+            </View>
+            <View style={styles.location}>
+              <TouchableHighlight
+                underlayColor={Colors.darkBlue}
+                onPress={() => openMaps('SVL')}
+                style={{ borderRadius: 4 }}
+              >
+                <Text style={styles.content}>
+                  Sunnyvale | 1145 E Arques Ave
+                </Text>
+              </TouchableHighlight>
+              <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
+            </View>
+            <View style={styles.location}>
+              <TouchableHighlight
+                underlayColor={Colors.darkBlue}
+                onPress={() => openMaps('FMT')}
+                style={{ borderRadius: 4 }}
+              >
+                <Text style={styles.content}>Fremont | 48989 Milmont Dr</Text>
+              </TouchableHighlight>
+              <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
+            </View>
+          </View>
+        </ScrollView>
+      )}
+    </HeaderHeightContext.Consumer>
   );
 };
 
-LocationsScreen.navigationOptions = {
-  headerTitle: () => <Text style={styles.header}>Locations</Text>,
-};
-
 const styles = StyleSheet.create({
-  header: {
-    fontFamily: 'NunitoSans-Regular',
-    fontSize: 26,
-    color: Colors.white,
-  },
   mainContainer: {
     flex: 1,
     backgroundColor: Colors.black,

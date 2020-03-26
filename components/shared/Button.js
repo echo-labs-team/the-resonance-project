@@ -25,16 +25,16 @@ export default ({
 
 const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
   },
   button: {
-    minHeight: 40,
+    minHeight: 60,
     backgroundColor: Colors.darkGray,
     borderRadius: 6,
     paddingHorizontal: 24,
-    paddingVertical: 16,
   },
   text: {
     color: Colors.white,

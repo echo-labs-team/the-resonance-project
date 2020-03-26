@@ -3,23 +3,24 @@ import {
   AsyncStorage,
   Image,
   Linking,
-  Platform,
   RefreshControl,
   ScrollView,
   StyleSheet,
   TouchableHighlight,
   View,
 } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
+import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import * as WebBrowser from 'expo-web-browser';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import { getHeaderInset } from '../utils/header';
 import { getInstagramPosts } from '../data/instagram';
 import { getBlogPosts } from '../data/blogPosts';
 import { getVerseOfTheDay } from '../data/verseOfTheDay';
 import TextStyles from '../constants/TextStyles';
+import useHandleTabChange from '../utils/useHandleTabChange';
 import AnimateChildrenIn from '../components/AnimateChildrenIn';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
@@ -27,16 +28,22 @@ import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
-const storePostsData = async data => {
-  await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch(err =>
+const storePostsData = async (data) => {
+  await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch((err) =>
     console.error(err)
   );
 };
 const getStoredPosts = () => {
-  return AsyncStorage.getItem('@posts').catch(err => console.error(err));
+  return AsyncStorage.getItem('@posts').catch((err) => console.error(err));
 };
 
 const HomeScreen = () => {
+  useHandleTabChange('Home');
+  const insets = useSafeArea();
+  const ref = React.useRef(null);
+
+  useScrollToTop(ref);
+
   const [cardData, setCardData] = useState([
     { url: 'loading1' },
     { url: 'loading2' },
@@ -96,55 +103,52 @@ const HomeScreen = () => {
   };
 
   return (
-    <ScrollView
-      {...getHeaderInset()}
-      refreshControl={
-        <RefreshControl
-          tintColor={Colors.gray}
-          colors={[Colors.gray]}
-          refreshing={refreshing}
-          onRefresh={refresh}
-        />
-      }
-      style={styles.container}
-      contentContainerStyle={styles.contentContainer}
-    >
-      {tryAgain && <Spinner />}
-
-      <AnimateChildrenIn
-        type="slide-top"
-        durationMs={500}
-        delayMs={300}
-        style={styles.logoContainer}
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      <ScrollView
+        ref={ref}
+        refreshControl={
+          <RefreshControl
+            tintColor={Colors.gray}
+            colors={[Colors.gray]}
+            refreshing={refreshing}
+            onRefresh={refresh}
+          />
+        }
+        contentContainerStyle={styles.contentContainer}
       >
-        <EchoLogo width={40} height={40} color={Colors.red} />
-        <Text style={styles.logo}>ECHO.CHURCH</Text>
-      </AnimateChildrenIn>
+        {tryAgain && <Spinner />}
 
-      {cardData.length ? (
-        cardData.map((item, index) => {
-          if (item?.url?.includes('loading')) {
-            return (
-              <HomeCardPlaceholder
-                key={`placeholder${index}`}
-                style={{ marginBottom: 16 }}
-              />
-            );
-          }
-          return <Card key={`card${index}`} {...item} />;
-        })
-      ) : (
-        <>
-          <Text style={styles.error}>No posts were found... 🤔</Text>
-          <Button title="Try Again" onPress={() => setTryAgain(true)} />
-        </>
-      )}
-    </ScrollView>
+        <AnimateChildrenIn
+          type="slide-top"
+          durationMs={500}
+          delayMs={300}
+          style={styles.logoContainer}
+        >
+          <EchoLogo width={40} height={40} color={Colors.red} />
+          <Text style={styles.logo}>ECHO.CHURCH</Text>
+        </AnimateChildrenIn>
+
+        {cardData.length ? (
+          cardData.map((item, index) => {
+            if (item?.url?.includes('loading')) {
+              return (
+                <HomeCardPlaceholder
+                  key={`placeholder${index}`}
+                  style={{ marginBottom: 16 }}
+                />
+              );
+            }
+            return <Card key={`card${index}`} {...item} />;
+          })
+        ) : (
+          <>
+            <Text style={styles.error}>No posts were found... 🤔</Text>
+            <Button title="Try Again" onPress={() => setTryAgain(true)} />
+          </>
+        )}
+      </ScrollView>
+    </View>
   );
-};
-
-HomeScreen.navigationOptions = {
-  header: null,
 };
 
 function getIcon(type) {
@@ -196,7 +200,7 @@ const Card = ({ type, url, image, title, date }) => {
         if (type === 'BLOG') {
           return WebBrowser.openBrowserAsync(url, {
             toolbarColor: Colors.darkestGray,
-          }).catch(err => {
+          }).catch((err) => {
             Amplitude.logEventWithProperties('ERROR with WebBrowser', {
               error: err,
             });
@@ -250,7 +254,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: 10,
-    marginTop: Platform.OS === 'ios' ? -20 : 0,
+    marginTop: 0,
   },
   logoContainer: {
     marginBottom: 10,

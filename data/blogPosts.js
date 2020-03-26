@@ -8,7 +8,7 @@ export async function getBlogPosts() {
   const { data: posts = [] } =
     (await axios
       .get('http://echo.church/wp-json/wp/v2/posts?per_page=3&orderby=date')
-      .catch(err => {
+      .catch((err) => {
         Amplitude.logEventWithProperties('ERROR loading blog posts', {
           error: err,
         });
@@ -45,7 +45,7 @@ export async function getBlogPosts() {
               date: postDate,
             };
           })
-          .catch(err => {
+          .catch((err) => {
             Amplitude.logEventWithProperties('ERROR loading blog post image', {
               error: err,
             });

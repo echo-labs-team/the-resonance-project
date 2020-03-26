@@ -1,14 +1,8 @@
 import React from 'react';
 import { render } from 'react-native-testing-library';
-import NavigationTestUtils from 'react-navigation/NavigationTestUtils';
 import Text from '../Text';
 
 describe('<Text/>', () => {
-  jest.useFakeTimers();
-  beforeEach(() => {
-    NavigationTestUtils.resetInternalState();
-  });
-
   test('render text', async () => {
     const { toJSON } = render(<Text>🔥</Text>);
 

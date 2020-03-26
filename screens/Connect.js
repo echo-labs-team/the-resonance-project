@@ -4,6 +4,7 @@ import React from 'react';
 import {
   FlatList,
   ImageBackground,
+  ScrollView,
   StyleSheet,
   TouchableHighlight,
   View,
@@ -14,6 +15,8 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
+import useHandleTabChange from '../utils/useHandleTabChange';
+import callToActionButtons from '../config/connect';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 
@@ -22,15 +25,15 @@ const items = [
   { value: 'ACTIVATE', page: 'Activate' },
   { value: 'BAPTISM', page: 'Baptism' },
   { value: 'VOLUNTEER', page: 'Volunteer' },
-  { value: 'PRAYER REQUESTS', page: 'PrayerRequests' },
+  { value: 'PRAYER REQUESTS', page: 'Prayer Requests' },
   { value: 'MISSIONS', page: 'Missions' },
 ];
 
-function openConnectionCard() {
-  Amplitude.logEvent('TAP Connection Card');
-  WebBrowser.openBrowserAsync('https://echo.church/connectioncard', {
+function openBrowser({ title, url }) {
+  Amplitude.logEvent(`TAP ${title}`);
+  WebBrowser.openBrowserAsync(url, {
     toolbarColor: Colors.darkestGray,
-  }).catch(err => {
+  }).catch((err) => {
     Amplitude.logEventWithProperties('ERROR with WebBrowser', {
       error: err,
     });
@@ -39,6 +42,7 @@ function openConnectionCard() {
 }
 
 const ConnectScreen = ({ navigation }: { navigation: Object }) => {
+  useHandleTabChange('Connect');
   const insets = useSafeArea();
 
   return (
@@ -51,6 +55,7 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
       <Text bold style={styles.headerTitle}>
         CONNECT
       </Text>
+
       <FlatList
         keyExtractor={({ value }) => value}
         data={items}
@@ -71,24 +76,38 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
         style={styles.list}
       />
 
-      <Button
-        icon={
-          <MaterialCommunityIcons
-            name={'account-heart'}
-            size={28}
-            color={Colors.gray}
+      <View>
+        <ScrollView style={styles.callToActions}>
+          <Button
+            icon={
+              <MaterialCommunityIcons
+                name={'account-heart'}
+                size={28}
+                color={Colors.gray}
+              />
+            }
+            title="Connection Card"
+            style={styles.connectionCard}
+            onPress={() =>
+              openBrowser({
+                title: 'Connection Card',
+                url: 'https://echo.church/connectioncard',
+              })
+            }
           />
-        }
-        title="Connection Card"
-        style={styles.connectionCard}
-        onPress={openConnectionCard}
-      />
+          {callToActionButtons.length &&
+            callToActionButtons.map(({ title, url, backgroundColor }) => (
+              <Button
+                key={title}
+                title={title}
+                style={[styles.connectionCard, { backgroundColor }]}
+                onPress={() => openBrowser({ title, url })}
+              />
+            ))}
+        </ScrollView>
+      </View>
     </View>
   );
-};
-
-ConnectScreen.navigationOptions = {
-  header: null,
 };
 
 const styles = StyleSheet.create({
@@ -125,7 +144,8 @@ const styles = StyleSheet.create({
     fontSize: 26,
     color: Colors.white,
   },
-  connectionCard: { marginHorizontal: 10, marginBottom: 20 },
+  connectionCard: { margin: 10 },
+  callToActions: { maxHeight: 360 },
 });
 
 export default ConnectScreen;

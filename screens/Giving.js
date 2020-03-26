@@ -10,15 +10,17 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
+import useHandleTabChange from '../utils/useHandleTabChange';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 
-const handleGive = campus => {
+const handleGive = (campus) => {
   Amplitude.logEvent(`TAP Giving ${campus}`);
   Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);
 };
 
 const GivingScreen = () => {
+  useHandleTabChange('Giving');
   const insets = useSafeArea();
 
   return (
@@ -62,10 +64,6 @@ const GivingScreen = () => {
       </ScrollView>
     </View>
   );
-};
-
-GivingScreen.navigationOptions = {
-  header: null,
 };
 
 const styles = StyleSheet.create({
