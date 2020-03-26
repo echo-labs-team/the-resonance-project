@@ -26,13 +26,13 @@ import LiveCard from '../components/LiveCard';
 import * as WebBrowser from 'expo-web-browser';
 
 const screenWidth = Dimensions.get('window').width;
-const storeMediaData = async data => {
-  await AsyncStorage.setItem('@media', JSON.stringify(data)).catch(err =>
+const storeMediaData = async (data) => {
+  await AsyncStorage.setItem('@media', JSON.stringify(data)).catch((err) =>
     console.error(err)
   );
 };
 const getStoredMedia = () => {
-  return AsyncStorage.getItem('@media').catch(err => console.error(err));
+  return AsyncStorage.getItem('@media').catch((err) => console.error(err));
 };
 
 const MediaScreen = () => {
@@ -137,7 +137,7 @@ const MediaScreen = () => {
               Amplitude.logEvent('TAP Watch Live');
               WebBrowser.openBrowserAsync('https://live.echo.church', {
                 toolbarColor: Colors.darkestGray,
-              }).catch(err => {
+              }).catch((err) => {
                 Amplitude.logEventWithProperties('ERROR with WebBrowser', {
                   error: err,
                 });
@@ -209,7 +209,7 @@ const PastSeriesSection = ({ data }) => {
 
   return (
     <View style={styles.list}>
-      {data.map(item => {
+      {data.map((item) => {
         if (item) {
           return (
             <YouTubeDataView

@@ -27,13 +27,13 @@ import GroupFilterModal from '../components/GroupFilterModal';
 import Error from '../components/GroupsError';
 import Spinner from '../components/shared/Spinner';
 
-const storeGroupsData = async groups => {
-  await AsyncStorage.setItem('@groups', JSON.stringify(groups)).catch(err =>
+const storeGroupsData = async (groups) => {
+  await AsyncStorage.setItem('@groups', JSON.stringify(groups)).catch((err) =>
     console.error(err)
   );
 };
 const getStoredGroupsData = () => {
-  return AsyncStorage.getItem('@groups').catch(err => console.error(err));
+  return AsyncStorage.getItem('@groups').catch((err) => console.error(err));
 };
 
 function useDebounce(value, delay) {
@@ -180,20 +180,20 @@ const GroupsScreen = () => {
     return (
       (campusFilter.length
         ? campusFilter
-            .map(c => c?.toLowerCase())
+            .map((c) => c?.toLowerCase())
             .includes(campus?.toLowerCase())
         : true) &&
       (dayFilter.length
-        ? dayFilter.some(day =>
+        ? dayFilter.some((day) =>
             daysOfWeek
-              .map(dow => dow?.toLowerCase())
+              .map((dow) => dow?.toLowerCase())
               .includes(day?.toLowerCase())
           )
         : true) &&
       (categoriesFilter.length
-        ? categoriesFilter.some(category =>
+        ? categoriesFilter.some((category) =>
             groupCategories
-              .map(cat => cat?.toLowerCase())
+              .map((cat) => cat?.toLowerCase())
               .includes(category?.toLowerCase())
           )
         : true)
@@ -268,7 +268,10 @@ const GroupsScreen = () => {
       ) : (
         <>
           <View style={[styles.searchBar, { flex: data.length ? 1 : 0 }]}>
-            <SearchBar value={query} onChangeText={value => setQuery(value)} />
+            <SearchBar
+              value={query}
+              onChangeText={(value) => setQuery(value)}
+            />
             <TouchableOpacity
               style={{ width: 80, height: 40 }}
               onPress={showFilterModal}

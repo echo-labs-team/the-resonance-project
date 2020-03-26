@@ -12,7 +12,7 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import Text from '../components/shared/Text';
 
-const openMaps = location => {
+const openMaps = (location) => {
   let url = '';
 
   switch (location) {
@@ -43,7 +43,7 @@ const openMaps = location => {
 const LocationsScreen = () => {
   return (
     <HeaderHeightContext.Consumer>
-      {headerHeight => (
+      {(headerHeight) => (
         <ScrollView
           style={[styles.mainContainer, { paddingTop: headerHeight }]}
         >

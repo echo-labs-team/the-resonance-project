@@ -21,16 +21,17 @@ Amplitude.initialize(keys.AMPLITUDE);
 const channel = Constants?.manifest?.releaseChannel;
 const emptyStorage = () =>
   AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
+
 // override amplitude tracking
 if (!channel) {
-  Amplitude.logEvent = name => console.log(`[amplitude]: ${name}`);
+  Amplitude.logEvent = (name) => console.log(`[amplitude]: ${name}`);
   Amplitude.logEventWithProperties = (name, data) =>
     console.log(`[amplitude]: ${name}\n`, data);
   emptyStorage();
 } else if (channel.indexOf('develop') !== -1) {
   // beta testing from the store--we want to log this to amplitude, but
   //  separate it out
-  Amplitude.logEvent = name => {
+  Amplitude.logEvent = (name) => {
     name = `BETA ${name}`;
     console.log(`[amplitude]: ${name}`);
     Amplitude.logEvent(name);
@@ -50,7 +51,7 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-export default props => {
+export default (props) => {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
 
   /**
@@ -61,7 +62,7 @@ export default props => {
    * https://reactnative.dev/docs/appstate
    */
   useEffect(() => {
-    const handleAppStateChange = state => {
+    const handleAppStateChange = (state) => {
       if (state === 'active') {
         Amplitude.logEvent('Start session');
       }
@@ -97,7 +98,7 @@ export default props => {
     ]);
   };
 
-  const handleLoadingError = error => {
+  const handleLoadingError = (error) => {
     // In this case, you might want to report the error to your error
     // reporting service, for example Sentry
     console.warn(error);

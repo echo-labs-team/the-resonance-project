@@ -4,7 +4,7 @@ import Colors from '../constants/Colors';
 
 export default () => (
   <Placeholder
-    Animation={props => (
+    Animation={(props) => (
       <Fade {...props} style={{ backgroundColor: Colors.darkGray }} />
     )}
     style={{ padding: 16 }}

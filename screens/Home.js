@@ -28,13 +28,13 @@ import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
-const storePostsData = async data => {
-  await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch(err =>
+const storePostsData = async (data) => {
+  await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch((err) =>
     console.error(err)
   );
 };
 const getStoredPosts = () => {
-  return AsyncStorage.getItem('@posts').catch(err => console.error(err));
+  return AsyncStorage.getItem('@posts').catch((err) => console.error(err));
 };
 
 const HomeScreen = () => {
@@ -200,7 +200,7 @@ const Card = ({ type, url, image, title, date }) => {
         if (type === 'BLOG') {
           return WebBrowser.openBrowserAsync(url, {
             toolbarColor: Colors.darkestGray,
-          }).catch(err => {
+          }).catch((err) => {
             Amplitude.logEventWithProperties('ERROR with WebBrowser', {
               error: err,
             });

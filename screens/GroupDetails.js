@@ -105,7 +105,7 @@ const GroupDetails = ({ route }: { route: Object }) => {
 
   return (
     <HeaderHeightContext.Consumer>
-      {headerHeight => (
+      {(headerHeight) => (
         <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
           <ImageBackground
             source={require('../assets/images/groups_bg.png')}
