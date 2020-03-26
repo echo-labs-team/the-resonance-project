@@ -10,7 +10,7 @@ import Button from '../components/shared/Button';
 const VolunteerScreen = () => {
   return (
     <HeaderHeightContext.Consumer>
-      {headerHeight => (
+      {(headerHeight) => (
         <ScrollView
           style={[styles.mainContainer, { paddingTop: headerHeight }]}
         >
@@ -64,7 +64,7 @@ const VolunteerScreen = () => {
                 WebBrowser.openBrowserAsync(
                   'https://docs.google.com/forms/d/1IdaVDIAr7AlDqH2QQ7kMm2k4txQKox7aPl7C12fz-0Q/viewform',
                   { toolbarColor: Colors.darkestGray }
-                ).catch(err => {
+                ).catch((err) => {
                   Amplitude.logEventWithProperties('ERROR with WebBrowser', {
                     error: err,
                   });

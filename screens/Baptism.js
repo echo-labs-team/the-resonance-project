@@ -10,7 +10,7 @@ import Button from '../components/shared/Button';
 const BaptismScreen = () => {
   return (
     <HeaderHeightContext.Consumer>
-      {headerHeight => (
+      {(headerHeight) => (
         <ScrollView
           style={[styles.mainContainer, { paddingTop: headerHeight }]}
         >
@@ -50,7 +50,7 @@ const BaptismScreen = () => {
                 WebBrowser.openBrowserAsync(
                   'https://goo.gl/forms/Lc8g3MU0CCxjea9e2',
                   { toolbarColor: Colors.darkestGray }
-                ).catch(err => {
+                ).catch((err) => {
                   Amplitude.logEventWithProperties('ERROR with WebBrowser', {
                     error: err,
                   });

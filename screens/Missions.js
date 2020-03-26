@@ -16,13 +16,13 @@ import Colors from '../constants/Colors';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 
-const storeMissionsData = async missions => {
-  await AsyncStorage.setItem('@missions', missions).catch(err =>
+const storeMissionsData = async (missions) => {
+  await AsyncStorage.setItem('@missions', missions).catch((err) =>
     console.error(err)
   );
 };
 const getStoredMissionsData = () => {
-  return AsyncStorage.getItem('@missions').catch(err => console.error(err));
+  return AsyncStorage.getItem('@missions').catch((err) => console.error(err));
 };
 
 const MissionsScreen = () => {
@@ -65,7 +65,7 @@ const MissionsScreen = () => {
 
   return (
     <HeaderHeightContext.Consumer>
-      {headerHeight => (
+      {(headerHeight) => (
         <ScrollView
           style={[styles.mainContainer, { paddingTop: headerHeight }]}
         >
@@ -91,7 +91,7 @@ const MissionsScreen = () => {
               </Text>
             ) : (
               <Placeholder
-                Animation={props => (
+                Animation={(props) => (
                   <Fade
                     {...props}
                     style={{ backgroundColor: Colors.darkGray }}
@@ -112,7 +112,7 @@ const MissionsScreen = () => {
                   {
                     toolbarColor: Colors.darkestGray,
                   }
-                ).catch(err => {
+                ).catch((err) => {
                   Amplitude.logEventWithProperties('ERROR with WebBrowser', {
                     error: err,
                   });

@@ -33,7 +33,7 @@ function openBrowser({ title, url }) {
   Amplitude.logEvent(`TAP ${title}`);
   WebBrowser.openBrowserAsync(url, {
     toolbarColor: Colors.darkestGray,
-  }).catch(err => {
+  }).catch((err) => {
     Amplitude.logEventWithProperties('ERROR with WebBrowser', {
       error: err,
     });

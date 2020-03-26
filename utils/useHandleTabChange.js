@@ -8,7 +8,7 @@ import { StatusBar } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 
-export default tab => {
+export default (tab) => {
   useFocusEffect(
     React.useCallback(() => {
       Amplitude.logEvent(`PAGEVIEW ${tab} tab`);

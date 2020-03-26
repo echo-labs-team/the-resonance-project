@@ -19,7 +19,7 @@ export async function getVerseOfTheDay() {
           },
         }
       )
-      .catch(err => console.error(err))) || {};
+      .catch((err) => console.error(err))) || {};
   const { image = {}, verse = {} } = data;
 
   return {

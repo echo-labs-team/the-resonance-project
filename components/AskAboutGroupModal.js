@@ -57,7 +57,7 @@ function reducer(state, action) {
   }
 }
 
-export default props => {
+export default (props) => {
   const [
     { loading, success, firstName, lastName, email, question },
     dispatch,
@@ -92,7 +92,7 @@ export default props => {
       group: props.title,
     });
     askQuestion(props.groupID, firstName, lastName, email, question)
-      .then(askSuccess => {
+      .then((askSuccess) => {
         if (askSuccess) {
           // close this modal
           dispatch({ type: 'setLoading', value: false });
@@ -102,7 +102,7 @@ export default props => {
           props.showSuccess('Thanks for asking ☺️');
         }
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch({ type: 'setLoading', value: false });
         Amplitude.logEventWithProperties('ERROR Group Ask Question', {
           group: props.title,
@@ -134,7 +134,7 @@ export default props => {
           placeholder="First name"
           placeholderTextColor={Colors.gray}
           value={firstName}
-          onChangeText={value => dispatch({ type: 'setFirstName', value })}
+          onChangeText={(value) => dispatch({ type: 'setFirstName', value })}
           style={styles.input}
         />
         <TextInput
@@ -145,7 +145,7 @@ export default props => {
           placeholder="Last name"
           placeholderTextColor={Colors.gray}
           value={lastName}
-          onChangeText={value => dispatch({ type: 'setLastName', value })}
+          onChangeText={(value) => dispatch({ type: 'setLastName', value })}
           style={styles.input}
         />
         <TextInput
@@ -158,7 +158,7 @@ export default props => {
           placeholder="Email"
           placeholderTextColor={Colors.gray}
           value={email}
-          onChangeText={value => dispatch({ type: 'setEmail', value })}
+          onChangeText={(value) => dispatch({ type: 'setEmail', value })}
           style={styles.input}
         />
         <TextInput
@@ -167,7 +167,7 @@ export default props => {
           placeholderTextColor={Colors.gray}
           multiline={true}
           value={question}
-          onChangeText={value => dispatch({ type: 'setQuestion', value })}
+          onChangeText={(value) => dispatch({ type: 'setQuestion', value })}
           style={styles.input}
         />
         <View style={styles.submitButton}>

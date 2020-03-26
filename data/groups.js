@@ -11,7 +11,7 @@ import config from './config';
 const baseURL = 'https://echo-api.westus.cloudapp.azure.com';
 
 // set the featured group, which is sorted to the top of the list of groups
-const isFeaturedGroup = groupName =>
+const isFeaturedGroup = (groupName) =>
   groupName.toLowerCase().includes(config.featuredGroup);
 
 export async function getOpenGroups(): Object {
@@ -50,7 +50,7 @@ export async function getCategories(): Promise<Array<any>> {
       .get(
         'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod/groups/categories'
       )
-      .catch(err =>
+      .catch((err) =>
         Amplitude.logEventWithProperties('ERROR hitting `/groups/categories`', {
           error: err,
         })
