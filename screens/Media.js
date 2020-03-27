@@ -14,6 +14,7 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
 import TextStyles from '../constants/TextStyles';
@@ -23,7 +24,6 @@ import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 import Spinner from '../components/shared/Spinner';
 import LiveCard from '../components/LiveCard';
-import * as WebBrowser from 'expo-web-browser';
 
 const screenWidth = Dimensions.get('window').width;
 const storeMediaData = async (data) => {
