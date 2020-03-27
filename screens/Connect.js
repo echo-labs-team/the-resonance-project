@@ -28,6 +28,7 @@ const items = [
   { value: 'PRAYER REQUESTS', page: 'Prayer Requests' },
   { value: 'MISSIONS', page: 'Missions' },
 ];
+const numberOfCTAs = callToActionButtons.length;
 
 function openBrowser({ title, url }) {
   Amplitude.logEvent(`TAP ${title}`);
@@ -77,7 +78,14 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
       />
 
       <View>
-        <ScrollView style={styles.callToActions}>
+        {/* 
+          only allow the ScrollView around the CTAs to
+          scroll if there's more than 2 extra ones 
+        */}
+        <ScrollView
+          scrollEnabled={numberOfCTAs > 2}
+          style={styles.callToActions}
+        >
           <Button
             icon={
               <MaterialCommunityIcons
@@ -95,7 +103,7 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
               })
             }
           />
-          {callToActionButtons.length &&
+          {numberOfCTAs &&
             callToActionButtons.map(({ title, url, backgroundColor }) => (
               <Button
                 key={title}
