@@ -38,3 +38,10 @@ jobs:
     - run: npm install
     - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}'}" > constants/Keys.js
     - run: npx expo-optimize . && expo publish --release-channel=release
+    - name: Slack notification
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      uses: Ilshidur/action-slack@master
+      with:
+        args: 'App has been published :fire:'
+
