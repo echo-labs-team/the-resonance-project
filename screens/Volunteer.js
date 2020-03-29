@@ -62,7 +62,7 @@ const VolunteerScreen = () => {
               onPress={() => {
                 Amplitude.logEvent('TAP Volunteer Sign Up');
                 WebBrowser.openBrowserAsync(
-                  'https://docs.google.com/forms/d/1IdaVDIAr7AlDqH2QQ7kMm2k4txQKox7aPl7C12fz-0Q/viewform',
+                  'https://echo.church/volunteerform',
                   { toolbarColor: Colors.darkestGray }
                 ).catch((err) => {
                   Amplitude.logEventWithProperties('ERROR with WebBrowser', {
