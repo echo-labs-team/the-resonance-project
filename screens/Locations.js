@@ -9,8 +9,10 @@ import {
 } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import * as Amplitude from 'expo-analytics-amplitude';
+import * as WebBrowser from 'expo-web-browser';
 import Colors from '../constants/Colors';
 import Text from '../components/shared/Text';
+import Button from '../components/shared/Button';
 
 const openMaps = (location) => {
   let url = '';
@@ -52,6 +54,25 @@ const LocationsScreen = () => {
             style={styles.image}
           />
           <View style={[styles.container, { paddingBottom: headerHeight }]}>
+            <Text style={styles.warning}>
+              Due to COVID-19, all services on physical locations are hosted
+              online.
+            </Text>
+            <Button
+              title="Watch Church Online"
+              style={{ marginBottom: 20 }}
+              onPress={() => {
+                WebBrowser.openBrowserAsync('https://live.echo.church', {
+                  toolbarColor: Colors.darkestGray,
+                }).catch((err) => {
+                  Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                    error: err,
+                  });
+                  WebBrowser.dismissBrowser();
+                });
+              }}
+            />
+
             <Text style={styles.heading}>
               All Echo.Church locations & regular service times
             </Text>
@@ -118,13 +139,20 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 220,
+    height: 200,
     resizeMode: 'cover',
     backgroundColor: Colors.white,
   },
   container: {
     paddingVertical: 20,
     paddingHorizontal: 16,
+  },
+  warning: {
+    marginVertical: 10,
+    fontSize: 28,
+    lineHeight: 32,
+    color: Colors.red,
+    textAlign: 'center',
   },
   heading: {
     marginVertical: 10,
@@ -137,12 +165,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   content: {
-    fontSize: 18,
+    fontSize: 22,
     color: Colors.blue,
     textAlign: 'center',
+    textDecorationLine: 'underline',
   },
   subContent: {
-    fontSize: 16,
+    paddingHorizontal: 8,
+    fontSize: 20,
     color: Colors.gray,
     textAlign: 'center',
   },

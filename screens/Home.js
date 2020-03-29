@@ -221,7 +221,12 @@ const Card = ({ type, url, image, title, date }) => {
           ]}
         />
         <View style={styles.cardTypeView}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+          >
             {icon.expoIcon ? (
               icon.expoIcon
             ) : (
@@ -294,6 +299,7 @@ const styles = StyleSheet.create({
   cardTypeView: {
     paddingTop: 16,
     paddingHorizontal: 8,
+    paddingBottom: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

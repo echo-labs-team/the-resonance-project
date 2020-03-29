@@ -20,14 +20,16 @@ export async function getVerseOfTheDay() {
         }
       )
       .catch((err) => console.error(err))) || {};
-  const { image = {}, verse = {} } = data;
+  const { image = {}, verse: { url = '' } = {} } = data;
+
+  // change the version to NLT, which is 116
+  const bibleUrl = url.replace(/(.*\/bible\/)(\d+)(\/.*)/, '$1116$3');
 
   return {
     type: 'VERSE OF THE DAY',
-    url: verse.url,
+    url: bibleUrl,
     image: `https:${image.url
       .replace('{width}', Layout.window.width)
       .replace('{height}', Layout.window.width)}`,
-    title: `${verse.text} ${verse.human_reference}`,
   };
 }
