@@ -57,7 +57,7 @@
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@babel/preset-flow": "^7.9.0",
     "babel-eslint": "^10.0.1",
-    "babel-preset-expo": "^8.0.0",
+    "babel-preset-expo": "^8.1.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-eslint-comments": "^3.1.1",
