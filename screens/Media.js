@@ -11,11 +11,11 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { useScrollToTop } from '@react-navigation/native';
+import { useScrollToTop, useNavigation } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import collectChannelData from '../data/youtube';
+import collectData from '../data/youtube';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import isTheWeekend from '../utils/isTheWeekend';
@@ -37,6 +37,7 @@ const getStoredMedia = () => {
 const MediaScreen = () => {
   useHandleTabChange('Media');
   const insets = useSafeArea();
+  const navigation = useNavigation();
   const ref = React.useRef(null);
 
   useScrollToTop(ref);
@@ -46,10 +47,10 @@ const MediaScreen = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    getVideos();
+    getPlaylists();
   }, []);
 
-  async function getVideos() {
+  async function getPlaylists() {
     try {
       const storedMedia = await getStoredMedia();
 
@@ -58,17 +59,68 @@ const MediaScreen = () => {
         setLoading(false);
       }
 
-      const fetchedVideos = (await collectChannelData()) || [];
+      const fetchedPlaylists = (await collectData()) || [];
 
-      setData(fetchedVideos);
+      setData(fetchedPlaylists);
       setLoading(false);
-      storeMediaData(fetchedVideos);
+      storeMediaData(fetchedPlaylists);
     } catch (err) {
       setError(true);
       setLoading(false);
       Amplitude.logEventWithProperties('ERROR loading media', { error: err });
     }
   }
+
+  const takeToItem = ({ id, title } = {}) => {
+    Amplitude.logEventWithProperties('TAP Past Series', {
+      series_name: title,
+    });
+    navigation.navigate('Playlist', { playlistId: id, playlistTitle: title });
+  };
+
+  const PastSeriesSection = ({ sectionData = [] }) => {
+    if (sectionData === null || sectionData.length === 0) {
+      return null;
+    }
+
+    return (
+      <View style={styles.list}>
+        {sectionData.map((item) => {
+          if (item) {
+            return (
+              <YouTubeDataView
+                key={item.title}
+                item={item}
+                thumbnailStyle={styles.youtubeThumbnailImageSmall}
+                style={styles.smallCard}
+              />
+            );
+          }
+          return null;
+        })}
+      </View>
+    );
+  };
+
+  const YouTubeDataView = ({ item = {}, style, thumbnailStyle } = {}) => {
+    const { id, title, thumbnails: { maxres = {} } = {} } = item;
+
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          takeToItem(item);
+        }}
+      >
+        <View style={style}>
+          <Image
+            source={{ uri: maxres.url }}
+            style={thumbnailStyle}
+            resizeMode="cover"
+          />
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   if (isLoading) {
     return (
@@ -100,7 +152,7 @@ const MediaScreen = () => {
             onPress={() => {
               setError(false);
               setLoading(true);
-              getVideos();
+              getPlaylists();
             }}
           />
         </View>
@@ -140,7 +192,7 @@ const MediaScreen = () => {
       <Subtitle style={styles.sectionHeaderText}>CURRENT SERIES</Subtitle>
       <YouTubeDataView
         style={styles.largeCard}
-        data={data[0]}
+        item={data[0]}
         thumbnailStyle={styles.youtubeThumbnailImageLarge}
       />
       <Button
@@ -155,8 +207,8 @@ const MediaScreen = () => {
         }}
       />
 
-      <Subtitle style={styles.sectionHeaderText}>PAST SERIES</Subtitle>
-      <PastSeriesSection data={data.slice(1, data.length)} />
+      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+      <PastSeriesSection sectionData={data.slice(1, data.length)} />
 
       <Subtitle style={styles.sectionHeaderText}>RESOURCES</Subtitle>
       <TouchableHighlight
@@ -178,58 +230,6 @@ const MediaScreen = () => {
         />
       </TouchableHighlight>
     </ScrollView>
-  );
-};
-
-const takeToItem = ({ id, title } = {}) => {
-  Amplitude.logEventWithProperties('TAP Past Series', {
-    series_name: title,
-  });
-
-  Linking.openURL(`https://www.youtube.com/playlist?list=${id}`);
-};
-
-const PastSeriesSection = ({ data }) => {
-  if (data === null || data.length === 0) {
-    return null;
-  }
-
-  return (
-    <View style={styles.list}>
-      {data.map((item) => {
-        if (item) {
-          return (
-            <YouTubeDataView
-              key={item.title}
-              data={item}
-              thumbnailStyle={styles.youtubeThumbnailImageSmall}
-              style={styles.smallCard}
-            />
-          );
-        }
-        return null;
-      })}
-    </View>
-  );
-};
-
-const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
-  const { thumbnails: { maxres = {} } = {} } = data;
-
-  return (
-    <TouchableOpacity
-      onPress={() => {
-        takeToItem(data);
-      }}
-    >
-      <View style={style}>
-        <Image
-          source={{ uri: maxres.url }}
-          style={thumbnailStyle}
-          resizeMode="cover"
-        />
-      </View>
-    </TouchableOpacity>
   );
 };
 
