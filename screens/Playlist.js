@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import {
   AsyncStorage,
+  Dimensions,
+  Image,
   FlatList,
   StyleSheet,
   Linking,
@@ -11,15 +13,14 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
-import * as WebBrowser from 'expo-web-browser';
 import Colors from '../constants/Colors';
 import Text from '../components/shared/Text';
 import Button from '../components/shared/Button';
 import Spinner from '../components/shared/Spinner';
 import TextStyles from '../constants/TextStyles';
 import collectData from '../data/youtube';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 
+const screenWidth = Dimensions.get('window').width;
 const storePlaylistData = async (playlistId, data) => {
   await AsyncStorage.setItem(
     `@${playlistId}`,
@@ -51,18 +52,18 @@ const PlaylistScreen = ({ navigation, route }) => {
   }, []);
   async function getVideos() {
     try {
-      //   const storedMedia = {};//await getStoredPlaylist(playlistId);
+      const storedMedia = await getStoredPlaylist(playlistId);
 
-      //   if (storedMedia) {
-      //     setData(JSON.parse(storedMedia));
-      //     setLoading(false);
-      //   }
+      if (storedMedia) {
+        setData(JSON.parse(storedMedia));
+        setLoading(false);
+      }
 
       const fetchedVideos = (await collectData(playlistId)) || [];
 
       setData(fetchedVideos);
       setLoading(false);
-      //   storePlaylistData(playlistId, fetchedVideos);
+      storePlaylistData(playlistId, fetchedVideos);
     } catch (err) {
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");
@@ -129,7 +130,13 @@ const PlaylistScreen = ({ navigation, route }) => {
             keyExtractor={({ id }) => id}
             data={data}
             renderItem={({
-              item: { id, publishDate, title, description, thumbnails } = {},
+              item: {
+                id,
+                publishDate,
+                title,
+                description,
+                thumbnails: { maxres = {} } = {},
+              } = {},
             }) => (
               <TouchableHighlight
                 underlayColor="transparent"
@@ -139,17 +146,25 @@ const PlaylistScreen = ({ navigation, route }) => {
                 }}
               >
                 <View style={styles.item}>
-                  <Text style={styles.heading}>{title}</Text>
-                  <Text style={styles.text}>{description}</Text>
-                  <Feather
-                    name={'chevron-right'}
-                    size={26}
-                    color={Colors.white}
+                  <Image
+                    source={{ uri: maxres.url }}
+                    style={styles.thumbnailStyle}
+                    resizeMode="cover"
                   />
+                  <Text bold style={styles.title}>
+                    {title}
+                  </Text>
+                  <Text
+                    numberOfLines={3}
+                    style={styles.description}
+                  >{`${description}...`}</Text>
                 </View>
               </TouchableHighlight>
             )}
             style={styles.list}
+            ItemSeparatorComponent={() => {
+              return <View style={styles.hairline} />;
+            }}
           />
         </View>
       )}
@@ -179,19 +194,38 @@ const styles = StyleSheet.create({
     color: Colors.red,
     textAlign: 'center',
   },
-  heading: {
-    marginVertical: 10,
-    fontSize: 30,
-    lineHeight: 32,
+  item: {
+    paddingLeft: 8,
+    paddingTop: 8,
+  },
+  title: {
+    paddingTop: 16,
+    fontSize: 16,
     color: Colors.white,
     textAlign: 'center',
   },
-
-  text: {
-    paddingVertical: 10,
+  hairline: {
+    margin: 8,
+    backgroundColor: '#A2A2A2',
+    height: 1,
+    width: screenWidth - 16,
+  },
+  description: {
+    paddingVertical: 8,
     paddingLeft: 8,
-    fontSize: 12,
+    paddingRight: 8,
+    fontSize: 13,
+    textAlign: 'left',
     color: Colors.white,
+  },
+  thumbnailStyle: {
+    paddingLeft: 8,
+    paddingTop: 8,
+    flex: 1,
+    borderRadius: 8,
+    height: (4 * (screenWidth - 16)) / 7,
+    width: screenWidth - 16,
+    overflow: 'hidden',
   },
 });
 
