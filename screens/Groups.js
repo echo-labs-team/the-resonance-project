@@ -18,7 +18,7 @@ import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import { getOpenGroups, getCategories } from '../data/groups';
-import Text from '../components/shared/Text';
+import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import GroupCardPlaceholder from '../components/GroupCardPlaceholder';
 import GroupCardDetails from '../components/GroupCardDetails';
@@ -208,10 +208,10 @@ const GroupsScreen = () => {
     if (query) {
       return (
         <View style={styles.noResults}>
-          <Text bold style={styles.noResultsHeader}>
+          <Subtitle center style={styles.noResultsHeader}>
             No results
-          </Text>
-          <Text style={styles.noResultsText}>
+          </Subtitle>
+          <Text>
             Try clearing your search or searching for something like
             &quot;Alpha&quot;
           </Text>
@@ -235,10 +235,8 @@ const GroupsScreen = () => {
 
     return (
       <View style={styles.noResults}>
-        <Text bold style={styles.noResultsHeader}>
-          No results
-        </Text>
-        <Text style={[styles.noResultsText, styles.noResults]}>
+        <Subtitle style={styles.noResultsHeader}>No results</Subtitle>
+        <Text style={styles.noResults}>
           Try removing some of the filters that you&apos;ve applied
         </Text>
         <Button
@@ -259,7 +257,7 @@ const GroupsScreen = () => {
 
       {tryAgain && <Spinner />}
 
-      <Text bold style={styles.headerTitle}>
+      <Text XXL bold style={styles.headerTitle}>
         GROUPS
       </Text>
 
@@ -272,14 +270,13 @@ const GroupsScreen = () => {
               value={query}
               onChangeText={(value) => setQuery(value)}
             />
-            <TouchableOpacity
-              style={{ width: 80, height: 40 }}
-              onPress={showFilterModal}
-            >
-              <Text style={styles.filter}>Filter</Text>
+            <TouchableOpacity style={styles.filter} onPress={showFilterModal}>
+              <Text L adjustsFontSizeToFit allowFontScaling={false}>
+                Filter
+              </Text>
               {numberOfFiltersApplied > 0 && (
                 <View style={styles.badge}>
-                  <Text light style={styles.badgeCount}>
+                  <Text S center light style={styles.badgeCount}>
                     {numberOfFiltersApplied}
                   </Text>
                 </View>
@@ -339,9 +336,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   headerTitle: {
-    marginTop: 10,
+    marginVertical: 10,
     marginLeft: 16,
-    fontSize: 30,
     color: Colors.red,
   },
   backgroundImage: {
@@ -353,9 +349,10 @@ const styles = StyleSheet.create({
     left: 0,
   },
   filter: {
-    padding: 10,
-    fontSize: 22,
-    color: Colors.gray,
+    width: 80,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   badge: {
     width: 20,
@@ -363,12 +360,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     right: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
     backgroundColor: Colors.blue,
     borderRadius: 10,
   },
-  badgeCount: { color: Colors.white, textAlign: 'center' },
+  badgeCount: { paddingTop: 1 },
   list: {
     height: '100%',
     paddingHorizontal: 10,
@@ -386,17 +381,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   noResults: { paddingHorizontal: 20 },
-  noResultsHeader: {
-    marginTop: 10,
-    fontSize: 24,
-    textAlign: 'center',
-    color: Colors.gray,
-  },
-  noResultsText: {
-    fontSize: 18,
-    textAlign: 'center',
-    color: Colors.gray,
-  },
+  noResultsHeader: { marginTop: 10 },
   button: { marginTop: 20 },
 });
 

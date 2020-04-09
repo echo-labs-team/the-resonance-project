@@ -3,7 +3,7 @@ import { StyleSheet, Platform, View, TextInput } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import * as Amplitude from 'expo-analytics-amplitude';
-import Text from './shared/Text';
+import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
 import Colors from '../constants/Colors';
 import { isEmailValid } from '../utils/groups';
@@ -114,11 +114,11 @@ export default (props) => {
       {loading && <Spinner style={{ backgroundColor: 'transparent' }} />}
 
       <View style={styles.container}>
-        <Text style={styles.title}>Sign up</Text>
+        <Title>Sign up</Title>
 
-        <Text style={styles.info}>
+        <Subtitle>
           {`The group leaders will reach out to you with more info once you've joined`}
-        </Text>
+        </Subtitle>
 
         <TextInput
           autoCompleteType="name"
@@ -180,13 +180,6 @@ export default (props) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  title: { marginBottom: 40, fontSize: 30, color: Colors.white },
-  info: {
-    marginBottom: 30,
-    fontSize: 18,
-    color: Colors.gray,
-    textAlign: 'center',
-  },
   input: {
     paddingVertical: 10,
     paddingHorizontal: 8,
@@ -196,5 +189,9 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: Colors.gray,
   },
-  submitButton: { flex: 1, marginVertical: 10, justifyContent: 'flex-end' },
+  submitButton: {
+    flex: 1,
+    marginVertical: 10,
+    justifyContent: 'flex-end',
+  },
 });

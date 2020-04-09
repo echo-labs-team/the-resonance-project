@@ -4,7 +4,6 @@ import React from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import { Feather, AntDesign } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
-import textStyles from '../constants/TextStyles';
 
 export default ({
   value = '',
@@ -25,7 +24,7 @@ export default ({
       />
       <TextInput
         testID="search-bar-input"
-        style={[textStyles.body, styles.input]}
+        style={styles.input}
         keyboardAppearance="dark"
         returnKeyType="search"
         value={value}
@@ -58,8 +57,9 @@ const styles = StyleSheet.create({
   input: {
     height: 40,
     paddingHorizontal: 40,
-    fontSize: 18,
     borderWidth: 0,
+    fontSize: 18,
+    fontFamily: 'NunitoSans-Regular',
     color: Colors.white,
   },
   clear: {

@@ -1,6 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
+import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import Colors from '../../constants/Colors';
+import { Text } from './Typography';
 
 export default ({
   title = '',
@@ -17,7 +18,7 @@ export default ({
     underlayColor={Colors.blue}
   >
     <View style={styles.wrapper}>
-      {icon && <View style={{ marginLeft: -10, marginRight: 10 }}>{icon}</View>}
+      {icon && <View style={styles.icon}>{icon}</View>}
       <Text style={[styles.text, textStyle]}>{title}</Text>
     </View>
   </TouchableHighlight>
@@ -34,11 +35,12 @@ const styles = StyleSheet.create({
     minHeight: 60,
     backgroundColor: Colors.darkGray,
     borderRadius: 6,
+    paddingVertical: 12,
     paddingHorizontal: 24,
   },
   text: {
     color: Colors.white,
     textAlign: 'center',
-    fontSize: 18,
   },
+  icon: { marginRight: 10 },
 });

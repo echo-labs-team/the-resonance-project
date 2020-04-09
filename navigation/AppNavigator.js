@@ -7,7 +7,7 @@ import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 
 import Colors from '../constants/Colors';
-import isTheWeekend from '../utils/isTheWeekend';
+import { Text } from '../components/shared/Typography';
 import EchoLogo from '../components/EchoLogo';
 import ConnectLogo from '../components/ConnectLogo';
 import GroupsLogo from '../components/GroupsLogo';
@@ -57,13 +57,13 @@ const defaultOptions = {
       intensity={Platform.OS === 'ios' ? 100 : 175}
     />
   ),
-  headerTitleStyle: {
-    fontFamily: 'NunitoSans-Bold',
-    fontSize: 24,
-    color: Colors.white,
-  },
+  headerTitle: (props) => (
+    <Text {...props} L allowFontScaling={false}>
+      {props.children}
+    </Text>
+  ),
   headerBackImage: () => (
-    <Feather name={'chevron-left'} size={30} color={Colors.white} />
+    <Feather name={'chevron-left'} size={30} color={Colors.lightGray} />
   ),
   headerBackTitleVisible: false,
   headerLeftContainerStyle: {
@@ -155,6 +155,7 @@ export default function App() {
             fontSize: 10,
             includeFontPadding: false,
           },
+          allowFontScaling: false,
         }}
       >
         <Tab.Screen

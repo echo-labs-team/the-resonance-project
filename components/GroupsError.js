@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import { Subtitle } from '../components/shared/Typography';
 import Button from './shared/Button';
 
 // eslint-disable-next-line
@@ -11,9 +10,9 @@ export default ({ tryAgain }) => {
 
   return (
     <View style={styles.container}>
-      <Text light style={styles.title}>
+      <Subtitle center style={styles.title}>
         Something went wrong...
-      </Text>
+      </Subtitle>
       {hasTryAgain && <Button title="Try Again" onPress={() => tryAgain()} />}
     </View>
   );
@@ -24,10 +23,5 @@ const styles = StyleSheet.create({
     padding: 40,
     justifyContent: 'center',
   },
-  title: {
-    marginBottom: 20,
-    fontSize: 24,
-    textAlign: 'center',
-    color: Colors.white,
-  },
+  title: { marginBottom: 20 },
 });

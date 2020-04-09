@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
-import Text from '../components/shared/Text';
+import { Text, Title } from '../components/shared/Typography';
 import Colors from '../constants/Colors';
 import {
   getMeetingFrequency,
@@ -59,31 +59,29 @@ export default ({
       }}
     >
       <View style={styles.group}>
-        <Text light adjustsFontSizeToFit numberOfLines={2} style={styles.title}>
+        <Title
+          light
+          adjustsFontSizeToFit
+          numberOfLines={2}
+          style={styles.title}
+        >
           {title}
-        </Text>
+        </Title>
 
         <View style={styles.when}>
-          <Text style={styles.detail}>
+          <Text>
             {getMeetingFrequency(frequency, interval)} on{' '}
-            <Text bold style={[styles.detail, styles.b]}>
-              {getMeetingDay(daysOfWeek, dayOfMonth)}
-            </Text>{' '}
-            at{' '}
-            <Text bold style={[styles.detail, styles.b]}>
-              {getMeetingTime(meetingTime)}
-            </Text>
+            <Text bold>{getMeetingDay(daysOfWeek, dayOfMonth)}</Text> at{' '}
+            <Text bold>{getMeetingTime(meetingTime)}</Text>
           </Text>
         </View>
 
         <View style={styles.details}>
-          <Text bold style={styles.detail}>
-            {campus}
-          </Text>
+          <Text bold>{campus}</Text>
         </View>
 
         <View style={styles.descriptionWrapper}>
-          <Text numberOfLines={4} style={styles.description}>
+          <Text numberOfLines={4} light>
             {description}
           </Text>
         </View>
@@ -104,20 +102,12 @@ export const styles = StyleSheet.create({
   title: {
     marginTop: 16,
     marginBottom: 10,
-    fontSize: 28,
-    lineHeight: 30,
-    color: Colors.white,
   },
   details: {
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  detail: {
-    fontSize: 16,
-    color: Colors.gray,
-  },
-  b: { fontSize: 17 },
   when: {
     marginBottom: 10,
     justifyContent: 'center',
@@ -125,10 +115,5 @@ export const styles = StyleSheet.create({
   descriptionWrapper: {
     flex: 1,
     justifyContent: 'center',
-  },
-  description: {
-    fontSize: 16,
-    lineHeight: 24,
-    color: Colors.gray,
   },
 });
