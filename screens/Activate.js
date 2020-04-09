@@ -4,7 +4,7 @@ import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import { Text, Title } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
 const ActivateScreen = () => {
@@ -19,7 +19,7 @@ const ActivateScreen = () => {
             style={styles.image}
           />
           <View style={[styles.container, { paddingBottom: headerHeight }]}>
-            <Text style={styles.heading}>Your next steps</Text>
+            <Title style={styles.heading}>Your next steps</Title>
             <Text style={styles.content}>
               Activate is about you and the environments we design at
               Echo.Church that can lead you to discover your purpose, develop
@@ -68,12 +68,9 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginVertical: 10,
-    fontSize: 30,
-    color: Colors.white,
   },
   content: {
     marginBottom: 20,
-    fontSize: 16,
     color: Colors.gray,
   },
   button: { marginVertical: 20 },

@@ -11,9 +11,8 @@ import { HeaderHeightContext } from '@react-navigation/stack';
 import * as Amplitude from 'expo-analytics-amplitude';
 import * as WebBrowser from 'expo-web-browser';
 import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import { Title, Subtitle, Heading } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
-
 const openMaps = (location) => {
   let url = '';
 
@@ -54,13 +53,13 @@ const LocationsScreen = () => {
             style={styles.image}
           />
           <View style={[styles.container, { paddingBottom: headerHeight }]}>
-            <Text style={styles.warning}>
+            <Title center style={styles.warning}>
               Due to COVID-19, all services on physical locations are hosted
               online.
-            </Text>
+            </Title>
             <Button
               title="Watch Church Online"
-              style={{ marginBottom: 20 }}
+              style={styles.button}
               onPress={() => {
                 WebBrowser.openBrowserAsync('https://live.echo.church', {
                   toolbarColor: Colors.darkestGray,
@@ -73,57 +72,65 @@ const LocationsScreen = () => {
               }}
             />
 
-            <Text style={styles.heading}>
+            <Title center style={styles.heading}>
               All Echo.Church locations & regular service times
-            </Text>
+            </Title>
 
             <View style={styles.location}>
               <TouchableHighlight
                 underlayColor={Colors.darkBlue}
                 onPress={() => openMaps('NSJ')}
-                style={{ borderRadius: 4 }}
+                style={styles.highlight}
               >
-                <Text style={styles.content}>
+                <Subtitle center style={styles.content}>
                   North San Jose | 1180 Murphy Ave
-                </Text>
+                </Subtitle>
               </TouchableHighlight>
-              <Text style={styles.subContent}>
+              <Heading center style={styles.subContent}>
                 8:30AM • 10:00AM • 11:30AM • 4:00PM • 5:30PM
-              </Text>
+              </Heading>
             </View>
             <View style={styles.location}>
               <TouchableHighlight
                 underlayColor={Colors.darkBlue}
                 onPress={() => openMaps('SSJ')}
-                style={{ borderRadius: 4 }}
+                style={styles.highlight}
               >
-                <Text style={styles.content}>
+                <Subtitle center style={styles.content}>
                   South San Jose | 6150 Snell Ave
-                </Text>
+                </Subtitle>
               </TouchableHighlight>
-              <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
+              <Heading center style={styles.subContent}>
+                9:30AM • 11:00AM
+              </Heading>
             </View>
             <View style={styles.location}>
               <TouchableHighlight
                 underlayColor={Colors.darkBlue}
                 onPress={() => openMaps('SVL')}
-                style={{ borderRadius: 4 }}
+                style={styles.highlight}
               >
-                <Text style={styles.content}>
+                <Subtitle center style={styles.content}>
                   Sunnyvale | 1145 E Arques Ave
-                </Text>
+                </Subtitle>
               </TouchableHighlight>
-              <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
+              <Heading center style={styles.subContent}>
+                9:30AM • 11:00AM
+              </Heading>
             </View>
             <View style={styles.location}>
               <TouchableHighlight
                 underlayColor={Colors.darkBlue}
                 onPress={() => openMaps('FMT')}
-                style={{ borderRadius: 4 }}
+                style={styles.highlight}
               >
-                <Text style={styles.content}>Fremont | 48989 Milmont Dr</Text>
+                <Subtitle center style={styles.content}>
+                  Fremont | 48989 Milmont Dr
+                </Subtitle>
               </TouchableHighlight>
-              <Text style={styles.subContent}>9:30AM • 11:00AM</Text>
+              <Heading center style={styles.subContent}>
+                9:30AM • 11:00AM
+              </Heading>
             </View>
           </View>
         </ScrollView>
@@ -147,34 +154,20 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     paddingHorizontal: 16,
   },
-  warning: {
-    marginVertical: 10,
-    fontSize: 28,
-    lineHeight: 32,
-    color: Colors.red,
-    textAlign: 'center',
-  },
-  heading: {
-    marginVertical: 10,
-    fontSize: 30,
-    lineHeight: 32,
-    color: Colors.white,
-    textAlign: 'center',
-  },
+  warning: { color: Colors.red },
+  button: { marginBottom: 20 },
+  heading: { marginVertical: 10 },
+  highlight: { borderRadius: 4 },
   location: {
     marginBottom: 20,
   },
   content: {
-    fontSize: 22,
     color: Colors.blue,
-    textAlign: 'center',
     textDecorationLine: 'underline',
   },
   subContent: {
     paddingHorizontal: 8,
-    fontSize: 20,
-    color: Colors.gray,
-    textAlign: 'center',
+    marginBottom: 10,
   },
 });
 

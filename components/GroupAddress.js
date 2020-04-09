@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, TouchableHighlight, Linking } from 'react-native';
+import { StyleSheet, View, TouchableHighlight, Linking } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import Text from './shared/Text';
+import { Heading } from './shared/Typography';
 
 export default ({ title, location = {} }) => {
   const {
@@ -38,36 +38,22 @@ export default ({ title, location = {} }) => {
   };
 
   return (
-    <View style={{ marginBottom: 16 }}>
-      <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-        Address
-      </Text>
+    <View style={styles.container}>
+      <Heading>Address</Heading>
 
       <TouchableHighlight
         underlayColor={Colors.darkBlue}
         onPress={openMaps}
-        style={{ borderRadius: 4 }}
+        style={styles.highlight}
       >
-        <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
+        <View style={styles.address}>
           <View>
-            <Text
-              style={{
-                fontSize: 18,
-                color: Colors.gray,
-              }}
-            >
-              {line1}
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                color: Colors.gray,
-              }}
-            >
+            <Heading light>{line1}</Heading>
+            <Heading light>
               {city}, {stProvince} {postalCode}
-            </Text>
+            </Heading>
           </View>
-          <View style={{ marginLeft: 'auto' }}>
+          <View style={styles.chevron}>
             <Feather name={'chevron-right'} size={26} color={Colors.gray} />
           </View>
         </View>
@@ -75,3 +61,10 @@ export default ({ title, location = {} }) => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: { marginBottom: 16 },
+  highlight: { borderRadius: 4 },
+  address: { flex: 1, flexDirection: 'row', alignItems: 'center' },
+  chevron: { marginLeft: 'auto' },
+});

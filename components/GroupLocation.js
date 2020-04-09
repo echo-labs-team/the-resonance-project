@@ -1,25 +1,22 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import Colors from '../constants/Colors';
-import Text from './shared/Text';
+import { Text, Heading } from './shared/Typography';
 
 export default ({ isOnline = false, location: { name, description } = {} }) => (
-  <View style={{ marginBottom: 16 }}>
-    <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-      Location
-    </Text>
-    {isOnline && (
-      <Text style={{ fontSize: 16, color: Colors.gray }}>Online</Text>
-    )}
-    {!isOnline && (
+  <View style={styles.container}>
+    <Heading>Location</Heading>
+    {isOnline ? (
+      <Text>Online</Text>
+    ) : (
       <>
-        <Text style={{ fontSize: 16, color: Colors.gray }}>{name}</Text>
-        {description && (
-          <Text style={{ marginTop: 10, fontSize: 16, color: Colors.gray }}>
-            {description}
-          </Text>
-        )}
+        <Text>{name}</Text>
+        {description && <Text style={styles.description}>{description}</Text>}
       </>
     )}
   </View>
 );
+
+const styles = StyleSheet.create({
+  container: { marginBottom: 16 },
+  description: { marginTop: 10 },
+});

@@ -4,7 +4,12 @@ import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import {
+  Text,
+  Title,
+  Subtitle,
+  Heading,
+} from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
 const VolunteerScreen = () => {
@@ -19,19 +24,19 @@ const VolunteerScreen = () => {
             style={styles.image}
           />
           <View style={[styles.container, { paddingBottom: headerHeight }]}>
-            <Text style={styles.heading}>Volunteering</Text>
+            <Title style={styles.heading}>Volunteering</Title>
 
-            <Text style={styles.subHeading}>Attend One Serve One</Text>
+            <Subtitle>Attend One Serve One</Subtitle>
             <Text style={styles.content}>
               {`Great things can happen when we work together. That's why we encourage everyone to attend one service, then serve during another service or hour of the week.`}
             </Text>
 
-            <Text style={styles.subHeading}>Why Volunteers Matter</Text>
+            <Subtitle>Why Volunteers Matter</Subtitle>
             <Text style={styles.content}>
               {`Volunteering is a great opportunity to use your time, energy, and skills to make a real difference in someone's life. Whether you are enthusiastically greeting our guests, holding babies in the nursery, or playing the drums on stage, every volunteer has a part in the life transformation that happens each week at Echo.Church. Join a team and experience the joy of knowing that God used your life to make an eternal impact.`}
             </Text>
 
-            <Text style={styles.subHeading}>{`What's the Commitment?`}</Text>
+            <Subtitle>{`What's the Commitment?`}</Subtitle>
             <Text style={styles.content}>
               When you join our Dream Team, you are assigned a team leader who
               will work with you to create a serving schedule that best fits
@@ -41,14 +46,14 @@ const VolunteerScreen = () => {
               by talking to your team leader.
             </Text>
 
-            <Text style={styles.subHeading}>Where can I serve?</Text>
+            <Subtitle>Where can I serve?</Subtitle>
             <Text style={styles.content}>
               There are numerous teams that need volunteers in order for
               Echo.Church to run as it does!
             </Text>
-            <Text style={styles.content}>
+            <Heading>
               Here are a few areas in which you can make a difference:
-            </Text>
+            </Heading>
             <Text style={styles.listItem}>{'\u2022 Guest Experience'}</Text>
             <Text style={styles.listItem}>{'\u2022 Production'}</Text>
             <Text style={styles.listItem}>{'\u2022 Worship'}</Text>
@@ -94,24 +99,13 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginVertical: 10,
-    fontSize: 30,
-    color: Colors.white,
-  },
-  subHeading: {
-    marginVertical: 10,
-    fontSize: 18,
-    color: Colors.white,
   },
   content: {
-    marginBottom: 20,
-    fontSize: 15,
-    color: Colors.gray,
+    marginBottom: 30,
   },
   listItem: {
     marginVertical: 4,
     marginHorizontal: 10,
-    fontSize: 15,
-    color: Colors.gray,
   },
   button: { marginVertical: 20 },
 });

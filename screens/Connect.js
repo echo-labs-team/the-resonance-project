@@ -17,7 +17,7 @@ import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import callToActionButtons from '../config/connect';
-import Text from '../components/shared/Text';
+import { Text } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
 const items = [
@@ -53,7 +53,7 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
         style={styles.backgroundImage}
       />
 
-      <Text bold style={styles.headerTitle}>
+      <Text XXL bold style={styles.headerTitle}>
         CONNECT
       </Text>
 
@@ -69,8 +69,14 @@ const ConnectScreen = ({ navigation }: { navigation: Object }) => {
             }}
           >
             <View style={styles.item}>
-              <Text style={styles.text}>{value}</Text>
-              <Feather name={'chevron-right'} size={26} color={Colors.white} />
+              <Text XL style={styles.text}>
+                {value}
+              </Text>
+              <Feather
+                name={'chevron-right'}
+                size={30}
+                color={Colors.lightGray}
+              />
             </View>
           </TouchableHighlight>
         )}
@@ -124,9 +130,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   headerTitle: {
-    marginTop: 10,
+    marginVertical: 10,
     marginLeft: 16,
-    fontSize: 30,
     color: Colors.red,
   },
   backgroundImage: {
@@ -149,8 +154,6 @@ const styles = StyleSheet.create({
   text: {
     paddingVertical: 10,
     paddingLeft: 8,
-    fontSize: 26,
-    color: Colors.white,
   },
   connectionCard: { margin: 10 },
   callToActions: { maxHeight: 360 },

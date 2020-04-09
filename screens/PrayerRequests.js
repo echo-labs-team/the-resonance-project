@@ -4,7 +4,7 @@ import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import { Text, Title } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
 const PrayerRequestsScreen = () => {
@@ -19,7 +19,7 @@ const PrayerRequestsScreen = () => {
             style={styles.image}
           />
           <View style={[styles.container, { paddingBottom: headerHeight }]}>
-            <Text style={styles.heading}>How can we pray for you?</Text>
+            <Title style={styles.heading}>How can we pray for you?</Title>
             <Text style={styles.content}>
               Let us pray for you. We invite you to contact us during difficult
               times.
@@ -60,15 +60,8 @@ const styles = StyleSheet.create({
   container: { paddingVertical: 20, paddingHorizontal: 16 },
   heading: {
     marginVertical: 10,
-    fontSize: 30,
-    lineHeight: 32,
-    color: Colors.white,
   },
-  content: {
-    marginBottom: 20,
-    fontSize: 16,
-    color: Colors.gray,
-  },
+  content: { marginBottom: 20 },
   button: { marginVertical: 20 },
 });
 

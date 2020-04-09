@@ -19,10 +19,9 @@ import Colors from '../constants/Colors';
 import { getInstagramPosts } from '../data/instagram';
 import { getBlogPosts } from '../data/blogPosts';
 import { getVerseOfTheDay } from '../data/verseOfTheDay';
-import TextStyles from '../constants/TextStyles';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import AnimateChildrenIn from '../components/AnimateChildrenIn';
-import Text from '../components/shared/Text';
+import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
@@ -125,7 +124,9 @@ const HomeScreen = () => {
           style={styles.logoContainer}
         >
           <EchoLogo width={40} height={40} color={Colors.red} />
-          <Text style={styles.logo}>ECHO.CHURCH</Text>
+          <Text XL style={styles.logo}>
+            ECHO.CHURCH
+          </Text>
         </AnimateChildrenIn>
 
         {cardData.length ? (
@@ -142,7 +143,9 @@ const HomeScreen = () => {
           })
         ) : (
           <>
-            <Text style={styles.error}>No posts were found... 🤔</Text>
+            <Subtitle center style={styles.error}>
+              No posts were found... 🤔
+            </Subtitle>
             <Button title="Try Again" onPress={() => setTryAgain(true)} />
           </>
         )}
@@ -243,7 +246,7 @@ const Card = ({ type, url, image, title, date }) => {
           )}
         </View>
         {title && (
-          <Text style={[TextStyles.body, styles.title]} numberOfLines={3}>
+          <Text style={styles.title} numberOfLines={3}>
             {title}
           </Text>
         )}
@@ -265,11 +268,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-end',
   },
   logo: {
     marginLeft: 10,
-    fontSize: 26,
     color: Colors.white,
   },
   card: {
@@ -292,9 +294,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   cardTypeText: {
-    fontSize: 13,
     paddingLeft: 8,
-    color: Colors.white,
   },
   cardTypeView: {
     paddingTop: 16,
@@ -304,12 +304,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  error: {
-    marginBottom: 10,
-    fontSize: 20,
-    textAlign: 'center',
-    color: Colors.gray,
-  },
+  error: { marginBottom: 10 },
 });
 
 export default HomeScreen;

@@ -4,8 +4,7 @@ import Svg, { Circle } from 'react-native-svg';
 import Animated, { Easing } from 'react-native-reanimated';
 import { loop, bInterpolate } from 'react-native-redash';
 import Colors from '../constants/Colors';
-import TextStyles from '../constants/TextStyles';
-import Text from './shared/Text';
+import { Subtitle } from './shared/Typography';
 
 const { block, set, useCode, Value } = Animated;
 
@@ -44,9 +43,7 @@ function AnimatedCircle() {
 export default ({ style }) => {
   return (
     <View style={[style, styles.container]}>
-      <Text L style={[TextStyles.title, styles.liveText]}>
-        WATCH LIVE
-      </Text>
+      <Subtitle style={styles.liveText}>WATCH LIVE</Subtitle>
       <AnimatedCircle />
     </View>
   );
@@ -54,6 +51,7 @@ export default ({ style }) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginBottom: 30,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -61,8 +59,7 @@ const styles = StyleSheet.create({
   },
   liveText: {
     marginRight: 10,
-    textAlign: 'center',
-    textAlignVertical: 'center',
+    marginBottom: 0,
   },
   circle: {
     height: 20,

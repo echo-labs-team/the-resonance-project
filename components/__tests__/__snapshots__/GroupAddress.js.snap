@@ -9,19 +9,25 @@ exports[`<GroupAddress/> render group address 1`] = `
   }
 >
   <Text
-    allowFontScaling={false}
     bold={true}
     selectable={true}
     style={
       Array [
         Object {
+          "color": "#cbd2d6",
           "fontFamily": "NunitoSans-Bold",
-          "fontSize": 16,
-        },
-        Object {
-          "color": "#b8bab8",
           "fontSize": 18,
+          "lineHeight": 24,
+          "textAlign": "auto",
         },
+        Array [
+          Object {
+            "color": "#cbd2d6",
+            "fontSize": 18,
+            "lineHeight": 24,
+          },
+          undefined,
+        ],
       ]
     }
   >
@@ -55,36 +61,52 @@ exports[`<GroupAddress/> render group address 1`] = `
     >
       <View>
         <Text
-          allowFontScaling={false}
+          bold={true}
+          light={true}
           selectable={true}
           style={
             Array [
               Object {
-                "fontFamily": "NunitoSans-Regular",
-                "fontSize": 16,
-              },
-              Object {
-                "color": "#b8bab8",
+                "color": "#cbd2d6",
+                "fontFamily": "NunitoSans-Light",
                 "fontSize": 18,
+                "lineHeight": 24,
+                "textAlign": "auto",
               },
+              Array [
+                Object {
+                  "color": "#cbd2d6",
+                  "fontSize": 18,
+                  "lineHeight": 24,
+                },
+                undefined,
+              ],
             ]
           }
         >
           1180 Murphy Ave
         </Text>
         <Text
-          allowFontScaling={false}
+          bold={true}
+          light={true}
           selectable={true}
           style={
             Array [
               Object {
-                "fontFamily": "NunitoSans-Regular",
-                "fontSize": 16,
-              },
-              Object {
-                "color": "#b8bab8",
+                "color": "#cbd2d6",
+                "fontFamily": "NunitoSans-Light",
                 "fontSize": 18,
+                "lineHeight": 24,
+                "textAlign": "auto",
               },
+              Array [
+                Object {
+                  "color": "#cbd2d6",
+                  "fontSize": 18,
+                  "lineHeight": 24,
+                },
+                undefined,
+              ],
             ]
           }
         >

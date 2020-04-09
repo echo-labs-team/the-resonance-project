@@ -20,21 +20,14 @@ exports[`<SearchBar/> render the default search bar 1`] = `
     rejectResponderTermination={true}
     returnKeyType="search"
     style={
-      Array [
-        Object {
-          "color": "#fff",
-          "fontFamily": "NunitoSans-Light",
-          "fontSize": 16,
-          "textAlign": "left",
-        },
-        Object {
-          "borderWidth": 0,
-          "color": "#fff",
-          "fontSize": 18,
-          "height": 40,
-          "paddingHorizontal": 40,
-        },
-      ]
+      Object {
+        "borderWidth": 0,
+        "color": "#fff",
+        "fontFamily": "NunitoSans-Regular",
+        "fontSize": 18,
+        "height": 40,
+        "paddingHorizontal": 40,
+      }
     }
     testID="search-bar-input"
     underlineColorAndroid="transparent"
@@ -63,21 +56,14 @@ exports[`<SearchBar/> render the search bar with a value 1`] = `
     rejectResponderTermination={true}
     returnKeyType="search"
     style={
-      Array [
-        Object {
-          "color": "#fff",
-          "fontFamily": "NunitoSans-Light",
-          "fontSize": 16,
-          "textAlign": "left",
-        },
-        Object {
-          "borderWidth": 0,
-          "color": "#fff",
-          "fontSize": 18,
-          "height": 40,
-          "paddingHorizontal": 40,
-        },
-      ]
+      Object {
+        "borderWidth": 0,
+        "color": "#fff",
+        "fontFamily": "NunitoSans-Regular",
+        "fontSize": 18,
+        "height": 40,
+        "paddingHorizontal": 40,
+      }
     }
     testID="search-bar-input"
     underlineColorAndroid="transparent"

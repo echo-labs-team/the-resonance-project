@@ -11,7 +11,7 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
-import Text from '../components/shared/Text';
+import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
 const handleGive = (campus) => {
@@ -30,10 +30,11 @@ const GivingScreen = () => {
         style={styles.backgroundImage}
       />
       <ScrollView style={styles.container}>
-        <Text bold style={styles.headerTitle}>
+        <Text XXL bold style={styles.headerTitle}>
           GIVING
         </Text>
-        <Text style={styles.header}>Changing lives together</Text>
+
+        <Subtitle>Changing lives together</Subtitle>
         <Text style={styles.content}>
           We believe that Christians ought to be the most generous people on
           Earth, because our God is a generous God — giving to us sacrificially
@@ -81,8 +82,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
   headerTitle: {
-    marginTop: 10,
-    fontSize: 30,
+    marginVertical: 10,
     color: Colors.red,
   },
   backgroundImage: {
@@ -94,17 +94,7 @@ const styles = StyleSheet.create({
     left: 0,
     opacity: 0.7,
   },
-  header: {
-    marginTop: 10,
-    marginBottom: 20,
-    fontSize: 20,
-    color: Colors.white,
-  },
-  content: {
-    marginBottom: 20,
-    fontSize: 16,
-    color: Colors.gray,
-  },
+  content: { marginBottom: 20 },
   button: { marginVertical: 10 },
 });
 

@@ -17,10 +17,9 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import collectChannelData from '../data/youtube';
 import Colors from '../constants/Colors';
-import TextStyles from '../constants/TextStyles';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import isTheWeekend from '../utils/isTheWeekend';
-import Text from '../components/shared/Text';
+import { Text, Subtitle, Heading } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import Spinner from '../components/shared/Spinner';
 import LiveCard from '../components/LiveCard';
@@ -44,7 +43,6 @@ const MediaScreen = () => {
 
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -67,7 +65,6 @@ const MediaScreen = () => {
       storeMediaData(fetchedVideos);
     } catch (err) {
       setError(true);
-      setErrorMessage("Make sure you're connected to the internet.");
       setLoading(false);
       Amplitude.logEventWithProperties('ERROR loading media', { error: err });
     }
@@ -76,7 +73,7 @@ const MediaScreen = () => {
   if (isLoading) {
     return (
       <View style={[styles.container, { flex: 1, paddingTop: insets.top }]}>
-        <Text bold style={styles.headerTitle}>
+        <Text XXL bold style={styles.headerTitle}>
           MEDIA
         </Text>
         <Spinner />
@@ -86,28 +83,17 @@ const MediaScreen = () => {
 
   if (isError) {
     return (
-      <View style={{ flex: 1, paddingTop: insets.top }}>
-        <Text bold style={styles.headerTitle}>
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <Text XXL bold style={styles.headerTitle}>
           MEDIA
         </Text>
-        <View
-          style={[
-            styles.container,
-            { alignItems: 'center', justifyContent: 'center', padding: 16 },
-          ]}
-        >
-          <Text style={[TextStyles.title, { textAlign: 'center' }]}>
-            {' '}
+        <View style={styles.error}>
+          <Subtitle center>
             Oh no! There was an error connecting to YouTube 😞
-          </Text>
-          <Text
-            style={[
-              TextStyles.body,
-              { textAlign: 'center', color: Colors.darkGray },
-            ]}
-          >
-            {errorMessage}
-          </Text>
+          </Subtitle>
+          <Heading center>
+            {`Make sure you're connected to the internet`}
+          </Heading>
           <Button
             title={'Retry'}
             style={styles.notesButton}
@@ -127,9 +113,10 @@ const MediaScreen = () => {
       ref={ref}
       style={[styles.container, { paddingTop: insets.top }]}
     >
-      <Text bold style={styles.headerTitle}>
+      <Text XXL bold style={styles.headerTitle}>
         MEDIA
       </Text>
+
       {isTheWeekend && (
         <>
           <TouchableHighlight
@@ -150,7 +137,7 @@ const MediaScreen = () => {
         </>
       )}
 
-      <Text style={styles.sectionHeaderText}>CURRENT SERIES</Text>
+      <Subtitle style={styles.sectionHeaderText}>CURRENT SERIES</Subtitle>
       <YouTubeDataView
         style={styles.largeCard}
         data={data[0]}
@@ -168,10 +155,10 @@ const MediaScreen = () => {
         }}
       />
 
-      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+      <Subtitle style={styles.sectionHeaderText}>PAST SERIES</Subtitle>
       <PastSeriesSection data={data.slice(1, data.length)} />
 
-      <Text style={styles.sectionHeaderText}>RESOURCES</Text>
+      <Subtitle style={styles.sectionHeaderText}>RESOURCES</Subtitle>
       <TouchableHighlight
         style={{ marginBottom: insets.bottom + 16 }}
         onPress={() => {
@@ -227,7 +214,7 @@ const PastSeriesSection = ({ data }) => {
 };
 
 const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
-  const { title, thumbnails: { maxres = {} } = {} } = data;
+  const { thumbnails: { maxres = {} } = {} } = data;
 
   return (
     <TouchableOpacity
@@ -247,21 +234,22 @@ const YouTubeDataView = ({ data = {}, style, thumbnailStyle } = {}) => {
 };
 
 const styles = StyleSheet.create({
-  sectionHeaderText: {
-    ...TextStyles.subtitle,
-    paddingLeft: 16,
-    paddingTop: 32,
-    paddingBottom: 8,
-  },
-  headerTitle: {
-    marginTop: 10,
-    marginLeft: 16,
-    fontSize: 30,
-    color: Colors.red,
-  },
   container: {
     flex: 1,
     backgroundColor: Colors.headerBackground,
+  },
+  error: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+  },
+  headerTitle: {
+    marginVertical: 10,
+    marginLeft: 16,
+    color: Colors.red,
+  },
+  sectionHeaderText: {
+    marginLeft: 16,
   },
   largeCard: {
     width: screenWidth - 32,
@@ -282,6 +270,7 @@ const styles = StyleSheet.create({
   },
   notesButton: {
     margin: 16,
+    marginBottom: 30,
     width: screenWidth - 32,
   },
   youtubeThumbnailImageSmall: {

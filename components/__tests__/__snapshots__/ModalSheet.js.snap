@@ -602,6 +602,7 @@ Array [
           "borderRadius": 6,
           "minHeight": 60,
           "paddingHorizontal": 24,
+          "paddingVertical": 12,
         },
         Object {
           "marginBottom": 16,
@@ -620,14 +621,23 @@ Array [
       }
     >
       <Text
+        selectable={true}
         style={
           Array [
             Object {
-              "color": "#fff",
+              "color": "#cbd2d6",
+              "fontFamily": "NunitoSans-Regular",
               "fontSize": 18,
-              "textAlign": "center",
+              "lineHeight": 24,
+              "textAlign": "auto",
             },
-            Object {},
+            Array [
+              Object {
+                "color": "#fff",
+                "textAlign": "center",
+              },
+              Object {},
+            ],
           ]
         }
       >

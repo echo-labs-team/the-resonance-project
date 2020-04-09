@@ -17,7 +17,7 @@ import Hyperlink from 'react-native-hyperlink';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import { Text, Title, Heading } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import { styles as groupStyles } from '../components/GroupCardDetails';
 import {
@@ -113,46 +113,35 @@ const GroupDetails = ({ route }: { route: Object }) => {
           />
 
           <ScrollView ref={scrollViewRef} style={styles.container}>
-            <Text
+            <Title
               light
               adjustsFontSizeToFit
               numberOfLines={2}
               style={groupStyles.title}
             >
               {title}
-            </Text>
+            </Title>
 
             <View style={groupStyles.when}>
-              <Text style={groupStyles.detail}>
+              <Text>
                 {getMeetingFrequency(frequency, interval)} on{' '}
-                <Text bold style={[groupStyles.detail, groupStyles.b]}>
-                  {getMeetingDay(daysOfWeek, dayOfMonth)}
-                </Text>{' '}
-                at{' '}
-                <Text bold style={[groupStyles.detail, groupStyles.b]}>
-                  {getMeetingTime(meetingTime)}
-                </Text>
+                <Text bold>{getMeetingDay(daysOfWeek, dayOfMonth)}</Text> at{' '}
+                <Text bold>{getMeetingTime(meetingTime)}</Text>
               </Text>
             </View>
 
             <View style={[groupStyles.details, { marginBottom: 16 }]}>
-              <Text bold style={[groupStyles.detail, { fontSize: 18 }]}>
-                {campus}
-              </Text>
+              <Heading>{campus}</Heading>
             </View>
 
             {isWomenOnly && (
               <View style={[groupStyles.details, { marginBottom: 16 }]}>
-                <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
-                  👩 WOMEN ONLY
-                </Text>
+                <Text light>👩 WOMEN ONLY</Text>
               </View>
             )}
             {isMenOnly && (
               <View style={[groupStyles.details, { marginBottom: 16 }]}>
-                <Text light style={[groupStyles.detail, { fontSize: 18 }]}>
-                  👨 MEN ONLY
-                </Text>
+                <Text light>👨 MEN ONLY</Text>
               </View>
             )}
 
@@ -164,44 +153,27 @@ const GroupDetails = ({ route }: { route: Object }) => {
 
             {shouldShowLeaders && (
               <View style={{ marginBottom: 16 }}>
-                <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-                  Leaders
-                </Text>
+                <Heading>Leaders</Heading>
                 {leaders.map(({ name }) => (
-                  <Text key={name} style={{ fontSize: 16, color: Colors.gray }}>
-                    {name}
-                  </Text>
+                  <Text key={name}>{name}</Text>
                 ))}
               </View>
             )}
 
             <View style={{ marginBottom: 16 }}>
-              <Text bold style={{ fontSize: 18, color: Colors.gray }}>
-                Childcare
-              </Text>
-              <Text style={{ fontSize: 16, color: Colors.gray }}>
-                {hasChildcare ? 'Provided' : 'Not Provided'}
-              </Text>
+              <Heading>Childcare</Heading>
+              <Text>{hasChildcare ? 'Provided' : 'Not Provided'}</Text>
             </View>
 
             {/* make any links clickable */}
             <Hyperlink linkDefault>
-              <Text
-                style={[
-                  groupStyles.description,
-                  { padding: 0, marginBottom: 20 },
-                ]}
-              >
-                {description}
-              </Text>
+              <Text style={{ marginBottom: 20 }}>{description}</Text>
             </Hyperlink>
 
             {startDate && (
               <Text
-                style={[
-                  groupStyles.description,
-                  { padding: 0, marginBottom: 20 },
-                ]}
+                light
+                style={{ marginBottom: 20 }}
               >{`This semester runs from 
 ${startDate} to ${endDate}`}</Text>
             )}

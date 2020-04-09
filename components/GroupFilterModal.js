@@ -12,10 +12,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Modal from 'react-native-modal';
+import { BlurView } from 'expo-blur';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import Text from './shared/Text';
+import { Text, Title, Subtitle, Heading } from './shared/Typography';
 import Button from './shared/Button';
 import Checkbox from './Checkbox';
 
@@ -82,9 +83,10 @@ export default ({
         <View style={styles.dragBar} />
 
         <View style={styles.heading}>
-          <Text style={styles.header}>Filters</Text>
+          <Title style={styles.header}>Filters</Title>
+
           <TouchableOpacity onPress={() => setFilters(initialFilters)}>
-            <Text style={styles.reset}>Reset</Text>
+            <Subtitle style={styles.header}>Reset</Subtitle>
           </TouchableOpacity>
         </View>
 
@@ -115,9 +117,11 @@ export default ({
             { title: 'Categories', data: categories },
           ]}
           renderSectionHeader={({ section: { title } }) => (
-            <Text bold style={styles.sectionTitle}>
-              {title}
-            </Text>
+            <BlurView tint="dark" intensity={100} style={styles.section}>
+              <Heading center style={styles.sectionTitle}>
+                {title}
+              </Heading>
+            </BlurView>
           )}
           renderItem={({ section: { title }, item }) => {
             return (
@@ -150,12 +154,8 @@ export default ({
           style={styles.contentContainer}
         />
 
-        <View style={styles.button}>
-          <Button
-            title="Apply"
-            style={{ width: '50%' }}
-            onPress={handleApply}
-          />
+        <View style={styles.buttonContainer}>
+          <Button title="Apply" style={styles.button} onPress={handleApply} />
         </View>
       </View>
     </Modal>
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.darkerGray,
   },
   // needed to allow scrolling on android
-  contentContainer: { flexGrow: 1, marginBottom: 66 },
+  contentContainer: { flexGrow: 1, marginBottom: 76 },
   dragBar: {
     width: 100,
     height: 6,
@@ -190,28 +190,18 @@ const styles = StyleSheet.create({
     backgroundColor: dragBarColor,
   },
   heading: {
-    marginBottom: 10,
+    marginVertical: 10,
+    paddingHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   header: {
-    paddingHorizontal: 16,
-    fontSize: 30,
-    color: Colors.white,
+    marginBottom: 0,
   },
-  reset: {
-    padding: 16,
-    fontSize: 24,
-    color: Colors.gray,
-  },
+  section: { borderRadius: 8 },
   sectionTitle: {
-    paddingTop: 10,
-    paddingBottom: 4,
-    fontSize: 22,
-    textAlign: 'center',
-    backgroundColor: Colors.darkerGray,
-    color: Colors.gray,
+    paddingVertical: 8,
   },
   item: {
     paddingVertical: 16,
@@ -220,11 +210,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  category: {
-    fontSize: 20,
-    color: Colors.gray,
-  },
-  button: {
+  buttonContainer: {
     width: Layout.window.width,
     paddingTop: 14,
     position: 'absolute',
@@ -235,4 +221,5 @@ const styles = StyleSheet.create({
     borderColor: Colors.darkGray,
     backgroundColor: Colors.darkerGray,
   },
+  button: { width: '50%' },
 });

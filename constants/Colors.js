@@ -1,5 +1,6 @@
 const red = '#ce2f1c';
 const black = '#000';
+const lightGray = '#cbd2d6';
 const gray = '#b8bab8';
 const blue = '#1f6276';
 const green = '#36ce78';
@@ -13,6 +14,7 @@ const darkBlue = '#183f50';
 export default {
   red,
   black,
+  lightGray,
   gray,
   blue,
   green,

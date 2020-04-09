@@ -31,23 +31,30 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
   >
     <Text
       adjustsFontSizeToFit={true}
-      allowFontScaling={false}
       light={true}
       numberOfLines={2}
       selectable={true}
       style={
         Array [
           Object {
+            "color": "#cbd2d6",
             "fontFamily": "NunitoSans-Light",
-            "fontSize": 16,
+            "fontSize": 18,
+            "lineHeight": 24,
+            "textAlign": "auto",
           },
-          Object {
-            "color": "#fff",
-            "fontSize": 28,
-            "lineHeight": 30,
-            "marginBottom": 10,
-            "marginTop": 16,
-          },
+          Array [
+            Object {
+              "color": "#fff",
+              "fontSize": 28,
+              "lineHeight": 34,
+              "marginBottom": 20,
+            },
+            Object {
+              "marginBottom": 10,
+              "marginTop": 16,
+            },
+          ],
         ]
       }
     >
@@ -62,18 +69,17 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
       }
     >
       <Text
-        allowFontScaling={false}
         selectable={true}
         style={
           Array [
             Object {
+              "color": "#cbd2d6",
               "fontFamily": "NunitoSans-Regular",
-              "fontSize": 16,
+              "fontSize": 18,
+              "lineHeight": 24,
+              "textAlign": "auto",
             },
-            Object {
-              "color": "#b8bab8",
-              "fontSize": 16,
-            },
+            undefined,
           ]
         }
       >
@@ -81,51 +87,38 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
          on
          
         <Text
-          allowFontScaling={false}
           bold={true}
           selectable={true}
           style={
             Array [
               Object {
+                "color": "#cbd2d6",
                 "fontFamily": "NunitoSans-Bold",
-                "fontSize": 16,
+                "fontSize": 18,
+                "lineHeight": 24,
+                "textAlign": "auto",
               },
-              Array [
-                Object {
-                  "color": "#b8bab8",
-                  "fontSize": 16,
-                },
-                Object {
-                  "fontSize": 17,
-                },
-              ],
+              undefined,
             ]
           }
         >
           Tuesday
         </Text>
-         
-        at
+         at
          
         <Text
-          allowFontScaling={false}
           bold={true}
           selectable={true}
           style={
             Array [
               Object {
+                "color": "#cbd2d6",
                 "fontFamily": "NunitoSans-Bold",
-                "fontSize": 16,
+                "fontSize": 18,
+                "lineHeight": 24,
+                "textAlign": "auto",
               },
-              Array [
-                Object {
-                  "color": "#b8bab8",
-                  "fontSize": 16,
-                },
-                Object {
-                  "fontSize": 17,
-                },
-              ],
+              undefined,
             ]
           }
         >
@@ -143,19 +136,18 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
       }
     >
       <Text
-        allowFontScaling={false}
         bold={true}
         selectable={true}
         style={
           Array [
             Object {
+              "color": "#cbd2d6",
               "fontFamily": "NunitoSans-Bold",
-              "fontSize": 16,
+              "fontSize": 18,
+              "lineHeight": 24,
+              "textAlign": "auto",
             },
-            Object {
-              "color": "#b8bab8",
-              "fontSize": 16,
-            },
+            undefined,
           ]
         }
       >
@@ -171,20 +163,19 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
       }
     >
       <Text
-        allowFontScaling={false}
+        light={true}
         numberOfLines={4}
         selectable={true}
         style={
           Array [
             Object {
-              "fontFamily": "NunitoSans-Regular",
-              "fontSize": 16,
-            },
-            Object {
-              "color": "#b8bab8",
-              "fontSize": 16,
+              "color": "#cbd2d6",
+              "fontFamily": "NunitoSans-Light",
+              "fontSize": 18,
               "lineHeight": 24,
+              "textAlign": "auto",
             },
+            undefined,
           ]
         }
       >

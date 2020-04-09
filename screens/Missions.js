@@ -13,7 +13,12 @@ import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import htmlParser from 'fast-html-parser';
 import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import {
+  Text,
+  Title,
+  Subtitle,
+  Heading,
+} from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
 const storeMissionsData = async (missions) => {
@@ -74,7 +79,7 @@ const MissionsScreen = () => {
             style={styles.image}
           />
           <View style={[styles.container, { paddingBottom: headerHeight }]}>
-            <Text style={styles.heading}>Echoing Around the World</Text>
+            <Title style={styles.heading}>Echoing Around the World</Title>
             <Text style={styles.content}>
               Mission trips give Echo.Church a chance to serve and encourage our
               partner churches and missionaries around the world, as well as an
@@ -82,13 +87,9 @@ const MissionsScreen = () => {
               opened to what God is doing beyond our region.
             </Text>
 
-            <Text bold style={[styles.heading, { fontSize: 24 }]}>
-              Current mission trips
-            </Text>
+            <Subtitle>Current mission trips</Subtitle>
             {missions ? (
-              <Text bold style={styles.subHeading}>
-                {missions}
-              </Text>
+              <Heading>{missions}</Heading>
             ) : (
               <Placeholder
                 Animation={(props) => (
@@ -144,19 +145,9 @@ const styles = StyleSheet.create({
   },
   heading: {
     marginVertical: 10,
-    fontSize: 30,
-    lineHeight: 32,
-    color: Colors.white,
-  },
-  subHeading: {
-    marginVertical: 10,
-    fontSize: 18,
-    color: Colors.white,
   },
   content: {
     marginBottom: 20,
-    fontSize: 16,
-    color: Colors.gray,
   },
   button: { marginVertical: 20 },
 });

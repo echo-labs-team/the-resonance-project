@@ -2,13 +2,15 @@
 
 exports[`<Text/> render text 1`] = `
 <Text
-  allowFontScaling={false}
   selectable={true}
   style={
     Array [
       Object {
+        "color": "#cbd2d6",
         "fontFamily": "NunitoSans-Regular",
-        "fontSize": 16,
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
       },
       undefined,
     ]
@@ -20,14 +22,16 @@ exports[`<Text/> render text 1`] = `
 
 exports[`<Text/> render text with a bold font 1`] = `
 <Text
-  allowFontScaling={false}
   bold={true}
   selectable={true}
   style={
     Array [
       Object {
+        "color": "#cbd2d6",
         "fontFamily": "NunitoSans-Bold",
-        "fontSize": 16,
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
       },
       undefined,
     ]
@@ -39,14 +43,16 @@ exports[`<Text/> render text with a bold font 1`] = `
 
 exports[`<Text/> render text with a light font 1`] = `
 <Text
-  allowFontScaling={false}
   light={true}
   selectable={true}
   style={
     Array [
       Object {
+        "color": "#cbd2d6",
         "fontFamily": "NunitoSans-Light",
-        "fontSize": 16,
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
       },
       undefined,
     ]
@@ -58,14 +64,16 @@ exports[`<Text/> render text with a light font 1`] = `
 
 exports[`<Text/> render text with extra props 1`] = `
 <Text
-  allowFontScaling={false}
   disabled={true}
   selectable={true}
   style={
     Array [
       Object {
+        "color": "#cbd2d6",
         "fontFamily": "NunitoSans-Regular",
-        "fontSize": 16,
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
       },
       undefined,
     ]
@@ -78,13 +86,15 @@ exports[`<Text/> render text with extra props 1`] = `
 
 exports[`<Text/> render text with style 1`] = `
 <Text
-  allowFontScaling={false}
   selectable={true}
   style={
     Array [
       Object {
+        "color": "#cbd2d6",
         "fontFamily": "NunitoSans-Regular",
-        "fontSize": 16,
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
       },
       Object {
         "fontSize": 30,
