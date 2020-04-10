@@ -15,7 +15,8 @@
     "format": "prettier --write \"**/*.js\"",
     "react-devtools": "react-devtools",
     "clear": ". scripts/Clear.sh",
-    "nuke": "rm -rf node_modules/ && rm -f package-lock.json && npm cache verify && npm install && expo r -c"
+    "nuke": "rm -rf node_modules/ && rm -f package-lock.json && npm cache verify && npm install && expo r -c",
+    "storybook": "start-storybook -p 7007 & REACT_NATIVE_STORYBOOK=true expo start"
   },
   "jest": {
     "preset": "jest-expo"
@@ -54,9 +55,16 @@
     "rn-placeholder": "^3.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
     "@babel/preset-flow": "^7.9.0",
+    "@storybook/addon-actions": "^5.3.18",
+    "@storybook/addon-links": "^5.3.18",
+    "@storybook/addons": "^5.3.18",
+    "@storybook/react-native": "^5.3.18",
+    "@storybook/react-native-server": "^5.3.18",
     "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.1.0",
     "babel-preset-expo": "^8.1.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.10.1",
@@ -73,6 +81,7 @@
     "lint-staged": "^10.0.10",
     "prettier": "^2.0.2",
     "react-devtools": "^4.6.0",
+    "react-dom": "^16.9.0",
     "react-native-testing-library": "^1.13.0",
     "react-test-renderer": "^16.12.0"
   },
