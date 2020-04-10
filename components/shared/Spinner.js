@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import Colors from '../../constants/Colors';
 
-export default ({ style }) => {
+export default ({ style, spinnerColor = Colors.gray }) => {
   return (
     <View style={[styles.container, style]}>
-      <ActivityIndicator size="large" color={Colors.gray} />
+      <ActivityIndicator size="large" color={spinnerColor} />
     </View>
   );
 };

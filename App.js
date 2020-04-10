@@ -51,7 +51,7 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-export default (props) => {
+function App(props) {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
 
   /**
@@ -129,4 +129,8 @@ export default (props) => {
       <AppNavigator />
     </SafeAreaProvider>
   );
-};
+}
+
+export default process.env.REACT_NATIVE_STORYBOOK
+  ? require('./storybook').default
+  : App;
