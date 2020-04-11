@@ -98,3 +98,6 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+# Storybook
+storyLoader.js

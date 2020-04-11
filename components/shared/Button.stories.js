@@ -2,11 +2,9 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-
-import CenterView from './CenterView';
+import CenterView from '../../storybook/CenterView';
 import Colors from '../../constants/Colors';
-import Button from '../../components/shared/Button';
-import Spinner from '../../components/shared/Spinner';
+import Button from './Button';
 
 storiesOf('Button', module)
   .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
@@ -29,15 +27,5 @@ storiesOf('Button', module)
         <MaterialCommunityIcons name={'fire'} size={30} color={Colors.red} />
       }
       title="Button"
-    />
-  ));
-
-storiesOf('Spinner', module)
-  .addDecorator((getStory) => <CenterView>{getStory()}</CenterView>)
-  .add('default', () => <Spinner />)
-  .add('with different color', () => (
-    <Spinner
-      spinnerColor={Colors.blue}
-      style={{ backgroundColor: Colors.red }}
     />
   ));

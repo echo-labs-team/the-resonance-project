@@ -8,11 +8,9 @@ import {
 } from 'react-native';
 import { AppLoading } from 'expo';
 import { Constants } from 'expo-constants';
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import * as Icon from '@expo/vector-icons';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import resources from './resources';
 import keys from './constants/Keys';
 import AppNavigator from './navigation/AppNavigator';
 
@@ -77,25 +75,7 @@ function App(props) {
   }, []);
 
   const loadResourcesAsync = async () => {
-    return Promise.all([
-      Asset.loadAsync([
-        require('./assets/images/activate.png'),
-        require('./assets/images/baptism.jpg'),
-        require('./assets/images/volunteer.jpg'),
-        require('./assets/images/pray.jpg'),
-        require('./assets/images/missions.png'),
-        require('./assets/images/connect_bg.png'),
-        require('./assets/images/groups_bg.png'),
-        require('./assets/images/giving_bg.png'),
-      ]),
-      Font.loadAsync({
-        // This is the font that we are using for our tab bar
-        ...Icon.Ionicons.font,
-        'NunitoSans-Light': require('./assets/fonts/NunitoSans-Light.ttf'),
-        'NunitoSans-Regular': require('./assets/fonts/NunitoSans-Regular.ttf'),
-        'NunitoSans-Bold': require('./assets/fonts/NunitoSans-Bold.ttf'),
-      }),
-    ]);
+    return Promise.all(resources);
   };
 
   const handleLoadingError = (error) => {
