@@ -15,10 +15,12 @@ exports[`<Button/> render the button 1`] = `
   style={
     Array [
       Object {
+        "alignItems": "center",
         "backgroundColor": "#313d48",
         "borderRadius": 6,
+        "justifyContent": "center",
         "minHeight": 60,
-        "paddingHorizontal": 24,
+        "paddingHorizontal": 16,
         "paddingVertical": 12,
       },
       Object {},
@@ -29,7 +31,6 @@ exports[`<Button/> render the button 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "center",
       }
@@ -77,10 +78,12 @@ exports[`<Button/> render the button with an icon 1`] = `
   style={
     Array [
       Object {
+        "alignItems": "center",
         "backgroundColor": "#313d48",
         "borderRadius": 6,
+        "justifyContent": "center",
         "minHeight": 60,
-        "paddingHorizontal": 24,
+        "paddingHorizontal": 16,
         "paddingVertical": 12,
       },
       Object {},
@@ -91,7 +94,6 @@ exports[`<Button/> render the button with an icon 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "center",
       }
@@ -152,10 +154,12 @@ exports[`<Button/> render the button with style 1`] = `
   style={
     Array [
       Object {
+        "alignItems": "center",
         "backgroundColor": "#313d48",
         "borderRadius": 6,
+        "justifyContent": "center",
         "minHeight": 60,
-        "paddingHorizontal": 24,
+        "paddingHorizontal": 16,
         "paddingVertical": 12,
       },
       Object {
@@ -168,7 +172,6 @@ exports[`<Button/> render the button with style 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "flex": 1,
         "flexDirection": "row",
         "justifyContent": "center",
       }

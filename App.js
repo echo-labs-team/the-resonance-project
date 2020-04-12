@@ -111,6 +111,6 @@ function App(props) {
   );
 }
 
-export default process.env.REACT_NATIVE_STORYBOOK
+export default __DEV__ && process.env.REACT_NATIVE_STORYBOOK
   ? require('./storybook').default
   : App;

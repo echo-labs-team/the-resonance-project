@@ -18,7 +18,7 @@ import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { Text, Title, Subtitle, Heading } from './shared/Typography';
 import Button from './shared/Button';
-import Checkbox from './Checkbox';
+import Checkbox from './shared/Checkbox';
 
 const Item = ({ item, isSelected, onSelected }) => {
   const [selected, setSelected] = useState(false);
@@ -39,7 +39,13 @@ const Item = ({ item, isSelected, onSelected }) => {
       }}
     >
       <View style={styles.item}>
-        <Text light style={styles.category}>
+        <Text
+          L
+          light
+          adjustsFontSizeToFit
+          numberOfLines={1}
+          style={styles.category}
+        >
           {item}
         </Text>
         {isSelected || selected ? <Checkbox checked /> : <Checkbox />}
@@ -210,6 +216,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  category: {
+    maxWidth: '80%',
+  },
   buttonContainer: {
     width: Layout.window.width,
     paddingTop: 14,
@@ -221,5 +230,5 @@ const styles = StyleSheet.create({
     borderColor: Colors.darkGray,
     backgroundColor: Colors.darkerGray,
   },
-  button: { width: '50%' },
+  button: { paddingHorizontal: 60 },
 });

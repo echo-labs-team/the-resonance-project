@@ -6,7 +6,7 @@ import { loop, bInterpolate } from 'react-native-redash';
 import Colors from '../constants/Colors';
 import { Subtitle } from './shared/Typography';
 
-const { block, set, useCode, Value } = Animated;
+const { set, useCode, Value } = Animated;
 
 function AnimatedCircle() {
   const animation = new Value(0);
@@ -15,17 +15,15 @@ function AnimatedCircle() {
   // https://www.youtube.com/watch?v=1Q9efh7OcR8
   useCode(
     () =>
-      block([
-        set(
-          animation,
-          loop({
-            duration: 1000,
-            easing: Easing.inOut(Easing.ease),
-            boomerang: true,
-            autoStart: true,
-          })
-        ),
-      ]),
+      set(
+        animation,
+        loop({
+          duration: 1000,
+          easing: Easing.inOut(Easing.ease),
+          boomerang: true,
+          autoStart: true,
+        })
+      ),
     [animation]
   );
 
@@ -42,7 +40,7 @@ function AnimatedCircle() {
 
 export default ({ style }) => {
   return (
-    <View style={[style, styles.container]}>
+    <View style={[styles.container, style]}>
       <Subtitle style={styles.liveText}>WATCH LIVE</Subtitle>
       <AnimatedCircle />
     </View>

@@ -13,9 +13,9 @@ export default ({
   },
 }) => (
   <TouchableHighlight
-    style={[styles.button, style]}
     onPress={onPress}
     underlayColor={Colors.blue}
+    style={[styles.button, style]}
   >
     <View style={styles.wrapper}>
       {icon && <View style={styles.icon}>{icon}</View>}
@@ -25,18 +25,19 @@ export default ({
 );
 
 const styles = StyleSheet.create({
+  button: {
+    minHeight: 60,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.darkGray,
+    borderRadius: 6,
+  },
   wrapper: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  button: {
-    minHeight: 60,
-    backgroundColor: Colors.darkGray,
-    borderRadius: 6,
-    paddingVertical: 12,
-    paddingHorizontal: 24,
   },
   text: {
     color: Colors.white,
