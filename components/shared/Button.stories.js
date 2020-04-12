@@ -15,11 +15,19 @@ storiesOf('Button', module)
   .add('with text styles (textiles 😂)', () => (
     <Button
       title="Button"
-      textStyle={{ fontSize: 26, fontWeight: 'bold', color: Colors.red }}
+      textStyle={{
+        fontSize: 26,
+        lineHeight: 34, // need to define `lineHeight` if we specify `fontSize`
+        fontWeight: 'bold',
+        color: Colors.red,
+      }}
     />
   ))
   .add('with long text', () => (
-    <Button title="Proident voluptate qui anim eiusmod in tempor labore." />
+    <Button
+      title="Cillum sunt amet et cupidatat reprehenderit pariatur aliqua aliquip consequat tempor excepteur."
+      textStyle={{ fontSize: 22, lineHeight: 28 }}
+    />
   ))
   .add('with icon', () => (
     <Button
