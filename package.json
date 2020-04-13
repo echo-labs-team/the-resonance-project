@@ -33,7 +33,7 @@
     "expo-analytics-amplitude": "~8.1.0",
     "expo-asset": "~8.1.4",
     "expo-blur": "~8.1.0",
-    "expo-font": "~8.0.0",
+    "expo-font": "~8.1.1",
     "expo-web-browser": "~8.1.0",
     "expokit": "^36.0.0",
     "fast-html-parser": "^1.0.1",
