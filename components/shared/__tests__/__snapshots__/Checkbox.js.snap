@@ -91,12 +91,7 @@ exports[`<Checkbox/> render a checked checkbox 1`] = `
     >
       <RNSVGPath
         d="M22.9 3.7l-15.2 16.6-6.6-7.1"
-        fill={
-          Array [
-            0,
-            4278190080,
-          ]
-        }
+        fill={4278190080}
         fillOpacity={1}
         fillRule={1}
         matrix={
@@ -125,12 +120,7 @@ exports[`<Checkbox/> render a checked checkbox 1`] = `
         scaleY={1}
         skewX={0}
         skewY={0}
-        stroke={
-          Array [
-            0,
-            4280363313,
-          ]
-        }
+        stroke={4280363313}
         strokeDasharray={null}
         strokeDashoffset={null}
         strokeLinecap={0}
