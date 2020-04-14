@@ -35,7 +35,7 @@
     "expo-blur": "~8.1.0",
     "expo-font": "~8.1.1",
     "expo-web-browser": "~8.1.0",
-    "expokit": "^36.0.0",
+    "expokit": "^37.0.0",
     "fast-html-parser": "^1.0.1",
     "html-entities": "^1.2.1",
     "react": "16.9.0",
