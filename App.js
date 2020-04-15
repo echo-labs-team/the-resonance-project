@@ -6,8 +6,8 @@ import {
   StatusBar,
   UIManager,
 } from 'react-native';
-import { AppLoading } from 'expo';
 import { Constants } from 'expo-constants';
+import * as SplashScreen from 'expo-splash-screen';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import resources from './resources';
@@ -60,6 +60,18 @@ function App(props) {
    * https://reactnative.dev/docs/appstate
    */
   useEffect(() => {
+    const loadResourcesAsync = async () => {
+      return Promise.all(resources).then(() => {
+        setIsLoadingComplete(true);
+      });
+    };
+
+    SplashScreen.preventAutoHideAsync().catch((err) => console.warn(err));
+    loadResourcesAsync().then(() => {
+      setIsLoadingComplete(true);
+      SplashScreen.hideAsync();
+    });
+
     const handleAppStateChange = (state) => {
       if (state === 'active') {
         Amplitude.logEvent('Start session');
@@ -74,26 +86,8 @@ function App(props) {
     return () => AppState.removeEventListener('change', handleAppStateChange);
   }, []);
 
-  const loadResourcesAsync = async () => {
-    return Promise.all(resources);
-  };
-
-  const handleLoadingError = (error) => {
-    // In this case, you might want to report the error to your error
-    // reporting service, for example Sentry
-    console.warn(error);
-  };
-
-  const handleFinishLoading = () => setIsLoadingComplete(true);
-
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={handleFinishLoading}
-      />
-    );
+  if (!isLoadingComplete) {
+    return null;
   }
 
   return (
