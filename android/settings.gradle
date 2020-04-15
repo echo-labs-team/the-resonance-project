@@ -1,9 +1,9 @@
-include ':app'
+rootProject.name = 'EchoChurch'
 
-
-// Import gradle helpers for unimodules.
 apply from: '../node_modules/react-native-unimodules/gradle.groovy'
+includeUnimodulesProjects()
 
-// Include unimodules.
-includeUnimodulesProjects(
-)
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle");
+applyNativeModulesSettingsGradle(settings)
+
+include ':app'
