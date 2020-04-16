@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
 import { Feather, AntDesign } from '@expo/vector-icons';
@@ -10,9 +8,6 @@ export default ({
   onChangeText = () => {
     console.log('`onChangeText` required');
   },
-}: {
-  value: string,
-  onChangeText: Function,
 }) => {
   return (
     <View style={styles.searchBar}>

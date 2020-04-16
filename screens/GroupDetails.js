@@ -1,5 +1,3 @@
-// @flow
-
 import React, { useRef } from 'react';
 import {
   ImageBackground,
@@ -30,7 +28,7 @@ import Address from '../components/GroupAddress';
 import SignUp from '../components/JoinGroupModal';
 import Ask from '../components/AskAboutGroupModal';
 
-const GroupDetails = ({ route }: { route: Object }) => {
+const GroupDetails = ({ route }) => {
   const insets = useSafeArea();
   const scrollViewRef = useRef(null);
   const dropdownAlertRef = useRef(null);
@@ -190,7 +188,6 @@ ${startDate} to ${endDate}`}</Text>
               }}
             />
 
-            {/* $FlowFixMe */}
             <DropdownAlert
               ref={dropdownAlertRef}
               successColor={Colors.blue}

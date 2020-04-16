@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -12,20 +10,7 @@ import {
   getMeetingTime,
 } from '../utils/groups';
 
-export default ({
-  item,
-}: {
-  item: {
-    name: string,
-    campus: string,
-    frequency: number,
-    interval: string,
-    daysOfWeek: Array<string>,
-    dayOfMonth: string,
-    meetingTime: string,
-    description: string,
-  },
-}) => {
+export default ({ item }) => {
   const navigation = useNavigation();
   const {
     name = '',
