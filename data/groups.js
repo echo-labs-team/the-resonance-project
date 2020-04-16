@@ -1,5 +1,3 @@
-// @flow
-
 import axios from 'axios';
 import * as Amplitude from 'expo-analytics-amplitude';
 import config from './config';
@@ -14,7 +12,7 @@ const baseURL = 'https://echo-api.westus.cloudapp.azure.com';
 const isFeaturedGroup = (groupName) =>
   groupName.toLowerCase().includes(config.featuredGroup);
 
-export async function getOpenGroups(): Object {
+export async function getOpenGroups() {
   const errorMessage = 'Error fetching groups';
   const { data = [] } = (await axios.get(`${baseURL}/groups/open`)) || {};
 
@@ -36,7 +34,7 @@ export async function getOpenGroups(): Object {
   });
 }
 
-export async function getCategories(): Promise<Array<any>> {
+export async function getCategories() {
   const {
     data: {
       errorMessage = 'Error getting categories',
@@ -74,13 +72,7 @@ export async function getCategories(): Promise<Array<any>> {
     .filter(Boolean);
 }
 
-export function askQuestion(
-  groupId: string,
-  firstName: string,
-  lastName: string,
-  email: string,
-  question: string
-) {
+export function askQuestion(groupId, firstName, lastName, email, question) {
   return axios.get(`${baseURL}/groups/ask`, {
     params: {
       GroupID: groupId,
@@ -92,12 +84,7 @@ export function askQuestion(
   });
 }
 
-export function joinGroup(
-  groupId: string,
-  firstName: string,
-  lastName: string,
-  email: string
-) {
+export function joinGroup(groupId, firstName, lastName, email) {
   return axios.get(`${baseURL}/groups/join`, {
     params: {
       GroupID: groupId,

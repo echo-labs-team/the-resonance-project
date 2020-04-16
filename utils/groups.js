@@ -1,9 +1,4 @@
-// @flow
-
-export const getMeetingFrequency = (
-  frequency: number = 1,
-  interval: string = ''
-) => {
+export const getMeetingFrequency = (frequency = 1, interval = '') => {
   if (interval.toLowerCase() === 'weekly') {
     if (Number(frequency) === 1) {
       return 'Every week';
@@ -21,17 +16,14 @@ export const getMeetingFrequency = (
   }
 };
 
-export const getGetOrdinal = (n: number) => {
+export const getGetOrdinal = (n) => {
   const s = ['th', 'st', 'nd', 'rd'];
   const v = n % 100;
 
   return n + (s[(v - 20) % 10] || s[v] || s[0]);
 };
 
-export const getMeetingDay = (
-  daysOfWeek: Array<string> = [],
-  dayOfMonth: string
-) => {
+export const getMeetingDay = (daysOfWeek = [], dayOfMonth) => {
   if (daysOfWeek.length) {
     if (daysOfWeek.length === 7) {
       return 'Every day';
@@ -47,7 +39,7 @@ export const getMeetingDay = (
   }
 };
 
-export const getMeetingTime = (meetingTime: string) => {
+export const getMeetingTime = (meetingTime) => {
   if (!meetingTime) {
     return null;
   }
@@ -65,6 +57,6 @@ export const getMeetingTime = (meetingTime: string) => {
   return `${h}:${minutes}${hrs < 12 ? 'am' : 'pm'}`;
 };
 
-export const isEmailValid = (email: string): boolean => {
+export const isEmailValid = (email) => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };

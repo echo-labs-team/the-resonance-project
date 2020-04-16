@@ -8,8 +8,6 @@
     "test": "node ./node_modules/jest-expo/bin/jest.js --watchAll=false",
     "test:watch": "node ./node_modules/jest-expo/bin/jest.js --watchAll",
     "lint": "eslint .",
-    "flow-typed": "flow-typed install",
-    "flow": "flow",
     "format": "prettier --write \"**/*.js\"",
     "react-devtools": "react-devtools",
     "clear": ". scripts/clear.sh",
@@ -58,36 +56,32 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "babel-jest": "~25.2.6",
-    "jest": "~25.2.6",
-    "react-test-renderer": "^16.12.0",
     "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-    "@babel/preset-flow": "^7.9.0",
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/react-native": "^5.3.18",
     "@storybook/react-native-server": "^5.3.18",
     "babel-eslint": "^10.0.1",
+    "babel-jest": "~25.2.6",
     "babel-loader": "^8.1.0",
     "babel-preset-expo": "^8.1.0",
     "eslint": "^6.1.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-eslint-comments": "^3.1.1",
-    "eslint-plugin-flowtype": "^4.7.0",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-hooks": "^2.5.0",
     "eslint-plugin-react-native": "^3.7.0",
     "expo-cli": "^3.17.24",
-    "flow-bin": "^0.122.0",
-    "flow-typed": "^3.1.0",
     "husky": "^4.2.3",
+    "jest": "~25.2.6",
     "jest-expo": "^37.0.0",
     "lint-staged": "^10.0.10",
     "prettier": "^2.0.2",
     "react-devtools": "^4.6.0",
     "react-native-storybook-loader": "^1.8.1",
-    "react-native-testing-library": "^1.13.0"
+    "react-native-testing-library": "^1.13.0",
+    "react-test-renderer": "^16.12.0"
   },
   "private": true,
   "husky": {
@@ -98,7 +92,6 @@
   "lint-staged": {
     "*.{js,json,css}": [
       "prettier --write",
-      "flow focus-check",
       "eslint",
       "git add"
     ]

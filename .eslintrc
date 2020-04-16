@@ -1,9 +1,5 @@
 {
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:flowtype/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -12,19 +8,13 @@
       "jsx": true
     }
   },
-  "plugins": ["react", "react-hooks", "react-native", "flowtype"],
+  "plugins": ["react", "react-hooks", "react-native"],
   "env": {
     "react-native/react-native": true,
     "jest": true
   },
-  "settings": {
-    "flowtype": {
-      "onlyFilesWithFlowAnnotation": true
-    }
-  },
+  "settings": {},
   "rules": {
-    "flowtype/space-after-type-colon": [0, { "allowLineBreak": true }],
-
     // Possible errors
     "no-await-in-loop": "error",
     "no-extra-parens": "off", // Has issues w/ prettier

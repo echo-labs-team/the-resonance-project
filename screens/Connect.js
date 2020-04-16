@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react';
 import {
   FlatList,
@@ -42,7 +40,7 @@ function openBrowser({ title, url }) {
   });
 }
 
-const ConnectScreen = ({ navigation }: { navigation: Object }) => {
+const ConnectScreen = ({ navigation }) => {
   useHandleTabChange('Connect');
   const insets = useSafeArea();
 

@@ -174,7 +174,6 @@ export default (props) => {
         </View>
       </View>
 
-      {/* $FlowFixMe */}
       <DropdownAlert
         ref={dropdownAlertRef}
         wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}

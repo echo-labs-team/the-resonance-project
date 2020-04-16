@@ -1,5 +1,3 @@
-// @flow
-
 import React, { useState, useEffect } from 'react';
 import {
   AsyncStorage,
@@ -63,7 +61,7 @@ function useDebounce(value, delay) {
 function useQuery(groups) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 500);
-  const queriedGroups = [...groups].filter(({ name = '' }: { name?: string }) =>
+  const queriedGroups = [...groups].filter(({ name = '' }) =>
     name?.toLowerCase().includes(debouncedQuery?.toLowerCase())
   );
 
@@ -161,11 +159,6 @@ const GroupsScreen = () => {
     campus = '',
     daysOfWeek = [],
     categories: groupCategories = [],
-  }: {
-    campus?: string,
-    daysOfWeek?: Array<string>,
-    dayOfMonth?: string,
-    categories?: Array<string>,
   } = {}) => {
     const {
       Campus: campusFilter = [],

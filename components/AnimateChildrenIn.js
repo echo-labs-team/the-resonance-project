@@ -1,4 +1,3 @@
-// @flow
 import React, { useState, useRef, useEffect } from 'react';
 import { View } from 'react-native';
 import { Transitioning, Transition } from 'react-native-reanimated';
@@ -9,14 +8,9 @@ export default ({
   durationMs = 500,
   delayMs = 0,
   ...otherProps
-}: {
-  children: Object,
-  type?: string,
-  durationMs?: number,
-  delayMs?: number,
 }) => {
   const [loaded, setLoaded] = useState(false);
-  const ref: { current: Object } = useRef();
+  const ref = useRef();
 
   useEffect(() => {
     ref.current.animateNextTransition();
@@ -38,7 +32,6 @@ export default ({
 
   return (
     <Transitioning.View ref={ref} transition={transition}>
-      {/* $FlowFixMe to ignore ...otherProps */}
       <View key={loaded} {...otherProps}>
         {children}
       </View>
