@@ -14,8 +14,8 @@
     "react-devtools": "react-devtools",
     "clear": ". scripts/clear.sh",
     "nuke": "rm -rf node_modules/ && rm -f package-lock.json && npm cache verify && npm install && expo r -c",
-    "storybook": "start-storybook -p 7007 & REACT_NATIVE_STORYBOOK=true npm run tunnel",
-    "prestorybook": "rnstl"
+    "prestorybook": "rnstl",
+    "storybook": "start-storybook -p 7007"
   },
   "jest": {
     "preset": "jest-expo"
