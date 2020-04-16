@@ -4,15 +4,18 @@ import {
   AsyncStorage,
   Platform,
   StatusBar,
+  TouchableHighlight,
   UIManager,
 } from 'react-native';
 import { Constants } from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Entypo } from '@expo/vector-icons';
 import resources from './resources';
 import keys from './constants/Keys';
 import AppNavigator from './navigation/AppNavigator';
+import Storybook from './storybook';
 
 Amplitude.initialize(keys.AMPLITUDE);
 
@@ -49,8 +52,9 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-function App(props) {
+function App() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
+  const [showStorybook, setShowStorybook] = useState(false);
 
   /**
    * Log when our app
@@ -90,6 +94,10 @@ function App(props) {
     return null;
   }
 
+  if (__DEV__ && showStorybook) {
+    return <Storybook />;
+  }
+
   return (
     <SafeAreaProvider>
       <StatusBar
@@ -101,10 +109,36 @@ function App(props) {
         translucent
       />
       <AppNavigator />
+
+      {/* Button to show the Storybook 📖 */}
+      {__DEV__ && (
+        <TouchableHighlight
+          underlayColor="#ce2f1c"
+          onPress={() => setShowStorybook(true)}
+          // eslint-disable-next-line
+          style={{
+            width: 50,
+            height: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'absolute',
+            bottom: 100,
+            right: 20,
+            borderRadius: 25,
+            backgroundColor: '#1f6276',
+          }}
+        >
+          <Entypo
+            name={'book'}
+            size={30}
+            color="#fff"
+            // eslint-disable-next-line
+            style={{ marginTop: 4 }}
+          />
+        </TouchableHighlight>
+      )}
     </SafeAreaProvider>
   );
 }
 
-export default __DEV__ && process.env.REACT_NATIVE_STORYBOOK
-  ? require('./storybook').default
-  : App;
+export default App;
