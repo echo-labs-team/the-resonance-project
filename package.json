@@ -27,7 +27,7 @@
     "@react-native-community/masked-view": "0.1.6",
     "@react-navigation/bottom-tabs": "^5.2.6",
     "@react-navigation/native": "^5.1.4",
-    "@react-navigation/stack": "^5.2.10",
+    "@react-navigation/stack": "^5.2.11",
     "axios": "^0.19.0",
     "expo": "^37.0.0",
     "expo-analytics-amplitude": "~8.1.0",
