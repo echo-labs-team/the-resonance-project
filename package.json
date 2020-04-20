@@ -51,7 +51,7 @@
     "react-native-svg": "11.0.1",
     "react-native-unimodules": "~0.8.1",
     "react-native-webview": "8.1.1",
-    "react-native-youtube": "^2.0.0",
+    "react-native-youtube": "^2.0.1",
     "rn-placeholder": "^3.0.0"
   },
   "devDependencies": {
