@@ -49,7 +49,7 @@
     "react-native-safe-area-view": "^1.0.0",
     "react-native-screens": "~2.2.0",
     "react-native-svg": "11.0.1",
-    "react-native-unimodules": "~0.8.1",
+    "react-native-unimodules": "~0.9.0",
     "react-native-webview": "8.1.1",
     "react-native-youtube": "^2.0.0",
     "rn-placeholder": "^3.0.0"
