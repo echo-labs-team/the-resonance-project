@@ -1,5 +1,7 @@
 package com.echo.church.app;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.ReactRootView;
