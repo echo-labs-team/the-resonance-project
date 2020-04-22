@@ -3,6 +3,7 @@
   <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:textColor">#000000</item>
     <item name="android:windowTranslucentStatus">true</item>
+    <item name="android:windowBackground">@drawable/splashscreen</item> <!-- this line instructs the system to use 'splashscreen.xml' as a background of the whole application -->
     <item name="colorPrimary">@color/colorPrimary</item>
   </style>
 </resources>
