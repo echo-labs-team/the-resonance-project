@@ -364,7 +364,7 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
-  trunk:
+  https://github.com/cocoapods/specs.git:
     - Amplitude-iOS
     - boost-for-react-native
     - YoutubePlayer-in-WKWebView
@@ -561,4 +561,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7f4c21e9567b9edf7b64e41ed7613898a792497c
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.7.5
