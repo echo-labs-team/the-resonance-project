@@ -36,7 +36,7 @@
     "fast-html-parser": "^1.0.1",
     "html-entities": "^1.2.1",
     "react": "~16.9.0",
-    "react-dom": "~16.9.0",
+    "react-dom": "~16.13.0",
     "react-native": "~0.61.5",
     "react-native-dropdownalert": "^4.1.0",
     "react-native-gesture-handler": "~1.6.0",
