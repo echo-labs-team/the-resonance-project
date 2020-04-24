@@ -1,4 +1,4 @@
-import { get } from 'axios';
+import axios from 'axios';
 import Keys from '../constants/Keys';
 
 const PLAYLIST_NAME_AVOID_LIST = [
@@ -10,6 +10,9 @@ const PLAYLIST_NAME_AVOID_LIST = [
   'Family Ministry',
   'Latest for Echo.Church',
 ];
+
+const PLAYLIST_PARTS = ['id', 'contentDetails', 'snippet'];
+
 const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw'; // This is Echo.Church's channel ID
 const API_KEY = Keys.YOUTUBE_DEV_API_KEY;
 const url = 'https://www.googleapis.com/youtube/v3';
@@ -27,39 +30,79 @@ axios.interceptors.response.use(response => {
 })
 */
 
-const fetchVideos = async (nextPage, videos = []) => {
+const fetchPlaylists = async (nextPage, playlists = []) => {
   const { data = {} } =
-    (await get(url, {
+    (await axios.get(`${url}/playlists`, {
       params: {
+        part: PLAYLIST_PARTS.join(),
         channelId: CHANNEL_ID,
         key: API_KEY,
         pageToken: nextPage,
+        maxResults: 10,
       },
     })) || {};
+
   const { items = [], nextPageToken } = data;
 
-  const moreVideos = items
+  const morePlaylists = items
     .map((item = {}) => {
       const {
         id,
-        snippet: { publishedAt, localized = {}, thumbnails } = {},
+        snippet: { publishedAt, title, description, thumbnails } = {},
       } = item;
 
-      if (PLAYLIST_NAME_AVOID_LIST.includes(localized.title)) {
+      if (PLAYLIST_NAME_AVOID_LIST.includes(title)) {
         return false;
       }
 
       return {
         id,
         publishDate: publishedAt,
-        title: localized.title,
+        title,
+        description,
         thumbnails,
       };
     })
     .filter(Boolean);
 
   if (nextPageToken) {
-    return fetchVideos(nextPageToken, [...videos, ...moreVideos]);
+    return fetchPlaylists(nextPageToken, [...playlists, ...morePlaylists]);
+  }
+
+  return [...playlists, ...morePlaylists];
+};
+
+const fetchPlaylistItems = async (playlistId, nextPage, videos = []) => {
+  const { data = {} } =
+    (await axios.get(`${url}/playlistItems`, {
+      params: {
+        part: PLAYLIST_PARTS.join(),
+        playlistId,
+        key: API_KEY,
+        pageToken: nextPage,
+      },
+    })) || {};
+
+  const { items = [], nextPageToken } = data;
+
+  const moreVideos = items.map((item = {}) => {
+    const {
+      id,
+      snippet: { publishedAt, title, description, thumbnails } = {},
+      contentDetails: { videoId },
+    } = item;
+
+    return {
+      id: videoId,
+      publishDate: publishedAt,
+      title,
+      description,
+      thumbnails,
+    };
+  });
+
+  if (nextPageToken) {
+    return fetchPlaylistItems(nextPageToken, [...videos, ...moreVideos]);
   }
 
   return [...videos, ...moreVideos];

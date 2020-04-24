@@ -71,11 +71,20 @@ const MediaScreen = () => {
     }
   }
 
-  const takeToItem = ({ id, title } = {}) => {
+  const takeToItem = (item) => {
+    const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
+    console.log('about to take to Item');
+    console.log(item);
     Amplitude.logEventWithProperties('TAP Past Series', {
       series_name: title,
     });
-    navigation.navigate('Playlist', { playlistId: id, playlistTitle: title });
+
+    navigation.navigate('Playlist', {
+      playlistID: id,
+      playlistTitle: title,
+      playlistDescription: description,
+      playlistURI: maxres.url,
+    });
   };
 
   const PastSeriesSection = ({ sectionData = [] }) => {
@@ -103,7 +112,7 @@ const MediaScreen = () => {
   };
 
   const YouTubeDataView = ({ item = {}, style, thumbnailStyle } = {}) => {
-    const { id, title, thumbnails: { maxres = {} } = {} } = item;
+    const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
 
     return (
       <TouchableOpacity

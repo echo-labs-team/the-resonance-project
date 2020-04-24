@@ -14,28 +14,39 @@ import { HeaderHeightContext } from '@react-navigation/stack';
 import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
-import Text from '../components/shared/Text';
+import {
+  Text,
+  Title,
+  Heading,
+  Subtitle,
+} from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import Spinner from '../components/shared/Spinner';
-import TextStyles from '../constants/TextStyles';
 import collectData from '../data/youtube';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('window').width;
-const storePlaylistData = async (playlistId, data) => {
+const storePlaylistData = async (playlistID, data) => {
   await AsyncStorage.setItem(
-    `@${playlistId}`,
+    `@${playlistID}`,
     JSON.stringify(data)
   ).catch((err) => console.error(err));
 };
 
-const getStoredPlaylist = (playlistId) => {
-  return AsyncStorage.getItem(`@${playlistId}`).catch((err) =>
+const getStoredPlaylist = (playlistID) => {
+  return AsyncStorage.getItem(`@${playlistID}`).catch((err) =>
     console.error(err)
   );
 };
 
 const PlaylistScreen = ({ navigation, route }) => {
-  const { playlistId, playlistTitle } = route.params;
+  const {
+    playlistID,
+    playlistTitle,
+    playlistDescription,
+    playlistURI,
+  } = route.params;
+  console.log(route.params);
   navigation.setOptions({ title: playlistTitle });
   const insets = useSafeArea();
   const ref = React.useRef(null);
@@ -52,18 +63,18 @@ const PlaylistScreen = ({ navigation, route }) => {
   }, []);
   async function getVideos() {
     try {
-      const storedMedia = await getStoredPlaylist(playlistId);
+      const storedMedia = await getStoredPlaylist(playlistID);
 
       if (storedMedia) {
         setData(JSON.parse(storedMedia));
         setLoading(false);
       }
 
-      const fetchedVideos = (await collectData(playlistId)) || [];
+      const fetchedVideos = (await collectData(playlistID)) || [];
 
       setData(fetchedVideos);
       setLoading(false);
-      storePlaylistData(playlistId, fetchedVideos);
+      storePlaylistData(playlistID, fetchedVideos);
     } catch (err) {
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");
@@ -96,16 +107,11 @@ const PlaylistScreen = ({ navigation, route }) => {
             { alignItems: 'center', justifyContent: 'center', padding: 16 },
           ]}
         >
-          <Text style={[TextStyles.title, { textAlign: 'center' }]}>
+          <Title style={[{ textAlign: 'center' }]}>
             {' '}
             Oh no! There was an error connecting to YouTube 😞
-          </Text>
-          <Text
-            style={[
-              TextStyles.body,
-              { textAlign: 'center', color: Colors.darkGray },
-            ]}
-          >
+          </Title>
+          <Text style={[{ textAlign: 'center', color: Colors.darkGray }]}>
             {errorMessage}
           </Text>
           <Button
@@ -126,10 +132,18 @@ const PlaylistScreen = ({ navigation, route }) => {
     <HeaderHeightContext.Consumer>
       {(headerHeight) => (
         <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
-          <FlatList
-            keyExtractor={({ id }) => id}
-            data={data}
-            renderItem={({
+          <ScrollView>
+            <Image
+              source={{ uri: playlistURI }}
+              style={styles.image}
+              resizeMode="cover"
+            />
+            <Text style={styles.description} numberOfLines={4}>
+              {data.length ? data[0].description : ''}
+            </Text>
+            <Subtitle style={styles.subtitle}>IN THIS SERIES</Subtitle>
+            {/* {
+            data.map(({
               item: {
                 id,
                 publishDate,
@@ -151,21 +165,57 @@ const PlaylistScreen = ({ navigation, route }) => {
                     style={styles.thumbnailStyle}
                     resizeMode="cover"
                   />
-                  <Text bold style={styles.title}>
-                    {title}
-                  </Text>
-                  <Text
-                    numberOfLines={3}
-                    style={styles.description}
-                  >{`${description}...`}</Text>
+                  <View style={{flex:1, flexDirection: "column"}}>
+                    <Heading style={styles.title}>
+                      {title}
+                    </Heading>
+                    <Text style={[styles.description, {paddingTop: 8}]}>
+                    {new Date(publishDate).toLocaleDateString()}
+                    </Text>
+                    <View style={{flex:1}}/>
+                  </View>
                 </View>
               </TouchableHighlight>
-            )}
-            style={styles.list}
-            ItemSeparatorComponent={() => {
-              return <View style={styles.hairline} />;
-            }}
-          />
+            ))
+          } */}
+            <FlatList
+              keyExtractor={({ id }) => id}
+              data={data}
+              renderItem={({
+                item: {
+                  id,
+                  publishDate,
+                  title,
+                  description,
+                  thumbnails: { maxres = {} } = {},
+                } = {},
+              }) => (
+                <TouchableHighlight
+                  underlayColor="transparent"
+                  onPress={() => {
+                    Amplitude.logEvent(`OPEN ${title}`);
+                    Linking.openURL(`https://www.youtube.com/watch?v=${id}`);
+                  }}
+                >
+                  <View style={styles.item}>
+                    <Image
+                      source={{ uri: maxres.url }}
+                      style={styles.thumbnailStyle}
+                      resizeMode="cover"
+                    />
+                    <View style={{ flex: 1, flexDirection: 'column' }}>
+                      <Heading style={styles.title}>{title}</Heading>
+                      <Text style={[styles.description, { paddingTop: 8 }]}>
+                        {new Date(publishDate).toLocaleDateString()}
+                      </Text>
+                      <View style={{ flex: 1 }} />
+                    </View>
+                  </View>
+                </TouchableHighlight>
+              )}
+              style={styles.list}
+            />
+          </ScrollView>
         </View>
       )}
     </HeaderHeightContext.Consumer>
@@ -178,10 +228,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.black,
   },
   image: {
-    width: '100%',
-    height: 200,
-    resizeMode: 'cover',
-    backgroundColor: Colors.white,
+    marginTop: 16,
+    marginBottom: 8,
+    marginLeft: 16,
+    width: screenWidth - 32,
+    height: (screenWidth - 32) / 2,
+    borderRadius: 8,
   },
   container: {
     paddingVertical: 20,
@@ -195,37 +247,37 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   item: {
-    paddingLeft: 8,
-    paddingTop: 8,
+    width: screenWidth,
+    flexDirection: 'row',
   },
   title: {
-    paddingTop: 16,
-    fontSize: 16,
+    paddingTop: 0,
+    paddingLeft: 16,
+    paddingRight: 16,
+    // fontSize: 16,
+    flex: 1,
+    flexWrap: 'wrap',
     color: Colors.white,
-    textAlign: 'center',
+    textAlign: 'left',
   },
-  hairline: {
-    margin: 8,
-    backgroundColor: '#A2A2A2',
-    height: 1,
-    width: screenWidth - 16,
+  subtitle: {
+    color: Colors.white,
+    paddingLeft: 16,
+    paddingBottom: 0,
   },
   description: {
-    paddingVertical: 8,
-    paddingLeft: 8,
-    paddingRight: 8,
-    fontSize: 13,
+    marginBottom: 16,
+    paddingLeft: 16,
+    paddingRight: 16,
+    fontSize: 14,
     textAlign: 'left',
-    color: Colors.white,
+    color: Colors.lightGray,
   },
   thumbnailStyle: {
-    paddingLeft: 8,
-    paddingTop: 8,
-    flex: 1,
-    borderRadius: 8,
-    height: (4 * (screenWidth - 16)) / 7,
-    width: screenWidth - 16,
-    overflow: 'hidden',
+    width: (screenWidth - 48) / 2,
+    height: (2 * (screenWidth - 48)) / 7,
+    marginBottom: 16,
+    marginLeft: 16,
   },
 });
 
