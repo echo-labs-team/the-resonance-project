@@ -37,7 +37,7 @@ jobs:
         expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
     - run: npm install
     - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}'}" > constants/Keys.js
-    - run: npx expo-optimize . && expo publish --release-channel=release
+    - run: npm run publish
     - name: Slack notification
       env:
         SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
