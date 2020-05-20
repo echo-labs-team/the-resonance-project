@@ -49,7 +49,7 @@
     "react-native-screens": "~2.7.0",
     "react-native-svg": "11.0.1",
     "react-native-unimodules": "~0.9.1",
-    "react-native-web": "~0.11.7",
+    "react-native-web": "~0.12.2",
     "react-native-webview": "8.1.2",
     "rn-placeholder": "^3.0.0"
   },
