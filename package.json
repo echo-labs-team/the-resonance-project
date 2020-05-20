@@ -4,7 +4,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "tunnel": "expo start --tunnel",
-    "publish": "npx expo-optimize . && expo publish --release-channel=develop_1_0_2",
+    "publish": "npx expo-optimize . && expo publish --release-channel=develop_1_0_3",
     "test": "node ./node_modules/jest-expo/bin/jest.js --watchAll=false",
     "test:watch": "node ./node_modules/jest-expo/bin/jest.js --watchAll",
     "lint": "eslint .",
