@@ -27,7 +27,7 @@
       android:theme="@style/AppTheme">
     <meta-data android:name="expo.modules.updates.EXPO_UPDATE_URL" android:value="https://exp.host/@echo.church/echo" />
     <meta-data android:name="expo.modules.updates.EXPO_SDK_VERSION" android:value="37.0.0" />
-    <meta-data android:name="expo.modules.updates.EXPO_RELEASE_CHANNEL" android:value="develop_1_0_2" />
+    <meta-data android:name="expo.modules.updates.EXPO_RELEASE_CHANNEL" android:value="develop_1_0_3" />
 
   <activity
     android:name=".MainActivity"

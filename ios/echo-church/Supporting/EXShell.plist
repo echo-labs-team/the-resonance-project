@@ -7,6 +7,6 @@
 	<key>EXUpdatesURL</key>
 	<string>https://exp.host/@echo.church/echo</string>
 	<key>releaseChannel</key>
-	<string>develop_1_0_2</string>
+	<string>develop_1_0_3</string>
 </dict>
 </plist>
