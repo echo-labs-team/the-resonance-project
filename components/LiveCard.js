@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 import Animated, { Easing } from 'react-native-reanimated';
-import { loop, bInterpolate } from 'react-native-redash';
+import { loop, mix } from 'react-native-redash';
 import Colors from '../constants/Colors';
 import { Subtitle } from './shared/Typography';
 
@@ -27,7 +27,7 @@ function AnimatedCircle() {
     [animation]
   );
 
-  const opacity = bInterpolate(animation, 0.1, 1);
+  const opacity = mix(animation, 0.1, 1);
 
   return (
     <Animated.View style={{ opacity }}>
