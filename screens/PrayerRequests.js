@@ -31,7 +31,7 @@ const PrayerRequestsScreen = () => {
               onPress={() => {
                 Amplitude.logEvent('TAP Prayer Request Submit');
                 WebBrowser.openBrowserAsync(
-                  'https://docs.google.com/forms/d/e/1FAIpQLScXKoHyYZnqe7HgI0W9ZYYZllrXkDLXQv8pJKmH15oOyRrG0Q/viewform',
+                  'https://echo.church/prayerrequest',
                   { toolbarColor: Colors.darkestGray }
                 ).catch((err) => {
                   Amplitude.logEventWithProperties('ERROR with WebBrowser', {
