@@ -108,7 +108,6 @@ const PlaylistScreen = ({ navigation, route }) => {
           ]}
         >
           <Title style={[{ textAlign: 'center' }]}>
-            {' '}
             Oh no! There was an error connecting to YouTube 😞
           </Title>
           <Text style={[{ textAlign: 'center', color: Colors.darkGray }]}>
@@ -254,7 +253,6 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     paddingLeft: 16,
     paddingRight: 16,
-    // fontSize: 16,
     flex: 1,
     flexWrap: 'wrap',
     color: Colors.white,

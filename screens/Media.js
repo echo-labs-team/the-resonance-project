@@ -73,8 +73,6 @@ const MediaScreen = () => {
 
   const takeToItem = (item) => {
     const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
-    console.log('about to take to Item');
-    console.log(item);
     Amplitude.logEventWithProperties('TAP Past Series', {
       series_name: title,
     });
@@ -88,7 +86,7 @@ const MediaScreen = () => {
   };
 
   const PastSeriesSection = ({ sectionData = [] }) => {
-    if (sectionData === null || sectionData.length === 0) {
+    if (!sectionData || !sectionData.length) {
       return null;
     }
 
