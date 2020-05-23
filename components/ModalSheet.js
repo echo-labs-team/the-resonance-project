@@ -7,7 +7,13 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, ScrollView, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import Modal from 'react-native-modal';
 import Button from './shared/Button';
 import Colors from '../constants/Colors';
@@ -48,12 +54,15 @@ export default ({
         swipeDirection="down"
         style={styles.modal}
       >
-        <View style={styles.container}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
+          style={styles.container}
+        >
           <View style={styles.dragBar} />
           <ScrollView contentContainerStyle={styles.contentContainer}>
             {children}
           </ScrollView>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );
@@ -72,7 +81,6 @@ const styles = StyleSheet.create({
     height: '85%',
     paddingTop: 10,
     paddingBottom: 20,
-    paddingHorizontal: 16,
     position: 'relative',
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,

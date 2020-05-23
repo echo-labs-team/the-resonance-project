@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 
 const styles = StyleSheet.create({
   main: {
@@ -10,5 +10,9 @@ const styles = StyleSheet.create({
 });
 
 export default function CenterView({ children, style }) {
-  return <View style={[styles.main, style]}>{children}</View>;
+  return (
+    <ScrollView contentContainerStyle={[styles.main, style]}>
+      {children}
+    </ScrollView>
+  );
 }

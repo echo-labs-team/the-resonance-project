@@ -1,15 +1,14 @@
-import React, { useReducer, useRef } from 'react';
-import { StyleSheet, Platform, View, TextInput } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import DropdownAlert from 'react-native-dropdownalert';
+import React, { useReducer } from 'react';
+import { StyleSheet, View } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
+import { Formik } from 'formik';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
-import Colors from '../constants/Colors';
-import { isEmailValid } from '../utils/groups';
+import { validateAskQuestionForm } from '../utils/formValidation';
 import { askQuestion } from '../data/groups';
 import ModalSheet from './ModalSheet';
 import Spinner from './shared/Spinner';
+import Input from './shared/TextInput';
 
 const initialState = {
   loading: false,
@@ -32,66 +31,26 @@ function reducer(state, action) {
         ...state,
         success: action.value,
       };
-    case 'setFirstName':
-      return {
-        ...state,
-        firstName: action.value,
-      };
-    case 'setLastName':
-      return {
-        ...state,
-        lastName: action.value,
-      };
-    case 'setEmail':
-      return {
-        ...state,
-        email: action.value,
-      };
-    case 'setQuestion':
-      return {
-        ...state,
-        question: action.value,
-      };
     default:
       throw new Error();
   }
 }
 
-export default (props) => {
-  const [
-    { loading, success, firstName, lastName, email, question },
-    dispatch,
-  ] = useReducer(reducer, initialState);
-  const dropdownAlertRef = useRef(null);
+export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
+  const [{ loading, success }, dispatch] = useReducer(reducer, initialState);
 
   const handleOpenModal = () => {
     Amplitude.logEventWithProperties('OPEN Group Ask Question', {
-      group: props.title,
+      group: title,
     });
   };
 
-  const handleAsk = () => {
-    if (!firstName || !lastName || !email || !question) {
-      return dropdownAlertRef.current.alertWithType(
-        'warn',
-        '😮',
-        `Make sure you've filled out everything`
-      );
-    }
-
-    if (!isEmailValid(email)) {
-      return dropdownAlertRef.current.alertWithType(
-        'error',
-        '🤔',
-        'Make sure your email is correct'
-      );
-    }
-
+  const handleAsk = ({ firstName, lastName, email, question }) => {
     dispatch({ type: 'setLoading', value: true });
     Amplitude.logEventWithProperties('SUBMIT Group Ask Question', {
-      group: props.title,
+      group: title,
     });
-    askQuestion(props.groupID, firstName, lastName, email, question)
+    askQuestion(groupID, firstName, lastName, email, question)
       .then((askSuccess) => {
         if (askSuccess) {
           // close this modal
@@ -99,13 +58,13 @@ export default (props) => {
           dispatch({ type: 'setSuccess', value: true });
           setTimeout(() => dispatch({ type: 'setSuccess', value: false }), 0);
 
-          props.showSuccess('Thanks for asking ☺️');
+          showSuccess('Thanks for asking ☺️');
         }
       })
       .catch((err) => {
         dispatch({ type: 'setLoading', value: false });
         Amplitude.logEventWithProperties('ERROR Group Ask Question', {
-          group: props.title,
+          group: title,
           error: err,
         });
       });
@@ -125,82 +84,88 @@ export default (props) => {
         <Subtitle>
           {`The group leaders will reach out to you with more info about this group`}
         </Subtitle>
-        <TextInput
-          autoCompleteType="name"
-          autoCorrect={false}
-          keyboardAppearance="dark"
-          returnKeyType="done"
-          placeholder="First name"
-          placeholderTextColor={Colors.gray}
-          value={firstName}
-          onChangeText={(value) => dispatch({ type: 'setFirstName', value })}
-          style={styles.input}
-        />
-        <TextInput
-          autoCompleteType="name"
-          autoCorrect={false}
-          keyboardAppearance="dark"
-          returnKeyType="done"
-          placeholder="Last name"
-          placeholderTextColor={Colors.gray}
-          value={lastName}
-          onChangeText={(value) => dispatch({ type: 'setLastName', value })}
-          style={styles.input}
-        />
-        <TextInput
-          autoCapitalize="none"
-          autoCompleteType="email"
-          keyboardAppearance="dark"
-          returnKeyType="done"
-          autoCorrect={false}
-          keyboardType="email-address"
-          placeholder="Email"
-          placeholderTextColor={Colors.gray}
-          value={email}
-          onChangeText={(value) => dispatch({ type: 'setEmail', value })}
-          style={styles.input}
-        />
-        <TextInput
-          keyboardAppearance="dark"
-          placeholder="Ask a question..."
-          placeholderTextColor={Colors.gray}
-          multiline={true}
-          value={question}
-          onChangeText={(value) => dispatch({ type: 'setQuestion', value })}
-          style={styles.input}
-        />
-        <View style={styles.submitButton}>
-          <Button title="Ask" onPress={handleAsk} />
-        </View>
-      </View>
 
-      <DropdownAlert
-        ref={dropdownAlertRef}
-        wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
-        renderImage={() => (
-          <AntDesign
-            name={'warning'}
-            size={30}
-            color={Colors.white}
-            style={{ padding: 8, alignSelf: 'center' }}
-          />
-        )}
-        zIndex={1}
-      />
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+            question: '',
+          }}
+          validate={validateAskQuestionForm}
+          onSubmit={handleAsk}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            touched,
+            values,
+            errors,
+          }) => (
+            <View>
+              <Input
+                autoCompleteType="name"
+                label="First Name"
+                placeholder="Andy"
+                textContentType="givenName"
+                touched={touched.firstName}
+                value={values.firstName}
+                errors={errors.firstName}
+                onChangeText={handleChange('firstName')}
+                onBlur={handleBlur('firstName')}
+              />
+              <Input
+                autoCompleteType="name"
+                label="Last Name"
+                placeholder="Wood"
+                textContentType="familyName"
+                touched={touched.lastName}
+                value={values.lastName}
+                errors={errors.lastName}
+                onChangeText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
+              />
+              <Input
+                autoCapitalize="none"
+                autoCompleteType="email"
+                autoCorrect={false}
+                clearButtonMode="while-editing"
+                keyboardType="email-address"
+                label="Email"
+                placeholder="andy@echo.church"
+                textContentType="emailAddress"
+                touched={touched.email}
+                value={values.email}
+                errors={errors.email}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+              />
+              <Input
+                label="Question"
+                placeholder="Ask a question..."
+                touched={touched.question}
+                value={values.question}
+                errors={errors.question}
+                onChangeText={handleChange('question')}
+                onBlur={handleBlur('question')}
+              />
+
+              <View style={styles.submitButton}>
+                <Button title="Ask" onPress={handleSubmit} />
+              </View>
+            </View>
+          )}
+        </Formik>
+      </View>
     </ModalSheet>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  input: {
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    marginBottom: 10,
-    fontSize: 18,
-    color: Colors.white,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.gray,
+  container: {
+    paddingHorizontal: 16,
+    flex: 1,
   },
   submitButton: {
     flex: 1,

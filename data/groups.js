@@ -73,24 +73,32 @@ export async function getCategories() {
 }
 
 export function askQuestion(groupId, firstName, lastName, email, question) {
-  return axios.get(`${baseURL}/groups/ask`, {
-    params: {
-      GroupID: groupId,
-      FirstName: firstName,
-      LastName: lastName,
-      Email: email,
-      Question: question,
-    },
-  });
+  const params = {
+    GroupID: groupId,
+    FirstName: firstName,
+    LastName: lastName,
+    Email: email,
+    Question: question,
+  };
+
+  if (__DEV__) {
+    console.log({ params });
+    return Promise.resolve(true);
+  }
+  return axios.get(`${baseURL}/groups/ask`, { params });
 }
 
 export function joinGroup(groupId, firstName, lastName, email) {
-  return axios.get(`${baseURL}/groups/join`, {
-    params: {
-      GroupID: groupId,
-      FirstName: firstName,
-      LastName: lastName,
-      Email: email,
-    },
-  });
+  const params = {
+    GroupID: groupId,
+    FirstName: firstName,
+    LastName: lastName,
+    Email: email,
+  };
+
+  if (__DEV__) {
+    console.log({ params });
+    return Promise.resolve(true);
+  }
+  return axios.get(`${baseURL}/groups/join`, { params });
 }
