@@ -60,7 +60,7 @@ const MediaScreen = () => {
       }
 
       const fetchedPlaylists = (await collectData()) || [];
-
+      console.log("fetched data length = " + fetchedPlaylists.length)
       setData(fetchedPlaylists);
       setLoading(false);
       storeMediaData(fetchedPlaylists);
@@ -94,6 +94,7 @@ const MediaScreen = () => {
       <View style={styles.list}>
         {sectionData.map((item) => {
           if (item) {
+            console.log("title = " + item.title)
             return (
               <YouTubeDataView
                 key={item.title}
@@ -111,7 +112,7 @@ const MediaScreen = () => {
 
   const YouTubeDataView = ({ item = {}, style, thumbnailStyle } = {}) => {
     const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
-
+    console.log("youtube data view for " + title)
     return (
       <TouchableOpacity
         onPress={() => {

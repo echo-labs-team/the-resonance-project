@@ -1,15 +1,7 @@
 import axios from 'axios';
 import Keys from '../constants/Keys';
 
-const PLAYLIST_NAME_AVOID_LIST = [
-  'Watch Later',
-  'Weekly Highlights',
-  'Echo Music',
-  'Messages',
-  'Testimonies',
-  'Family Ministry',
-  'Latest for Echo.Church',
-];
+const TARGET_SECTION_TITLE = "Popular Series"
 
 const PLAYLIST_PARTS = ['id', 'contentDetails', 'snippet'];
 
@@ -30,49 +22,81 @@ axios.interceptors.response.use(response => {
 })
 */
 
-const fetchPlaylists = async (nextPage, playlists = []) => {
+const fetchChannelSection = async () => {
+  console.log("fetching channel section")
   const { data = {} } =
-    (await axios.get(`${url}/playlists`, {
-      params: {
-        part: PLAYLIST_PARTS.join(),
-        channelId: CHANNEL_ID,
-        key: API_KEY,
-        pageToken: nextPage,
-        maxResults: 10,
-      },
-    })) || {};
+  (await axios.get(`${url}/channelSections`, {
+    params: {
+      part: PLAYLIST_PARTS.join(),
+      channelId: CHANNEL_ID,
+      key: API_KEY,
+    },
+  })) || {};
 
-  const { items = [], nextPageToken } = data;
+  const { items = [] } = data;
+  const playlistIDs = items
+  .map((item = {}) => {
+    const {
+      snippet: { title } = {},
+      contentDetails: { playlists = [] } = {}
+    } = item;
+    console.log("title = " + title)
+    if (title != TARGET_SECTION_TITLE) {
+      return false;
+    }
 
-  const morePlaylists = items
-    .map((item = {}) => {
-      const {
-        id,
-        snippet: { publishedAt, title, description, thumbnails } = {},
-      } = item;
+    return playlists;
+  })
+  .filter(Boolean)[0];
+  console.log("playlistIDs length = " + playlistIDs.length)
+  const playlists = playlistIDs
+  .map((id = "") => {
+    return fetchPlaylistItems(id)
+  })
+  const fullPlaylists = await Promise.all(playlists);
+  return fullPlaylists
+}
 
-      if (PLAYLIST_NAME_AVOID_LIST.includes(title)) {
-        return false;
-      }
+// const fetchPlaylists = async (nextPage, playlists = []) => {
+//   const { data = {} } =
+//     (await axios.get(`${url}/channelSections`, {
+//       params: {
+//         part: PLAYLIST_PARTS.join(),
+//         channelId: CHANNEL_ID,
+//         key: API_KEY,
+//         pageToken: nextPage,
+//         maxResults: 10,
+//       },
+//     })) || {};
 
-      return {
-        id,
-        publishDate: publishedAt,
-        title,
-        description,
-        thumbnails,
-      };
-    })
-    .filter(Boolean);
+//   const { items = [], nextPageToken } = data;
 
-  if (nextPageToken) {
-    return fetchPlaylists(nextPageToken, [...playlists, ...morePlaylists]);
-  }
+//   const morePlaylists = items
+//     .map((item = {}) => {
+//       const {
+//         snippet: { title } = {},
+//         contentDetails: { playlists }
+//       } = item;
+//       console.log("title = " + title)
+//       if (title != TARGET_SECTION_TITLE) {
+//         return false;
+//       }
 
-  return [...playlists, ...morePlaylists];
-};
+//       return {
+//         playlists
+//       };
+//     })
+//     .filter(Boolean);
+
+//   if (nextPageToken) {
+//     return fetchPlaylists(nextPageToken, [...playlists, ...morePlaylists]);
+//   }
+
+//   return [...playlists, ...morePlaylists];
+// };
 
 const fetchPlaylistItems = async (playlistId, nextPage, videos = []) => {
+  console.log("fetch id = " + playlistId)
   const { data = {} } =
     (await axios.get(`${url}/playlistItems`, {
       params: {
@@ -91,7 +115,7 @@ const fetchPlaylistItems = async (playlistId, nextPage, videos = []) => {
       snippet: { publishedAt, title, description, thumbnails } = {},
       contentDetails: { videoId },
     } = item;
-
+    console.log(`Ttile: ${title}, Description: ${description}, publishedAt: ${publishedAt}`)
     return {
       id: videoId,
       publishDate: publishedAt,
@@ -102,7 +126,7 @@ const fetchPlaylistItems = async (playlistId, nextPage, videos = []) => {
   });
 
   if (nextPageToken) {
-    return fetchPlaylistItems(nextPageToken, [...videos, ...moreVideos]);
+    return fetchPlaylistItems(playlistId, nextPageToken, [...videos, ...moreVideos]);
   }
 
   return [...videos, ...moreVideos];
@@ -113,7 +137,7 @@ const collectData = async (playlistId) => {
   if (playlistId) {
     returnList = await fetchPlaylistItems(playlistId);
   } else {
-    returnList = await fetchPlaylists();
+    returnList = await fetchChannelSection();
   }
 
   // test playlist (badish): PL8cDVrurCVqNXdr3pSHE79wHqNoBhJZuk

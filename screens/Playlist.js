@@ -141,42 +141,6 @@ const PlaylistScreen = ({ navigation, route }) => {
               {data.length ? data[0].description : ''}
             </Text>
             <Subtitle style={styles.subtitle}>IN THIS SERIES</Subtitle>
-            {/* {
-            data.map(({
-              item: {
-                id,
-                publishDate,
-                title,
-                description,
-                thumbnails: { maxres = {} } = {},
-              } = {},
-            }) => (
-              <TouchableHighlight
-                underlayColor="transparent"
-                onPress={() => {
-                  Amplitude.logEvent(`OPEN ${title}`);
-                  Linking.openURL(`https://www.youtube.com/watch?v=${id}`);
-                }}
-              >
-                <View style={styles.item}>
-                  <Image
-                    source={{ uri: maxres.url }}
-                    style={styles.thumbnailStyle}
-                    resizeMode="cover"
-                  />
-                  <View style={{flex:1, flexDirection: "column"}}>
-                    <Heading style={styles.title}>
-                      {title}
-                    </Heading>
-                    <Text style={[styles.description, {paddingTop: 8}]}>
-                    {new Date(publishDate).toLocaleDateString()}
-                    </Text>
-                    <View style={{flex:1}}/>
-                  </View>
-                </View>
-              </TouchableHighlight>
-            ))
-          } */}
             <FlatList
               keyExtractor={({ id }) => id}
               data={data}
