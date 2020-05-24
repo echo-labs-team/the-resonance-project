@@ -6,7 +6,9 @@ const TARGET_SECTION_TITLE = "Popular Series"
 const PLAYLIST_PARTS = ['id', 'contentDetails', 'snippet'];
 
 const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw'; // This is Echo.Church's channel ID
-const API_KEY = Keys.YOUTUBE_DEV_API_KEY;
+
+const API_KEY = __DEV__ ? Keys.YOUTUBE_DEV_API_KEY : Keys.YOUTUBE_RELEASE_API_KEY;
+
 const url = 'https://www.googleapis.com/youtube/v3';
 
 // this is good to keep around for logging axios req/resp
@@ -44,17 +46,34 @@ const fetchChannelSection = async () => {
     if (title != TARGET_SECTION_TITLE) {
       return false;
     }
-
     return playlists;
   })
   .filter(Boolean)[0];
-  console.log("playlistIDs length = " + playlistIDs.length)
+  console.log(`playlistIDs length = ${playlistIDs.length}`)
   const playlists = playlistIDs
   .map((id = "") => {
-    return fetchPlaylistItems(id)
+    return axios.get(`${url}/playlists`, {
+      params: {
+        id: id,
+        part: PLAYLIST_PARTS.join(),
+        key: API_KEY,
+      },
+    });
   })
-  const fullPlaylists = await Promise.all(playlists);
-  return fullPlaylists
+  return await Promise.all(playlists).then((values) => {
+    return values
+    .map((playlist = {}) => {
+      const { data: { items }} = playlist
+      const { snippet: { publishedAt, id, title, thumbnails }} = items[0]
+      console.log(`fetched: Title: ${title} publishedAt: ${publishedAt}`)
+      return {
+        publishDate: publishedAt,
+        id,
+        title,
+        thumbnails
+      }
+    })
+  })
 }
 
 // const fetchPlaylists = async (nextPage, playlists = []) => {
@@ -95,7 +114,7 @@ const fetchChannelSection = async () => {
 //   return [...playlists, ...morePlaylists];
 // };
 
-const fetchPlaylistItems = async (playlistId, nextPage, videos = []) => {
+const fetchPlaylistItems = async (playlistId, nextPage, videos = [], recurse = true) => {
   console.log("fetch id = " + playlistId)
   const { data = {} } =
     (await axios.get(`${url}/playlistItems`, {
@@ -115,7 +134,7 @@ const fetchPlaylistItems = async (playlistId, nextPage, videos = []) => {
       snippet: { publishedAt, title, description, thumbnails } = {},
       contentDetails: { videoId },
     } = item;
-    console.log(`Ttile: ${title}, Description: ${description}, publishedAt: ${publishedAt}`)
+    console.log(`fetched: Title: ${title} publishedAt: ${publishedAt}`)
     return {
       id: videoId,
       publishDate: publishedAt,
@@ -125,7 +144,7 @@ const fetchPlaylistItems = async (playlistId, nextPage, videos = []) => {
     };
   });
 
-  if (nextPageToken) {
+  if (nextPageToken && recurse) {
     return fetchPlaylistItems(playlistId, nextPageToken, [...videos, ...moreVideos]);
   }
 
