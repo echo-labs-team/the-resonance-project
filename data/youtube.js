@@ -1,14 +1,11 @@
 import axios from 'axios';
 import Keys from '../constants/Keys';
 
-const TARGET_SECTION_TITLE = "Popular Series"
-
-const PLAYLIST_PARTS = ['id', 'contentDetails', 'snippet'];
-
 const CHANNEL_ID = 'UCjycPAZuveusvPrk94-ClBw'; // This is Echo.Church's channel ID
-
-const API_KEY = __DEV__ ? Keys.YOUTUBE_DEV_API_KEY : Keys.YOUTUBE_RELEASE_API_KEY;
-
+const TARGET_SECTION_TITLE = 'Popular Series';
+const API_KEY = __DEV__
+  ? Keys.YOUTUBE_DEV_API_KEY
+  : Keys.YOUTUBE_RELEASE_API_KEY;
 const url = 'https://www.googleapis.com/youtube/v3';
 
 // this is good to keep around for logging axios req/resp
@@ -24,159 +21,119 @@ axios.interceptors.response.use(response => {
 })
 */
 
-const fetchChannelSection = async () => {
-  console.log("fetching channel section")
-  const { data = {} } =
-  (await axios.get(`${url}/channelSections`, {
-    params: {
-      part: PLAYLIST_PARTS.join(),
-      channelId: CHANNEL_ID,
-      key: API_KEY,
-    },
-  })) || {};
+/**
+ * Sorting function to sort playlists by publish date
+ * @param {Object} playlist channel section playlist
+ * @param {Object} playlist channel section playlist
+ */
+export function sortByDate(
+  { publishDate: firstPublishDate },
+  { publishDate: secondPublishDate }
+) {
+  return new Date(secondPublishDate) - new Date(firstPublishDate);
+}
 
-  const { items = [] } = data;
-  const playlistIDs = items
-  .map((item = {}) => {
-    const {
-      snippet: { title } = {},
-      contentDetails: { playlists = [] } = {}
-    } = item;
-    console.log("title = " + title)
-    if (title != TARGET_SECTION_TITLE) {
-      return false;
-    }
-    return playlists;
-  })
-  .filter(Boolean)[0];
-  console.log(`playlistIDs length = ${playlistIDs.length}`)
-  const playlists = playlistIDs
-  .map((id = "") => {
+/**
+ * Fetch channel sections
+ * https://developers.google.com/youtube/v3/docs/channelSections
+ */
+export async function fetchChannelSection() {
+  const { data = {} } =
+    (await axios.get(`${url}/channelSections`, {
+      params: {
+        channelId: CHANNEL_ID,
+        key: API_KEY,
+        part: 'id,snippet,contentDetails',
+      },
+    })) || {};
+
+  const [channelSection] = data.items.filter(
+    ({ snippet: { title } = {} } = {}) => title === TARGET_SECTION_TITLE
+  );
+
+  const channelSectionPlaylistIDs =
+    channelSection?.contentDetails?.playlists || [];
+
+  if (!channelSectionPlaylistIDs.length) {
+    throw new Error('No playlists for in channel section');
+  }
+
+  return channelSectionPlaylistIDs;
+}
+
+/**
+ * Fetch playlists
+ * https://developers.google.com/youtube/v3/docs/playlists/list
+ * @param {String} channelSectionPlaylistIDs a playlist ID
+ */
+export async function fetchPlaylists(channelSectionPlaylistIDs) {
+  const playlists = channelSectionPlaylistIDs.map((id = '') => {
     return axios.get(`${url}/playlists`, {
       params: {
-        id: id,
-        part: PLAYLIST_PARTS.join(),
+        id,
         key: API_KEY,
+        part: 'id,snippet',
       },
     });
-  })
-  return await Promise.all(playlists).then((values) => {
-    return values
-    .map((playlist = {}) => {
-      const { data: { items }} = playlist
-      const { snippet: { publishedAt, id, title, thumbnails }} = items[0]
-      console.log(`fetched: Title: ${title} publishedAt: ${publishedAt}`)
+  });
+
+  const result = await Promise.all(playlists);
+
+  if (!result.length) {
+    throw new Error('No playlist data');
+  }
+
+  return result
+    .map(({ data: { items } } = {}) => {
+      const {
+        id,
+        snippet: { publishedAt, title, thumbnails },
+      } = items[0];
+
       return {
         publishDate: publishedAt,
         id,
         title,
-        thumbnails
-      }
+        thumbnails,
+      };
     })
-  })
+    .sort(sortByDate);
 }
 
-// const fetchPlaylists = async (nextPage, playlists = []) => {
-//   const { data = {} } =
-//     (await axios.get(`${url}/channelSections`, {
-//       params: {
-//         part: PLAYLIST_PARTS.join(),
-//         channelId: CHANNEL_ID,
-//         key: API_KEY,
-//         pageToken: nextPage,
-//         maxResults: 10,
-//       },
-//     })) || {};
-
-//   const { items = [], nextPageToken } = data;
-
-//   const morePlaylists = items
-//     .map((item = {}) => {
-//       const {
-//         snippet: { title } = {},
-//         contentDetails: { playlists }
-//       } = item;
-//       console.log("title = " + title)
-//       if (title != TARGET_SECTION_TITLE) {
-//         return false;
-//       }
-
-//       return {
-//         playlists
-//       };
-//     })
-//     .filter(Boolean);
-
-//   if (nextPageToken) {
-//     return fetchPlaylists(nextPageToken, [...playlists, ...morePlaylists]);
-//   }
-
-//   return [...playlists, ...morePlaylists];
-// };
-
-const fetchPlaylistItems = async (playlistId, nextPage, videos = [], recurse = true) => {
-  console.log("fetch id = " + playlistId)
+/**
+ * Fetch playlist videos
+ * https://developers.google.com/youtube/v3/docs/playlistItems/list
+ * @param {String} playlistId the playlist ID to get videos
+ */
+export async function fetchPlaylistItems(playlistId) {
   const { data = {} } =
     (await axios.get(`${url}/playlistItems`, {
       params: {
-        part: PLAYLIST_PARTS.join(),
-        playlistId,
         key: API_KEY,
-        pageToken: nextPage,
+        maxResults: 30, // ? 🤔 not sure the max # of videos in series playlists
+        part: 'id,snippet',
+        playlistId,
       },
     })) || {};
 
-  const { items = [], nextPageToken } = data;
+  const { items = [] } = data;
 
-  const moreVideos = items.map((item = {}) => {
+  if (!items.length) {
+    throw new Error('No playlist items');
+  }
+
+  return items.map((item = {}) => {
     const {
       id,
       snippet: { publishedAt, title, description, thumbnails } = {},
-      contentDetails: { videoId },
     } = item;
-    console.log(`fetched: Title: ${title} publishedAt: ${publishedAt}`)
+
     return {
-      id: videoId,
+      id,
       publishDate: publishedAt,
       title,
       description,
       thumbnails,
     };
   });
-
-  if (nextPageToken && recurse) {
-    return fetchPlaylistItems(playlistId, nextPageToken, [...videos, ...moreVideos]);
-  }
-
-  return [...videos, ...moreVideos];
-};
-
-const collectData = async (playlistId) => {
-  let returnList = [];
-  if (playlistId) {
-    returnList = await fetchPlaylistItems(playlistId);
-  } else {
-    returnList = await fetchChannelSection();
-  }
-
-  // test playlist (badish): PL8cDVrurCVqNXdr3pSHE79wHqNoBhJZuk
-  // const items = await fetchPlaylistItems("PL8cDVrurCVqNXdr3pSHE79wHqNoBhJZuk");
-  // console.log(items);
-
-  return returnList.sort((a, b) => {
-    const a_date = new Date(a.publishDate);
-    const b_date = new Date(b.publishDate);
-
-    if (a_date > b_date) {
-      return -1;
-    }
-
-    if (a_date < b_date) {
-      return 1;
-    }
-
-    return 0;
-  });
-};
-
-export default collectData;
+}

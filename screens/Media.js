@@ -15,7 +15,7 @@ import { useScrollToTop, useNavigation } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import collectData from '../data/youtube';
+import { fetchChannelSection, fetchPlaylists } from '../data/youtube';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import isTheWeekend from '../utils/isTheWeekend';
@@ -46,10 +46,6 @@ const MediaScreen = () => {
   const [isError, setError] = useState(false);
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    getPlaylists();
-  }, []);
-
   async function getPlaylists() {
     try {
       const storedMedia = await getStoredMedia();
@@ -59,11 +55,12 @@ const MediaScreen = () => {
         setLoading(false);
       }
 
-      const fetchedPlaylists = (await collectData()) || [];
-      console.log("fetched data length = " + fetchedPlaylists.length)
-      setData(fetchedPlaylists);
+      const channelSection = await fetchChannelSection();
+      const playlists = await fetchPlaylists(channelSection);
+
+      setData(playlists);
       setLoading(false);
-      storeMediaData(fetchedPlaylists);
+      storeMediaData(playlists);
     } catch (err) {
       setError(true);
       setLoading(false);
@@ -71,8 +68,13 @@ const MediaScreen = () => {
     }
   }
 
+  useEffect(() => {
+    getPlaylists();
+  }, []);
+
   const takeToItem = (item) => {
     const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
+
     Amplitude.logEventWithProperties('TAP Past Series', {
       series_name: title,
     });
@@ -94,7 +96,6 @@ const MediaScreen = () => {
       <View style={styles.list}>
         {sectionData.map((item) => {
           if (item) {
-            console.log("title = " + item.title)
             return (
               <YouTubeDataView
                 key={item.title}
@@ -111,8 +112,8 @@ const MediaScreen = () => {
   };
 
   const YouTubeDataView = ({ item = {}, style, thumbnailStyle } = {}) => {
-    const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
-    console.log("youtube data view for " + title)
+    const { thumbnails: { maxres = {} } = {} } = item;
+
     return (
       <TouchableOpacity
         onPress={() => {

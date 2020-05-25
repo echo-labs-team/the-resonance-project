@@ -59,7 +59,14 @@ const defaultOptions = {
     />
   ),
   headerTitle: (props) => (
-    <Text {...props} L allowFontScaling={false}>
+    <Text
+      {...props}
+      L
+      adjustsFontSizeToFit
+      allowFontScaling={false}
+      numberOfLines={1}
+      style={{ paddingHorizontal: 16 }}
+    >
       {props.children}
     </Text>
   ),
