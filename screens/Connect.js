@@ -14,18 +14,10 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
-import callToActionButtons from '../config/connect';
+import { listItems, callToActionButtons } from '../config/connect';
 import { Text } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
-const items = [
-  { value: 'LOCATIONS', page: 'Locations' },
-  { value: 'ACTIVATE', page: 'Activate' },
-  { value: 'BAPTISM', page: 'Baptism' },
-  { value: 'VOLUNTEER', page: 'Volunteer' },
-  { value: 'PRAYER REQUESTS', page: 'Prayer Requests' },
-  { value: 'MISSIONS', page: 'Missions' },
-];
 const numberOfCTAs = callToActionButtons.length;
 
 function openBrowser({ title, url }) {
@@ -57,7 +49,7 @@ const ConnectScreen = ({ navigation }) => {
 
       <FlatList
         keyExtractor={({ value }) => value}
-        data={items}
+        data={listItems}
         renderItem={({ item: { value, page } = {} }) => (
           <TouchableHighlight
             underlayColor="transparent"
