@@ -21,6 +21,7 @@ import HomeScreen from '../screens/Home';
  * Media Tab
  */
 import MediaScreen from '../screens/Media';
+import PlaylistScreen from '../screens/Playlist';
 
 /**
  * Connect Tab
@@ -58,7 +59,14 @@ const defaultOptions = {
     />
   ),
   headerTitle: (props) => (
-    <Text {...props} L allowFontScaling={false}>
+    <Text
+      {...props}
+      L
+      adjustsFontSizeToFit
+      allowFontScaling={false}
+      numberOfLines={1}
+      style={{ paddingHorizontal: 16 }}
+    >
       {props.children}
     </Text>
   ),
@@ -71,6 +79,25 @@ const defaultOptions = {
     marginLeft: Platform.OS === 'ios' ? 16 : 0,
   },
 };
+
+const MediaStack = createStackNavigator();
+
+function MediaStackScreen() {
+  return (
+    <MediaStack.Navigator>
+      <MediaStack.Screen
+        name="Media"
+        component={MediaScreen}
+        options={{ headerShown: false }}
+      />
+      <ConnectStack.Screen
+        name="Playlist"
+        component={PlaylistScreen}
+        options={defaultOptions}
+      />
+    </MediaStack.Navigator>
+  );
+}
 
 const ConnectStack = createStackNavigator();
 
@@ -170,7 +197,7 @@ export default function App() {
         />
         <Tab.Screen
           name="Media"
-          component={MediaScreen}
+          component={MediaStackScreen}
           options={{
             tabBarLabel: 'MEDIA',
             tabBarIcon: ({ color, size }) => (
