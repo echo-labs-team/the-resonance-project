@@ -56,7 +56,3 @@ export const getMeetingTime = (meetingTime) => {
 
   return `${h}:${minutes}${hrs < 12 ? 'am' : 'pm'}`;
 };
-
-export const isEmailValid = (email) => {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-};
