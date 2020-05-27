@@ -1,5 +1,11 @@
 import { LayoutAnimation } from 'react-native';
 
+const animationConfig = {
+  create: { duration: 150, property: 'opacity', type: 'easeOut' },
+  delete: { duration: 150, property: 'opacity', type: 'easeOut' },
+  update: { duration: 300, springDamping: 0.7, type: 'spring' },
+};
+
 /**
  * Validate email
  */
@@ -17,7 +23,7 @@ function validateEmail(value) {
  */
 export function validateSignUpForm(values) {
   // 💫 animate the error in/out
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  LayoutAnimation.configureNext(animationConfig);
 
   const errors = {};
 
@@ -43,7 +49,7 @@ export function validateSignUpForm(values) {
  */
 export function validateAskQuestionForm(values) {
   // 💫 animate the error in/out
-  LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
+  LayoutAnimation.configureNext(animationConfig);
 
   const errors = {};
 

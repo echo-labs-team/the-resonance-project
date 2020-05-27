@@ -5,6 +5,7 @@ import { Text } from './Typography';
 
 export default function Input(props) {
   const { label, touched, errors, ...inputProps } = props;
+  const showError = errors && touched;
 
   return (
     <View style={styles.container}>
@@ -18,10 +19,13 @@ export default function Input(props) {
         keyboardAppearance="dark"
         returnKeyType="done"
         placeholderTextColor="rgba(255, 255, 255, 0.5)"
-        style={styles.input}
+        style={[
+          styles.input,
+          { borderColor: showError ? Colors.red : Colors.darkGray },
+        ]}
         {...inputProps}
       />
-      {errors && touched && (
+      {showError && (
         <View style={styles.error}>
           <Text S bold style={{ color: Colors.red }}>
             {errors}
@@ -48,25 +52,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: Colors.white,
     borderWidth: 1,
-    borderColor: Colors.darkGray,
     borderRadius: 4,
     backgroundColor: Colors.darkestGray,
   },
   error: {
     width: '100%',
     paddingVertical: 10,
-    paddingHorizontal: 8,
-    marginTop: -1,
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
-    backgroundColor: Colors.darkestGray,
-    shadowColor: Colors.black,
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
-    elevation: 12,
   },
 });
