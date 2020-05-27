@@ -3,7 +3,6 @@ import {
   AsyncStorage,
   Dimensions,
   Image,
-  FlatList,
   StyleSheet,
   Linking,
   TouchableHighlight,
@@ -11,7 +10,6 @@ import {
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { HeaderHeightContext } from '@react-navigation/stack';
-import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import Colors from '../constants/Colors';
 import {
@@ -22,7 +20,7 @@ import {
 } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import Spinner from '../components/shared/Spinner';
-import collectData from '../data/youtube';
+import { fetchPlaylistItems } from '../data/youtube';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('window').width;
@@ -32,7 +30,6 @@ const storePlaylistData = async (playlistID, data) => {
     JSON.stringify(data)
   ).catch((err) => console.error(err));
 };
-
 const getStoredPlaylist = (playlistID) => {
   return AsyncStorage.getItem(`@${playlistID}`).catch((err) =>
     console.error(err)
@@ -40,18 +37,10 @@ const getStoredPlaylist = (playlistID) => {
 };
 
 const PlaylistScreen = ({ navigation, route }) => {
-  const {
-    playlistID,
-    playlistTitle,
-    playlistDescription,
-    playlistURI,
-  } = route.params;
-  console.log(route.params);
-  navigation.setOptions({ title: playlistTitle });
   const insets = useSafeArea();
-  const ref = React.useRef(null);
+  const { playlistID, playlistTitle, playlistURI } = route.params;
 
-  useScrollToTop(ref);
+  navigation.setOptions({ title: playlistTitle });
 
   const [isLoading, setLoading] = useState(true);
   const [isError, setError] = useState(false);
@@ -70,7 +59,7 @@ const PlaylistScreen = ({ navigation, route }) => {
         setLoading(false);
       }
 
-      const fetchedVideos = (await collectData(playlistID)) || [];
+      const fetchedVideos = await fetchPlaylistItems(playlistID);
 
       setData(fetchedVideos);
       setLoading(false);
@@ -141,19 +130,10 @@ const PlaylistScreen = ({ navigation, route }) => {
               {data.length ? data[0].description : ''}
             </Text>
             <Subtitle style={styles.subtitle}>IN THIS SERIES</Subtitle>
-            <FlatList
-              keyExtractor={({ id }) => id}
-              data={data}
-              renderItem={({
-                item: {
-                  id,
-                  publishDate,
-                  title,
-                  description,
-                  thumbnails: { maxres = {} } = {},
-                } = {},
-              }) => (
+            <View style={styles.list}>
+              {data.map(({ id, title, thumbnails: { maxres = {} } = {} }) => (
                 <TouchableHighlight
+                  key={id}
                   underlayColor="transparent"
                   onPress={() => {
                     Amplitude.logEvent(`OPEN ${title}`);
@@ -166,18 +146,11 @@ const PlaylistScreen = ({ navigation, route }) => {
                       style={styles.thumbnailStyle}
                       resizeMode="cover"
                     />
-                    <View style={{ flex: 1, flexDirection: 'column' }}>
-                      <Heading style={styles.title}>{title}</Heading>
-                      <Text style={[styles.description, { paddingTop: 8 }]}>
-                        {new Date(publishDate).toLocaleDateString()}
-                      </Text>
-                      <View style={{ flex: 1 }} />
-                    </View>
+                    <Heading style={styles.title}>{title}</Heading>
                   </View>
                 </TouchableHighlight>
-              )}
-              style={styles.list}
-            />
+              ))}
+            </View>
           </ScrollView>
         </View>
       )}
@@ -201,13 +174,6 @@ const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
     paddingHorizontal: 16,
-  },
-  warning: {
-    marginVertical: 10,
-    fontSize: 28,
-    lineHeight: 32,
-    color: Colors.red,
-    textAlign: 'center',
   },
   item: {
     width: screenWidth,
