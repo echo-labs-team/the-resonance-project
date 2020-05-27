@@ -1,15 +1,14 @@
-import React, { useReducer, useRef } from 'react';
-import { StyleSheet, Platform, View, TextInput } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
-import DropdownAlert from 'react-native-dropdownalert';
+import React, { useReducer } from 'react';
+import { StyleSheet, View } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
+import { Formik } from 'formik';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
-import Colors from '../constants/Colors';
-import { isEmailValid } from '../utils/groups';
+import { validateSignUpForm } from '../utils/formValidation';
 import { joinGroup } from '../data/groups';
 import ModalSheet from './ModalSheet';
 import Spinner from './shared/Spinner';
+import Input from './shared/TextInput';
 
 const initialState = {
   loading: false,
@@ -31,61 +30,26 @@ function reducer(state, action) {
         ...state,
         success: action.value,
       };
-    case 'setFirstName':
-      return {
-        ...state,
-        firstName: action.value,
-      };
-    case 'setLastName':
-      return {
-        ...state,
-        lastName: action.value,
-      };
-    case 'setEmail':
-      return {
-        ...state,
-        email: action.value,
-      };
     default:
       throw new Error();
   }
 }
 
-export default (props) => {
-  const [
-    { loading, success, firstName, lastName, email },
-    dispatch,
-  ] = useReducer(reducer, initialState);
-  const dropdownAlertRef = useRef(null);
+export default function JoinGroupModal({ groupID, title, showSuccess }) {
+  const [{ loading, success }, dispatch] = useReducer(reducer, initialState);
 
   const handleOpenModal = () => {
     Amplitude.logEventWithProperties('OPEN Group Sign Up', {
-      group: props.title,
+      group: title,
     });
   };
 
-  const handleSignUp = () => {
-    if (!firstName || !lastName || !email) {
-      return dropdownAlertRef.current.alertWithType(
-        'warn',
-        '😮',
-        `Make sure you've filled out everything`
-      );
-    }
-
-    if (!isEmailValid(email)) {
-      return dropdownAlertRef.current.alertWithType(
-        'error',
-        '🤔',
-        'Make sure your email is correct'
-      );
-    }
-
+  const handleSignUp = ({ firstName, lastName, email }) => {
     dispatch({ type: 'setLoading', value: true });
     Amplitude.logEventWithProperties('SUBMIT Group Sign Up', {
-      group: props.title,
+      group: title,
     });
-    joinGroup(props.groupID, firstName, lastName, email)
+    joinGroup(groupID, firstName, lastName, email)
       .then((joinGroupSuccess) => {
         if (joinGroupSuccess) {
           // close this modal
@@ -93,13 +57,13 @@ export default (props) => {
           dispatch({ type: 'setSuccess', value: true });
           setTimeout(() => dispatch({ type: 'setSuccess', value: false }), 0);
 
-          props.showSuccess('Thanks for joining ☺️');
+          showSuccess('Thanks for joining ☺️');
         }
       })
       .catch((err) => {
         dispatch({ type: 'setLoading', value: false });
         Amplitude.logEventWithProperties('ERROR Group Sign Up', {
-          group: props.title,
+          group: title,
           error: err,
         });
       });
@@ -120,73 +84,77 @@ export default (props) => {
           {`The group leaders will reach out to you with more info once you've joined`}
         </Subtitle>
 
-        <TextInput
-          autoCompleteType="name"
-          autoCorrect={false}
-          keyboardAppearance="dark"
-          returnKeyType="done"
-          placeholder="First name"
-          placeholderTextColor={Colors.gray}
-          value={firstName}
-          onChangeText={(value) => dispatch({ type: 'setFirstName', value })}
-          style={styles.input}
-        />
-        <TextInput
-          autoCompleteType="name"
-          autoCorrect={false}
-          keyboardAppearance="dark"
-          returnKeyType="done"
-          placeholder="Last name"
-          placeholderTextColor={Colors.gray}
-          value={lastName}
-          onChangeText={(value) => dispatch({ type: 'setLastName', value })}
-          style={styles.input}
-        />
-        <TextInput
-          autoCapitalize="none"
-          autoCompleteType="email"
-          autoCorrect={false}
-          keyboardType="email-address"
-          keyboardAppearance="dark"
-          returnKeyType="done"
-          placeholder="Email"
-          placeholderTextColor={Colors.gray}
-          value={email}
-          onChangeText={(value) => dispatch({ type: 'setEmail', value })}
-          style={styles.input}
-        />
-        <View style={styles.submitButton}>
-          <Button title="Sign Up" onPress={handleSignUp} />
-        </View>
-      </View>
+        <Formik
+          initialValues={{
+            firstName: '',
+            lastName: '',
+            email: '',
+          }}
+          validate={validateSignUpForm}
+          onSubmit={handleSignUp}
+        >
+          {({
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            touched,
+            values,
+            errors,
+          }) => (
+            <View>
+              <Input
+                autoCompleteType="name"
+                label="First Name"
+                placeholder="Andy"
+                textContentType="givenName"
+                touched={touched.firstName}
+                value={values.firstName}
+                errors={errors.firstName}
+                onChangeText={handleChange('firstName')}
+                onBlur={handleBlur('firstName')}
+              />
+              <Input
+                autoCompleteType="name"
+                label="Last Name"
+                placeholder="Wood"
+                textContentType="familyName"
+                touched={touched.lastName}
+                value={values.lastName}
+                errors={errors.lastName}
+                onChangeText={handleChange('lastName')}
+                onBlur={handleBlur('lastName')}
+              />
+              <Input
+                autoCapitalize="none"
+                autoCompleteType="email"
+                autoCorrect={false}
+                clearButtonMode="while-editing"
+                keyboardType="email-address"
+                label="Email"
+                placeholder="andy@echo.church"
+                textContentType="emailAddress"
+                touched={touched.email}
+                value={values.email}
+                errors={errors.email}
+                onChangeText={handleChange('email')}
+                onBlur={handleBlur('email')}
+              />
 
-      <DropdownAlert
-        ref={dropdownAlertRef}
-        wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
-        renderImage={() => (
-          <AntDesign
-            name={'warning'}
-            size={30}
-            color={Colors.white}
-            style={{ padding: 8, alignSelf: 'center' }}
-          />
-        )}
-        zIndex={1}
-      />
+              <View style={styles.submitButton}>
+                <Button title="Sign Up" onPress={handleSubmit} />
+              </View>
+            </View>
+          )}
+        </Formik>
+      </View>
     </ModalSheet>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  input: {
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    marginBottom: 10,
-    fontSize: 20,
-    color: Colors.white,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.gray,
+  container: {
+    paddingHorizontal: 16,
+    flex: 1,
   },
   submitButton: {
     flex: 1,

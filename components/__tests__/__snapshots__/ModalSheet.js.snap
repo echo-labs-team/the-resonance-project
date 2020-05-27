@@ -741,17 +741,22 @@ Array [
       swipeThreshold={100}
     >
       <View
+        onLayout={[Function]}
         style={
-          Object {
-            "backgroundColor": "#212931",
-            "borderTopLeftRadius": 10,
-            "borderTopRightRadius": 10,
-            "height": "85%",
-            "paddingBottom": 20,
-            "paddingHorizontal": 16,
-            "paddingTop": 10,
-            "position": "relative",
-          }
+          Array [
+            Object {
+              "backgroundColor": "#212931",
+              "borderTopLeftRadius": 10,
+              "borderTopRightRadius": 10,
+              "height": "85%",
+              "paddingBottom": 20,
+              "paddingTop": 10,
+              "position": "relative",
+            },
+            Object {
+              "paddingBottom": 0,
+            },
+          ]
         }
       >
         <View
