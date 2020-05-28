@@ -3,7 +3,7 @@ import { StyleSheet, View, TextInput } from 'react-native';
 import Colors from '../../constants/Colors';
 import { Text } from './Typography';
 
-export default function Input(props) {
+function Input(props, ref) {
   const { label, touched, errors, ...inputProps } = props;
   const showError = errors && touched;
 
@@ -19,6 +19,7 @@ export default function Input(props) {
         keyboardAppearance="dark"
         returnKeyType="done"
         placeholderTextColor="rgba(255, 255, 255, 0.5)"
+        ref={ref}
         style={[
           styles.input,
           { borderColor: showError ? Colors.red : Colors.darkGray },
@@ -60,3 +61,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 });
+
+// make sure we're forwarding refs
+// https://reactjs.org/docs/forwarding-refs.html
+export default React.forwardRef(Input);
