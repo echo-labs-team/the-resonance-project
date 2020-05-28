@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { Formik } from 'formik';
@@ -38,6 +38,9 @@ function reducer(state, action) {
 
 export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
   const [{ loading, success }, dispatch] = useReducer(reducer, initialState);
+  const lastNameRef = useRef(null);
+  const emailRef = useRef(null);
+  const questionRef = useRef(null);
 
   const handleOpenModal = () => {
     Amplitude.logEventWithProperties('OPEN Group Ask Question', {
@@ -106,44 +109,56 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
             <View>
               <Input
                 autoCompleteType="name"
+                blurOnSubmit={false}
                 label="First Name"
                 placeholder="Andy"
+                returnKeyType="next"
                 textContentType="givenName"
                 touched={touched.firstName}
                 value={values.firstName}
                 errors={errors.firstName}
                 onChangeText={handleChange('firstName')}
                 onBlur={handleBlur('firstName')}
+                onSubmitEditing={() => lastNameRef.current.focus()}
               />
               <Input
                 autoCompleteType="name"
+                blurOnSubmit={false}
                 label="Last Name"
                 placeholder="Wood"
+                ref={lastNameRef}
+                returnKeyType="next"
                 textContentType="familyName"
                 touched={touched.lastName}
                 value={values.lastName}
                 errors={errors.lastName}
                 onChangeText={handleChange('lastName')}
                 onBlur={handleBlur('lastName')}
+                onSubmitEditing={() => emailRef.current.focus()}
               />
               <Input
                 autoCapitalize="none"
                 autoCompleteType="email"
                 autoCorrect={false}
+                blurOnSubmit={false}
                 clearButtonMode="while-editing"
                 keyboardType="email-address"
                 label="Email"
                 placeholder="andy@echo.church"
+                ref={emailRef}
+                returnKeyType="next"
                 textContentType="emailAddress"
                 touched={touched.email}
                 value={values.email}
                 errors={errors.email}
                 onChangeText={handleChange('email')}
                 onBlur={handleBlur('email')}
+                onSubmitEditing={() => questionRef.current.focus()}
               />
               <Input
                 label="Question"
                 placeholder="Ask a question..."
+                ref={questionRef}
                 touched={touched.question}
                 value={values.question}
                 errors={errors.question}
