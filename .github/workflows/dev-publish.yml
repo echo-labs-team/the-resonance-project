@@ -24,6 +24,7 @@ jobs:
 
     # Runs a command using the runners shell
     - run: npm install
+    - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}'}" > constants/Keys.js
     - run: npm test
       
   publish:
