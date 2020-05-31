@@ -13,10 +13,6 @@ import Input from './shared/TextInput';
 const initialState = {
   loading: false,
   success: false,
-  firstName: '',
-  lastName: '',
-  email: '',
-  question: '',
 };
 
 function reducer(state, action) {

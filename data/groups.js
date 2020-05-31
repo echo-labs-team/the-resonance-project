@@ -2,15 +2,46 @@ import axios from 'axios';
 import * as Amplitude from 'expo-analytics-amplitude';
 import config from './config';
 
-// get the service endpoint based on the environment
-// const baseURL = __DEV__
-//   ? 'http://localhost:8080'
-//   : 'https://echo-api.westus.cloudapp.azure.com';
 const baseURL = 'https://echo-api.westus.cloudapp.azure.com';
 
 // set the featured group, which is sorted to the top of the list of groups
 const isFeaturedGroup = (groupName) =>
   groupName.toLowerCase().includes(config.featuredGroup);
+
+export async function getCategories() {
+  const { data, status } =
+    (await axios.get(`${baseURL}/groups/categories`).catch((err) =>
+      Amplitude.logEventWithProperties('ERROR hitting `/groups/categories`', {
+        error: err,
+      })
+    )) || {};
+
+  if (status !== 200) {
+    Amplitude.logEventWithProperties('ERROR loading group categories', {
+      data,
+      status,
+    });
+    return [];
+  }
+
+  const { categories = [] } = data;
+
+  return categories
+    .map(({ name }) => {
+      if (name === 'Sermon-based') {
+        return false;
+      }
+      if (name === 'Easter') {
+        return false;
+      }
+      if (name === 'Co-Ed') {
+        return 'Co-Ed / General';
+      }
+
+      return name;
+    })
+    .filter(Boolean);
+}
 
 export async function getOpenGroups() {
   const errorMessage = 'Error fetching groups';
@@ -32,44 +63,6 @@ export async function getOpenGroups() {
     }
     return 0;
   });
-}
-
-export async function getCategories() {
-  const {
-    data: {
-      errorMessage = 'Error getting categories',
-      errorType,
-      stackTrace,
-      statusCode,
-      body,
-    } = {},
-  } =
-    (await axios
-      .get(
-        'https://hr8iyfwzze.execute-api.us-west-1.amazonaws.com/Prod/groups/categories'
-      )
-      .catch((err) =>
-        Amplitude.logEventWithProperties('ERROR hitting `/groups/categories`', {
-          error: err,
-        })
-      )) || {};
-
-  const success = statusCode === 200;
-
-  if (!success) {
-    Amplitude.logEventWithProperties('ERROR loading group categories', {
-      message: errorMessage,
-      type: errorType,
-      stack: stackTrace,
-    });
-    return [];
-  }
-
-  const { categories = [] } = JSON.parse(body);
-
-  return categories
-    .map(({ name }) => name !== 'Sermon-based' && name !== 'Easter' && name)
-    .filter(Boolean);
 }
 
 export function askQuestion(groupId, firstName, lastName, email, question) {

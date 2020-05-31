@@ -151,7 +151,7 @@ const GroupDetails = ({ route }) => {
 
             {shouldShowLeaders && (
               <View style={{ marginBottom: 16 }}>
-                <Heading>Leaders</Heading>
+                <Heading>Host(s)</Heading>
                 {leaders.map(({ name }) => (
                   <Text key={name}>{name}</Text>
                 ))}
