@@ -124,12 +124,11 @@ export async function fetchPlaylistItems(playlistId) {
 
   return items.map((item = {}) => {
     const {
-      id,
-      snippet: { publishedAt, title, description, thumbnails } = {},
+      snippet: { publishedAt, title, description, thumbnails, resourceId: { videoId } = {} } = {},
     } = item;
 
     return {
-      id,
+      id: videoId,
       publishDate: publishedAt,
       title,
       description,
