@@ -32,7 +32,7 @@ export default ({ item }) => {
 
   return (
     <TouchableHighlight
-      style={styles.cardHighlight}
+      style={styles.group}
       underlayColor={Colors.darkestGray}
       onPress={() => {
         Amplitude.logEventWithProperties('OPEN Group Details', {
@@ -43,7 +43,7 @@ export default ({ item }) => {
         });
       }}
     >
-      <View style={styles.group}>
+      <View>
         <Title
           light
           adjustsFontSizeToFit
@@ -53,52 +53,34 @@ export default ({ item }) => {
           {title}
         </Title>
 
-        <View style={styles.when}>
-          <Text>
-            {getMeetingFrequency(frequency, interval)} on{' '}
-            <Text bold>{getMeetingDay(daysOfWeek, dayOfMonth)}</Text> at{' '}
-            <Text bold>{getMeetingTime(meetingTime)}</Text>
-          </Text>
-        </View>
+        <Text style={styles.detail}>
+          {getMeetingFrequency(frequency, interval)} on{' '}
+          <Text bold>{getMeetingDay(daysOfWeek, dayOfMonth)}</Text> at{' '}
+          <Text bold>{getMeetingTime(meetingTime)}</Text>
+        </Text>
 
-        <View style={styles.details}>
-          <Text bold>{campus}</Text>
-        </View>
+        <Text bold style={styles.detail}>
+          {campus}
+        </Text>
 
-        <View style={styles.descriptionWrapper}>
-          <Text numberOfLines={4} light>
-            {description}
-          </Text>
-        </View>
+        <Text light numberOfLines={3} ellipsizeMode="tail">
+          {description}
+        </Text>
       </View>
     </TouchableHighlight>
   );
 };
 
 export const styles = StyleSheet.create({
-  cardHighlight: { borderRadius: 16 },
   group: {
-    height: 250,
     padding: 16,
-    borderRadius: 10,
     position: 'relative',
-    overflow: 'hidden',
+    borderRadius: 16,
   },
   title: {
-    marginTop: 16,
-    marginBottom: 10,
+    marginVertical: 10,
   },
-  details: {
+  detail: {
     marginBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  when: {
-    marginBottom: 10,
-    justifyContent: 'center',
-  },
-  descriptionWrapper: {
-    flex: 1,
-    justifyContent: 'center',
   },
 });

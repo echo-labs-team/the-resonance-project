@@ -5,6 +5,7 @@
 
 function loadStories() {
 	require('../components/AskAboutGroupModal.stories');
+	require('../components/GroupCardDetails.stories');
 	require('../components/JoinGroupModal.stories');
 	require('../components/LiveCard.stories');
 	require('../components/shared/Button.stories');
@@ -16,6 +17,7 @@ function loadStories() {
 
 const stories = [
 	'../components/AskAboutGroupModal.stories',
+	'../components/GroupCardDetails.stories',
 	'../components/JoinGroupModal.stories',
 	'../components/LiveCard.stories',
 	'../components/shared/Button.stories',

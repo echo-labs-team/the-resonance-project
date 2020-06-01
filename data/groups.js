@@ -68,10 +68,10 @@ export async function getOpenGroups() {
 export function askQuestion(groupId, firstName, lastName, email, question) {
   const params = {
     GroupID: groupId,
-    FirstName: firstName,
-    LastName: lastName,
-    Email: email,
-    Question: question,
+    FirstName: firstName.trim(),
+    LastName: lastName.trim(),
+    Email: email.trim(),
+    Question: question.trim(),
   };
 
   if (__DEV__) {
@@ -84,9 +84,9 @@ export function askQuestion(groupId, firstName, lastName, email, question) {
 export function joinGroup(groupId, firstName, lastName, email) {
   const params = {
     GroupID: groupId,
-    FirstName: firstName,
-    LastName: lastName,
-    Email: email,
+    FirstName: firstName.trim(),
+    LastName: lastName.trim(),
+    Email: email.trim(),
   };
 
   if (__DEV__) {
