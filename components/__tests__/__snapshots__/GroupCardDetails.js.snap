@@ -15,19 +15,13 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
   style={
     Object {
       "borderRadius": 16,
+      "padding": 16,
+      "position": "relative",
     }
   }
 >
   <View
-    style={
-      Object {
-        "borderRadius": 10,
-        "height": 250,
-        "overflow": "hidden",
-        "padding": 16,
-        "position": "relative",
-      }
-    }
+    style={null}
   >
     <Text
       adjustsFontSizeToFit={true}
@@ -51,8 +45,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
               "marginBottom": 20,
             },
             Object {
-              "marginBottom": 10,
-              "marginTop": 16,
+              "marginVertical": 10,
             },
           ],
         ]
@@ -60,81 +53,26 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
     >
       Test Group
     </Text>
-    <View
+    <Text
+      selectable={true}
       style={
-        Object {
-          "justifyContent": "center",
-          "marginBottom": 10,
-        }
+        Array [
+          Object {
+            "color": "#cbd2d6",
+            "fontFamily": "NunitoSans-Regular",
+            "fontSize": 18,
+            "lineHeight": 24,
+            "textAlign": "auto",
+          },
+          Object {
+            "marginBottom": 10,
+          },
+        ]
       }
     >
-      <Text
-        selectable={true}
-        style={
-          Array [
-            Object {
-              "color": "#cbd2d6",
-              "fontFamily": "NunitoSans-Regular",
-              "fontSize": 18,
-              "lineHeight": 24,
-              "textAlign": "auto",
-            },
-            undefined,
-          ]
-        }
-      >
-        Every week
-         on
-         
-        <Text
-          bold={true}
-          selectable={true}
-          style={
-            Array [
-              Object {
-                "color": "#cbd2d6",
-                "fontFamily": "NunitoSans-Bold",
-                "fontSize": 18,
-                "lineHeight": 24,
-                "textAlign": "auto",
-              },
-              undefined,
-            ]
-          }
-        >
-          Tuesday
-        </Text>
-         at
-         
-        <Text
-          bold={true}
-          selectable={true}
-          style={
-            Array [
-              Object {
-                "color": "#cbd2d6",
-                "fontFamily": "NunitoSans-Bold",
-                "fontSize": 18,
-                "lineHeight": 24,
-                "textAlign": "auto",
-              },
-              undefined,
-            ]
-          }
-        >
-          7:00pm
-        </Text>
-      </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "flexDirection": "row",
-          "justifyContent": "space-between",
-          "marginBottom": 10,
-        }
-      }
-    >
+      Every week
+       on
+       
       <Text
         bold={true}
         selectable={true}
@@ -151,26 +89,18 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
           ]
         }
       >
-        North San Jose
+        Tuesday
       </Text>
-    </View>
-    <View
-      style={
-        Object {
-          "flex": 1,
-          "justifyContent": "center",
-        }
-      }
-    >
+       at
+       
       <Text
-        light={true}
-        numberOfLines={4}
+        bold={true}
         selectable={true}
         style={
           Array [
             Object {
               "color": "#cbd2d6",
-              "fontFamily": "NunitoSans-Light",
+              "fontFamily": "NunitoSans-Bold",
               "fontSize": 18,
               "lineHeight": 24,
               "textAlign": "auto",
@@ -179,9 +109,49 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
           ]
         }
       >
-        This group is a test
+        7:00pm
       </Text>
-    </View>
+    </Text>
+    <Text
+      bold={true}
+      selectable={true}
+      style={
+        Array [
+          Object {
+            "color": "#cbd2d6",
+            "fontFamily": "NunitoSans-Bold",
+            "fontSize": 18,
+            "lineHeight": 24,
+            "textAlign": "auto",
+          },
+          Object {
+            "marginBottom": 10,
+          },
+        ]
+      }
+    >
+      North San Jose
+    </Text>
+    <Text
+      ellipsizeMode="tail"
+      light={true}
+      numberOfLines={3}
+      selectable={true}
+      style={
+        Array [
+          Object {
+            "color": "#cbd2d6",
+            "fontFamily": "NunitoSans-Light",
+            "fontSize": 18,
+            "lineHeight": 24,
+            "textAlign": "auto",
+          },
+          undefined,
+        ]
+      }
+    >
+      This group is a test
+    </Text>
   </View>
 </View>
 `;

@@ -3,5 +3,5 @@
  */
 
 export default {
-  featuredGroup: 'alpha',
+  featuredGroup: 'hope',
 };

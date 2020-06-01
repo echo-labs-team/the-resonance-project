@@ -13,7 +13,7 @@ function validateEmail(value) {
   if (!value) {
     return 'Required';
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())) {
     return 'Invalid email address';
   }
 }

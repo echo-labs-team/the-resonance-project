@@ -78,12 +78,14 @@ function useQuery(groups) {
 
 const Card = ({ item }) => {
   return (
-    <View>
-      {item?.uuid?.toString().includes('loading') ? (
-        <GroupCardPlaceholder />
-      ) : (
-        <GroupCardDetails item={item} />
-      )}
+    <View style={styles.cardShadow}>
+      <BlurView tint="dark" intensity={100} style={styles.card}>
+        {item?.uuid?.toString().includes('loading') ? (
+          <GroupCardPlaceholder />
+        ) : (
+          <GroupCardDetails item={item} />
+        )}
+      </BlurView>
     </View>
   );
 };
@@ -283,13 +285,7 @@ const GroupsScreen = () => {
               keyExtractor={({ uuid }) => uuid.toString()}
               data={data}
               renderItem={({ item }) => {
-                return (
-                  <View style={styles.cardShadow}>
-                    <BlurView tint="dark" intensity={100} style={styles.card}>
-                      <Card item={item} />
-                    </BlurView>
-                  </View>
-                );
+                return <Card item={item} />;
               }}
               refreshControl={
                 <RefreshControl
@@ -318,7 +314,7 @@ const GroupsScreen = () => {
   );
 };
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: Colors.black,
