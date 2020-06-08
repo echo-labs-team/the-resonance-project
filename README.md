@@ -1,5 +1,6 @@
 # 🔊 The Resonance Project
 
+![License](https://img.shields.io/github/license/echo-labs-team/the-resonance-project)
 ![Dev Publish](https://github.com/echo-labs-team/the-resonance-project/workflows/Dev%20Publish/badge.svg?branch=dev)
 
 A React Native application for Echo.Church built by volunteers
@@ -34,7 +35,7 @@ Open a bash terminal:
    If `$ which expo` returns a path, skip this.
 
    ```sh
-   npm install expo-cli --global
+   npm install expo-cli --globals
    ```
 
 5. Install [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
