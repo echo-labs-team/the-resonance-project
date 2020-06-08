@@ -77,7 +77,7 @@
     "husky": "^4.2.3",
     "jest": "~25.2.6",
     "jest-expo": "^37.0.0",
-    "lint-staged": "^10.2.4",
+    "lint-staged": "^10.2.9",
     "prettier": "^2.0.5",
     "react-devtools": "^4.7.0",
     "react-native-storybook-loader": "^1.8.1",
