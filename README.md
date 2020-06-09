@@ -7,6 +7,7 @@ A React Native application for Echo.Church built by volunteers
 
 <p align="center"><img src="https://echo.church/wp-content/uploads/2018/01/echo_logo_main_header.png" width="300" /></p>
 
+
 ## 🔌 Installation
 
 Open a bash terminal:
