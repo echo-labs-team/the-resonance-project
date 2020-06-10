@@ -22,7 +22,8 @@ export async function getBlogPosts() {
         date,
         _links: links = {},
       } = {}) => {
-        const [{ href: imageUrl } = {}] = links['wp:featuredmedia'] || [];
+        const [{ href: imageUrl } = {}] =
+          links['wp:featuredmedia'] || links['wp:attachment'] || [];
         const postDate = new Date(date).toLocaleDateString();
 
         if (!imageUrl) {
@@ -36,7 +37,9 @@ export async function getBlogPosts() {
 
         return axios
           .get(imageUrl)
-          .then(({ data: { link: image } = {} } = {}) => {
+          .then(({ data = [] } = {}) => {
+            const [{ link: image } = {}] = Array.isArray(data) ? data : [data];
+
             return {
               type: 'BLOG',
               url: blogUrl,
