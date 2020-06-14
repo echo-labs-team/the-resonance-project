@@ -20,6 +20,11 @@ export const listItems = [
  */
 export const callToActionButtons = [
   {
+    title: 'Join the Hope Project',
+    url: 'https://echo.church/2020/06/14/get-ready-for-the-hope-project/',
+    backgroundColor: Colors.blue,
+  },
+  {
     title: 'Echo Compassion (COVID-19)',
     url: 'https://echochurchteam.typeform.com/to/UOQ9sl',
     backgroundColor: Colors.red,
