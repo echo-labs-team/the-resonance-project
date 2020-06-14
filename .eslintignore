@@ -2,7 +2,6 @@ node/
 coverage/
 build-tools
 tmpnpm
-flow-typed/
 !.eslintrc.js
 Gruntfile.js
 tasks/

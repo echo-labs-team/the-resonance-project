@@ -22,7 +22,6 @@ When sending a pull request, create a feature/fix branch and push that to `origi
 4. Ensure that all tests pass. You can run `npm run test:watch` or `yarn test:watch` to run tests in watch mode.
 5. Format your code with `prettier` and make things easier by installing an [Editor Integration](https://prettier.io/docs/en/editors.html)
 6. Make sure your code lints by running `npm run lint` or `yarn lint`
-7. Run the Flow typechecks using `npm run flow` or `yarn flow`
 
 💡 If other PRs get merged, you may have to fetch those changed from `origin` and interactively rebase or merge in order to fix any conflicts.
 
@@ -36,6 +35,6 @@ Whenever you do add or upgrade anything, make sure to [update `yarn.lock`](https
 
 We use an automatic code formatter called [Prettier](https://prettier.io/). Install an [Editor Integration](https://prettier.io/docs/en/editors.html) and format on save to make things magically easy. ✨
 
-Linting and flow typechecking will try to catch most issues that may exist in your code. Check out [Airbnb's Style Guide](https://github.com/airbnb/javascript) if you need more help.
+Linting will try to catch most issues that may exist in your code. Check out [Airbnb's Style Guide](https://github.com/airbnb/javascript) if you need more help.
 
 Please try to keep the codebase as consistent as possible, thanks!
