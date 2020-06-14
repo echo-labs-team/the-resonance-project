@@ -32,6 +32,7 @@ export default ({ item }) => {
 
   return (
     <TouchableHighlight
+      testID="GroupCardDetails"
       style={styles.group}
       underlayColor={Colors.darkestGray}
       onPress={() => {
