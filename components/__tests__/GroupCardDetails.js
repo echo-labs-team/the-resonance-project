@@ -1,5 +1,4 @@
 import React from 'react';
-import { TouchableHighlight } from 'react-native';
 import { render, fireEvent } from 'react-native-testing-library';
 import { useNavigation } from '@react-navigation/native';
 import GroupCardDetails from '../GroupCardDetails';
@@ -26,11 +25,11 @@ describe('<GroupCardDetails/>', () => {
         description: 'This group is a test',
       },
     };
-    const { toJSON, getByType } = render(<GroupCardDetails {...props} />);
+    const { toJSON, getByTestId } = render(<GroupCardDetails {...props} />);
 
     expect(toJSON()).toMatchSnapshot();
 
-    fireEvent.press(getByType(TouchableHighlight));
+    fireEvent.press(getByTestId('GroupCardDetails'));
 
     expect(mockNavigate).toBeCalledWith('GroupDetails', {
       group: { ...props.item, title: 'Test Group' },

@@ -19,6 +19,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
       "position": "relative",
     }
   }
+  testID="GroupCardDetails"
 >
   <View
     style={null}

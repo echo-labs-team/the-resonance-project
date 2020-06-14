@@ -34,12 +34,12 @@ PODS:
   - EXPermissions (8.1.0):
     - UMCore
     - UMPermissionsInterface
-  - EXSplashScreen (0.2.0):
+  - EXSplashScreen (0.2.3):
     - UMCore
   - EXSQLite (8.1.0):
     - UMCore
     - UMFileSystemInterface
-  - EXUpdates (0.1.2):
+  - EXUpdates (0.2.7):
     - React
     - UMCore
   - EXWebBrowser (8.2.1):
@@ -268,7 +268,7 @@ PODS:
     - React
   - RNGestureHandler (1.6.1):
     - React
-  - RNReanimated (1.7.1):
+  - RNReanimated (1.9.0):
     - React
   - RNScreens (2.7.0):
     - React
@@ -309,7 +309,7 @@ DEPENDENCIES:
   - EXSplashScreen (from `../node_modules/expo-splash-screen/ios`)
   - EXSQLite (from `../node_modules/expo-sqlite/ios`)
   - EXUpdates (from `../node_modules/expo-updates/ios`)
-  - EXWebBrowser (from `../node_modules/expo/node_modules/expo-web-browser/ios`)
+  - EXWebBrowser (from `../node_modules/expo-web-browser/ios`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
@@ -343,11 +343,11 @@ DEPENDENCIES:
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
-  - UMAppLoader (from `../node_modules/react-native-unimodules/node_modules/unimodules-app-loader/ios`)
+  - UMAppLoader (from `../node_modules/unimodules-app-loader/ios`)
   - UMBarCodeScannerInterface (from `../node_modules/unimodules-barcode-scanner-interface/ios`)
   - UMCameraInterface (from `../node_modules/unimodules-camera-interface/ios`)
   - UMConstantsInterface (from `../node_modules/unimodules-constants-interface/ios`)
-  - "UMCore (from `../node_modules/react-native-unimodules/node_modules/@unimodules/core/ios`)"
+  - "UMCore (from `../node_modules/@unimodules/core/ios`)"
   - UMFaceDetectorInterface (from `../node_modules/unimodules-face-detector-interface/ios`)
   - UMFileSystemInterface (from `../node_modules/unimodules-file-system-interface/ios`)
   - UMFontInterface (from `../node_modules/unimodules-font-interface/ios`)
@@ -395,7 +395,7 @@ EXTERNAL SOURCES:
   EXUpdates:
     :path: "../node_modules/expo-updates/ios"
   EXWebBrowser:
-    :path: "../node_modules/expo/node_modules/expo-web-browser/ios"
+    :path: "../node_modules/expo-web-browser/ios"
   FBLazyVector:
     :path: "../node_modules/react-native/Libraries/FBLazyVector"
   FBReactNativeSpec:
@@ -457,7 +457,7 @@ EXTERNAL SOURCES:
   RNSVG:
     :path: "../node_modules/react-native-svg"
   UMAppLoader:
-    :path: "../node_modules/react-native-unimodules/node_modules/unimodules-app-loader/ios"
+    :path: "../node_modules/unimodules-app-loader/ios"
   UMBarCodeScannerInterface:
     :path: "../node_modules/unimodules-barcode-scanner-interface/ios"
   UMCameraInterface:
@@ -465,7 +465,7 @@ EXTERNAL SOURCES:
   UMConstantsInterface:
     :path: "../node_modules/unimodules-constants-interface/ios"
   UMCore:
-    :path: "../node_modules/react-native-unimodules/node_modules/@unimodules/core/ios"
+    :path: "../node_modules/@unimodules/core/ios"
   UMFaceDetectorInterface:
     :path: "../node_modules/unimodules-face-detector-interface/ios"
   UMFileSystemInterface:
@@ -500,9 +500,9 @@ SPEC CHECKSUMS:
   EXLinearGradient: 8189387e3a65c2a9ba5507432e3a099ea8f7ea86
   EXLocation: 0397e4f11666d6ceb026b6424fdf66995c604964
   EXPermissions: d2cafee9c72578ecc9ca121481e6c4a04a798861
-  EXSplashScreen: 2f233c878f04f585a9e89ac22dbc3bcd22cf21df
+  EXSplashScreen: 6888f24a847a2cdbf5ca4d996300adf9cc2726b4
   EXSQLite: 15268ec49f859e4594fe5b0a1c7a47913da0b67e
-  EXUpdates: 73400517f57f10b5df8efeaf5bf802b27fceb912
+  EXUpdates: 1b470c19c03f149aec214d291e1c89b04acd7519
   EXWebBrowser: 6364e9e1ea73f6c3c2e6e3cc0ac17259a260e3a8
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
@@ -531,7 +531,7 @@ SPEC CHECKSUMS:
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
-  RNReanimated: 4e102df74a9674fa943e05f97f3362b6e44d0b48
+  RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
   RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
   RNSVG: 67f1f12dae2cef6ed59a42cae74a6b8f5a9e7b46
   UMAppLoader: ae5eaee9f3c8cc847c631a579fed20d217de5913

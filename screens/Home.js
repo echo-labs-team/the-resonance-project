@@ -75,8 +75,21 @@ const HomeScreen = () => {
 
       // get all the posts and sort them descending by date
       const posts = [...blogPosts, ...igPosts].sort(
-        ({ date: firstDate }, { date: secondDate }) =>
-          new Date(secondDate) - new Date(firstDate)
+        (firstPost = {}, secondPost = {}) => {
+          const { date: firstDate, type: firstType } = firstPost;
+          const { date: secondDate, type: secondType } = secondPost;
+
+          if (firstDate === secondDate) {
+            if (firstType === 'BLOG') {
+              return -1;
+            }
+            if (secondType === 'BLOG') {
+              return 1;
+            }
+          }
+
+          return new Date(secondDate) - new Date(firstDate);
+        }
       );
       const [firstPost, secondPost, ...restOfPosts] = posts;
 
