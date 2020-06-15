@@ -7,7 +7,7 @@ const entities = new AllHtmlEntities();
 export async function getBlogPosts() {
   const { data: posts = [] } =
     (await axios
-      .get('http://echo.church/wp-json/wp/v2/posts?per_page=3&orderby=date')
+      .get('http://echo.church/wp-json/wp/v2/posts?per_page=6&orderby=date')
       .catch((err) => {
         Amplitude.logEventWithProperties('ERROR loading blog posts', {
           error: err,
@@ -24,14 +24,13 @@ export async function getBlogPosts() {
       } = {}) => {
         const [{ href: imageUrl } = {}] =
           links['wp:featuredmedia'] || links['wp:attachment'] || [];
-        const postDate = new Date(date).toLocaleDateString();
 
         if (!imageUrl) {
           return {
             type: 'BLOG',
             url: blogUrl,
             title: entities.decode(title),
-            date: postDate,
+            date,
           };
         }
 
@@ -45,7 +44,7 @@ export async function getBlogPosts() {
               url: blogUrl,
               image,
               title: entities.decode(title),
-              date: postDate,
+              date,
             };
           })
           .catch((err) => {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AsyncStorage,
   Image,
   Linking,
   RefreshControl,
@@ -27,15 +26,6 @@ import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
-const storePostsData = async (data) => {
-  await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch((err) =>
-    console.error(err)
-  );
-};
-const getStoredPosts = () => {
-  return AsyncStorage.getItem('@posts').catch((err) => console.error(err));
-};
-
 const HomeScreen = () => {
   useHandleTabChange('Home');
   const insets = useSafeArea();
@@ -59,12 +49,6 @@ const HomeScreen = () => {
   // fetch data on mount
   useEffect(() => {
     const getPosts = async () => {
-      const storedPosts = await getStoredPosts();
-
-      if (storedPosts) {
-        setCardData(JSON.parse(storedPosts));
-      }
-
       const igPosts = (await getInstagramPosts()) || [];
       const blogPosts = (await getBlogPosts()) || [];
       const verseOfTheDay = (await getVerseOfTheDay()) || {};
@@ -99,7 +83,6 @@ const HomeScreen = () => {
       setCardData(allPosts);
       setRefreshing(false);
       setTryAgain(false);
-      storePostsData(allPosts);
     };
 
     if (refreshing || tryAgain) {
@@ -203,6 +186,7 @@ function getImageHeight(type, image) {
 
 const Card = ({ type, url, image, title, date }) => {
   const icon = getIcon(type);
+  const postDate = new Date(date).toLocaleDateString();
 
   return (
     <TouchableHighlight
@@ -237,12 +221,7 @@ const Card = ({ type, url, image, title, date }) => {
           ]}
         />
         <View style={styles.cardTypeView}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.cardType}>
             {icon.expoIcon ? (
               icon.expoIcon
             ) : (
@@ -252,9 +231,9 @@ const Card = ({ type, url, image, title, date }) => {
               {type}
             </Text>
           </View>
-          {date && (
+          {postDate && (
             <Text light style={styles.cardTypeText}>
-              {date}
+              {postDate}
             </Text>
           )}
         </View>
@@ -298,16 +277,9 @@ const styles = StyleSheet.create({
     width: undefined,
     resizeMode: 'cover',
   },
-  cardTypeIcon: {
-    width: 16,
-    height: 16,
-  },
   title: {
     paddingHorizontal: 8,
     paddingVertical: 8,
-  },
-  cardTypeText: {
-    paddingLeft: 8,
   },
   cardTypeView: {
     paddingTop: 16,
@@ -316,6 +288,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  cardType: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cardTypeIcon: {
+    width: 16,
+    height: 16,
+  },
+  cardTypeText: {
+    paddingLeft: 8,
   },
   error: { marginBottom: 10 },
 });
