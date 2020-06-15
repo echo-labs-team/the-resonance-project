@@ -170,10 +170,12 @@ const HomeScreen = () => {
       }
 
       // get all the posts and sort them descending by date
-      const posts = [...blogPosts, ...igPosts].sort();
-      const allPosts = [...posts, verseOfTheDay];
+      const posts = [...blogPosts, ...igPosts].sort(sortPosts);
 
-      setCardData(allPosts);
+      // insert VOTD post
+      posts.splice(5, 0, verseOfTheDay);
+
+      setCardData(posts);
       setRefreshing(false);
       setTryAgain(false);
     };
