@@ -7,7 +7,7 @@ const entities = new AllHtmlEntities();
 export async function getBlogPosts() {
   const { data: posts = [] } =
     (await axios
-      .get('http://echo.church/wp-json/wp/v2/posts?per_page=6&orderby=date')
+      .get('http://echo.church/wp-json/wp/v2/posts?per_page=8&orderby=date')
       .catch((err) => {
         Amplitude.logEventWithProperties('ERROR loading blog posts', {
           error: err,

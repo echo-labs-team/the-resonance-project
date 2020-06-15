@@ -27,7 +27,7 @@ export async function getInstagramPosts() {
       } = {},
     } = profile;
 
-    instagramPosts = mediaEdges.slice(0, 6).map(({ node = {} } = {}) => {
+    instagramPosts = mediaEdges.slice(0, 5).map(({ node = {} } = {}) => {
       const {
         shortcode,
         thumbnail_src,
@@ -53,5 +53,5 @@ export async function getInstagramPosts() {
     });
   }
 
-  return instagramPosts.slice(0, 3);
+  return instagramPosts;
 }
