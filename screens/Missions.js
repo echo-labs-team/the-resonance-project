@@ -66,7 +66,7 @@ const MissionsScreen = () => {
 
       // get data from the missions page in WordPress
       const data = await fetch(
-        'http://echo.church/wp-json/wp/v2/pages?slug=missions',
+        'https://echo.church/wp-json/wp/v2/pages?slug=missions',
         {
           method: 'GET',
           headers: {
