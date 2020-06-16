@@ -165,12 +165,14 @@ const HomeScreen = () => {
       const blogPosts = (await getBlogPosts()) || [];
       const verseOfTheDay = (await getVerseOfTheDay()) || {};
 
-      if (!blogPosts.length || !igPosts.length) {
-        Amplitude.logEvent('ERROR no posts');
+      if (!blogPosts.length) {
+        Amplitude.logEvent('ERROR no blog posts');
+      }
+      if (!igPosts.length) {
+        Amplitude.logEvent('ERROR no instagram posts');
       }
 
-      // get all the posts and sort them descending by date
-      const posts = [...blogPosts, ...igPosts].sort(sortPosts);
+      const posts = blogPosts;
 
       // insert VOTD post
       posts.splice(5, 0, verseOfTheDay);
