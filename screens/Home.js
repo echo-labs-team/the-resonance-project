@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AsyncStorage,
   Image,
   Linking,
   RefreshControl,
@@ -27,144 +26,20 @@ import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 
-const storePostsData = async (data) => {
-  await AsyncStorage.setItem('@posts', JSON.stringify(data)).catch((err) =>
-    console.error(err)
-  );
-};
-const getStoredPosts = () => {
-  return AsyncStorage.getItem('@posts').catch((err) => console.error(err));
-};
+const sortPosts = (firstPost = {}, secondPost = {}) => {
+  const { date: firstDate, type: firstType } = firstPost;
+  const { date: secondDate, type: secondType } = secondPost;
 
-const HomeScreen = () => {
-  useHandleTabChange('Home');
-  const insets = useSafeArea();
-  const ref = React.useRef(null);
-
-  useScrollToTop(ref);
-
-  const [cardData, setCardData] = useState([
-    { url: 'loading1' },
-    { url: 'loading2' },
-    { url: 'loading3' },
-    { url: 'loading4' },
-    { url: 'loading5' },
-    { url: 'loading6' },
-    { url: 'loading7' },
-    { url: 'loading8' },
-  ]);
-  const [refreshing, setRefreshing] = useState(false);
-  const [tryAgain, setTryAgain] = useState(false);
-
-  // fetch data on mount
-  useEffect(() => {
-    const getPosts = async () => {
-      const storedPosts = await getStoredPosts();
-
-      if (storedPosts) {
-        setCardData(JSON.parse(storedPosts));
-      }
-
-      const igPosts = (await getInstagramPosts()) || [];
-      const blogPosts = (await getBlogPosts()) || [];
-      const verseOfTheDay = (await getVerseOfTheDay()) || {};
-
-      if (!blogPosts.length || !igPosts.length) {
-        Amplitude.logEvent('ERROR no posts');
-      }
-
-      // get all the posts and sort them descending by date
-      const posts = [...blogPosts, ...igPosts].sort(
-        (firstPost = {}, secondPost = {}) => {
-          const { date: firstDate, type: firstType } = firstPost;
-          const { date: secondDate, type: secondType } = secondPost;
-
-          if (firstDate === secondDate) {
-            if (firstType === 'BLOG') {
-              return -1;
-            }
-            if (secondType === 'BLOG') {
-              return 1;
-            }
-          }
-
-          return new Date(secondDate) - new Date(firstDate);
-        }
-      );
-      const [firstPost, secondPost, ...restOfPosts] = posts;
-
-      // insert the verse of the day as the third item
-      const allPosts = [firstPost, secondPost, verseOfTheDay, ...restOfPosts];
-
-      setCardData(allPosts);
-      setRefreshing(false);
-      setTryAgain(false);
-      storePostsData(allPosts);
-    };
-
-    if (refreshing || tryAgain) {
-      getPosts();
-      return;
+  if (firstDate === secondDate) {
+    if (firstType === 'BLOG') {
+      return -1;
     }
+    if (secondType === 'BLOG') {
+      return 1;
+    }
+  }
 
-    getPosts();
-  }, [refreshing, tryAgain]);
-
-  const refresh = () => {
-    setRefreshing(true);
-  };
-
-  return (
-    <View style={[styles.container, { paddingTop: insets.top }]}>
-      <ScrollView
-        ref={ref}
-        refreshControl={
-          <RefreshControl
-            tintColor={Colors.gray}
-            colors={[Colors.gray]}
-            refreshing={refreshing}
-            onRefresh={refresh}
-          />
-        }
-        contentContainerStyle={styles.contentContainer}
-      >
-        {tryAgain && <Spinner />}
-
-        <AnimateChildrenIn
-          type="slide-top"
-          durationMs={500}
-          delayMs={300}
-          style={styles.logoContainer}
-        >
-          <EchoLogo width={40} height={40} color={Colors.red} />
-          <Text XL style={styles.logo}>
-            ECHO.CHURCH
-          </Text>
-        </AnimateChildrenIn>
-
-        {cardData.length ? (
-          cardData.map((item, index) => {
-            if (item?.url?.includes('loading')) {
-              return (
-                <HomeCardPlaceholder
-                  key={`placeholder${index}`}
-                  style={{ marginBottom: 16 }}
-                />
-              );
-            }
-            return <Card key={`card${index}`} {...item} />;
-          })
-        ) : (
-          <>
-            <Subtitle center style={styles.error}>
-              No posts were found... 🤔
-            </Subtitle>
-            <Button title="Try Again" onPress={() => setTryAgain(true)} />
-          </>
-        )}
-      </ScrollView>
-    </View>
-  );
+  return new Date(secondDate) - new Date(firstDate);
 };
 
 function getIcon(type) {
@@ -237,12 +112,7 @@ const Card = ({ type, url, image, title, date }) => {
           ]}
         />
         <View style={styles.cardTypeView}>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-          >
+          <View style={styles.cardType}>
             {icon.expoIcon ? (
               icon.expoIcon
             ) : (
@@ -265,6 +135,113 @@ const Card = ({ type, url, image, title, date }) => {
         )}
       </View>
     </TouchableHighlight>
+  );
+};
+
+const HomeScreen = () => {
+  useHandleTabChange('Home');
+  const insets = useSafeArea();
+  const ref = React.useRef(null);
+
+  useScrollToTop(ref);
+
+  const [cardData, setCardData] = useState([
+    { url: 'loading1' },
+    { url: 'loading2' },
+    { url: 'loading3' },
+    { url: 'loading4' },
+    { url: 'loading5' },
+    { url: 'loading6' },
+    { url: 'loading7' },
+    { url: 'loading8' },
+  ]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [tryAgain, setTryAgain] = useState(false);
+
+  // fetch data on mount
+  useEffect(() => {
+    const getPosts = async () => {
+      const igPosts = (await getInstagramPosts()) || [];
+      const blogPosts = (await getBlogPosts()) || [];
+      const verseOfTheDay = (await getVerseOfTheDay()) || {};
+
+      if (!blogPosts.length || !igPosts.length) {
+        Amplitude.logEvent('ERROR no posts');
+      }
+
+      // get all the posts and sort them descending by date
+      const posts = [...blogPosts, ...igPosts].sort(sortPosts);
+
+      // insert VOTD post
+      posts.splice(5, 0, verseOfTheDay);
+
+      setCardData(posts);
+      setRefreshing(false);
+      setTryAgain(false);
+    };
+
+    if (refreshing || tryAgain) {
+      getPosts();
+      return;
+    }
+
+    getPosts();
+  }, [refreshing, tryAgain]);
+
+  const refresh = () => {
+    setRefreshing(true);
+  };
+
+  return (
+    <View style={[styles.container, { paddingTop: insets.top }]}>
+      <ScrollView
+        ref={ref}
+        refreshControl={
+          <RefreshControl
+            tintColor={Colors.gray}
+            colors={[Colors.gray]}
+            refreshing={refreshing}
+            onRefresh={refresh}
+          />
+        }
+        contentContainerStyle={styles.contentContainer}
+      >
+        {tryAgain && <Spinner />}
+
+        <AnimateChildrenIn
+          type="slide-top"
+          durationMs={500}
+          delayMs={300}
+          style={styles.logoContainer}
+        >
+          <EchoLogo width={40} height={40} color={Colors.red} />
+          <Text XL style={styles.logo}>
+            ECHO.CHURCH
+          </Text>
+        </AnimateChildrenIn>
+
+        {cardData.length ? (
+          cardData.map((item, index) => {
+            if (item?.url?.includes('loading')) {
+              return (
+                <HomeCardPlaceholder
+                  key={`placeholder${index}`}
+                  style={{ marginBottom: 16 }}
+                />
+              );
+            }
+            return <Card key={`card${index}`} {...item} />;
+          })
+        ) : (
+          <>
+            <Subtitle center style={styles.error}>
+              No posts were found... 🤔
+            </Subtitle>
+            <Button title="Try Again" onPress={() => setTryAgain(true)} />
+          </>
+        )}
+      </ScrollView>
+    </View>
   );
 };
 
@@ -298,16 +275,9 @@ const styles = StyleSheet.create({
     width: undefined,
     resizeMode: 'cover',
   },
-  cardTypeIcon: {
-    width: 16,
-    height: 16,
-  },
   title: {
     paddingHorizontal: 8,
     paddingVertical: 8,
-  },
-  cardTypeText: {
-    paddingLeft: 8,
   },
   cardTypeView: {
     paddingTop: 16,
@@ -316,6 +286,17 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  cardType: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cardTypeIcon: {
+    width: 16,
+    height: 16,
+  },
+  cardTypeText: {
+    paddingLeft: 8,
   },
   error: { marginBottom: 10 },
 });

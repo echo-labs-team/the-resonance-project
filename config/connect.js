@@ -21,7 +21,7 @@ export const listItems = [
 export const callToActionButtons = [
   {
     title: 'Join the Hope Project',
-    url: 'https://echo.church/2020/06/14/get-ready-for-the-hope-project/',
+    url: 'https://echo.church/hopeproject/',
     backgroundColor: Colors.blue,
   },
   {

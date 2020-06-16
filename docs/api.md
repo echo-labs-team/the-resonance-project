@@ -4,7 +4,7 @@
 
 ### Fetch the latest blog posts from the Echo WordPress site
 
-`GET http://echo.church/wp-json/wp/v2/posts?per_page=3&orderby=date`
+`GET https://echo.church/wp-json/wp/v2/posts?per_page=10&orderby=date`
 
 ## Groups
 
