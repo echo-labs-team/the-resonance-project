@@ -4,6 +4,17 @@ import { AllHtmlEntities } from 'html-entities';
 
 const entities = new AllHtmlEntities();
 
+/**
+ * The default is the runtime default time zone, but we want to ensure the string is in UTC time, so
+ * get each part of the UTC date and return the formatted date string
+ * @param {Date} date blog post publish date
+ */
+function formatDate(date) {
+  return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${String(
+    date.getUTCFullYear()
+  ).slice(2)}`;
+}
+
 export async function getBlogPosts() {
   const { data: posts = [] } =
     (await axios
@@ -24,11 +35,7 @@ export async function getBlogPosts() {
       } = {}) => {
         const [{ href: imageUrl } = {}] =
           links['wp:featuredmedia'] || links['wp:attachment'] || [];
-
-        // the default is the runtime default time zone, but we want to ensure the string is in UTC time
-        const formattedDate = new Date(date).toLocaleDateString('en-US', {
-          timeZone: 'UTC',
-        });
+        const formattedDate = formatDate(new Date(date));
 
         if (!imageUrl) {
           return {
