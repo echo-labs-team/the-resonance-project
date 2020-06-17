@@ -10,8 +10,6 @@ export default [
     require('./assets/images/fall_leaves_bg.png'),
     require('./assets/images/giving_bg.png'),
     require('./assets/images/groups_bg.png'),
-    require('./assets/images/hp-bg.jpg'),
-    require('./assets/images/hp-logo.png'),
     require('./assets/images/locations.png'),
     require('./assets/images/missions.png'),
     require('./assets/images/pray.jpg'),

@@ -18,7 +18,10 @@ function FeaturedDetails({ route: { params } }) {
       {(headerHeight) => (
         <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
           <ImageBackground
-            source={require('../assets/images/hp-bg.jpg')}
+            source={{
+              uri:
+                'https://echo.church/wp-content/uploads/2020/05/Hope-Project_TitleSlideFinal111.jpg',
+            }}
             style={styles.backgroundImage}
           />
           <ScrollView style={styles.container}>

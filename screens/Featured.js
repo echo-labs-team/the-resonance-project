@@ -27,11 +27,17 @@ function FeaturedScreen({ navigation }) {
       {(headerHeight) => (
         <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
           <ImageBackground
-            source={require('../assets/images/hp-bg.jpg')}
+            source={{
+              uri:
+                'https://echo.church/wp-content/uploads/2020/05/Hope-Project_TitleSlideFinal111.jpg',
+            }}
             style={styles.backgroundImage}
           />
           <Image
-            source={require('../assets/images/hp-logo.png')}
+            source={{
+              uri:
+                'https://echo.church/wp-content/uploads/elementor/thumbs/HP_WhiteIcon-1-opizmnxv1bqwwsj6ih2c78mebgu69hsmb89bs0b45s.png',
+            }}
             style={styles.logo}
           />
           <FlatList

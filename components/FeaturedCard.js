@@ -27,13 +27,19 @@ function FeaturedCard() {
     >
       <View style={cardStyles.mainContainer}>
         <ImageBackground
-          source={require('../assets/images/hp-bg.jpg')}
+          source={{
+            uri:
+              'https://echo.church/wp-content/uploads/2020/05/Hope-Project_TitleSlideFinal111.jpg',
+          }}
           style={cardStyles.backgroundImage}
         />
         <View style={cardStyles.container}>
           <View style={cardStyles.wrapper}>
             <Image
-              source={require('../assets/images/hp-logo.png')}
+              source={{
+                uri:
+                  'https://echo.church/wp-content/uploads/elementor/thumbs/HP_WhiteIcon-1-opizmnxv1bqwwsj6ih2c78mebgu69hsmb89bs0b45s.png',
+              }}
               style={cardStyles.logo}
             />
             <Feather
@@ -47,7 +53,7 @@ function FeaturedCard() {
             HOPE PROJECT
           </Title>
           <Subtitle bold style={cardStyles.subtitle}>
-            A 40-DAY JOURNEY
+            A 40-DAY DEVOTIONAL
           </Subtitle>
         </View>
       </View>
