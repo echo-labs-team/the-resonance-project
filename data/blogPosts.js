@@ -18,7 +18,10 @@ function formatDate(date) {
 export async function getBlogPosts() {
   const { data: posts = [] } =
     (await axios
-      .get('https://echo.church/wp-json/wp/v2/posts?per_page=10&orderby=date')
+      .get(
+        `https://echo.church/wp-json/wp/v2/posts?per_page=10&orderby=date&timestamp=${new Date().getTime()}`,
+        { headers: { 'Cache-Control': 'no-cache' } }
+      )
       .catch((err) => {
         Amplitude.logEventWithProperties('ERROR loading blog posts', {
           error: err,
