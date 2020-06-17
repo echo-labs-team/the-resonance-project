@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   AppState,
-  AsyncStorage,
   Platform,
   StatusBar,
   TouchableHighlight,
   UIManager,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Constants } from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -20,8 +20,9 @@ import Storybook from './storybook';
 Amplitude.initialize(keys.AMPLITUDE);
 
 const channel = Constants?.manifest?.releaseChannel;
-const emptyStorage = () =>
-  AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
+const emptyStorage = async () => {
+  await AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
+};
 
 // override amplitude tracking
 if (!channel) {

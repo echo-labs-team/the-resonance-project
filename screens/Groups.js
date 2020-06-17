@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AsyncStorage,
   FlatList,
   ImageBackground,
   RefreshControl,
@@ -8,6 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
