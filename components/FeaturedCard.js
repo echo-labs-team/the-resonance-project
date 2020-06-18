@@ -27,6 +27,7 @@ function FeaturedCard() {
     >
       <View style={cardStyles.mainContainer}>
         <ImageBackground
+          progressiveRenderingEnabled
           source={{
             uri:
               'https://echo.church/wp-content/uploads/2020/05/Hope-Project_TitleSlideFinal111.jpg',
@@ -36,6 +37,7 @@ function FeaturedCard() {
         <View style={cardStyles.container}>
           <View style={cardStyles.wrapper}>
             <Image
+              progressiveRenderingEnabled
               source={{
                 uri:
                   'https://echo.church/wp-content/uploads/elementor/thumbs/HP_WhiteIcon-1-opizmnxv1bqwwsj6ih2c78mebgu69hsmb89bs0b45s.png',
@@ -70,6 +72,7 @@ const cardStyles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
+    backgroundColor: Colors.blue,
   },
   container: {
     flex: 1,

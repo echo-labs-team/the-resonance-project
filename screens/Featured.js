@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   FlatList,
   Image,
@@ -14,19 +14,42 @@ import * as Amplitude from 'expo-analytics-amplitude';
 import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
-import { listItems } from '../config/featured';
 import { Text } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
 function FeaturedScreen({ navigation }) {
+  const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     StatusBar.setHidden(false);
+
+    // set the post data for the list up to today's date
+    const items = [];
+    const start = new Date(2020, 5, 15);
+    const today = new Date();
+    const timeDiff = today.getTime() - start.getTime();
+    const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
+
+    for (let i = 0; i < dayDiff; i++) {
+      const postDate = new Date(start);
+      const day = i + 1;
+
+      postDate.setDate(start.getDate() + i);
+      items.push({
+        value: `DAY ${day} - ${postDate.toLocaleDateString()}`,
+        slug: `day${day}-hopeproject`,
+      });
+    }
+
+    setPosts(items);
   }, []);
+
   return (
     <HeaderHeightContext.Consumer>
       {(headerHeight) => (
         <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
           <ImageBackground
+            progressiveRenderingEnabled
             source={{
               uri:
                 'https://echo.church/wp-content/uploads/2020/05/Hope-Project_TitleSlideFinal111.jpg',
@@ -34,6 +57,7 @@ function FeaturedScreen({ navigation }) {
             style={styles.backgroundImage}
           />
           <Image
+            progressiveRenderingEnabled
             source={{
               uri:
                 'https://echo.church/wp-content/uploads/elementor/thumbs/HP_WhiteIcon-1-opizmnxv1bqwwsj6ih2c78mebgu69hsmb89bs0b45s.png',
@@ -42,7 +66,7 @@ function FeaturedScreen({ navigation }) {
           />
           <FlatList
             keyExtractor={({ value }) => value}
-            data={listItems}
+            data={posts}
             ItemSeparatorComponent={({ highlighted }) => (
               <View
                 style={[styles.separator, highlighted && { marginLeft: 0 }]}
@@ -103,6 +127,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     opacity: 0.5,
+    backgroundColor: Colors.blue,
   },
   logo: {
     width: 100,
