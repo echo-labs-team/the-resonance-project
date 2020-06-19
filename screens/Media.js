@@ -15,7 +15,11 @@ import { useScrollToTop, useNavigation } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import { fetchChannelSection, fetchPlaylists } from '../data/youtube';
+import {
+  fetchChannelSection,
+  fetchPlaylists,
+  fetchPlaylistsWrapper,
+} from '../data/youtube';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import isTheWeekend from '../utils/isTheWeekend';
@@ -56,7 +60,7 @@ const MediaScreen = () => {
       }
 
       const channelSection = await fetchChannelSection();
-      const playlists = await fetchPlaylists(channelSection);
+      const playlists = await fetchPlaylistsWrapper(channelSection);
 
       setData(playlists);
       setLoading(false);
@@ -112,7 +116,7 @@ const MediaScreen = () => {
   };
 
   const YouTubeDataView = ({ item = {}, style, thumbnailStyle } = {}) => {
-    const { thumbnails: { maxres = {} } = {} } = item;
+    const { title, thumbnails: { maxres = {} } = {} } = item;
 
     return (
       <TouchableOpacity
@@ -121,11 +125,23 @@ const MediaScreen = () => {
         }}
       >
         <View style={style}>
-          <Image
-            source={{ uri: maxres.url }}
-            style={thumbnailStyle}
-            resizeMode="cover"
-          />
+          {maxres.url ? (
+            <Image
+              source={{ uri: maxres.url }}
+              style={thumbnailStyle}
+              resizeMode="cover"
+            />
+          ) : (
+            <Text
+              style={{
+                color: Colors.darkestGray,
+                margin: 8,
+                textAlign: 'center',
+              }}
+            >
+              {title}
+            </Text>
+          )}
         </View>
       </TouchableOpacity>
     );
@@ -275,7 +291,12 @@ const styles = StyleSheet.create({
     height: (2 * (screenWidth - 48)) / 7,
     marginBottom: 32,
     marginLeft: 16,
-    borderRadius: 0,
+    borderRadius: 8,
+    backgroundColor: Colors.white,
+    overflow: 'hidden',
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   notesButton: {
     margin: 16,
@@ -284,6 +305,7 @@ const styles = StyleSheet.create({
   },
   youtubeThumbnailImageSmall: {
     flex: 1,
+    backgroundColor: Colors.white,
     height: undefined,
     width: (screenWidth - 48) / 2,
     borderRadius: 8,

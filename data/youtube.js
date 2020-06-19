@@ -59,6 +59,26 @@ export async function fetchChannelSection() {
 }
 
 /**
+ * Fetch playlists, but modify thumbnails because
+ * of https://issuetracker.google.com/issues/134417363#comment2
+ * @param {String} channelSectionPlaylistIDs a playlist ID
+ */
+export async function fetchPlaylistsWrapper(channelSectionPlaylistIDs) {
+  const playlists = await fetchPlaylists(channelSectionPlaylistIDs);
+  const playlistFirstItems = playlists.map(({ title, playlistId } = {}) => {
+    return fetchPlaylistItems(playlistId, 1).then((result) => {
+      return {
+        title,
+        id: playlistId,
+        thumbnails: result[0].thumbnails,
+      };
+    });
+  });
+  const result = await Promise.all(playlistFirstItems);
+  return result;
+}
+
+/**
  * Fetch playlists
  * https://developers.google.com/youtube/v3/docs/playlists/list
  * @param {String} channelSectionPlaylistIDs a playlist ID
@@ -74,64 +94,24 @@ export async function fetchPlaylists(channelSectionPlaylistIDs) {
     });
   });
 
-  // To extract the thumbnail as a workaround for
-  // https://issuetracker.google.com/issues/134417363#comment2
-  const playlistListItems = channelSectionPlaylistIDs.map((id = '') => {
-    return axios.get(`${url}/playlistItems`, {
-      params: {
-        playlistId: id,
-        key: API_KEY,
-        part: 'id,snippet',
-        maxResults: 1,
-      },
-    });
-  });
-
   const result = await Promise.all(playlists);
-  const playlistListItemsResult = await Promise.all(playlistListItems);
 
   if (!result.length) {
     throw new Error('No playlist data');
   }
 
-  if (!playlistListItemsResult.length) {
-    throw new Error('No playlist items data');
-  }
-
-  const playlistItems = playlistListItemsResult.map(
-    ({ data: { items } } = {}) => {
-      const {
-        snippet: { playlistId = '', thumbnails = {}, title = '' } = {},
-      } = items[0];
-      return {
-        title,
-        playlistId,
-        thumbnails,
-      };
-    }
-  );
-
   return result
     .map(({ data: { items } } = {}) => {
       const {
         id,
-        snippet: { publishedAt, title },
+        snippet: { publishedAt, title, thumbnails },
       } = items[0];
-      const playlistItem = playlistItems.filter(
-        ({ playlistId } = {}) => playlistId === id
-      )[0];
-
-      if (!playlistItem) {
-        throw new Error('No playlist item after filtering');
-      }
-      console.log(
-        `title: ${title} item title: ${playlistItem.title}, Thumbnails: ${playlistItem.thumbnails?.maxres?.url}`
-      );
       return {
+        playlistId: id,
         publishDate: publishedAt,
         id,
         title,
-        thumbnails: playlistItem.thumbnails,
+        thumbnails,
       };
     })
     .sort(sortByDate);
@@ -142,12 +122,12 @@ export async function fetchPlaylists(channelSectionPlaylistIDs) {
  * https://developers.google.com/youtube/v3/docs/playlistItems/list
  * @param {String} playlistId the playlist ID to get videos
  */
-export async function fetchPlaylistItems(playlistId) {
+export async function fetchPlaylistItems(playlistId, maxResults) {
   const { data = {} } =
     (await axios.get(`${url}/playlistItems`, {
       params: {
         key: API_KEY,
-        maxResults: 30, // ? 🤔 not sure the max # of videos in series playlists
+        maxResults,
         part: 'id,snippet',
         playlistId,
       },
@@ -173,6 +153,7 @@ export async function fetchPlaylistItems(playlistId) {
     return {
       id: videoId,
       publishDate: publishedAt,
+      playlistId,
       title,
       description,
       thumbnails,
