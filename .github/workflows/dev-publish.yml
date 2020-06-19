@@ -37,5 +37,5 @@ jobs:
         expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
         expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
     - run: npm install
-    - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',}" > constants/Keys.js
+    - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha:0:7 }}',}" > constants/Keys.js
     - run: npm run publish
