@@ -70,8 +70,8 @@ const GivingScreen = () => {
           style={styles.button}
         />
         <Button
-          title={`build ${Keys.GITHUB_SHA}`}
-          onPress={() => Clipboard.setString(Keys.GITHUB_SHA)}
+          title={`build ${Keys.GITHUB_SHA.substring(0,7)}`}
+          onPress={() => Clipboard.setString(Keys.GITHUB_SHA.substring(0,7))}
           style={styles.sha_button}
           textStyle={{ color: 'rgba(255, 255, 255, 0.20)', fontSize: 14 }}
         />
