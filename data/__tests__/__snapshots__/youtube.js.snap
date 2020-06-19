@@ -1,5 +1,64 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`should fetch a playlist 1`] = `
+Array [
+  Object {
+    "id": "id",
+    "playlistId": "id",
+    "publishDate": "2020-04-04T00:00:00Z",
+    "thumbnails": Array [
+      Object {},
+    ],
+    "title": "Playlist Title",
+  },
+  Object {
+    "id": "id",
+    "playlistId": "id",
+    "publishDate": "2020-04-04T00:00:00Z",
+    "thumbnails": Array [
+      Object {},
+    ],
+    "title": "Playlist Title",
+  },
+  Object {
+    "id": "id",
+    "playlistId": "id",
+    "publishDate": "2020-04-04T00:00:00Z",
+    "thumbnails": Array [
+      Object {},
+    ],
+    "title": "Playlist Title",
+  },
+  Object {
+    "id": "id",
+    "playlistId": "id",
+    "publishDate": "2020-04-04T00:00:00Z",
+    "thumbnails": Array [
+      Object {},
+    ],
+    "title": "Playlist Title",
+  },
+  Object {
+    "id": "id",
+    "playlistId": "id",
+    "publishDate": "2020-04-04T00:00:00Z",
+    "thumbnails": Array [
+      Object {},
+    ],
+    "title": "Playlist Title",
+  },
+  Object {
+    "id": "id",
+    "playlistId": "id",
+    "publishDate": "2020-04-04T00:00:00Z",
+    "thumbnails": Array [
+      Object {},
+    ],
+    "title": "Playlist Title",
+  },
+]
+`;
+
 exports[`should fetch channel sections 1`] = `
 Array [
   "PL8cDVrurCVqMDEP9wiPCgvuZslIGkE_5M",
