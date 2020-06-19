@@ -41,7 +41,7 @@ function FeaturedScreen({ navigation }) {
       });
     }
 
-    setPosts(items);
+    setPosts(items.reverse());
   }, []);
 
   return (
