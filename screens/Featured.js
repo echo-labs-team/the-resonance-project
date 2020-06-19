@@ -11,13 +11,12 @@ import {
 import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
-import { Feather } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import { Text } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
-function FeaturedScreen({ navigation }) {
+function FeaturedScreen() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -67,28 +66,30 @@ function FeaturedScreen({ navigation }) {
           <FlatList
             keyExtractor={({ value }) => value}
             data={posts}
-            ItemSeparatorComponent={({ highlighted }) => (
-              <View
-                style={[styles.separator, highlighted && { marginLeft: 0 }]}
-              />
-            )}
+            ItemSeparatorComponent={() => <View style={[styles.separator]} />}
             renderItem={({ item = {} }) => (
               <TouchableHighlight
-                underlayColor="transparent"
+                style={styles.item}
+                underlayColor={Colors.blue}
                 onPress={() => {
                   Amplitude.logEvent(`OPEN ${item.value}`);
-                  navigation.navigate('FeaturedDetails', item);
+                  WebBrowser.openBrowserAsync(
+                    `https://echo.church/${item.slug}`,
+                    {
+                      toolbarColor: Colors.darkestGray,
+                    }
+                  ).catch((err) => {
+                    Amplitude.logEventWithProperties('ERROR with WebBrowser', {
+                      error: err,
+                    });
+                    WebBrowser.dismissBrowser();
+                  });
                 }}
               >
-                <View style={styles.item}>
+                <View>
                   <Text L bold style={styles.text}>
                     {item.value}
                   </Text>
-                  <Feather
-                    name={'chevron-right'}
-                    size={30}
-                    color={Colors.white}
-                  />
                 </View>
               </TouchableHighlight>
             )}
@@ -132,23 +133,23 @@ const styles = StyleSheet.create({
   logo: {
     width: 100,
     height: 100,
-    marginTop: 6,
+    marginTop: 10,
     alignSelf: 'center',
   },
   list: {
-    paddingTop: 4,
+    paddingTop: 10,
     paddingBottom: 20,
   },
   separator: {
-    height: 0.5,
-    marginLeft: 20,
-    backgroundColor: Colors.blue,
+    height: 20,
   },
   item: {
-    paddingHorizontal: 10,
-    flexDirection: 'row',
+    marginHorizontal: 10,
+    paddingVertical: 10,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    borderRadius: 16,
+    backgroundColor: Colors.darkGray,
   },
   text: {
     paddingVertical: 10,
