@@ -16,6 +16,8 @@ import GroupsLogo from '../components/GroupsLogo';
  * Home Tab
  */
 import HomeScreen from '../screens/Home';
+import FeaturedScreen from '../screens/Featured';
+import FeaturedDetailsScreen from '../screens/FeaturedDetails';
 
 /**
  * Media Tab
@@ -80,6 +82,33 @@ const defaultOptions = {
   },
 };
 
+const HomeStack = createStackNavigator();
+
+function HomeStackScreen() {
+  return (
+    <HomeStack.Navigator>
+      <HomeStack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <HomeStack.Screen
+        name="Featured"
+        component={FeaturedScreen}
+        options={{ ...defaultOptions, title: 'Hope Project' }}
+      />
+      <HomeStack.Screen
+        name="FeaturedDetails"
+        component={FeaturedDetailsScreen}
+        options={({ route }) => ({
+          ...defaultOptions,
+          title: route.params.value,
+        })}
+      />
+    </HomeStack.Navigator>
+  );
+}
+
 const MediaStack = createStackNavigator();
 
 function MediaStackScreen() {
@@ -90,7 +119,7 @@ function MediaStackScreen() {
         component={MediaScreen}
         options={{ headerShown: false }}
       />
-      <ConnectStack.Screen
+      <MediaStack.Screen
         name="Playlist"
         component={PlaylistScreen}
         options={defaultOptions}
@@ -187,7 +216,7 @@ export default function App() {
       >
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={HomeStackScreen}
           options={{
             tabBarLabel: 'ECHO',
             tabBarIcon: ({ size, color }) => (

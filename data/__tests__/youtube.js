@@ -23,20 +23,6 @@ test('should fetch channel sections', async () => {
       items: [
         {
           kind: 'youtube#channelSection',
-          etag: 'etag-0',
-          id: '0',
-          snippet: {
-            type: 'singlePlaylist',
-            style: 'horizontalRow',
-            channelId: 'UCjycPAZuveusvPrk94-ClBw',
-            position: 0,
-          },
-          contentDetails: {
-            playlists: ['PL8cDVrurCVqOTS6Yaqd7mUu2XhNGHa5Pn'],
-          },
-        },
-        {
-          kind: 'youtube#channelSection',
           etag: 'etag-1',
           id: '1',
           snippet: {
@@ -58,20 +44,6 @@ test('should fetch channel sections', async () => {
               'PL8cDVrurCVqNrhEI2KZqn2GCyMrq967xV',
               'PL8cDVrurCVqNX0hof1GEmDbIVSHP4xMUs',
             ],
-          },
-        },
-        {
-          kind: 'youtube#channelSection',
-          etag: 'etag-2',
-          id: '2',
-          snippet: {
-            type: 'singlePlaylist',
-            style: 'horizontalRow',
-            channelId: 'UCjycPAZuveusvPrk94-ClBw',
-            position: 2,
-          },
-          contentDetails: {
-            playlists: ['PL8cDVrurCVqPua3di3k-VWH21W5Lkt7NT'],
           },
         },
       ],

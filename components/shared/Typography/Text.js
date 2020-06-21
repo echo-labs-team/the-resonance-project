@@ -49,7 +49,7 @@ export function Text(props) {
       {...props}
       style={[
         {
-          fontFamily: `NunitoSans-${fontWeight}`,
+          fontFamily: `NunitoSans-${fontWeight}${props.italic ? 'Italic' : ''}`,
           textAlign: props.center ? 'center' : 'auto',
           color: Colors.lightGray, // ! use theme to determine this
           ...fontRhythm,
