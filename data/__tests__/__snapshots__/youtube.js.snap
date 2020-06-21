@@ -4,6 +4,7 @@ exports[`should fetch a playlist 1`] = `
 Array [
   Object {
     "id": "id",
+    "playlistId": "id",
     "publishDate": "2020-04-04T00:00:00Z",
     "thumbnails": Array [
       Object {},
@@ -12,6 +13,7 @@ Array [
   },
   Object {
     "id": "id",
+    "playlistId": "id",
     "publishDate": "2020-04-04T00:00:00Z",
     "thumbnails": Array [
       Object {},
@@ -20,6 +22,7 @@ Array [
   },
   Object {
     "id": "id",
+    "playlistId": "id",
     "publishDate": "2020-04-04T00:00:00Z",
     "thumbnails": Array [
       Object {},
@@ -28,6 +31,7 @@ Array [
   },
   Object {
     "id": "id",
+    "playlistId": "id",
     "publishDate": "2020-04-04T00:00:00Z",
     "thumbnails": Array [
       Object {},
@@ -36,6 +40,7 @@ Array [
   },
   Object {
     "id": "id",
+    "playlistId": "id",
     "publishDate": "2020-04-04T00:00:00Z",
     "thumbnails": Array [
       Object {},
@@ -44,6 +49,7 @@ Array [
   },
   Object {
     "id": "id",
+    "playlistId": "id",
     "publishDate": "2020-04-04T00:00:00Z",
     "thumbnails": Array [
       Object {},

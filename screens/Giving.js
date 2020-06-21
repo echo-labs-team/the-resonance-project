@@ -5,6 +5,7 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  Clipboard,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -13,6 +14,7 @@ import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
+import Keys from '../constants/Keys';
 
 const handleGive = (campus) => {
   Amplitude.logEvent(`TAP Giving ${campus}`);
@@ -67,6 +69,12 @@ const GivingScreen = () => {
           onPress={() => handleGive('online')}
           style={styles.button}
         />
+        <Button
+          title={`build ${Keys.GITHUB_SHA.substring(0,7)}`}
+          onPress={() => Clipboard.setString(Keys.GITHUB_SHA.substring(0,7))}
+          style={styles.sha_button}
+          textStyle={{ color: 'rgba(255, 255, 255, 0.20)', fontSize: 14 }}
+        />
       </ScrollView>
     </View>
   );
@@ -96,6 +104,11 @@ const styles = StyleSheet.create({
   },
   content: { marginBottom: 20 },
   button: { marginVertical: 10 },
+  sha_button: {
+    minHeight: 15,
+    marginVertical: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+  },
 });
 
 export default GivingScreen;

@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
-import axios from 'axios';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import htmlParser from 'fast-html-parser';
@@ -30,23 +29,60 @@ const getStoredMissionsData = () => {
   return AsyncStorage.getItem('@missions').catch((err) => console.error(err));
 };
 
+function CurrentMissions({ loading, missions }) {
+  if (loading) {
+    return (
+      <Placeholder
+        Animation={(props) => (
+          <Fade {...props} style={{ backgroundColor: Colors.darkGray }} />
+        )}
+      >
+        <PlaceholderLine height={40} style={styles.loader} />
+      </Placeholder>
+    );
+  }
+
+  if (missions) {
+    return <Heading>{missions}</Heading>;
+  }
+
+  return <Text>Learn more about our global strategic partnerships.</Text>;
+}
+
 const MissionsScreen = () => {
+  const [loading, setLoading] = useState(false);
   const [missions, setMissions] = useState('');
 
   useEffect(() => {
     const getMissionsContent = async () => {
+      setLoading(true);
+
       const storedMissionsData = await getStoredMissionsData();
 
       if (storedMissionsData) {
         setMissions(storedMissionsData);
+        setLoading(false);
       }
 
       // get data from the missions page in WordPress
-      const { data = [] } =
-        (await axios.get(
-          'http://echo.church/wp-json/wp/v2/pages?slug=missions'
-        )) || {};
-      const [{ content: { rendered = '' } = {} } = {}] = data;
+      const data = await fetch(
+        'https://echo.church/wp-json/wp/v2/pages?slug=missions',
+        {
+          method: 'GET',
+          headers: {
+            'content-type': 'application/json',
+            accept: 'application/json',
+          },
+        }
+      ).then((res) => res.json());
+      const [{ content: { rendered = '' } = {} } = {}] = data || [];
+
+      if (!rendered && !storedMissionsData) {
+        setMissions('');
+        setLoading(false);
+        Amplitude.logEventWithProperties('ERROR loading missions', { data });
+        return;
+      }
 
       // parse the HTML that we get back
       const $ = htmlParser.parse(rendered);
@@ -63,6 +99,7 @@ const MissionsScreen = () => {
 
       setMissions(places);
       storeMissionsData(places);
+      setLoading(false);
     };
 
     getMissionsContent();
@@ -88,20 +125,7 @@ const MissionsScreen = () => {
             </Text>
 
             <Subtitle>Current mission trips</Subtitle>
-            {missions ? (
-              <Heading>{missions}</Heading>
-            ) : (
-              <Placeholder
-                Animation={(props) => (
-                  <Fade
-                    {...props}
-                    style={{ backgroundColor: Colors.darkGray }}
-                  />
-                )}
-              >
-                <PlaceholderLine height={40} style={styles.loader} />
-              </Placeholder>
-            )}
+            <CurrentMissions loading={loading} missions={missions} />
 
             <Button
               title="Learn More"

@@ -227,7 +227,7 @@ PODS:
   - React-jsinspector (0.61.5)
   - react-native-safe-area-context (0.7.3):
     - React
-  - react-native-webview (8.1.2):
+  - react-native-webview (10.3.1):
     - React
   - React-RCTActionSheet (0.61.5):
     - React-Core/RCTActionSheetHeaders (= 0.61.5)
@@ -270,7 +270,7 @@ PODS:
     - React
   - RNReanimated (1.9.0):
     - React
-  - RNScreens (2.7.0):
+  - RNScreens (2.8.0):
     - React
   - RNSVG (12.1.0):
     - React
@@ -518,7 +518,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
-  react-native-webview: 055c7110f17c2f19c971f655064ee480638db668
+  react-native-webview: 938d49de66f0d5c95134f19682243cbe53294f51
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360
   React-RCTBlob: d89293cc0236d9cb0933d85e430b0bbe81ad1d72
@@ -532,7 +532,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
-  RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
+  RNScreens: 62211832af51e0aebcf6e8c36bcf7dd65592f244
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   UMAppLoader: ae5eaee9f3c8cc847c631a579fed20d217de5913
   UMBarCodeScannerInterface: aa3409ab9d108866e55c09ad0292e4a6c08a7775
@@ -551,4 +551,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 7f4c21e9567b9edf7b64e41ed7613898a792497c
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

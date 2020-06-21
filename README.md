@@ -2,6 +2,7 @@
 
 ![License](https://img.shields.io/github/license/echo-labs-team/the-resonance-project)
 ![Dev Publish](https://github.com/echo-labs-team/the-resonance-project/workflows/Dev%20Publish/badge.svg?branch=dev)
+![Production Publish](https://github.com/echo-labs-team/the-resonance-project/workflows/Production%20Publish/badge.svg)
 
 A React Native application for Echo.Church built by volunteers
 
