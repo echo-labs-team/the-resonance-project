@@ -47,7 +47,7 @@ export async function fetchChannelSection() {
     })) || {};
 
   const channelSectionPlaylistIDs =
-    data?.items[0]?.contentDetails?.playlists || [];
+    data?.items?.[0]?.contentDetails?.playlists || [];
 
   if (!channelSectionPlaylistIDs.length) {
     throw new Error('No playlists for in channel section');
