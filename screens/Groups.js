@@ -187,9 +187,6 @@ const GroupsScreen = () => {
         : true) &&
       (categoriesFilter.length
         ? categoriesFilter.some((category) => {
-            if (category === 'Co-Ed / General') {
-              category = 'co-ed';
-            }
             return groupCategories
               .map((cat) => cat?.toLowerCase())
               .includes(category?.toLowerCase());

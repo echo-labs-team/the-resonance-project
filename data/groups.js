@@ -10,8 +10,8 @@ const isFeaturedGroup = (groupName) =>
 
 export async function getCategories() {
   const { data, status } =
-    (await axios.get(`${baseURL}/groups/categories`).catch((err) =>
-      Amplitude.logEventWithProperties('ERROR hitting `/groups/categories`', {
+    (await axios.get(`${baseURL}/groups/rock-categories`, {}).catch((err) =>
+      Amplitude.logEventWithProperties('ERROR getting group categories', {
         error: err,
       })
     )) || {};
@@ -33,9 +33,6 @@ export async function getCategories() {
       }
       if (name === 'Easter') {
         return false;
-      }
-      if (name === 'Co-Ed') {
-        return 'Co-Ed / General';
       }
 
       return name;
