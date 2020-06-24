@@ -24,7 +24,7 @@ function FeaturedScreen() {
 
     // set the post data for the list up to today's date
     const items = [];
-    const start = new Date(2020, 5, 15);
+    const start = new Date('June 14, 2020 12:00:00');
     const today = new Date();
     const timeDiff = today.getTime() - start.getTime();
     const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
@@ -137,8 +137,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   list: {
-    paddingTop: 10,
-    paddingBottom: 20,
+    marginTop: 10,
   },
   separator: {
     height: 20,
@@ -156,7 +155,11 @@ const styles = StyleSheet.create({
     paddingLeft: 8,
     color: Colors.white,
   },
-  button: { marginVertical: 10, marginHorizontal: 10 },
+  button: {
+    marginTop: 20,
+    marginHorizontal: 10,
+    marginBottom: 10,
+  },
 });
 
 export default FeaturedScreen;
