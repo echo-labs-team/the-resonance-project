@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/stack';
-import { Placeholder, PlaceholderLine, Fade } from 'rn-placeholder';
+import ContentLoader, { Rect } from 'react-content-loader/native';
 import * as WebBrowser from 'expo-web-browser';
 import * as Amplitude from 'expo-analytics-amplitude';
 import htmlParser from 'fast-html-parser';
@@ -32,13 +32,17 @@ const getStoredMissionsData = () => {
 function CurrentMissions({ loading, missions }) {
   if (loading) {
     return (
-      <Placeholder
-        Animation={(props) => (
-          <Fade {...props} style={{ backgroundColor: Colors.darkGray }} />
-        )}
+      <ContentLoader
+        height={48}
+        viewBox="0 0 300 48"
+        backgroundColor={Colors.darkGray}
+        foregroundColor={Colors.darkerGray}
+        preserveAspectRatio="none"
       >
-        <PlaceholderLine height={40} style={styles.loader} />
-      </Placeholder>
+        {/* title & content */}
+        <Rect x="0" y="4" rx="3" ry="3" width="95%" height="16" />
+        <Rect x="0" y="32" rx="3" ry="3" width="60%" height="16" />
+      </ContentLoader>
     );
   }
 

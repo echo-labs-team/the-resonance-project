@@ -24,9 +24,10 @@ function FeaturedScreen() {
 
     // set the post data for the list up to today's date
     const items = [];
-    const start = new Date('June 14, 2020 12:00:00');
+    const start = new Date('June 15, 2020');
     const today = new Date();
-    const timeDiff = today.getTime() - start.getTime();
+    const timeDiff =
+      today.getTime() - new Date('June 14, 2020 12:00:00').getTime();
     const dayDiff = Math.round(timeDiff / (1000 * 3600 * 24));
 
     for (let i = 0; i < dayDiff; i++) {

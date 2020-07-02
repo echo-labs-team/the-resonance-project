@@ -117,17 +117,13 @@ const HomeScreen = () => {
         <FeaturedCard />
 
         {cardData.length ? (
-          cardData.map((item, index) => {
-            if (item?.url?.includes('loading')) {
-              return (
-                <HomeCardPlaceholder
-                  key={`placeholder${index}`}
-                  style={{ marginBottom: 16 }}
-                />
-              );
-            }
-            return <Card key={`card${index}`} {...item} />;
-          })
+          cardData.map((item, index) =>
+            item?.url?.includes('loading') ? (
+              <HomeCardPlaceholder key={`placeholder${index}`} />
+            ) : (
+              <Card key={`card${index}`} {...item} />
+            )
+          )
         ) : (
           <>
             <Subtitle center style={styles.error}>

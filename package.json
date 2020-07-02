@@ -38,6 +38,7 @@
     "formik": "^2.1.4",
     "html-entities": "^1.2.1",
     "react": "~16.9.0",
+    "react-content-loader": "^5.1.0",
     "react-dom": "~16.13.0",
     "react-native": "~0.61.5",
     "react-native-dropdownalert": "^4.1.0",
@@ -52,8 +53,7 @@
     "react-native-svg": "12.1.0",
     "react-native-unimodules": "~0.9.1",
     "react-native-web": "~0.12.2",
-    "react-native-webview": "^10.3.1",
-    "rn-placeholder": "^3.0.0"
+    "react-native-webview": "^10.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
