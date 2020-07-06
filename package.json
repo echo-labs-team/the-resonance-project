@@ -28,7 +28,7 @@
     "axios": "^0.19.0",
     "expo": "^37.0.11",
     "expo-analytics-amplitude": "~8.1.0",
-    "expo-asset": "~8.1.5",
+    "expo-asset": "~8.1.7",
     "expo-blur": "~8.1.0",
     "expo-font": "~8.1.0",
     "expo-splash-screen": "^0.2.3",
