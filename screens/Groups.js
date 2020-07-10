@@ -187,9 +187,6 @@ const GroupsScreen = () => {
         : true) &&
       (categoriesFilter.length
         ? categoriesFilter.some((category) => {
-            if (category === 'Co-Ed / General') {
-              category = 'co-ed';
-            }
             return groupCategories
               .map((cat) => cat?.toLowerCase())
               .includes(category?.toLowerCase());
@@ -287,9 +284,7 @@ const GroupsScreen = () => {
               ref={ref}
               keyExtractor={({ uuid }) => uuid.toString()}
               data={data}
-              renderItem={({ item }) => {
-                return <Card item={item} />;
-              }}
+              renderItem={({ item }) => <Card item={item} />}
               refreshControl={
                 <RefreshControl
                   tintColor={Colors.gray}

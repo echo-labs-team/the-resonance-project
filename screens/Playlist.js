@@ -59,7 +59,7 @@ const PlaylistScreen = ({ navigation, route }) => {
         setLoading(false);
       }
 
-      const fetchedVideos = await fetchPlaylistItems(playlistID);
+      const fetchedVideos = await fetchPlaylistItems(playlistID, 10);
 
       setData(fetchedVideos);
       setLoading(false);
@@ -122,7 +122,11 @@ const PlaylistScreen = ({ navigation, route }) => {
         <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
           <ScrollView>
             <Image
-              source={{ uri: playlistURI }}
+              source={
+                playlistURI
+                  ? { uri: playlistURI }
+                  : require('../assets/images/splash.png')
+              }
               style={styles.image}
               resizeMode="cover"
             />
@@ -142,7 +146,11 @@ const PlaylistScreen = ({ navigation, route }) => {
                 >
                   <View style={styles.item}>
                     <Image
-                      source={{ uri: maxres.url }}
+                      source={
+                        maxres.url
+                          ? { uri: maxres.url }
+                          : require('../assets/images/splash.png')
+                      }
                       style={styles.thumbnailStyle}
                       resizeMode="cover"
                     />
