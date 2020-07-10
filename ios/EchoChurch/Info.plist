@@ -68,6 +68,11 @@
 	<string>Give Echo.Church periences permission to access your photos</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>Allow Echo.Church to access your reminders</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

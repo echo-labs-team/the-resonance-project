@@ -8,7 +8,7 @@ PODS:
     - UMCore
   - EXBlur (8.1.0):
     - UMCore
-  - EXConstants (9.0.0):
+  - EXConstants (9.1.1):
     - UMConstantsInterface
     - UMCore
   - EXErrorRecovery (1.1.0):
@@ -39,7 +39,7 @@ PODS:
   - EXSQLite (8.1.0):
     - UMCore
     - UMFileSystemInterface
-  - EXUpdates (0.2.7):
+  - EXUpdates (0.2.9):
     - React
     - UMCore
   - EXWebBrowser (8.2.1):
@@ -62,6 +62,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
+  - OneSignal (2.14.3)
   - RCTRequired (0.61.5)
   - RCTTypeSafety (0.61.5):
     - FBLazyVector (= 0.61.5)
@@ -225,6 +226,9 @@ PODS:
     - React-cxxreact (= 0.61.5)
     - React-jsi (= 0.61.5)
   - React-jsinspector (0.61.5)
+  - react-native-onesignal (3.9.0):
+    - OneSignal (= 2.14.3)
+    - React (< 1.0.0, >= 0.13.0)
   - react-native-safe-area-context (0.7.3):
     - React
   - react-native-webview (8.1.2):
@@ -270,9 +274,9 @@ PODS:
     - React
   - RNReanimated (1.9.0):
     - React
-  - RNScreens (2.7.0):
+  - RNScreens (2.8.0):
     - React
-  - RNSVG (11.0.1):
+  - RNSVG (12.1.0):
     - React
   - UMAppLoader (1.0.2)
   - UMBarCodeScannerInterface (5.1.0)
@@ -297,7 +301,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXAmplitude (from `../node_modules/expo-analytics-amplitude/ios`)
   - EXBlur (from `../node_modules/expo-blur/ios`)
-  - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXConstants (from `../node_modules/expo-linking/node_modules/expo-constants/ios`)
   - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
@@ -314,6 +318,7 @@ DEPENDENCIES:
   - FBReactNativeSpec (from `../node_modules/react-native/Libraries/FBReactNativeSpec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - OneSignal (< 3.0, >= 2.9.3)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -325,6 +330,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-onesignal (from `../node_modules/react-native-onesignal`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -362,6 +368,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Amplitude-iOS
     - boost-for-react-native
+    - OneSignal
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -371,7 +378,7 @@ EXTERNAL SOURCES:
   EXBlur:
     :path: "../node_modules/expo-blur/ios"
   EXConstants:
-    :path: "../node_modules/expo-constants/ios"
+    :path: "../node_modules/expo-linking/node_modules/expo-constants/ios"
   EXErrorRecovery:
     :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
@@ -422,6 +429,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-onesignal:
+    :path: "../node_modules/react-native-onesignal"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-webview:
@@ -491,7 +500,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
   EXAmplitude: ccf4141ef2c4c7e2075a27cc17790a2c48ac1ea1
   EXBlur: bcc7a55f55c2915ffd7662449e89ecbdd6bf91b9
-  EXConstants: 9f18e9ef229706394f41735d9c7f309d479b36c0
+  EXConstants: c2c6d5805520a34f274e09b778404310c52b118f
   EXErrorRecovery: 88541714d9bbf8a823f4ee0b7078a92d3e0e42d2
   EXFileSystem: b82693d78de152efe10a77d4aac781f782e10916
   EXFont: af4c3281cac0bf6ccd8b8a534e9bce6437cc2e17
@@ -502,12 +511,13 @@ SPEC CHECKSUMS:
   EXPermissions: d2cafee9c72578ecc9ca121481e6c4a04a798861
   EXSplashScreen: 6888f24a847a2cdbf5ca4d996300adf9cc2726b4
   EXSQLite: 15268ec49f859e4594fe5b0a1c7a47913da0b67e
-  EXUpdates: 1b470c19c03f149aec214d291e1c89b04acd7519
+  EXUpdates: ea5bf562a1694b917bdceb269e84dfa084783efb
   EXWebBrowser: 6364e9e1ea73f6c3c2e6e3cc0ac17259a260e3a8
   FBLazyVector: aaeaf388755e4f29cd74acbc9e3b8da6d807c37f
   FBReactNativeSpec: 118d0d177724c2d67f08a59136eb29ef5943ec75
   Folly: 30e7936e1c45c08d884aa59369ed951a8e68cf51
   glog: 1f3da668190260b06b429bb211bfbee5cd790c28
+  OneSignal: 7dfe466265c05f02b95a274b9c997a0619ad2117
   RCTRequired: b153add4da6e7dbc44aebf93f3cf4fcae392ddf1
   RCTTypeSafety: 9aa1b91d7f9310fc6eadc3cf95126ffe818af320
   React: b6a59ef847b2b40bb6e0180a97d0ca716969ac78
@@ -517,6 +527,7 @@ SPEC CHECKSUMS:
   React-jsi: cb2cd74d7ccf4cffb071a46833613edc79cdf8f7
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
+  react-native-onesignal: 3cb529f99353f5765ca3ce305c9e8c583fd54c81
   react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
   react-native-webview: 055c7110f17c2f19c971f655064ee480638db668
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
@@ -532,8 +543,8 @@ SPEC CHECKSUMS:
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNReanimated: b5ccb50650ba06f6e749c7c329a1bc3ae0c88b43
-  RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
-  RNSVG: 67f1f12dae2cef6ed59a42cae74a6b8f5a9e7b46
+  RNScreens: 62211832af51e0aebcf6e8c36bcf7dd65592f244
+  RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   UMAppLoader: ae5eaee9f3c8cc847c631a579fed20d217de5913
   UMBarCodeScannerInterface: aa3409ab9d108866e55c09ad0292e4a6c08a7775
   UMCameraInterface: 9d5da92c521e0af7815afbf77ea19bd0312b4928
@@ -549,6 +560,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 4e6c4c34a89512e2225d336154df1cb689226a29
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 7f4c21e9567b9edf7b64e41ed7613898a792497c
+PODFILE CHECKSUM: 48bc27487dea75fc6d4b2497064268836cef88cc
 
 COCOAPODS: 1.7.5
