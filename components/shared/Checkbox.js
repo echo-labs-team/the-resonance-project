@@ -1,9 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as Svg from 'react-native-svg';
+import Svg, { Path } from 'react-native-svg';
 import Colors from '../../constants/Colors';
-
-const { Path } = Svg;
 
 export default ({ checked = false }) => {
   return (
@@ -13,7 +11,7 @@ export default ({ checked = false }) => {
         { backgroundColor: checked ? Colors.gray : 'transparent' },
       ]}
     >
-      <Svg.Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
+      <Svg width={24} height={24} viewBox="0 0 24 24" fill="none">
         {checked && (
           <Path
             strokeWidth={3}
@@ -23,7 +21,7 @@ export default ({ checked = false }) => {
             d="M22.9 3.7l-15.2 16.6-6.6-7.1"
           />
         )}
-      </Svg.Svg>
+      </Svg>
     </View>
   );
 };

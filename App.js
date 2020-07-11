@@ -33,17 +33,11 @@ if (!channel) {
 } else if (channel.indexOf('develop') !== -1) {
   // beta testing from the store--we want to log this to amplitude, but
   //  separate it out
-  Amplitude.logEvent = (name) => {
-    name = `BETA ${name}`;
-    console.log(`[amplitude]: ${name}`);
-    Amplitude.logEvent(name);
-  };
-  Amplitude.logEventWithProperties = (name, data) => {
-    name = `BETA ${name}`;
-    console.log(`[amplitude]: ${name}\n`, data);
-    Amplitude.logEventWithProperties(name, data);
-  };
-  emptyStorage();
+  const { logEvent, logEventWithProperties } = Amplitude;
+
+  Amplitude.logEvent = (name) => logEvent(`BETA ${name}`);
+  Amplitude.logEventWithProperties = (name, data) =>
+    logEventWithProperties(`BETA ${name}`, data);
 }
 
 if (

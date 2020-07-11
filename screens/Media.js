@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AsyncStorage,
   Dimensions,
   Image,
   Linking,
@@ -10,16 +9,13 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop, useNavigation } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import {
-  fetchChannelSection,
-  fetchPlaylists,
-  fetchPlaylistsWrapper,
-} from '../data/youtube';
+import { fetchChannelSection, fetchPlaylistsWrapper } from '../data/youtube';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import isTheWeekend from '../utils/isTheWeekend';
@@ -29,17 +25,10 @@ import Spinner from '../components/shared/Spinner';
 import LiveCard from '../components/LiveCard';
 
 const screenWidth = Dimensions.get('window').width;
-const storeMediaData = async (data) => {
-  await AsyncStorage.setItem('@media', JSON.stringify(data)).catch((err) =>
-    console.error(err)
-  );
-};
-const getStoredMedia = () => {
-  return AsyncStorage.getItem('@media').catch((err) => console.error(err));
-};
 
 const MediaScreen = () => {
   useHandleTabChange('Media');
+  const { getItem, setItem } = useAsyncStorage('@media');
   const insets = useSafeArea();
   const navigation = useNavigation();
   const ref = React.useRef(null);
@@ -52,7 +41,7 @@ const MediaScreen = () => {
 
   async function getPlaylists() {
     try {
-      const storedMedia = await getStoredMedia();
+      const storedMedia = await getItem();
 
       if (storedMedia) {
         setData(JSON.parse(storedMedia));
@@ -64,7 +53,7 @@ const MediaScreen = () => {
 
       setData(playlists);
       setLoading(false);
-      storeMediaData(playlists);
+      await setItem(JSON.stringify(playlists));
     } catch (err) {
       setError(true);
       setLoading(false);

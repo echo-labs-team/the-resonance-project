@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
+import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -36,6 +36,7 @@ const sortPosts = (firstPost = {}, secondPost = {}) => {
 
 const HomeScreen = () => {
   useHandleTabChange('Home');
+  const { removeItem } = useAsyncStorage('@posts');
   const insets = useSafeArea();
   const ref = React.useRef(null);
 
@@ -54,8 +55,8 @@ const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [tryAgain, setTryAgain] = useState(false);
 
-  useEffect(() => {
-    AsyncStorage.removeItem('@posts').catch((err) => console.log(err));
+  useEffect(async () => {
+    await removeItem().catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {

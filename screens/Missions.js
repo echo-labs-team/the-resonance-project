@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import {
-  AsyncStorage,
-  Image,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Image, ScrollView, StyleSheet, View } from 'react-native';
+import { useAsyncStorage } from '@react-native-community/async-storage';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import * as WebBrowser from 'expo-web-browser';
@@ -19,15 +14,6 @@ import {
   Heading,
 } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
-
-const storeMissionsData = async (missions) => {
-  await AsyncStorage.setItem('@missions', missions).catch((err) =>
-    console.error(err)
-  );
-};
-const getStoredMissionsData = () => {
-  return AsyncStorage.getItem('@missions').catch((err) => console.error(err));
-};
 
 function CurrentMissions({ loading, missions }) {
   if (loading) {
@@ -54,6 +40,7 @@ function CurrentMissions({ loading, missions }) {
 }
 
 const MissionsScreen = () => {
+  const { getItem, setItem } = useAsyncStorage('@missions');
   const [loading, setLoading] = useState(false);
   const [missions, setMissions] = useState('');
 
@@ -61,7 +48,7 @@ const MissionsScreen = () => {
     const getMissionsContent = async () => {
       setLoading(true);
 
-      const storedMissionsData = await getStoredMissionsData();
+      const storedMissionsData = await getItem();
 
       if (storedMissionsData) {
         setMissions(storedMissionsData);
@@ -102,7 +89,7 @@ const MissionsScreen = () => {
         .join(', ');
 
       setMissions(places);
-      storeMissionsData(places);
+      await setItem(places);
       setLoading(false);
     };
 
