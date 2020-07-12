@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/' } // Gradle Plugin Portal 
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.12.6, 0.99.99]'
+    }
+}
+
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
 apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
@@ -83,7 +94,7 @@ project.ext.react = [
 
 apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
 apply from: "../../node_modules/react-native/react.gradle"
-apply from: "../../node_modules/expo-updates/expo-updates.gradle"
+apply from: "../../node_modules/expo-updates/scripts/create-manifest-android.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:

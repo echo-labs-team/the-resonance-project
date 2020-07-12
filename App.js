@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import {
   AppState,
   AsyncStorage,
@@ -16,6 +16,7 @@ import resources from './resources';
 import keys from './constants/Keys';
 import AppNavigator from './navigation/AppNavigator';
 import Storybook from './storybook';
+import OneSignal from 'react-native-onesignal';
 
 Amplitude.initialize(keys.AMPLITUDE);
 
@@ -55,6 +56,17 @@ if (
 function App() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [showStorybook, setShowStorybook] = useState(false);
+
+  // Replace 'YOUR_ONESIGNAL_APP_ID' with your OneSignal App ID.
+  OneSignal.init(keys.ONESIGNAL_APP_ID, {
+    kOSSettingsKeyAutoPrompt: false,
+    kOSSettingsKeyInAppLaunchURL: false,
+    kOSSettingsKeyInFocusDisplayOption: 2,
+  });
+  OneSignal.inFocusDisplaying(2); // Controls what should happen if a notification is received while the app is open. 2 means that the notification will go directly to the device's notification center.
+
+  // The promptForPushNotifications function code will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step below)
+  OneSignal.promptForPushNotificationsWithUserResponse(() => {});
 
   /**
    * Log when our app
