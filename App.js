@@ -53,21 +53,6 @@ if (
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
-function onReceived(notification) {
-  console.log('Notification received: ', notification);
-}
-
-function onOpened(openResult) {
-  console.log('Message: ', openResult.notification.payload.body);
-  console.log('Data: ', openResult.notification.payload.additionalData);
-  console.log('isActive: ', openResult.notification.isAppInFocus);
-  console.log('openResult: ', openResult);
-}
-
-function onIds(device) {
-  console.log('Device info: ', device);
-}
-
 function App() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [showStorybook, setShowStorybook] = useState(false);
@@ -82,20 +67,6 @@ function App() {
 
   // The promptForPushNotifications function code will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step below)
   OneSignal.promptForPushNotificationsWithUserResponse();
-
-  useEffect(() => {
-    console.log('Mounting...');
-    OneSignal.addEventListener('received', onReceived);
-    OneSignal.addEventListener('opened', onOpened);
-    OneSignal.addEventListener('ids', onIds);
-    return () => {
-      // componentWillUnmount()
-      OneSignal.removeEventListener('received', onReceived);
-      OneSignal.removeEventListener('opened', onOpened);
-      OneSignal.removeEventListener('ids', onIds);
-      console.log('Un-Mounting!!!');
-    };
-  }, []);
 
   /**
    * Log when our app
