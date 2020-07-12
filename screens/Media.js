@@ -57,7 +57,9 @@ const MediaScreen = () => {
     } catch (err) {
       setError(true);
       setLoading(false);
-      Amplitude.logEventWithProperties('ERROR loading media', { error: err });
+      Amplitude.logEventWithProperties('ERROR loading media', {
+        error: err.message,
+      });
     }
   }
 
@@ -192,7 +194,7 @@ const MediaScreen = () => {
                 toolbarColor: Colors.darkestGray,
               }).catch((err) => {
                 Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                  error: err,
+                  error: err.message,
                 });
                 WebBrowser.dismissBrowser();
               });

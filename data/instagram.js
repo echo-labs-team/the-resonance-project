@@ -49,7 +49,7 @@ export async function getInstagramPosts() {
     });
   } catch (err) {
     Amplitude.logEventWithProperties('ERROR loading instagram posts', {
-      error: err,
+      error: err.message,
     });
   }
 

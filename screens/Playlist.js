@@ -59,7 +59,7 @@ const PlaylistScreen = ({ navigation, route }) => {
       setErrorMessage("Make sure you're connected to the internet.");
       setLoading(false);
       Amplitude.logEventWithProperties('ERROR loading playlist items', {
-        error: err,
+        error: err.message,
       });
     }
   }
