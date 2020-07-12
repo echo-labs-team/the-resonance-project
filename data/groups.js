@@ -12,7 +12,7 @@ export async function getCategories() {
   const { data, status } =
     (await axios.get(`${baseURL}/groups/rock-categories`, {}).catch((err) =>
       Amplitude.logEventWithProperties('ERROR getting group categories', {
-        error: err,
+        error: err.message,
       })
     )) || {};
 

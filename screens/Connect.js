@@ -26,7 +26,7 @@ function openBrowser({ title, url }) {
     toolbarColor: Colors.darkestGray,
   }).catch((err) => {
     Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-      error: err,
+      error: err.message,
     });
     WebBrowser.dismissBrowser();
   });

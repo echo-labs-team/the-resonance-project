@@ -24,7 +24,7 @@ export async function getBlogPosts() {
       )
       .catch((err) => {
         Amplitude.logEventWithProperties('ERROR loading blog posts', {
-          error: err,
+          error: err.message,
         });
       })) || {};
 
@@ -64,7 +64,7 @@ export async function getBlogPosts() {
           })
           .catch((err) => {
             Amplitude.logEventWithProperties('ERROR loading blog post image', {
-              error: err,
+              error: err.message,
             });
           });
       }

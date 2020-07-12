@@ -63,7 +63,7 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
         dispatch({ type: 'setLoading', value: false });
         Amplitude.logEventWithProperties('ERROR Group Sign Up', {
           group: title,
-          error: err,
+          error: err.message,
         });
       });
   };

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AsyncStorage,
   Dimensions,
   Image,
   StyleSheet,
@@ -8,6 +7,7 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
+import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -24,21 +24,11 @@ import { fetchPlaylistItems } from '../data/youtube';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const screenWidth = Dimensions.get('window').width;
-const storePlaylistData = async (playlistID, data) => {
-  await AsyncStorage.setItem(
-    `@${playlistID}`,
-    JSON.stringify(data)
-  ).catch((err) => console.error(err));
-};
-const getStoredPlaylist = (playlistID) => {
-  return AsyncStorage.getItem(`@${playlistID}`).catch((err) =>
-    console.error(err)
-  );
-};
 
 const PlaylistScreen = ({ navigation, route }) => {
-  const insets = useSafeArea();
   const { playlistID, playlistTitle, playlistURI } = route.params;
+  const { getItem, setItem } = useAsyncStorage(`@${playlistID}`);
+  const insets = useSafeArea();
 
   navigation.setOptions({ title: playlistTitle });
 
@@ -52,7 +42,7 @@ const PlaylistScreen = ({ navigation, route }) => {
   }, []);
   async function getVideos() {
     try {
-      const storedMedia = await getStoredPlaylist(playlistID);
+      const storedMedia = await getItem();
 
       if (storedMedia) {
         setData(JSON.parse(storedMedia));
@@ -63,13 +53,13 @@ const PlaylistScreen = ({ navigation, route }) => {
 
       setData(fetchedVideos);
       setLoading(false);
-      storePlaylistData(playlistID, fetchedVideos);
+      await setItem(JSON.stringify(fetchedVideos));
     } catch (err) {
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");
       setLoading(false);
       Amplitude.logEventWithProperties('ERROR loading playlist items', {
-        error: err,
+        error: err.message,
       });
     }
   }

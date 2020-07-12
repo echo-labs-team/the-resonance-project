@@ -1,12 +1,12 @@
 import React, { useState, useEffect, Component } from 'react';
 import {
   AppState,
-  AsyncStorage,
   Platform,
   StatusBar,
   TouchableHighlight,
   UIManager,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Constants } from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -21,8 +21,9 @@ import OneSignal from 'react-native-onesignal';
 Amplitude.initialize(keys.AMPLITUDE);
 
 const channel = Constants?.manifest?.releaseChannel;
-const emptyStorage = () =>
-  AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
+const emptyStorage = async () => {
+  await AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
+};
 
 // override amplitude tracking
 if (!channel) {
@@ -33,17 +34,11 @@ if (!channel) {
 } else if (channel.indexOf('develop') !== -1) {
   // beta testing from the store--we want to log this to amplitude, but
   //  separate it out
-  Amplitude.logEvent = (name) => {
-    name = `BETA ${name}`;
-    console.log(`[amplitude]: ${name}`);
-    Amplitude.logEvent(name);
-  };
-  Amplitude.logEventWithProperties = (name, data) => {
-    name = `BETA ${name}`;
-    console.log(`[amplitude]: ${name}\n`, data);
-    Amplitude.logEventWithProperties(name, data);
-  };
-  emptyStorage();
+  const { logEvent, logEventWithProperties } = Amplitude;
+
+  Amplitude.logEvent = (name) => logEvent(`BETA ${name}`);
+  Amplitude.logEventWithProperties = (name, data) =>
+    logEventWithProperties(`BETA ${name}`, data);
 }
 
 if (

@@ -64,7 +64,7 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
         dispatch({ type: 'setLoading', value: false });
         Amplitude.logEventWithProperties('ERROR Group Ask Question', {
           group: title,
-          error: err,
+          error: err.message,
         });
       });
   };
