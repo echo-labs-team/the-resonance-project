@@ -54,7 +54,7 @@
     "react-native-screens": "~2.8.0",
     "react-native-svg": "12.1.0",
     "react-native-unimodules": "~0.9.1",
-    "react-native-web": "~0.12.2",
+    "react-native-web": "~0.13.3",
     "react-native-webview": "^10.3.2"
   },
   "devDependencies": {
