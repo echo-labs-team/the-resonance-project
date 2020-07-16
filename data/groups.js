@@ -1,6 +1,6 @@
 import axios from 'axios';
-import * as Amplitude from 'expo-analytics-amplitude';
 import config from './config';
+import logEvent from '../utils/logEvent';
 
 const baseURL = 'https://echo-api.westus.cloudapp.azure.com';
 
@@ -10,14 +10,14 @@ const isFeaturedGroup = (groupName) =>
 
 export async function getCategories() {
   const { data, status } =
-    (await axios.get(`${baseURL}/groups/rock-categories`, {}).catch((err) =>
-      Amplitude.logEventWithProperties('ERROR getting group categories', {
-        error: err.message,
-      })
-    )) || {};
+    (await axios
+      .get(`${baseURL}/groups/rock-categories`, {})
+      .catch((err) =>
+        logEvent('ERROR getting group categories', { error: err.message })
+      )) || {};
 
   if (status !== 200) {
-    Amplitude.logEventWithProperties('ERROR loading group categories', {
+    logEvent('ERROR loading group categories', {
       data,
       status,
     });
@@ -45,7 +45,7 @@ export async function getOpenGroups() {
   const { data = [] } = (await axios.get(`${baseURL}/groups/open`)) || {};
 
   if (!data || !Array.isArray(data)) {
-    Amplitude.logEventWithProperties('ERROR loading groups', {
+    logEvent('ERROR loading groups', {
       error: errorMessage,
     });
     throw Error(errorMessage);

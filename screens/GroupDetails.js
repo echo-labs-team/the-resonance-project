@@ -12,7 +12,7 @@ import { HeaderHeightContext } from '@react-navigation/stack';
 import { Feather } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Hyperlink from 'react-native-hyperlink';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { Text, Title, Heading } from '../components/shared/Typography';
@@ -75,7 +75,7 @@ const GroupDetails = ({ route }) => {
   const shouldShowLeaders = leaders.length > 0;
 
   const onShare = async () => {
-    Amplitude.logEventWithProperties('TAP Group Share', {
+    logEvent('TAP Group Share', {
       group: title,
     });
 
@@ -89,13 +89,13 @@ const GroupDetails = ({ route }) => {
       const { action, activityType = 'unknown' } = result;
 
       if (action === Share.sharedAction) {
-        Amplitude.logEventWithProperties('SHARED Group', {
+        logEvent('SHARED Group', {
           group: title,
           activityType,
         });
       }
     } catch (error) {
-      Amplitude.logEventWithProperties('ERROR sharing group', {
+      logEvent('ERROR sharing group', {
         group: title,
       });
     }

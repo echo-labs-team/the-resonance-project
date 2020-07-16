@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import { BlurView } from 'expo-blur';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { Text, Title, Subtitle, Heading } from './shared/Typography';
@@ -72,7 +72,7 @@ export default ({
   const handleApply = () => {
     applyFilters(filters);
     setIsVisible(false);
-    Amplitude.logEventWithProperties('APPLY Group Filters', { filters });
+    logEvent('APPLY Group Filters', { filters });
   };
 
   return (

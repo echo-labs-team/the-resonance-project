@@ -3,7 +3,7 @@ import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import { getInstagramPosts } from '../data/instagram';
 import { getBlogPosts } from '../data/blogPosts';
@@ -66,7 +66,7 @@ const HomeScreen = () => {
       const verseOfTheDay = (await getVerseOfTheDay()) || {};
 
       if (!blogPosts.length || !igPosts.length) {
-        Amplitude.logEvent('ERROR no posts');
+        logEvent('ERROR no posts');
       }
 
       // get all the posts and sort them descending by date

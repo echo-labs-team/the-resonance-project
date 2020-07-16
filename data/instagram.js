@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 
 export async function getInstagramPosts() {
   let instagramPosts = [];
@@ -48,9 +48,7 @@ export async function getInstagramPosts() {
       };
     });
   } catch (err) {
-    Amplitude.logEventWithProperties('ERROR loading instagram posts', {
-      error: err.message,
-    });
+    logEvent('ERROR loading instagram posts', { error: err.message });
   }
 
   return instagramPosts;

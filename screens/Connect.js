@@ -10,7 +10,7 @@ import {
 import { useSafeArea } from 'react-native-safe-area-context';
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
@@ -21,13 +21,11 @@ import Button from '../components/shared/Button';
 const numberOfCTAs = callToActionButtons.length;
 
 function openBrowser({ title, url }) {
-  Amplitude.logEvent(`TAP ${title}`);
+  logEvent(`TAP ${title}`);
   WebBrowser.openBrowserAsync(url, {
     toolbarColor: Colors.darkestGray,
   }).catch((err) => {
-    Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-      error: err.message,
-    });
+    logEvent('ERROR with WebBrowser', { error: err.message });
     WebBrowser.dismissBrowser();
   });
 }
@@ -54,7 +52,7 @@ const ConnectScreen = ({ navigation }) => {
           <TouchableHighlight
             underlayColor="transparent"
             onPress={() => {
-              Amplitude.logEvent(`OPEN ${page}`);
+              logEvent(`OPEN ${page}`);
               navigation.navigate(page);
             }}
           >

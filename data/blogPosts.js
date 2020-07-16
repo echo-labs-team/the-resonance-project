@@ -1,6 +1,6 @@
 import axios from 'axios';
-import * as Amplitude from 'expo-analytics-amplitude';
 import { AllHtmlEntities } from 'html-entities';
+import logEvent from '../utils/logEvent';
 
 const entities = new AllHtmlEntities();
 
@@ -23,9 +23,7 @@ export async function getBlogPosts() {
         { headers: { 'Cache-Control': 'no-cache' } }
       )
       .catch((err) => {
-        Amplitude.logEventWithProperties('ERROR loading blog posts', {
-          error: err.message,
-        });
+        logEvent('ERROR loading blog posts', { error: err.message });
       })) || {};
 
   return Promise.all(
@@ -63,9 +61,7 @@ export async function getBlogPosts() {
             };
           })
           .catch((err) => {
-            Amplitude.logEventWithProperties('ERROR loading blog post image', {
-              error: err.message,
-            });
+            logEvent('ERROR loading blog post image', { error: err.message });
           });
       }
     )

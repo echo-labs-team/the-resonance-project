@@ -11,7 +11,7 @@ import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
@@ -58,7 +58,7 @@ function useQuery(groups) {
 
   useEffect(() => {
     if (debouncedQuery) {
-      Amplitude.logEventWithProperties('SEARCH Groups', {
+      logEvent('SEARCH Groups', {
         search_text: debouncedQuery,
       });
     }

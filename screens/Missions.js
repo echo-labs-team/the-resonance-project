@@ -4,8 +4,8 @@ import { useAsyncStorage } from '@react-native-community/async-storage';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import * as WebBrowser from 'expo-web-browser';
-import * as Amplitude from 'expo-analytics-amplitude';
 import htmlParser from 'fast-html-parser';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import {
   Text,
@@ -71,7 +71,7 @@ const MissionsScreen = () => {
       if (!rendered && !storedMissionsData) {
         setMissions('');
         setLoading(false);
-        Amplitude.logEventWithProperties('ERROR loading missions', { data });
+        logEvent('ERROR loading missions', { data });
         return;
       }
 
@@ -122,16 +122,14 @@ const MissionsScreen = () => {
               title="Learn More"
               style={styles.button}
               onPress={() => {
-                Amplitude.logEvent('TAP Missions Learn More');
+                logEvent('TAP Missions Learn More');
                 WebBrowser.openBrowserAsync(
                   'https://echo.church/missions/#global',
                   {
                     toolbarColor: Colors.darkestGray,
                   }
                 ).catch((err) => {
-                  Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                    error: err.message,
-                  });
+                  logEvent('ERROR with WebBrowser', { error: err.message });
                   WebBrowser.dismissBrowser();
                 });
               }}

@@ -10,7 +10,7 @@ import {
 import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { HeaderHeightContext } from '@react-navigation/stack';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import {
   Text,
@@ -58,9 +58,7 @@ const PlaylistScreen = ({ navigation, route }) => {
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");
       setLoading(false);
-      Amplitude.logEventWithProperties('ERROR loading playlist items', {
-        error: err.message,
-      });
+      logEvent('ERROR loading playlist items', { error: err.message });
     }
   }
   if (isLoading) {
@@ -130,7 +128,7 @@ const PlaylistScreen = ({ navigation, route }) => {
                   key={id}
                   underlayColor="transparent"
                   onPress={() => {
-                    Amplitude.logEvent(`OPEN ${title}`);
+                    logEvent(`OPEN ${title}`);
                     Linking.openURL(`https://www.youtube.com/watch?v=${id}`);
                   }}
                 >

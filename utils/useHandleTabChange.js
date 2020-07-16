@@ -6,12 +6,12 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 
 export default (tab) => {
   useFocusEffect(
     React.useCallback(() => {
-      Amplitude.logEvent(`PAGEVIEW ${tab} tab`);
+      logEvent(`PAGEVIEW ${tab} tab`);
       StatusBar.setHidden(tab === 'Home', 'fade');
     }, [])
   );

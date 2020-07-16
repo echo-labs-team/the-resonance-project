@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   AppState,
   Platform,
@@ -7,38 +7,27 @@ import {
   UIManager,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { Constants } from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
-import * as Amplitude from 'expo-analytics-amplitude';
+import Amplitude from 'amplitude-js';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Entypo } from '@expo/vector-icons';
+import OneSignal from 'react-native-onesignal';
 import resources from './resources';
 import keys from './constants/Keys';
+import logEvent from './utils/logEvent';
 import AppNavigator from './navigation/AppNavigator';
 import Storybook from './storybook';
-import OneSignal from 'react-native-onesignal';
 
-Amplitude.initialize(keys.AMPLITUDE);
+Amplitude.getInstance().init(keys.AMPLITUDE, null, {
+  platform: 'Mobile',
+});
 
-const channel = Constants?.manifest?.releaseChannel;
 const emptyStorage = async () => {
   await AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
 };
 
-// override amplitude tracking
-if (!channel) {
-  Amplitude.logEvent = (name) => console.log(`[amplitude]: ${name}`);
-  Amplitude.logEventWithProperties = (name, data) =>
-    console.log(`[amplitude]: ${name}\n`, data);
+if (__DEV__) {
   emptyStorage();
-} else if (channel.indexOf('develop') !== -1) {
-  // beta testing from the store--we want to log this to amplitude, but
-  //  separate it out
-  const { logEvent, logEventWithProperties } = Amplitude;
-
-  Amplitude.logEvent = (name) => logEvent(`BETA ${name}`);
-  Amplitude.logEventWithProperties = (name, data) =>
-    logEventWithProperties(`BETA ${name}`, data);
 }
 
 if (
@@ -58,10 +47,16 @@ function App() {
     kOSSettingsKeyInAppLaunchURL: false,
     kOSSettingsKeyInFocusDisplayOption: 2,
   });
-  OneSignal.inFocusDisplaying(2); // Controls what should happen if a notification is received while the app is open. 2 means that the notification will go directly to the device's notification center.
 
-  // The promptForPushNotifications function code will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission (See step below)
-  OneSignal.promptForPushNotificationsWithUserResponse(() => {});
+  // Controls what should happen if a notification is received while the app is open. 2 means that the notification will
+  // go directly to the device's notification center.
+  OneSignal.inFocusDisplaying(2);
+
+  // The promptForPushNotifications function code will show the iOS push notification prompt. We recommend removing the
+  // following code and instead using an In-App Message to prompt for notification permission (See step below)
+  OneSignal.promptForPushNotificationsWithUserResponse((permission) =>
+    logEvent(`${permission ? 'Allowed' : 'Disallowed'} push notifications`)
+  );
 
   /**
    * Log when our app
@@ -85,10 +80,10 @@ function App() {
 
     const handleAppStateChange = (state) => {
       if (state === 'active') {
-        Amplitude.logEvent('Start session');
+        logEvent('Start session');
       }
       if (state === 'background') {
-        Amplitude.logEvent('End session');
+        logEvent('End session');
       }
     };
 

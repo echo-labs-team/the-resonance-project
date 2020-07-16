@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import { Text, Title, Heading } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
@@ -46,14 +46,12 @@ const BaptismScreen = () => {
               title="I'm Interested"
               style={styles.button}
               onPress={() => {
-                Amplitude.logEvent('TAP Baptism Interested');
+                logEvent('TAP Baptism Interested');
                 WebBrowser.openBrowserAsync(
                   'https://goo.gl/forms/Lc8g3MU0CCxjea9e2',
                   { toolbarColor: Colors.darkestGray }
                 ).catch((err) => {
-                  Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                    error: err.message,
-                  });
+                  logEvent('ERROR with WebBrowser', { error: err.message });
                   WebBrowser.dismissBrowser();
                 });
               }}
