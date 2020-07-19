@@ -6,9 +6,9 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import * as Amplitude from 'expo-analytics-amplitude';
 import * as WebBrowser from 'expo-web-browser';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import { Text } from './shared/Typography';
@@ -55,7 +55,7 @@ function Card({ type, url, image, title, date }) {
       underlayColor={Colors.darkBlue}
       style={styles.card}
       onPress={() => {
-        Amplitude.logEventWithProperties('TAP post', {
+        logEvent('TAP post', {
           post_type: type.toLowerCase(),
         });
 
@@ -63,9 +63,7 @@ function Card({ type, url, image, title, date }) {
           return WebBrowser.openBrowserAsync(url, {
             toolbarColor: Colors.darkestGray,
           }).catch((err) => {
-            Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-              error: err.message,
-            });
+            logEvent('ERROR with WebBrowser', { error: err.message });
             WebBrowser.dismissBrowser();
           });
         }

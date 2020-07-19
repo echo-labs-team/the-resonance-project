@@ -1,7 +1,7 @@
 import React, { useReducer, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as Amplitude from 'expo-analytics-amplitude';
 import { Formik } from 'formik';
+import logEvent from '../utils/logEvent';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
 import { validateSignUpForm } from '../utils/formValidation';
@@ -38,14 +38,14 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
   const emailRef = useRef(null);
 
   const handleOpenModal = () => {
-    Amplitude.logEventWithProperties('OPEN Group Sign Up', {
+    logEvent('OPEN Group Sign Up', {
       group: title,
     });
   };
 
   const handleSignUp = ({ firstName, lastName, email }) => {
     dispatch({ type: 'setLoading', value: true });
-    Amplitude.logEventWithProperties('SUBMIT Group Sign Up', {
+    logEvent('SUBMIT Group Sign Up', {
       group: title,
     });
     joinGroup(groupID, firstName, lastName, email)
@@ -61,7 +61,7 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
       })
       .catch((err) => {
         dispatch({ type: 'setLoading', value: false });
-        Amplitude.logEventWithProperties('ERROR Group Sign Up', {
+        logEvent('ERROR Group Sign Up', {
           group: title,
           error: err.message,
         });

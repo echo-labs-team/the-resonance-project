@@ -12,7 +12,7 @@ import {
 import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop, useNavigation } from '@react-navigation/native';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import { fetchChannelSection, fetchPlaylistsWrapper } from '../data/youtube';
@@ -57,9 +57,7 @@ const MediaScreen = () => {
     } catch (err) {
       setError(true);
       setLoading(false);
-      Amplitude.logEventWithProperties('ERROR loading media', {
-        error: err.message,
-      });
+      logEvent('ERROR loading media', { error: err.message });
     }
   }
 
@@ -70,7 +68,7 @@ const MediaScreen = () => {
   const takeToItem = (item) => {
     const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
 
-    Amplitude.logEventWithProperties('TAP Past Series', {
+    logEvent('TAP Past Series', {
       series_name: title,
     });
 
@@ -189,13 +187,11 @@ const MediaScreen = () => {
         <>
           <TouchableHighlight
             onPress={() => {
-              Amplitude.logEvent('TAP Watch Live');
+              logEvent('TAP Watch Live');
               WebBrowser.openBrowserAsync('https://live.echo.church', {
                 toolbarColor: Colors.darkestGray,
               }).catch((err) => {
-                Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                  error: err.message,
-                });
+                logEvent('ERROR with WebBrowser', { error: err.message });
                 WebBrowser.dismissBrowser();
               });
             }}
@@ -218,7 +214,7 @@ const MediaScreen = () => {
         title="Message Notes"
         style={styles.notesButton}
         onPress={() => {
-          Amplitude.logEvent('TAP Message Notes');
+          logEvent('TAP Message Notes');
           Linking.openURL('https://echo.church/messagenotes');
         }}
       />
@@ -230,7 +226,7 @@ const MediaScreen = () => {
       <TouchableHighlight
         style={{ marginBottom: insets.bottom + 16 }}
         onPress={() => {
-          Amplitude.logEvent('TAP Rightnow Media');
+          logEvent('TAP Rightnow Media');
           Linking.openURL(
             'https://www.rightnowmedia.org/Account/Invite/EchoChurch'
           );

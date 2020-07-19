@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
 import { Text } from '../components/shared/Typography';
@@ -73,16 +73,14 @@ function FeaturedScreen() {
                 style={styles.item}
                 underlayColor={Colors.blue}
                 onPress={() => {
-                  Amplitude.logEvent(`OPEN ${item.value}`);
+                  logEvent(`OPEN ${item.value}`);
                   WebBrowser.openBrowserAsync(
                     `https://echo.church/${item.slug}`,
                     {
                       toolbarColor: Colors.darkestGray,
                     }
                   ).catch((err) => {
-                    Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                      error: err.message,
-                    });
+                    logEvent('ERROR with WebBrowser', { error: err.message });
                     WebBrowser.dismissBrowser();
                   });
                 }}
@@ -103,9 +101,7 @@ function FeaturedScreen() {
               WebBrowser.openBrowserAsync('https://echo.church/hopeproject/', {
                 toolbarColor: Colors.darkestGray,
               }).catch((err) => {
-                Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                  error: err.message,
-                });
+                logEvent('ERROR with WebBrowser', { error: err.message });
                 WebBrowser.dismissBrowser();
               });
             }}

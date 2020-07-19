@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View, Image } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import {
   Text,
@@ -65,14 +65,12 @@ const VolunteerScreen = () => {
               title="Sign Up"
               style={styles.button}
               onPress={() => {
-                Amplitude.logEvent('TAP Volunteer Sign Up');
+                logEvent('TAP Volunteer Sign Up');
                 WebBrowser.openBrowserAsync(
                   'https://echo.church/volunteerform',
                   { toolbarColor: Colors.darkestGray }
                 ).catch((err) => {
-                  Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                    error: err.message,
-                  });
+                  logEvent('ERROR with WebBrowser', { error: err.message });
                   WebBrowser.dismissBrowser();
                 });
               }}

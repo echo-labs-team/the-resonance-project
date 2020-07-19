@@ -1,7 +1,7 @@
 import React, { useReducer, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
-import * as Amplitude from 'expo-analytics-amplitude';
 import { Formik } from 'formik';
+import logEvent from '../utils/logEvent';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
 import { validateAskQuestionForm } from '../utils/formValidation';
@@ -39,14 +39,14 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
   const questionRef = useRef(null);
 
   const handleOpenModal = () => {
-    Amplitude.logEventWithProperties('OPEN Group Ask Question', {
+    logEvent('OPEN Group Ask Question', {
       group: title,
     });
   };
 
   const handleAsk = ({ firstName, lastName, email, question }) => {
     dispatch({ type: 'setLoading', value: true });
-    Amplitude.logEventWithProperties('SUBMIT Group Ask Question', {
+    logEvent('SUBMIT Group Ask Question', {
       group: title,
     });
     askQuestion(groupID, firstName, lastName, email, question)
@@ -62,7 +62,7 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
       })
       .catch((err) => {
         dispatch({ type: 'setLoading', value: false });
-        Amplitude.logEventWithProperties('ERROR Group Ask Question', {
+        logEvent('ERROR Group Ask Question', {
           group: title,
           error: err.message,
         });
