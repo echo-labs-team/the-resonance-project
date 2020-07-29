@@ -7,8 +7,8 @@ import {
   View,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import * as Amplitude from 'expo-analytics-amplitude';
 import { Feather } from '@expo/vector-icons';
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import { Title, Subtitle } from './shared/Typography';
 import { styles } from './HomeCard';
@@ -21,7 +21,7 @@ function FeaturedCard() {
       underlayColor={Colors.darkBlue}
       style={[styles.card, { height: 300 }]}
       onPress={() => {
-        Amplitude.logEventWithProperties('TAP post', { post_type: 'featured' });
+        logEvent('TAP post', { post_type: 'featured' });
         navigation.navigate('Featured');
       }}
     >

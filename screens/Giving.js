@@ -8,7 +8,7 @@ import {
   Clipboard,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import useHandleTabChange from '../utils/useHandleTabChange';
@@ -17,7 +17,7 @@ import Button from '../components/shared/Button';
 import Keys from '../constants/Keys';
 
 const handleGive = (campus) => {
-  Amplitude.logEvent(`TAP Giving ${campus}`);
+  logEvent(`TAP Giving ${campus}`);
   Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);
 };
 
@@ -70,8 +70,8 @@ const GivingScreen = () => {
           style={styles.button}
         />
         <Button
-          title={`build ${Keys.GITHUB_SHA.substring(0,7)}`}
-          onPress={() => Clipboard.setString(Keys.GITHUB_SHA.substring(0,7))}
+          title={`build ${Keys.GITHUB_SHA.substring(0, 7)}`}
+          onPress={() => Clipboard.setString(Keys.GITHUB_SHA.substring(0, 7))}
           style={styles.sha_button}
           textStyle={{ color: 'rgba(255, 255, 255, 0.20)', fontSize: 14 }}
         />

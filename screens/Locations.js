@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { HeaderHeightContext } from '@react-navigation/stack';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import * as WebBrowser from 'expo-web-browser';
 import Colors from '../constants/Colors';
 import { Title, Subtitle, Heading } from '../components/shared/Typography';
@@ -37,7 +37,7 @@ const openMaps = (location) => {
       break;
   }
 
-  Amplitude.logEventWithProperties('TAP Location', { campus: location });
+  logEvent('TAP Location', { campus: location });
   Linking.openURL(url);
 };
 
@@ -64,9 +64,7 @@ const LocationsScreen = () => {
                 WebBrowser.openBrowserAsync('https://live.echo.church', {
                   toolbarColor: Colors.darkestGray,
                 }).catch((err) => {
-                  Amplitude.logEventWithProperties('ERROR with WebBrowser', {
-                    error: err.message,
-                  });
+                  logEvent('ERROR with WebBrowser', { error: err.message });
                   WebBrowser.dismissBrowser();
                 });
               }}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import * as Amplitude from 'expo-analytics-amplitude';
+import logEvent from '../utils/logEvent';
 import { Text, Title } from '../components/shared/Typography';
 import Colors from '../constants/Colors';
 import {
@@ -36,7 +36,7 @@ export default ({ item }) => {
       style={styles.group}
       underlayColor={Colors.darkestGray}
       onPress={() => {
-        Amplitude.logEventWithProperties('OPEN Group Details', {
+        logEvent('OPEN Group Details', {
           group: title,
         });
         navigation.navigate('GroupDetails', {
