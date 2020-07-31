@@ -120,7 +120,7 @@ const HomeScreen = () => {
           </Text>
         </AnimateChildrenIn>
 
-        <FeaturedCard />
+        <View />
 
         {cardData.length ? (
           cardData.map((item, index) =>
