@@ -4,7 +4,6 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
 <View
   accessible={true}
   focusable={true}
-  isTVSelectable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -21,9 +20,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
   }
   testID="GroupCardDetails"
 >
-  <View
-    style={null}
-  >
+  <View>
     <Text
       adjustsFontSizeToFit={true}
       light={true}

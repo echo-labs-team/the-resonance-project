@@ -80,7 +80,6 @@ exports[`<GroupsError/> render a group error with a Try Again CTA 1`] = `
   <View
     accessible={true}
     focusable={true}
-    isTVSelectable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
