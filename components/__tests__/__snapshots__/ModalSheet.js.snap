@@ -587,7 +587,6 @@ Array [
   <View
     accessible={true}
     focusable={true}
-    isTVSelectable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -673,6 +672,7 @@ Array [
     <View
       accessible={true}
       focusable={true}
+      forwardedRef={[Function]}
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -695,6 +695,7 @@ Array [
       }
     />
     <View
+      forwardedRef={[Function]}
       hideModalContentWhileAnimating={false}
       onModalHide={[Function]}
       onModalWillHide={[Function]}
