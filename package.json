@@ -50,7 +50,7 @@
     "react-native-onesignal": "^3.9.0",
     "react-native-reanimated": "~1.9.0",
     "react-native-redash": "^14.2.4",
-    "react-native-safe-area-context": "~3.0.7",
+    "react-native-safe-area-context": "~3.1.7",
     "react-native-safe-area-view": "^1.0.0",
     "react-native-screens": "~2.9.0",
     "react-native-svg": "12.1.0",
