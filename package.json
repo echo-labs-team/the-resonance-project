@@ -32,7 +32,7 @@
     "expo-asset": "~8.1.7",
     "expo-blur": "~8.1.2",
     "expo-font": "~8.2.2",
-    "expo-splash-screen": "^0.3.1",
+    "expo-splash-screen": "^0.5.0",
     "expo-updates": "^0.2.13",
     "expo-web-browser": "~8.3.1",
     "fast-html-parser": "^1.0.1",
