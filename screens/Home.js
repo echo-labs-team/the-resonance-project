@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
-import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import logEvent from '../utils/logEvent';
@@ -15,7 +14,6 @@ import Button from '../components/shared/Button';
 import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
-import FeaturedCard from '../components/FeaturedCard';
 import Card from '../components/HomeCard';
 
 const sortPosts = (firstPost = {}, secondPost = {}) => {
@@ -36,7 +34,6 @@ const sortPosts = (firstPost = {}, secondPost = {}) => {
 
 const HomeScreen = () => {
   useHandleTabChange('Home');
-  const { removeItem } = useAsyncStorage('@posts');
   const insets = useSafeArea();
   const ref = React.useRef(null);
 
@@ -54,10 +51,6 @@ const HomeScreen = () => {
   ]);
   const [refreshing, setRefreshing] = useState(false);
   const [tryAgain, setTryAgain] = useState(false);
-
-  useEffect(async () => {
-    await removeItem().catch((err) => console.log(err));
-  }, []);
 
   useEffect(() => {
     const getPosts = async () => {

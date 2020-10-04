@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
-import { useAsyncStorage } from '@react-native-community/async-storage';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import * as WebBrowser from 'expo-web-browser';
@@ -40,20 +39,12 @@ function CurrentMissions({ loading, missions }) {
 }
 
 const MissionsScreen = () => {
-  const { getItem, setItem } = useAsyncStorage('@missions');
   const [loading, setLoading] = useState(false);
   const [missions, setMissions] = useState('');
 
   useEffect(() => {
     const getMissionsContent = async () => {
       setLoading(true);
-
-      const storedMissionsData = await getItem();
-
-      if (storedMissionsData) {
-        setMissions(storedMissionsData);
-        setLoading(false);
-      }
 
       // get data from the missions page in WordPress
       const data = await fetch(
@@ -68,7 +59,7 @@ const MissionsScreen = () => {
       ).then((res) => res.json());
       const [{ content: { rendered = '' } = {} } = {}] = data || [];
 
-      if (!rendered && !storedMissionsData) {
+      if (!rendered) {
         setMissions('');
         setLoading(false);
         logEvent('ERROR loading missions', { data });
@@ -89,7 +80,6 @@ const MissionsScreen = () => {
         .join(', ');
 
       setMissions(places);
-      await setItem(places);
       setLoading(false);
     };
 
@@ -151,11 +141,6 @@ const styles = StyleSheet.create({
     height: 250,
   },
   container: { paddingVertical: 20, paddingHorizontal: 16 },
-  loader: {
-    marginTop: 10,
-    marginBottom: 20,
-    backgroundColor: Colors.darkestGray,
-  },
   heading: {
     marginVertical: 10,
   },

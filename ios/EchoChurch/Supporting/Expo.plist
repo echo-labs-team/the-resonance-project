@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>EXUpdatesReleaseChannel</key>
-	<string>develop_1_0_3</string>
+	<string>develop_1_0_4</string>
 	<key>EXUpdatesSDKVersion</key>
-	<string>37.0.0</string>
+	<string>38.0.0</string>
 	<key>EXUpdatesURL</key>
 	<string>https://exp.host/@echo.church/echo</string>
 </dict>

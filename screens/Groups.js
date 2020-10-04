@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import { BlurView } from 'expo-blur';
@@ -89,7 +88,6 @@ const initialFilters = {
 
 const GroupsScreen = () => {
   useHandleTabChange('Groups');
-  const { getItem, setItem } = useAsyncStorage('@groups');
   const insets = useSafeArea();
   const ref = React.useRef(null);
 
@@ -118,16 +116,9 @@ const GroupsScreen = () => {
   useEffect(() => {
     const getGroups = async () => {
       try {
-        const storedGroupsData = await getItem();
-
-        if (storedGroupsData) {
-          setGroups(JSON.parse(storedGroupsData));
-        }
-
         const fetchedGroups = (await getOpenGroups()) || [];
 
         setGroups(fetchedGroups);
-        await setItem(JSON.stringify(fetchedGroups));
       } catch (err) {
         setHasError(true);
       }
