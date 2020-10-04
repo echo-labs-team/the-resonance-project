@@ -71,15 +71,17 @@ function Card({ type, url, image, title, date }) {
       }}
     >
       <View>
-        <Image
-          source={{ uri: image }}
-          style={[
-            styles.image,
-            {
-              height: getImageHeight(type, image),
-            },
-          ]}
-        />
+        {image ? (
+          <Image
+            source={{ uri: image }}
+            style={[
+              styles.image,
+              {
+                height: getImageHeight(type, image),
+              },
+            ]}
+          />
+        ) : null}
         <View style={styles.cardTypeView}>
           <View style={styles.cardType}>
             {icon.expoIcon ? (
@@ -117,6 +119,7 @@ export const styles = StyleSheet.create({
   },
   image: {
     width: undefined,
+    marginBottom: 8,
     resizeMode: 'cover',
   },
   title: {
@@ -124,9 +127,8 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   cardTypeView: {
-    paddingTop: 16,
     paddingHorizontal: 8,
-    paddingBottom: 8,
+    paddingVertical: 8,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',

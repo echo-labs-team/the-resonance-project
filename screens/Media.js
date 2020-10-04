@@ -9,7 +9,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop, useNavigation } from '@react-navigation/native';
 import logEvent from '../utils/logEvent';
@@ -28,7 +27,6 @@ const screenWidth = Dimensions.get('window').width;
 
 const MediaScreen = () => {
   useHandleTabChange('Media');
-  const { getItem, setItem } = useAsyncStorage('@media');
   const insets = useSafeArea();
   const navigation = useNavigation();
   const ref = React.useRef(null);
@@ -41,19 +39,11 @@ const MediaScreen = () => {
 
   async function getPlaylists() {
     try {
-      const storedMedia = await getItem();
-
-      if (storedMedia) {
-        setData(JSON.parse(storedMedia));
-        setLoading(false);
-      }
-
       const channelSection = await fetchChannelSection();
       const playlists = await fetchPlaylistsWrapper(channelSection);
 
       setData(playlists);
       setLoading(false);
-      await setItem(JSON.stringify(playlists));
     } catch (err) {
       setError(true);
       setLoading(false);

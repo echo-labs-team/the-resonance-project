@@ -7,7 +7,6 @@ import {
   TouchableHighlight,
   View,
 } from 'react-native';
-import { useAsyncStorage } from '@react-native-community/async-storage';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import logEvent from '../utils/logEvent';
@@ -27,7 +26,6 @@ const screenWidth = Dimensions.get('window').width;
 
 const PlaylistScreen = ({ navigation, route }) => {
   const { playlistID, playlistTitle, playlistURI } = route.params;
-  const { getItem, setItem } = useAsyncStorage(`@${playlistID}`);
   const insets = useSafeArea();
 
   navigation.setOptions({ title: playlistTitle });
@@ -42,18 +40,10 @@ const PlaylistScreen = ({ navigation, route }) => {
   }, []);
   async function getVideos() {
     try {
-      const storedMedia = await getItem();
-
-      if (storedMedia) {
-        setData(JSON.parse(storedMedia));
-        setLoading(false);
-      }
-
       const fetchedVideos = await fetchPlaylistItems(playlistID, 10);
 
       setData(fetchedVideos);
       setLoading(false);
-      await setItem(JSON.stringify(fetchedVideos));
     } catch (err) {
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");

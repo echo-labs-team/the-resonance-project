@@ -28,8 +28,10 @@ export async function getVerseOfTheDay() {
   return {
     type: 'VERSE OF THE DAY',
     url: bibleUrl,
-    image: `https:${image.url
-      .replace('{width}', Layout.window.width)
-      .replace('{height}', Layout.window.width)}`,
+    image: image.url
+      ? `https:${image.url
+          .replace('{width}', Layout.window.width)
+          .replace('{height}', Layout.window.width)}`
+      : undefined,
   };
 }
