@@ -84,7 +84,7 @@ function Card({ type, url, image, title, date }) {
         ) : null}
         <View style={styles.cardTypeView}>
           <View style={styles.cardType}>
-            {icon.expoIcon ? (
+            {icon?.expoIcon ? (
               icon.expoIcon
             ) : (
               <Image source={icon} style={styles.cardTypeIcon} />
