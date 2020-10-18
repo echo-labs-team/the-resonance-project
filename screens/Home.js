@@ -63,7 +63,7 @@ const HomeScreen = () => {
       }
 
       // get all the posts and sort them descending by date
-      const posts = [...blogPosts, ...igPosts].sort(sortPosts);
+      const posts = [...blogPosts, ...igPosts].filter(Boolean).sort(sortPosts);
 
       // insert VOTD post
       posts.splice(5, 0, verseOfTheDay);

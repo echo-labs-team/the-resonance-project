@@ -50,7 +50,10 @@ export async function getBlogPosts() {
         return axios
           .get(imageUrl)
           .then(({ data = [] } = {}) => {
-            const [{ link: image } = {}] = Array.isArray(data) ? data : [data];
+            const [{ media_details } = {}] = Array.isArray(data)
+              ? data
+              : [data];
+            const image = media_details?.sizes?.medium_large?.source_url;
 
             return {
               type: 'BLOG',
@@ -61,7 +64,10 @@ export async function getBlogPosts() {
             };
           })
           .catch((err) => {
-            logEvent('ERROR loading blog post image', { error: err.message });
+            logEvent('ERROR loading blog post image', {
+              imageUrl,
+              error: err.message,
+            });
           });
       }
     )
