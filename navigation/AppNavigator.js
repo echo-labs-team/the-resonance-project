@@ -5,12 +5,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
+import { ErrorBoundary } from 'react-error-boundary';
 
 import Colors from '../constants/Colors';
 import { Text } from '../components/shared/Typography';
 import EchoLogo from '../components/EchoLogo';
 import ConnectLogo from '../components/ConnectLogo';
 import GroupsLogo from '../components/GroupsLogo';
+import ErrorFallback, { handleError } from '../components/shared/ErrorFallback';
 
 /**
  * Home Tab
@@ -86,26 +88,28 @@ const HomeStack = createStackNavigator();
 
 function HomeStackScreen() {
   return (
-    <HomeStack.Navigator>
-      <HomeStack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <HomeStack.Screen
-        name="Featured"
-        component={FeaturedScreen}
-        options={{ ...defaultOptions, title: 'Hope Project' }}
-      />
-      <HomeStack.Screen
-        name="FeaturedDetails"
-        component={FeaturedDetailsScreen}
-        options={({ route }) => ({
-          ...defaultOptions,
-          title: route.params.value,
-        })}
-      />
-    </HomeStack.Navigator>
+    <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
+      <HomeStack.Navigator>
+        <HomeStack.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <HomeStack.Screen
+          name="Featured"
+          component={FeaturedScreen}
+          options={{ ...defaultOptions, title: 'Hope Project' }}
+        />
+        <HomeStack.Screen
+          name="FeaturedDetails"
+          component={FeaturedDetailsScreen}
+          options={({ route }) => ({
+            ...defaultOptions,
+            title: route.params.value,
+          })}
+        />
+      </HomeStack.Navigator>
+    </ErrorBoundary>
   );
 }
 
@@ -113,18 +117,20 @@ const MediaStack = createStackNavigator();
 
 function MediaStackScreen() {
   return (
-    <MediaStack.Navigator>
-      <MediaStack.Screen
-        name="Media"
-        component={MediaScreen}
-        options={{ headerShown: false }}
-      />
-      <MediaStack.Screen
-        name="Playlist"
-        component={PlaylistScreen}
-        options={defaultOptions}
-      />
-    </MediaStack.Navigator>
+    <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
+      <MediaStack.Navigator>
+        <MediaStack.Screen
+          name="Media"
+          component={MediaScreen}
+          options={{ headerShown: false }}
+        />
+        <MediaStack.Screen
+          name="Playlist"
+          component={PlaylistScreen}
+          options={defaultOptions}
+        />
+      </MediaStack.Navigator>
+    </ErrorBoundary>
   );
 }
 
@@ -132,43 +138,45 @@ const ConnectStack = createStackNavigator();
 
 function ConnectStackScreen() {
   return (
-    <ConnectStack.Navigator>
-      <ConnectStack.Screen
-        name="Connect"
-        component={ConnectScreen}
-        options={{ headerShown: false }}
-      />
-      <ConnectStack.Screen
-        name="Locations"
-        component={LocationsScreen}
-        options={defaultOptions}
-      />
-      <ConnectStack.Screen
-        name="Activate"
-        component={ActivateScreen}
-        options={defaultOptions}
-      />
-      <ConnectStack.Screen
-        name="Baptism"
-        component={BaptismScreen}
-        options={defaultOptions}
-      />
-      <ConnectStack.Screen
-        name="Volunteer"
-        component={VolunteerScreen}
-        options={defaultOptions}
-      />
-      <ConnectStack.Screen
-        name="Prayer Requests"
-        component={PrayerRequestsScreen}
-        options={defaultOptions}
-      />
-      <ConnectStack.Screen
-        name="Missions"
-        component={MissionsScreen}
-        options={defaultOptions}
-      />
-    </ConnectStack.Navigator>
+    <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
+      <ConnectStack.Navigator>
+        <ConnectStack.Screen
+          name="Connect"
+          component={ConnectScreen}
+          options={{ headerShown: false }}
+        />
+        <ConnectStack.Screen
+          name="Locations"
+          component={LocationsScreen}
+          options={defaultOptions}
+        />
+        <ConnectStack.Screen
+          name="Activate"
+          component={ActivateScreen}
+          options={defaultOptions}
+        />
+        <ConnectStack.Screen
+          name="Baptism"
+          component={BaptismScreen}
+          options={defaultOptions}
+        />
+        <ConnectStack.Screen
+          name="Volunteer"
+          component={VolunteerScreen}
+          options={defaultOptions}
+        />
+        <ConnectStack.Screen
+          name="Prayer Requests"
+          component={PrayerRequestsScreen}
+          options={defaultOptions}
+        />
+        <ConnectStack.Screen
+          name="Missions"
+          component={MissionsScreen}
+          options={defaultOptions}
+        />
+      </ConnectStack.Navigator>
+    </ErrorBoundary>
   );
 }
 
@@ -176,18 +184,20 @@ const GroupsStack = createStackNavigator();
 
 function GroupsStackScreen() {
   return (
-    <GroupsStack.Navigator>
-      <GroupsStack.Screen
-        name="Groups"
-        component={GroupsScreen}
-        options={{ headerShown: false }}
-      />
-      <GroupsStack.Screen
-        name="GroupDetails"
-        component={GroupDetailsScreen}
-        options={{ ...defaultOptions, headerTitle: null }}
-      />
-    </GroupsStack.Navigator>
+    <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
+      <GroupsStack.Navigator>
+        <GroupsStack.Screen
+          name="Groups"
+          component={GroupsScreen}
+          options={{ headerShown: false }}
+        />
+        <GroupsStack.Screen
+          name="GroupDetails"
+          component={GroupDetailsScreen}
+          options={{ ...defaultOptions, headerTitle: null }}
+        />
+      </GroupsStack.Navigator>
+    </ErrorBoundary>
   );
 }
 
