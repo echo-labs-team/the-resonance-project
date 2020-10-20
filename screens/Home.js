@@ -113,8 +113,6 @@ const HomeScreen = () => {
           </Text>
         </AnimateChildrenIn>
 
-        <View />
-
         {cardData.length ? (
           cardData.map((item, index) =>
             item?.url?.includes('loading') ? (

@@ -37,13 +37,13 @@ export async function getInstagramPosts() {
       const date = new Date(taken_at_timestamp * 1000).toLocaleDateString();
       const [captionEdge = {}] = captionEdges;
       const { node: { text: caption } = {} } = captionEdge;
-      const title = caption.split('-');
+      const title = caption?.split('-');
 
       return {
         type: 'INSTAGRAM',
         url: `https://www.instagram.com/p/${shortcode}`,
         image: thumbnail_src,
-        title: title.join(''),
+        title: title?.join(''),
         date,
       };
     });
