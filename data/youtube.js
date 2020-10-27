@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Keys from '../constants/Keys';
 
-const CHANNEL_SECTION_ID = 'UCjycPAZuveusvPrk94-ClBw.j_S84EfePTc'; // Popular Series Section
+const CHANNEL_SECTION_ID = 'UCjycPAZuveusvPrk94-ClBw.nGzAI5pLbMY'; // Popular Series Section
 const API_KEY = __DEV__
   ? Keys.YOUTUBE_DEV_API_KEY
   : Keys.YOUTUBE_RELEASE_API_KEY;
