@@ -36,7 +36,7 @@
     "expo-updates": "~0.3.3",
     "expo-web-browser": "~8.5.0",
     "fast-html-parser": "^1.0.1",
-    "formik": "^2.1.5",
+    "formik": "^2.2.3",
     "html-entities": "^1.2.1",
     "react": "16.13.1",
     "react-content-loader": "^5.1.0",
