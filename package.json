@@ -84,7 +84,7 @@
     "jest-expo": "^39.0.0",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
-    "react-devtools": "^4.8.2",
+    "react-devtools": "^4.10.0",
     "react-native-storybook-loader": "^1.8.1",
     "react-native-testing-library": "^1.14.0",
     "react-test-renderer": "^16.12.0"
