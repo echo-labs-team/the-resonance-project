@@ -1,7 +1,9 @@
 import axios from 'axios';
 import Keys from '../constants/Keys';
 
-const CHANNEL_SECTION_ID = 'UCjycPAZuveusvPrk94-ClBw.nGzAI5pLbMY'; // Popular Series Section
+// Previous Series Channel Section
+// https://developers.google.com/youtube/v3/docs/channelSections/list?apix_params=%7B%22part%22%3A%5B%22contentDetails%22%2C%22snippet%22%5D%2C%22channelId%22%3A%22UCjycPAZuveusvPrk94-ClBw%22%7D
+const CHANNEL_SECTION_ID = 'UCjycPAZuveusvPrk94-ClBw.iJLXf_7B368';
 const API_KEY = __DEV__
   ? Keys.YOUTUBE_DEV_API_KEY
   : Keys.YOUTUBE_RELEASE_API_KEY;
