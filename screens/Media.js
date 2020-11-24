@@ -58,10 +58,7 @@ const MediaScreen = () => {
   const takeToItem = (item) => {
     const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
 
-    logEvent('TAP Past Series', {
-      series_name: title,
-    });
-
+    logEvent('TAP Past Series', { series_name: title });
     navigation.navigate('Playlist', {
       playlistID: id,
       playlistTitle: title,
@@ -76,21 +73,24 @@ const MediaScreen = () => {
     }
 
     return (
-      <View style={styles.list}>
-        {sectionData.map((item) => {
-          if (item) {
-            return (
-              <YouTubeDataView
-                key={item.title}
-                item={item}
-                thumbnailStyle={styles.youtubeThumbnailImageSmall}
-                style={styles.smallCard}
-              />
-            );
-          }
-          return null;
-        })}
-      </View>
+      <>
+        <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
+        <View style={styles.pastSeriesList}>
+          {sectionData.map((item) => {
+            if (item) {
+              return (
+                <YouTubeDataView
+                  key={item.title}
+                  item={item}
+                  thumbnailStyle={styles.youtubeThumbnailImageSmall}
+                  style={styles.smallCard}
+                />
+              );
+            }
+            return null;
+          })}
+        </View>
+      </>
     );
   };
 
@@ -192,11 +192,13 @@ const MediaScreen = () => {
       )}
 
       <Subtitle style={styles.sectionHeaderText}>CURRENT SERIES</Subtitle>
-      <YouTubeDataView
-        style={styles.largeCard}
-        item={data[0]}
-        thumbnailStyle={styles.youtubeThumbnailImageLarge}
-      />
+      {data.length ? (
+        <YouTubeDataView
+          style={styles.largeCard}
+          item={data[0]}
+          thumbnailStyle={styles.youtubeThumbnailImageLarge}
+        />
+      ) : null}
       <Button
         icon={
           <MaterialIcons name={'speaker-notes'} size={24} color={Colors.gray} />
@@ -209,7 +211,6 @@ const MediaScreen = () => {
         }}
       />
 
-      <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
       <PastSeriesSection sectionData={data.slice(1, data.length)} />
 
       <Subtitle style={styles.sectionHeaderText}>RESOURCES</Subtitle>
@@ -259,7 +260,8 @@ const styles = StyleSheet.create({
     marginLeft: 16,
     borderRadius: 8,
   },
-  list: {
+  pastSeriesList: {
+    marginTop: 16,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },

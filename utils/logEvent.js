@@ -5,7 +5,7 @@ const channel = Constants?.manifest?.releaseChannel;
 
 export default function logEvent(name, data) {
   // override amplitude tracking
-  if (!channel) {
+  if (__DEV__) {
     console.log(`[amplitude]: ${name}\n`);
     return data && console.log('data:', JSON.stringify(data, null, 2));
   }

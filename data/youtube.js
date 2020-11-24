@@ -75,6 +75,7 @@ export async function fetchPlaylistsWrapper(channelSectionPlaylistIDs) {
     });
   });
   const result = await Promise.all(playlistFirstItems);
+
   return result;
 }
 
@@ -101,11 +102,9 @@ export async function fetchPlaylists(channelSectionPlaylistIDs) {
   }
 
   return result
-    .map(({ data: { items } } = {}) => {
-      const {
-        id,
-        snippet: { publishedAt, title, thumbnails },
-      } = items[0];
+    .map(({ data: { items = [] } } = {}) => {
+      const { id, snippet: { publishedAt, title, thumbnails } = {} } = items[0];
+
       return {
         playlistId: id,
         publishDate: publishedAt,

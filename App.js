@@ -6,7 +6,6 @@ import {
   TouchableHighlight,
   UIManager,
 } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 import * as SplashScreen from 'expo-splash-screen';
 import Amplitude from 'amplitude-js';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -21,14 +20,6 @@ import Storybook from './storybook';
 Amplitude.getInstance().init(keys.AMPLITUDE, null, {
   platform: 'Mobile',
 });
-
-const emptyStorage = async () => {
-  await AsyncStorage.multiRemove(['@posts', '@media', '@groups', '@missions']);
-};
-
-if (__DEV__) {
-  emptyStorage();
-}
 
 if (
   Platform.OS === 'android' &&
