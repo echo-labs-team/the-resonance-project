@@ -10,10 +10,5 @@ export default function logEvent(name, data) {
     return data && console.log('data:', JSON.stringify(data, null, 2));
   }
 
-  // beta testing from the store--we want to log this to amplitude, but separate it out
-  if (channel.indexOf('develop') !== -1) {
-    return Amplitude.getInstance().logEvent(`BETA ${name}`, data);
-  }
-
   Amplitude.getInstance().logEvent(name, data);
 }
