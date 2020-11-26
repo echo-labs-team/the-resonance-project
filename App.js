@@ -18,15 +18,9 @@ import logEvent from './utils/logEvent';
 import AppNavigator from './navigation/AppNavigator';
 import Storybook from './storybook';
 
-Sentry.init({
-  dsn:
-    'https://21ae19962e164fd6bf8abe521d7f52fc@o481968.ingest.sentry.io/5531444',
-  enableNative: !__DEV__,
-});
-
-Amplitude.getInstance().init(keys.AMPLITUDE, null, {
-  platform: 'Mobile',
-});
+// initialize Sentry and Amplitude
+Sentry.init({ dsn: keys.SENTRY_DSN, enableNative: false });
+Amplitude.getInstance().init(keys.AMPLITUDE, null, { platform: 'Mobile' });
 
 if (
   Platform.OS === 'android' &&
