@@ -7,6 +7,7 @@ import {
   UIManager,
 } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
+import * as Sentry from '@sentry/react-native';
 import Amplitude from 'amplitude-js';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Entypo } from '@expo/vector-icons';
@@ -16,6 +17,12 @@ import keys from './constants/Keys';
 import logEvent from './utils/logEvent';
 import AppNavigator from './navigation/AppNavigator';
 import Storybook from './storybook';
+
+Sentry.init({
+  dsn:
+    'https://21ae19962e164fd6bf8abe521d7f52fc@o481968.ingest.sentry.io/5531444',
+  enableNative: !__DEV__,
+});
 
 Amplitude.getInstance().init(keys.AMPLITUDE, null, {
   platform: 'Mobile',

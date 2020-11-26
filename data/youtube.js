@@ -63,7 +63,11 @@ export async function fetchChannelSection() {
  * of https://issuetracker.google.com/issues/134417363#comment2
  * @param {String} channelSectionPlaylistIDs a playlist ID
  */
-export async function fetchPlaylistsWrapper(channelSectionPlaylistIDs) {
+export async function fetchPlaylistsWrapper(channelSectionPlaylistIDs = []) {
+  if (!channelSectionPlaylistIDs?.length) {
+    throw new Error('No playlist data');
+  }
+
   const playlists = await fetchPlaylists(channelSectionPlaylistIDs);
   const playlistFirstItems = playlists.map(({ title, playlistId } = {}) => {
     return fetchPlaylistItems(playlistId, 1).then((result) => {
@@ -74,9 +78,8 @@ export async function fetchPlaylistsWrapper(channelSectionPlaylistIDs) {
       };
     });
   });
-  const result = await Promise.all(playlistFirstItems);
 
-  return result;
+  return Promise.all(playlistFirstItems);
 }
 
 /**

@@ -4,11 +4,11 @@
 
 name: Production Publish
 
-# Controls when the action will run. Triggers the workflow on push or pull request 
+# Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [master]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -19,14 +19,14 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
 
-    # Runs a command using the runners shell
-    - run: npm install
-    - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',}" > constants/Keys.js
-    - run: npm test
-      
+      # Runs a command using the runners shell
+      - run: npm install
+      - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',}" > constants/Keys.js
+      - run: npm test
+
   update_release_draft:
     runs-on: ubuntu-latest
     steps:
@@ -34,23 +34,22 @@ jobs:
       - uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
+
   publish:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: expo/expo-github-action@v5
-      with:
-        expo-version: 3.x
-        expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
-        expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
-    - run: npm install
-    - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',}" > constants/Keys.js
-    - run: npx expo-optimize . && expo publish --release-channel=develop_1_0_2
-    - name: Slack notification
-      env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      uses: Ilshidur/action-slack@master
-      with:
-        args: 'App has been published :fire:'
-
+      - uses: actions/checkout@v2
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - run: npm install
+      - run: echo "export default {YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',}" > constants/Keys.js
+      - run: npx expo-optimize . && expo publish --release-channel=develop_1_0_5
+      - name: Slack notification
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        uses: Ilshidur/action-slack@master
+        with:
+          args: 'App has been published :fire:'

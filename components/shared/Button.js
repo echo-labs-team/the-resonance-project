@@ -9,7 +9,7 @@ export default ({
   textStyle = {},
   icon,
   onPress = () => {
-    console.log('no `onPress` handler supplied');
+    throw new Error('no `onPress` handler supplied');
   },
 }) => (
   <TouchableHighlight

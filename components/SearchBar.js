@@ -6,7 +6,7 @@ import Colors from '../constants/Colors';
 export default ({
   value = '',
   onChangeText = () => {
-    console.log('`onChangeText` required');
+    throw new Error('`onChangeText` required');
   },
 }) => {
   return (

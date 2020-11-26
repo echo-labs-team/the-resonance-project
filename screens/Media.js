@@ -38,17 +38,18 @@ const MediaScreen = () => {
   const [data, setData] = useState([]);
 
   async function getPlaylists() {
-    try {
-      const channelSection = await fetchChannelSection();
-      const playlists = await fetchPlaylistsWrapper(channelSection);
-
-      setData(playlists);
-      setLoading(false);
-    } catch (err) {
+    const channelSection = await fetchChannelSection().catch((err) => {
       setError(true);
-      setLoading(false);
-      logEvent('ERROR loading media', { error: err.message });
-    }
+      logEvent('ERROR fetching channel section', { error: err.toString() });
+    });
+    const playlists =
+      (await fetchPlaylistsWrapper(channelSection).catch((err) => {
+        setError(true);
+        logEvent('ERROR fetching playlists', { error: err.toString() });
+      })) || [];
+
+    setLoading(false);
+    setData(playlists);
   }
 
   useEffect(() => {

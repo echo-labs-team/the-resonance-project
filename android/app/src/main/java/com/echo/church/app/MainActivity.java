@@ -9,7 +9,7 @@ import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 import android.os.Bundle;
 import android.content.Intent;
 import android.content.res.Configuration;
-import expo.modules.splashscreen.SplashScreen;
+import expo.modules.splashscreen.singletons.SplashScreen;
 import expo.modules.splashscreen.SplashScreenImageResizeMode;
 
 public class MainActivity extends ReactActivity {
@@ -17,7 +17,7 @@ public class MainActivity extends ReactActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // SplashScreen.show(...) has to be called after super.onCreate(...)
-        SplashScreen.show(this, SplashScreenImageResizeMode.CONTAIN, ReactRootView.class);
+        SplashScreen.show(this, SplashScreenImageResizeMode.CONTAIN, ReactRootView.class, false);
     }
 
     // Added automatically by Expo Config
