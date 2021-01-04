@@ -35,7 +35,7 @@
     "expo-font": "~8.3.0",
     "expo-splash-screen": "~0.6.1",
     "expo-updates": "~0.3.3",
-    "expo-web-browser": "~8.5.0",
+    "expo-web-browser": "~8.6.0",
     "fast-html-parser": "^1.0.1",
     "formik": "^2.1.5",
     "html-entities": "^1.2.1",
