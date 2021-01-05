@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   UIManager,
 } from 'react-native';
+import { enableScreens } from 'react-native-screens';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
 import Amplitude from 'amplitude-js';
@@ -17,6 +18,8 @@ import keys from './constants/Keys';
 import logEvent from './utils/logEvent';
 import AppNavigator from './navigation/AppNavigator';
 import Storybook from './storybook';
+
+enableScreens();
 
 // initialize Sentry and Amplitude
 Sentry.init({ dsn: keys.SENTRY_DSN, enableNative: false });

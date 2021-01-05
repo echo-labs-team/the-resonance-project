@@ -15,7 +15,10 @@ import expo.modules.splashscreen.SplashScreenImageResizeMode;
 public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        // Discard any Activity state persisted during the Activity restart process to avoid inconsistencies that lead to crashes
+        // https://github.com/software-mansion/react-native-screens#android
+        super.onCreate(null);
+
         // SplashScreen.show(...) has to be called after super.onCreate(...)
         SplashScreen.show(this, SplashScreenImageResizeMode.CONTAIN, ReactRootView.class, false);
     }
