@@ -83,7 +83,7 @@
     "expo-cli": "^4.0.17",
     "husky": "^4.2.3",
     "jest": "^26.4.2",
-    "jest-expo": "^39.0.0",
+    "jest-expo": "^40.0.1",
     "lint-staged": "^10.2.11",
     "prettier": "^2.0.5",
     "react-devtools": "^4.8.2",
