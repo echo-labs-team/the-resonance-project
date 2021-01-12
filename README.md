@@ -8,7 +8,6 @@ A React Native application for Echo.Church built by volunteers
 
 <p align="center"><img src="https://echo.church/wp-content/uploads/2018/01/echo_logo_main_header.png" width="300" /></p>
 
-
 ## 🔌 Installation
 
 Open a bash terminal:
@@ -57,8 +56,7 @@ Open a bash terminal:
 
 7. Download xcode from the Mac App store
 8. Download android studio
-9. Go [here](https://drive.google.com/drive/folders/1_PorSP9Kw-DGxbRYVYNSPDgLA_JrmGVf)
-   to download Keys.js and put it in `the-resonance-project/constants/`
+9. Ask to get access to app keys
 
 ## 👩‍💻 Running the app 👨‍💻
 

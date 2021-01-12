@@ -16,6 +16,7 @@ import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import Keys from '../constants/Keys';
 
+const build = Keys.GITHUB_SHA.substring(0, 7);
 const handleGive = (campus) => {
   logEvent(`TAP Giving ${campus}`);
   Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);
@@ -23,6 +24,7 @@ const handleGive = (campus) => {
 
 const GivingScreen = () => {
   useHandleTabChange('Giving');
+
   const insets = useSafeArea();
 
   return (
@@ -70,8 +72,8 @@ const GivingScreen = () => {
           style={styles.button}
         />
         <Button
-          title={`build ${Keys.GITHUB_SHA.substring(0, 7)}`}
-          onPress={() => Clipboard.setString(Keys.GITHUB_SHA.substring(0, 7))}
+          title={build}
+          onPress={() => Clipboard.setString(build)}
           style={styles.sha_button}
           textStyle={{ color: 'rgba(255, 255, 255, 0.20)', fontSize: 14 }}
         />
