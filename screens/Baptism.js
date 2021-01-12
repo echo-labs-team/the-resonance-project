@@ -47,10 +47,9 @@ const BaptismScreen = () => {
               style={styles.button}
               onPress={() => {
                 logEvent('TAP Baptism Interested');
-                WebBrowser.openBrowserAsync(
-                  'https://goo.gl/forms/Lc8g3MU0CCxjea9e2',
-                  { toolbarColor: Colors.darkestGray }
-                ).catch((err) => {
+                WebBrowser.openBrowserAsync('https://echo.church/baptism/', {
+                  toolbarColor: Colors.darkestGray,
+                }).catch((err) => {
                   logEvent('ERROR with WebBrowser', { error: err.message });
                   WebBrowser.dismissBrowser();
                 });

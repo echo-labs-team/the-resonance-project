@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>EXUpdatesSDKVersion</key>
-	<string>37.0.0</string>
+	<string>40.0.0</string>
 	<key>EXUpdatesURL</key>
 	<string>https://exp.host/@echo.church/echo</string>
 	<key>releaseChannel</key>

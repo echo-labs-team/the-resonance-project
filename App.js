@@ -37,7 +37,6 @@ function App() {
   const [showStorybook, setShowStorybook] = useState(false);
 
   if (!__DEV__) {
-    // Replace 'YOUR_ONESIGNAL_APP_ID' with your OneSignal App ID.
     OneSignal.init(keys.ONESIGNAL_APP_ID, {
       kOSSettingsKeyAutoPrompt: false,
       kOSSettingsKeyInAppLaunchURL: false,
