@@ -211,17 +211,26 @@ const GroupsScreen = () => {
       );
     }
 
+    if (numberOfFiltersApplied > 0) {
+      return (
+        <View style={styles.noResults}>
+          <Subtitle style={styles.noResultsHeader}>No results</Subtitle>
+          <Text style={styles.noResults}>
+            Try removing some of the filters that you&apos;ve applied
+          </Text>
+          <Button
+            title="Change Filters"
+            style={styles.button}
+            onPress={showFilterModal}
+          />
+        </View>
+      );
+    }
+
     return (
       <View style={styles.noResults}>
         <Subtitle style={styles.noResultsHeader}>No results</Subtitle>
-        <Text style={styles.noResults}>
-          Try removing some of the filters that you&apos;ve applied
-        </Text>
-        <Button
-          title="Change Filters"
-          style={styles.button}
-          onPress={showFilterModal}
-        />
+        <Text style={styles.noResults}>Try again later ⏱</Text>
       </View>
     );
   };
