@@ -79,6 +79,6 @@
   "publishedTime": "2020-04-17T04:23:32.973Z",
   "commitTime": "2020-04-17T04:23:33.018Z",
   "bundleUrl": "https://d1wp6m56sqw74a.cloudfront.net/%40echo.church%2Fecho%2F1.0.0%2F1c26746cbf371758b76276cc5837470c-37.0.0-ios.js",
-  "releaseChannel": "release_1_0_6",
-  "hostUri": "exp.host/@echo.church/echo?release-channel=release_1_0_6"
+  "releaseChannel": "release_1_0_7",
+  "hostUri": "exp.host/@echo.church/echo?release-channel=release_1_0_7"
 }
