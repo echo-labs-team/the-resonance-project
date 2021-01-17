@@ -9,12 +9,8 @@ test('should get group categories', async () => {
     data: {
       categories: [
         {
-          name: 'Sermon-based',
+          name: 'Sermon Discussion',
           id: '20090',
-        },
-        {
-          name: 'Easter',
-          id: '20975',
         },
         {
           name: 'Men Only',

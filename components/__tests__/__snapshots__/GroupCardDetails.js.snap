@@ -68,47 +68,7 @@ exports[`<GroupCardDetails/> render the group details 1`] = `
         ]
       }
     >
-      Every week
-       on
-       
-      <Text
-        bold={true}
-        selectable={true}
-        style={
-          Array [
-            Object {
-              "color": "#cbd2d6",
-              "fontFamily": "NunitoSans-Bold",
-              "fontSize": 18,
-              "lineHeight": 24,
-              "textAlign": "auto",
-            },
-            undefined,
-          ]
-        }
-      >
-        Tuesday
-      </Text>
-       at
-       
-      <Text
-        bold={true}
-        selectable={true}
-        style={
-          Array [
-            Object {
-              "color": "#cbd2d6",
-              "fontFamily": "NunitoSans-Bold",
-              "fontSize": 18,
-              "lineHeight": 24,
-              "textAlign": "auto",
-            },
-            undefined,
-          ]
-        }
-      >
-        7:00pm
-      </Text>
+      Weekly: Tuesdays at 7:00 PM
     </Text>
     <Text
       bold={true}

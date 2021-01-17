@@ -15,6 +15,7 @@ exports[`<SearchBar/> render the default search bar 1`] = `
   <Text />
   <TextInput
     allowFontScaling={true}
+    autoCorrect={false}
     keyboardAppearance="dark"
     onChangeText={[Function]}
     rejectResponderTermination={true}
@@ -51,6 +52,7 @@ exports[`<SearchBar/> render the search bar with a value 1`] = `
   <Text />
   <TextInput
     allowFontScaling={true}
+    autoCorrect={false}
     keyboardAppearance="dark"
     onChangeText={[Function]}
     rejectResponderTermination={true}

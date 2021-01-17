@@ -2,6 +2,7 @@
 
 exports[`should get group categories 1`] = `
 Array [
+  "Sermon Discussion",
   "Men Only",
   "Women Only",
   "Young Professionals",

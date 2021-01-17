@@ -48,26 +48,7 @@ exports[`<GroupLocation/> render a group with a location 1`] = `
       ]
     }
   >
-    Starbucks
-  </Text>
-  <Text
-    selectable={true}
-    style={
-      Array [
-        Object {
-          "color": "#cbd2d6",
-          "fontFamily": "NunitoSans-Regular",
-          "fontSize": 18,
-          "lineHeight": 24,
-          "textAlign": "auto",
-        },
-        Object {
-          "marginTop": 10,
-        },
-      ]
-    }
-  >
-    Table in the back with all the coffee
+    San Jose
   </Text>
 </View>
 `;
@@ -120,7 +101,7 @@ exports[`<GroupLocation/> render a group with a location, but no description 1`]
       ]
     }
   >
-    Starbucks
+    Sunnyvale
   </Text>
 </View>
 `;
@@ -169,11 +150,13 @@ exports[`<GroupLocation/> render an online group 1`] = `
           "lineHeight": 24,
           "textAlign": "auto",
         },
-        undefined,
+        Object {
+          "marginBottom": 10,
+        },
       ]
     }
   >
-    Online
+    Meets Online
   </Text>
 </View>
 `;

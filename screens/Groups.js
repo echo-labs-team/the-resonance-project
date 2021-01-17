@@ -51,8 +51,8 @@ function useDebounce(value, delay) {
 function useQuery(groups) {
   const [query, setQuery] = useState('');
   const debouncedQuery = useDebounce(query, 500);
-  const queriedGroups = [...groups].filter(({ name = '' }) =>
-    name?.toLowerCase().includes(debouncedQuery?.toLowerCase())
+  const queriedGroups = [...groups].filter(({ Name = '' }) =>
+    Name?.toLowerCase().includes(debouncedQuery?.toLowerCase())
   );
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const Card = ({ item }) => {
   return (
     <View style={styles.cardShadow}>
       <BlurView tint="dark" intensity={100} style={styles.card}>
-        {item?.uuid?.toString().includes('loading') ? (
+        {item?.Id?.toString().includes('loading') ? (
           <GroupCardPlaceholder />
         ) : (
           <GroupCardDetails item={item} />
@@ -94,14 +94,14 @@ const GroupsScreen = () => {
   useScrollToTop(ref);
 
   const [groups, setGroups] = useState([
-    { uuid: 'loading1' },
-    { uuid: 'loading2' },
-    { uuid: 'loading3' },
-    { uuid: 'loading4' },
-    { uuid: 'loading5' },
-    { uuid: 'loading6' },
-    { uuid: 'loading7' },
-    { uuid: 'loading8' },
+    { Id: 'loading1' },
+    { Id: 'loading2' },
+    { Id: 'loading3' },
+    { Id: 'loading4' },
+    { Id: 'loading5' },
+    { Id: 'loading6' },
+    { Id: 'loading7' },
+    { Id: 'loading8' },
   ]);
   const [categories, setCategories] = useState([]);
   const [query, setQuery, queriedGroups] = useQuery(groups);
@@ -141,9 +141,10 @@ const GroupsScreen = () => {
   }, [setGroups, setCategories, refreshing, tryAgain]);
 
   const filterGroups = ({
-    campus = '',
-    daysOfWeek = [],
-    categories: groupCategories = [],
+    GroupCampus = '',
+    DayOfWeek = '',
+    AudienceName = '',
+    TopicName = '',
   } = {}) => {
     const {
       Campus: campusFilter = [],
@@ -159,20 +160,31 @@ const GroupsScreen = () => {
       (campusFilter.length
         ? campusFilter
             .map((c) => c?.toLowerCase())
-            .includes(campus?.toLowerCase())
+            .includes(GroupCampus?.toLowerCase())
         : true) &&
       (dayFilter.length
-        ? dayFilter.some((day) =>
-            daysOfWeek
-              .map((dow) => dow?.toLowerCase())
-              .includes(day?.toLowerCase())
+        ? dayFilter.some(
+            (day) => DayOfWeek.toLowerCase() === day?.toLowerCase()
           )
         : true) &&
       (categoriesFilter.length
-        ? categoriesFilter.some((category) => {
-            return groupCategories
-              .map((cat) => cat?.toLowerCase())
-              .includes(category?.toLowerCase());
+        ? categoriesFilter.some((category = '') => {
+            if (!category) {
+              return false;
+            }
+
+            // get each category of a filter that includes multiple audience or topic names
+            const categoryNames = category?.split('/') || [];
+
+            // check if some of the category filters apply to the group's audience or topic
+            return categoryNames.some((categoryName) => {
+              return (
+                AudienceName.toLowerCase().includes(
+                  categoryName.toLowerCase()
+                ) ||
+                TopicName.toLowerCase().includes(categoryName.toLowerCase())
+              );
+            });
           })
         : true)
     );
@@ -274,7 +286,7 @@ const GroupsScreen = () => {
           {data.length ? (
             <FlatList
               ref={ref}
-              keyExtractor={({ uuid }) => uuid.toString()}
+              keyExtractor={({ Id }) => Id.toString()}
               data={data}
               renderItem={({ item }) => <Card item={item} />}
               refreshControl={

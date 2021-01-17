@@ -15,14 +15,10 @@ describe('<GroupCardDetails/>', () => {
 
     const props = {
       item: {
-        name: '01 - Test Group',
-        campus: 'North San Jose',
-        frequency: 1,
-        interval: 'Weekly',
-        daysOfWeek: ['Tuesday'],
-        dayOfMonth: '',
-        meetingTime: '19:00:00 PST',
-        description: 'This group is a test',
+        Name: 'Test Group',
+        GroupCampus: 'North San Jose',
+        FriendlyScheduleText: 'Weekly: Tuesdays at 7:00 PM',
+        Description: 'This group is a test',
       },
     };
     const { toJSON, getByTestId } = render(<GroupCardDetails {...props} />);
@@ -32,7 +28,7 @@ describe('<GroupCardDetails/>', () => {
     fireEvent.press(getByTestId('GroupCardDetails'));
 
     expect(mockNavigate).toBeCalledWith('GroupDetails', {
-      group: { ...props.item, title: 'Test Group' },
+      group: { ...props.item },
     });
   });
 });

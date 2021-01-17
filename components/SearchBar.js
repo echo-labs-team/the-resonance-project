@@ -21,6 +21,7 @@ export default ({
         testID="search-bar-input"
         style={styles.input}
         keyboardAppearance="dark"
+        autoCorrect={false}
         returnKeyType="search"
         value={value}
         onChangeText={onChangeText}

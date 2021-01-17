@@ -5,13 +5,7 @@ import GroupLocation from '../GroupLocation';
 describe('<GroupLocation/>', () => {
   test('render a group with a location', async () => {
     const { toJSON } = render(
-      <GroupLocation
-        isOnline={false}
-        location={{
-          name: 'Starbucks',
-          description: 'Table in the back with all the coffee',
-        }}
-      />
+      <GroupLocation isOnline={false} city="San Jose" />
     );
 
     expect(toJSON()).toMatchSnapshot();
@@ -19,7 +13,7 @@ describe('<GroupLocation/>', () => {
 
   test('render a group with a location, but no description', async () => {
     const { toJSON } = render(
-      <GroupLocation isOnline={false} location={{ name: 'Starbucks' }} />
+      <GroupLocation isOnline={false} city="Sunnyvale" />
     );
 
     expect(toJSON()).toMatchSnapshot();

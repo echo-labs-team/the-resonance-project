@@ -26,40 +26,36 @@ export async function getCategories() {
 
   const { categories = [] } = data;
 
-  return categories
-    .map(({ name }) => {
-      if (name === 'Sermon-based') {
-        return false;
-      }
-      if (name === 'Easter') {
-        return false;
-      }
-
-      return name;
-    })
-    .filter(Boolean);
+  return categories.map(({ name }) => name).filter(Boolean);
 }
 
 export async function getOpenGroups() {
   const errorMessage = 'Error fetching groups';
-  const { data = [] } = (await axios.get(`${baseURL}/groups/open`)) || {};
+  const { data } =
+    (await axios.get(
+      'https://rock.echo.church/api/GroupFinder/GetGroups/25?primaryAliasId=16536'
+    )) || {};
 
-  if (!data || !Array.isArray(data)) {
+  const { Success: isSuccessful, Data = [] } = data;
+
+  if (!isSuccessful || !Data || !Array.isArray(Data)) {
     logEvent('ERROR loading groups', {
       error: errorMessage,
     });
     throw Error(errorMessage);
   }
 
-  return data.sort(({ name = '' }, { name: otherName = '' }) => {
-    if (isFeaturedGroup(name) && !isFeaturedGroup(otherName)) {
-      return -1;
+  return Data.filter(({ AtCapacity = false }) => !AtCapacity).sort(
+    ({ Name = '' }, { Name: otherName = '' }) => {
+      if (isFeaturedGroup(Name) && !isFeaturedGroup(otherName)) {
+        return -1;
+      }
+      if (!isFeaturedGroup(Name) && isFeaturedGroup(otherName)) {
+        return 1;
+      }
+      return 0;
     }
-    if (!isFeaturedGroup(name) && isFeaturedGroup(otherName)) {
-      return 1;
-    }
-    return 0;
-  });
+  );
 }
 
 export function askQuestion(groupId, firstName, lastName, email, question) {

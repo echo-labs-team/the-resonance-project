@@ -18,13 +18,9 @@ import Colors from '../constants/Colors';
 import { Text, Title, Heading } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import { styles as groupStyles } from '../components/GroupCardDetails';
-import {
-  getMeetingFrequency,
-  getMeetingDay,
-  getMeetingTime,
-} from '../utils/groups';
 import Location from '../components/GroupLocation';
 import Address from '../components/GroupAddress';
+import Leader from '../components/Leader';
 import SignUp from '../components/JoinGroupModal';
 import Ask from '../components/AskAboutGroupModal';
 
@@ -41,62 +37,64 @@ const GroupDetails = ({ route }) => {
   }
 
   const {
-    uuid,
-    title = '',
-    campus,
-    frequency,
-    interval,
-    daysOfWeek,
-    dayOfMonth,
-    meetingTime,
-    description,
-    leaders: { leaders = [] } = {},
-    location = {
-      address: {},
-      description: '',
-      isOnline: false,
-      name: '',
-    },
-    hasChildcare = false,
-    categories = [],
-    openDate: {
-      startDate: { formatted: startDate = '' } = {},
-      endDate: { formatted: endDate = '' } = {},
-    } = {},
+    Id,
+    Name = '',
+    GroupCampus,
+    FriendlyScheduleText,
+    Description,
+    LeaderFirstName,
+    LeaderLastName,
+    LeaderPhotoId,
+    HostFirstName,
+    HostLastName,
+    HostPhotoId,
+    City,
+    Online: isOnline,
+    AudienceName,
   } = route.params?.group ?? {};
 
-  const isWomenOnly = categories.includes('Women Only');
-  const isMenOnly = categories.includes('Men Only');
-  const isOnline = location.isOnline === 'true';
-  const shouldShowLocation = Boolean(
-    isOnline || location.name || location.description
-  );
-  const shouldShowAddress = Boolean(!isOnline && location?.address?.address1);
-  const shouldShowLeaders = leaders.length > 0;
+  const isWomenOnly = AudienceName.includes('Women Only');
+  const isMenOnly = AudienceName.includes('Men Only');
+  const shouldShowLocation = Boolean(isOnline || City);
+  const shouldShowAddress = Boolean(!isOnline && City);
+  const shouldShowLeaders = Boolean(LeaderFirstName) || Boolean(HostFirstName);
+  const leaders = [
+    {
+      name: `${LeaderFirstName} ${LeaderLastName}`,
+      photo: `https://rock.echo.church/GetImage.ashx?id=${LeaderPhotoId}&width=100&height=100&mode=crop`,
+    },
+  ];
+
+  if (HostFirstName) {
+    leaders.push({
+      name: `${HostFirstName} ${HostLastName}`,
+      photo: `https://rock.echo.church/GetImage.ashx?id=${HostPhotoId}&width=100&height=100&mode=crop`,
+    });
+  }
 
   const onShare = async () => {
     logEvent('TAP Group Share', {
-      group: title,
+      group: Name,
     });
 
     try {
       const result = await Share.share({
         title: 'Echo Groups',
-        message: `Check out this Echo Group: ${title}`,
-        url: `https://groups.echo.church/group/${uuid}`,
+        message: `Check out this Echo Group: ${Name}`,
+        url: `https://rock.echo.church/groupfinder?GroupId=${Id}`,
       });
 
       const { action, activityType = 'unknown' } = result;
 
       if (action === Share.sharedAction) {
         logEvent('SHARED Group', {
-          group: title,
+          group: Name,
           activityType,
         });
       }
     } catch (error) {
       logEvent('ERROR sharing group', {
-        group: title,
+        group: Name,
       });
     }
   };
@@ -117,19 +115,15 @@ const GroupDetails = ({ route }) => {
               numberOfLines={2}
               style={groupStyles.title}
             >
-              {title}
+              {Name}
             </Title>
 
             <View style={groupStyles.when}>
-              <Text>
-                {getMeetingFrequency(frequency, interval)} on{' '}
-                <Text bold>{getMeetingDay(daysOfWeek, dayOfMonth)}</Text> at{' '}
-                <Text bold>{getMeetingTime(meetingTime)}</Text>
-              </Text>
+              <Text>{FriendlyScheduleText}</Text>
             </View>
 
             <View style={[groupStyles.details, { marginBottom: 16 }]}>
-              <Heading>{campus}</Heading>
+              <Heading>{GroupCampus}</Heading>
             </View>
 
             {isWomenOnly && (
@@ -143,41 +137,26 @@ const GroupDetails = ({ route }) => {
               </View>
             )}
 
-            {shouldShowLocation && (
-              <Location isOnline={isOnline} location={location} />
-            )}
+            {shouldShowLocation && <Location isOnline={isOnline} city={City} />}
 
-            {shouldShowAddress && <Address title={title} location={location} />}
+            {shouldShowAddress && <Address title={Name} city={City} />}
 
             {shouldShowLeaders && (
               <View style={{ marginBottom: 16 }}>
                 <Heading>Host(s)</Heading>
-                {leaders.map(({ name }) => (
-                  <Text key={name}>{name}</Text>
+                {leaders.map((leader) => (
+                  <Leader key={leader?.name} {...leader} />
                 ))}
               </View>
             )}
 
-            <View style={{ marginBottom: 16 }}>
-              <Heading>Childcare</Heading>
-              <Text>{hasChildcare ? 'Provided' : 'Not Provided'}</Text>
-            </View>
-
             {/* make any links clickable */}
             <Hyperlink linkDefault>
-              <Text style={{ marginBottom: 20 }}>{description}</Text>
+              <Text style={{ marginVertical: 20 }}>{Description}</Text>
             </Hyperlink>
 
-            {startDate && (
-              <Text
-                light
-                style={{ marginBottom: 20 }}
-              >{`This semester runs from 
-${startDate} to ${endDate}`}</Text>
-            )}
-
-            <SignUp groupID={uuid} title={title} showSuccess={showSuccess} />
-            <Ask groupID={uuid} title={title} showSuccess={showSuccess} />
+            <SignUp groupID={Id} title={Name} showSuccess={showSuccess} />
+            <Ask groupID={Id} title={Name} showSuccess={showSuccess} />
             <Button
               icon={<Feather name={'share'} size={24} color={Colors.gray} />}
               title="Share"
