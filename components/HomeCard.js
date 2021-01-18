@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
@@ -26,9 +26,7 @@ function getIcon(type) {
     EVENTS: require('../assets/icons/Events.png'),
     ANNOUNCEMENTS: require('../assets/icons/Announcements.png'),
     'VERSE OF THE DAY': {
-      expoIcon: (
-        <MaterialCommunityIcons name={'bible'} size={24} color={Colors.white} />
-      ),
+      expoIcon: <FontAwesome5 name={'bible'} size={24} color={Colors.white} />,
     },
   }[type];
 }

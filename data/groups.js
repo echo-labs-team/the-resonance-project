@@ -29,6 +29,10 @@ export async function getCategories() {
   return categories.map(({ name }) => name).filter(Boolean);
 }
 
+/**
+ * Get groups using the Rock's GroupFinder API
+ * https://rock.echo.church/api/docs/index#/GroupFinder
+ */
 export async function getOpenGroups() {
   const errorMessage = 'Error fetching groups';
   const { data } =
