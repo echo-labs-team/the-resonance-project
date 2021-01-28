@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
-import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
-import { getInstagramPosts } from '../data/instagram';
-import { getBlogPosts } from '../data/blogPosts';
-import { getVerseOfTheDay } from '../data/verseOfTheDay';
+import { useInstagramPosts } from '../data/instagram';
+import { useBlogPosts } from '../data/blogPosts';
+import { useVerseOfTheDay } from '../data/verseOfTheDay';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import AnimateChildrenIn from '../components/AnimateChildrenIn';
 import { Text, Subtitle } from '../components/shared/Typography';
@@ -39,51 +38,30 @@ const HomeScreen = () => {
 
   useScrollToTop(ref);
 
-  const [cardData, setCardData] = useState([
-    { url: 'loading1' },
-    { url: 'loading2' },
-    { url: 'loading3' },
-    { url: 'loading4' },
-    { url: 'loading5' },
-    { url: 'loading6' },
-    { url: 'loading7' },
-    { url: 'loading8' },
-  ]);
-  const [refreshing, setRefreshing] = useState(false);
+  const {
+    isFetching: isFetchingBlogPosts,
+    data: postsData = [],
+    refetch: refetchBlogPosts,
+  } = useBlogPosts();
+  const {
+    isFetching: isFetchingInstagramPosts,
+    data: instagramData = [],
+    refetch: refetchInstagramPosts,
+  } = useInstagramPosts();
+  const { isLoading: isLoadingVOTD, data: verseOfTheDay } = useVerseOfTheDay();
   const [tryAgain, setTryAgain] = useState(false);
 
-  useEffect(() => {
-    const getPosts = async () => {
-      const igPosts = (await getInstagramPosts()) || [];
-      const blogPosts = (await getBlogPosts()) || [];
-      const verseOfTheDay = (await getVerseOfTheDay()) || {};
+  function handleRefresh() {
+    refetchBlogPosts();
+    refetchInstagramPosts();
+  }
 
-      if (!blogPosts.length || !igPosts.length) {
-        logEvent('ERROR no posts');
-      }
+  const cardData = [...postsData, ...instagramData]
+    .filter(Boolean)
+    .sort(sortPosts);
 
-      // get all the posts and sort them descending by date
-      const posts = [...blogPosts, ...igPosts].filter(Boolean).sort(sortPosts);
-
-      // insert VOTD post
-      posts.splice(5, 0, verseOfTheDay);
-
-      setCardData(posts);
-      setRefreshing(false);
-      setTryAgain(false);
-    };
-
-    if (refreshing || tryAgain) {
-      getPosts();
-      return;
-    }
-
-    getPosts();
-  }, [refreshing, tryAgain]);
-
-  const refresh = () => {
-    setRefreshing(true);
-  };
+  // insert the Verse of the Day
+  cardData.splice(5, 0, isLoadingVOTD ? { url: 'loadingVOTD' } : verseOfTheDay);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -93,8 +71,8 @@ const HomeScreen = () => {
           <RefreshControl
             tintColor={Colors.gray}
             colors={[Colors.gray]}
-            refreshing={refreshing}
-            onRefresh={refresh}
+            refreshing={isFetchingBlogPosts || isFetchingInstagramPosts}
+            onRefresh={handleRefresh}
           />
         }
         contentContainerStyle={styles.contentContainer}
@@ -126,7 +104,13 @@ const HomeScreen = () => {
             <Subtitle center style={styles.error}>
               No posts were found... 🤔
             </Subtitle>
-            <Button title="Try Again" onPress={() => setTryAgain(true)} />
+            <Button
+              title="Try Again"
+              onPress={() => {
+                setTryAgain(true);
+                handleRefresh();
+              }}
+            />
           </>
         )}
       </ScrollView>

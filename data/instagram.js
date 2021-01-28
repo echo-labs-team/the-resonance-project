@@ -1,16 +1,42 @@
 import axios from 'axios';
+import { useQuery } from 'react-query';
 import logEvent from '../utils/logEvent';
 
-export async function getInstagramPosts() {
+export async function useInstagramPosts() {
   let instagramPosts = [];
 
-  try {
-    const userInfoSource = await axios.get(
-      'https://www.instagram.com/echochurchlive/'
-    );
+  const {
+    isFetching,
+    isLoading,
+    isError,
+    data: instagramData,
+    error,
+    refetch,
+  } = useQuery('instagram', () =>
+    axios('https://www.instagram.com/echochurchlive/')
+  );
 
-    // userInfoSource.data contains the HTML from Axios
-    const jsonObject = userInfoSource.data
+  if (isLoading) {
+    return {
+      data: [
+        { url: 'loadingIG1' },
+        { url: 'loadingIG2' },
+        { url: 'loadingIG3' },
+      ],
+    };
+  }
+
+  if (isError) {
+    logEvent('ERROR loading instagram posts', { error });
+
+    return { isFetching, error, data: [], refetch };
+  }
+
+  const { data: userInfoSource = {} } = instagramData;
+
+  try {
+    // userInfoSource contains the DOM
+    const jsonObject = userInfoSource
       .match(
         /<script type="text\/javascript">window\._sharedData = (.*)<\/script>/
       )[1]
@@ -51,5 +77,9 @@ export async function getInstagramPosts() {
     logEvent('ERROR loading instagram posts', { error: err.message });
   }
 
-  return instagramPosts;
+  if (!instagramPosts.length) {
+    logEvent('ERROR no instagram posts');
+  }
+
+  return { isFetching, data: instagramPosts, refetch };
 }

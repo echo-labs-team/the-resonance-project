@@ -6,6 +6,7 @@ import {
   TouchableHighlight,
   UIManager,
 } from 'react-native';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { enableScreens } from 'react-native-screens';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from '@sentry/react-native';
@@ -31,6 +32,8 @@ if (
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
+
+const queryClient = new QueryClient();
 
 function App() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
@@ -97,45 +100,47 @@ function App() {
   }
 
   return (
-    <SafeAreaProvider>
-      <StatusBar
-        hidden={true}
-        animated
-        barStyle="light-content"
-        networkActivityIndicatorVisible
-        showHideTransition="fade"
-        translucent
-      />
-      <AppNavigator />
+    <QueryClientProvider client={queryClient}>
+      <SafeAreaProvider>
+        <StatusBar
+          hidden={true}
+          animated
+          barStyle="light-content"
+          networkActivityIndicatorVisible
+          showHideTransition="fade"
+          translucent
+        />
+        <AppNavigator />
 
-      {/* Button to show the Storybook 📖 */}
-      {__DEV__ && (
-        <TouchableHighlight
-          underlayColor="#ce2f1c"
-          onPress={() => setShowStorybook(true)}
-          // eslint-disable-next-line
-          style={{
-            width: 50,
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            bottom: 100,
-            right: 20,
-            borderRadius: 25,
-            backgroundColor: '#1f6276',
-          }}
-        >
-          <Entypo
-            name={'book'}
-            size={30}
-            color="#fff"
+        {/* Button to show the Storybook 📖 */}
+        {__DEV__ && (
+          <TouchableHighlight
+            underlayColor="#ce2f1c"
+            onPress={() => setShowStorybook(true)}
             // eslint-disable-next-line
-            style={{ marginTop: 4 }}
-          />
-        </TouchableHighlight>
-      )}
-    </SafeAreaProvider>
+            style={{
+              width: 50,
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: 100,
+              right: 20,
+              borderRadius: 25,
+              backgroundColor: '#1f6276',
+            }}
+          >
+            <Entypo
+              name={'book'}
+              size={30}
+              color="#fff"
+              // eslint-disable-next-line
+              style={{ marginTop: 4 }}
+            />
+          </TouchableHighlight>
+        )}
+      </SafeAreaProvider>
+    </QueryClientProvider>
   );
 }
 
