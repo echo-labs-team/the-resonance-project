@@ -28,7 +28,7 @@ export function useVerseOfTheDay() {
   if (isError) {
     console.error(error);
 
-    return { error };
+    return {};
   }
 
   const { data: { image = {}, verse: { url = '' } = {} } = {} } = data;

@@ -3,9 +3,9 @@ import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import Colors from '../constants/Colors';
-import { useInstagramPosts } from '../data/instagram';
 import { useBlogPosts } from '../data/blogPosts';
 import { useVerseOfTheDay } from '../data/verseOfTheDay';
+import { useTweets } from '../data/tweets';
 import useHandleTabChange from '../utils/useHandleTabChange';
 import AnimateChildrenIn from '../components/AnimateChildrenIn';
 import { Text, Subtitle } from '../components/shared/Typography';
@@ -44,19 +44,19 @@ const HomeScreen = () => {
     refetch: refetchBlogPosts,
   } = useBlogPosts();
   const {
-    isFetching: isFetchingInstagramPosts,
-    data: instagramData = [],
-    refetch: refetchInstagramPosts,
-  } = useInstagramPosts();
+    isFetching: isFetchingTweets,
+    data: tweetsData = [],
+    refetch: refetchTweets,
+  } = useTweets();
   const { isLoading: isLoadingVOTD, data: verseOfTheDay } = useVerseOfTheDay();
   const [tryAgain, setTryAgain] = useState(false);
 
   function handleRefresh() {
     refetchBlogPosts();
-    refetchInstagramPosts();
+    refetchTweets();
   }
 
-  const cardData = [...postsData, ...instagramData]
+  const cardData = [...postsData, ...tweetsData]
     .filter(Boolean)
     .sort(sortPosts);
 
@@ -71,7 +71,7 @@ const HomeScreen = () => {
           <RefreshControl
             tintColor={Colors.gray}
             colors={[Colors.gray]}
-            refreshing={isFetchingBlogPosts || isFetchingInstagramPosts}
+            refreshing={isFetchingBlogPosts || isFetchingTweets}
             onRefresh={handleRefresh}
           />
         }

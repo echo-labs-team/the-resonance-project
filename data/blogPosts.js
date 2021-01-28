@@ -13,7 +13,7 @@ const entities = new AllHtmlEntities();
 function formatDate(date) {
   return `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${String(
     date.getUTCFullYear()
-  ).slice(2)}`;
+  )}`;
 }
 
 async function fetchPostImage({ imageUrl, blogUrl, title, formattedDate }) {
@@ -29,11 +29,11 @@ async function fetchPostImage({ imageUrl, blogUrl, title, formattedDate }) {
   const image = media_details?.sizes?.medium_large?.source_url;
 
   return {
-    type: 'BLOG',
-    url: blogUrl,
+    date: formattedDate,
     image,
     title: entities.decode(title),
-    date: formattedDate,
+    type: 'BLOG',
+    url: blogUrl,
   };
 }
 
@@ -52,7 +52,7 @@ export function useBlogPosts() {
     )
   );
 
-  const { data: posts = [] } = postsData || [];
+  const { data: posts = [] } = postsData || {};
 
   const blogPosts = useQueries(
     posts.map(
@@ -71,10 +71,10 @@ export function useBlogPosts() {
           return {
             queryKey: ['post', id],
             queryFn: async () => ({
+              date: formattedDate,
+              title: entities.decode(title),
               type: 'BLOG',
               url: blogUrl,
-              title: entities.decode(title),
-              date: formattedDate,
             }),
           };
         }
@@ -82,7 +82,12 @@ export function useBlogPosts() {
         return {
           queryKey: ['post', id],
           queryFn: () =>
-            fetchPostImage({ imageUrl, blogUrl, title, formattedDate }),
+            fetchPostImage({
+              blogUrl,
+              formattedDate,
+              imageUrl,
+              title,
+            }),
         };
       }
     )
@@ -94,8 +99,6 @@ export function useBlogPosts() {
         { url: 'loadingPost1' },
         { url: 'loadingPost2' },
         { url: 'loadingPost3' },
-        { url: 'loadingPost4' },
-        { url: 'loadingPost5' },
       ],
     };
   }
@@ -103,7 +106,7 @@ export function useBlogPosts() {
   if (isError) {
     logEvent('ERROR loading blog posts', { error });
 
-    return { isFetching, error, data: [], refetch };
+    return { isFetching, data: [], refetch };
   }
 
   if (!blogPosts.length) {

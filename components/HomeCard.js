@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
-import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
 import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import Layout from '../constants/Layout';
@@ -22,11 +22,31 @@ function getIcon(type) {
   }
 
   return {
-    BLOG: require('../assets/icons/Blog.png'),
-    EVENTS: require('../assets/icons/Events.png'),
-    ANNOUNCEMENTS: require('../assets/icons/Announcements.png'),
+    BLOG: {
+      expoIcon: (
+        <MaterialCommunityIcons name="post" size={24} color={Colors.white} />
+      ),
+    },
+    INSTAGRAM: {
+      expoIcon: (
+        <MaterialCommunityIcons
+          name="instagram"
+          size={24}
+          color={Colors.white}
+        />
+      ),
+    },
+    SOCIAL: {
+      expoIcon: (
+        <MaterialCommunityIcons
+          name="lightbulb"
+          size={24}
+          color={Colors.white}
+        />
+      ),
+    },
     'VERSE OF THE DAY': {
-      expoIcon: <FontAwesome5 name={'bible'} size={24} color={Colors.white} />,
+      expoIcon: <FontAwesome5 name="bible" size={24} color={Colors.white} />,
     },
   }[type];
 }
@@ -38,7 +58,7 @@ function getImageHeight(type, image) {
   }
 
   // these images are pretty large
-  if (type === 'INSTAGRAM' || type === 'VERSE OF THE DAY') {
+  if (type === 'SOCIAL' || type === 'VERSE OF THE DAY') {
     return Layout.window.width - 20;
   }
 
@@ -46,6 +66,10 @@ function getImageHeight(type, image) {
 }
 
 function Card({ type, url, image, title, date }) {
+  if (!type) {
+    return null;
+  }
+
   const icon = getIcon(type);
 
   return (
@@ -57,15 +81,18 @@ function Card({ type, url, image, title, date }) {
           post_type: type.toLowerCase(),
         });
 
-        if (type === 'BLOG') {
-          return WebBrowser.openBrowserAsync(url, {
-            toolbarColor: Colors.darkestGray,
-          }).catch((err) => {
-            logEvent('ERROR with WebBrowser', { error: err.message });
-            WebBrowser.dismissBrowser();
-          });
+        if (url) {
+          if (type === 'BLOG') {
+            return WebBrowser.openBrowserAsync(url, {
+              toolbarColor: Colors.darkestGray,
+            }).catch((err) => {
+              logEvent('ERROR with WebBrowser', { error: err.message });
+              WebBrowser.dismissBrowser();
+            });
+          }
+
+          Linking.openURL(url);
         }
-        Linking.openURL(url);
       }}
     >
       <View>
@@ -87,9 +114,11 @@ function Card({ type, url, image, title, date }) {
             ) : (
               <Image source={icon} style={styles.cardTypeIcon} />
             )}
-            <Text bold style={styles.cardTypeText}>
-              {type}
-            </Text>
+            {type === 'SOCIAL' ? null : (
+              <Text bold style={styles.cardTypeText}>
+                {type}
+              </Text>
+            )}
           </View>
           {date && (
             <Text light style={styles.cardTypeText}>
@@ -98,7 +127,10 @@ function Card({ type, url, image, title, date }) {
           )}
         </View>
         {title && (
-          <Text style={styles.title} numberOfLines={3}>
+          <Text
+            style={styles.title}
+            numberOfLines={type === 'SOCIAL' ? undefined : 3}
+          >
             {title}
           </Text>
         )}
