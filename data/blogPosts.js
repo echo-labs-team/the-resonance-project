@@ -96,9 +96,9 @@ export function useBlogPosts() {
   if (isLoading) {
     return {
       data: [
-        { url: 'loadingPost1' },
-        { url: 'loadingPost2' },
-        { url: 'loadingPost3' },
+        { type: 'BLOG', url: 'loadingPost1' },
+        { type: 'BLOG', url: 'loadingPost2' },
+        { type: 'BLOG', url: 'loadingPost3' },
       ],
     };
   }

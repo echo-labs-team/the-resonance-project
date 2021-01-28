@@ -79,17 +79,16 @@ function App() {
 
     loadResourcesAsync().then(() => {
       setIsLoadingComplete(true);
-      SplashScreen.hideAsync();
     });
 
-    const handleAppStateChange = (state) => {
+    function handleAppStateChange(state) {
       if (state === 'active') {
         logEvent('Start session');
       }
       if (state === 'background') {
         logEvent('End session');
       }
-    };
+    }
 
     AppState.addEventListener('change', handleAppStateChange);
 

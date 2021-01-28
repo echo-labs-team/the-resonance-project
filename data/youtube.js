@@ -93,7 +93,7 @@ export async function fetchPlaylists(channelSectionPlaylistIDs) {
       params: {
         id,
         key: API_KEY,
-        part: 'id,snippet',
+        part: 'id,contentDetails,snippet',
       },
     });
   });
@@ -106,11 +106,15 @@ export async function fetchPlaylists(channelSectionPlaylistIDs) {
 
   return result
     .map(({ data: { items = [] } } = {}) => {
-      const { id, snippet: { publishedAt, title, thumbnails } = {} } = items[0];
+      const {
+        id,
+        contentDetails: { videoPublishedAt },
+        snippet: { title, thumbnails },
+      } = items[0];
 
       return {
         playlistId: id,
-        publishDate: publishedAt,
+        publishDate: videoPublishedAt,
         id,
         title,
         thumbnails,

@@ -64,7 +64,6 @@ test('should fetch a playlist', async () => {
           etag: 'etag',
           id: 'id',
           snippet: {
-            publishedAt: '2020-04-04T00:00:00Z',
             channelId: 'UCjycPAZuveusvPrk94-ClBw',
             title: 'Playlist Title',
             description: '',
@@ -72,7 +71,10 @@ test('should fetch a playlist', async () => {
             channelTitle: 'Echo.Church',
             localized: [{}],
           },
-          contentDetails: { itemCount: 5 },
+          contentDetails: {
+            itemCount: 5,
+            videoPublishedAt: '2020-04-04T00:00:00Z',
+          },
         },
       ],
     },

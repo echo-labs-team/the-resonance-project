@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Platform } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -204,6 +205,13 @@ function GroupsStackScreen() {
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  useEffect(() => {
+    async function hideSplashScreen() {
+      SplashScreen.hideAsync();
+    }
+    hideSplashScreen();
+  }, []);
+
   return (
     <NavigationContainer>
       <Tab.Navigator
