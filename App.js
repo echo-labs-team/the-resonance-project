@@ -71,7 +71,12 @@ function App() {
       });
     };
 
-    SplashScreen.preventAutoHideAsync().catch((err) => console.warn(err));
+    SplashScreen.preventAutoHideAsync().catch((err) =>
+      logEvent('ERROR: splashscreen preventAutoHideAsync', {
+        error: err.message,
+      })
+    );
+
     loadResourcesAsync().then(() => {
       setIsLoadingComplete(true);
       SplashScreen.hideAsync();
