@@ -7,7 +7,6 @@
     "privacy": "public",
     "platforms": ["ios", "android"],
     "version": "1.0.7",
-    "sdkVersion": "40.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "icon": "./assets/images/icon.png",
