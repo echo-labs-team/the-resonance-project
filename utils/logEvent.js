@@ -1,4 +1,5 @@
 import Amplitude from 'amplitude-js';
+import * as Sentry from '@sentry/react-native';
 
 export default function logEvent(name, data) {
   // override amplitude tracking
@@ -10,5 +11,9 @@ export default function logEvent(name, data) {
     }
   } else {
     Amplitude.getInstance().logEvent(name, data);
+
+    if (name.toLowerCase().includes('error')) {
+      Sentry.captureException(data?.error || { message: name });
+    }
   }
 }

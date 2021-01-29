@@ -20,7 +20,10 @@
     "storybook": "start-storybook -p 7007"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-native|react-native-animatable|react-native-modal|@expo|@unimodules|@sentry|expo-font|expo-asset|expo-constants)/)"
+    ]
   },
   "dependencies": {
     "@expo/vector-icons": "^12.0.2",

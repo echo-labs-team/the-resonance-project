@@ -37,7 +37,7 @@ const ActivateScreen = () => {
                   'https://docs.google.com/forms/d/e/1FAIpQLSdZ1EBI_kCqt8xtK1n1PBfcBUlHFPl45o-9Ls3O2srwejpjGw/viewform?vc=0&c=0&w=1',
                   { toolbarColor: Colors.darkestGray }
                 ).catch((err) => {
-                  logEvent('ERROR with WebBrowser', { error: err.message });
+                  logEvent('ERROR with WebBrowser', { error: err });
                   WebBrowser.dismissBrowser();
                 });
               }}

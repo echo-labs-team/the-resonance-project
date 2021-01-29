@@ -93,9 +93,7 @@ const GroupDetails = ({ route }) => {
         });
       }
     } catch (error) {
-      logEvent('ERROR sharing group', {
-        group: Name,
-      });
+      logEvent('ERROR sharing group', { group: Name, error });
     }
   };
 

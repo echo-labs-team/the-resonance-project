@@ -40,12 +40,12 @@ const MediaScreen = () => {
   async function getPlaylists() {
     const channelSection = await fetchChannelSection().catch((err) => {
       setError(true);
-      logEvent('ERROR fetching channel section', { error: err.toString() });
+      logEvent('ERROR fetching channel section', { error: err });
     });
     const playlists =
       (await fetchPlaylistsWrapper(channelSection).catch((err) => {
         setError(true);
-        logEvent('ERROR fetching playlists', { error: err.toString() });
+        logEvent('ERROR fetching playlists', { error: err });
       })) || [];
 
     setLoading(false);
@@ -182,7 +182,7 @@ const MediaScreen = () => {
               WebBrowser.openBrowserAsync('https://live.echo.church', {
                 toolbarColor: Colors.darkestGray,
               }).catch((err) => {
-                logEvent('ERROR with WebBrowser', { error: err.message });
+                logEvent('ERROR with WebBrowser', { error: err });
                 WebBrowser.dismissBrowser();
               });
             }}

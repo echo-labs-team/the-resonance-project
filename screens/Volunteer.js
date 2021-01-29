@@ -70,7 +70,7 @@ const VolunteerScreen = () => {
                   'https://echo.church/volunteerform',
                   { toolbarColor: Colors.darkestGray }
                 ).catch((err) => {
-                  logEvent('ERROR with WebBrowser', { error: err.message });
+                  logEvent('ERROR with WebBrowser', { error: err });
                   WebBrowser.dismissBrowser();
                 });
               }}

@@ -64,7 +64,7 @@ const LocationsScreen = () => {
                 WebBrowser.openBrowserAsync('https://live.echo.church', {
                   toolbarColor: Colors.darkestGray,
                 }).catch((err) => {
-                  logEvent('ERROR with WebBrowser', { error: err.message });
+                  logEvent('ERROR with WebBrowser', { error: err });
                   WebBrowser.dismissBrowser();
                 });
               }}

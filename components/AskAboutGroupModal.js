@@ -64,7 +64,7 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
         dispatch({ type: 'setLoading', value: false });
         logEvent('ERROR Group Ask Question', {
           group: title,
-          error: err.message,
+          error: err,
         });
       });
   };

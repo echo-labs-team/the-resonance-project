@@ -63,7 +63,7 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
         dispatch({ type: 'setLoading', value: false });
         logEvent('ERROR Group Sign Up', {
           group: title,
-          error: err.message,
+          error: err,
         });
       });
   };

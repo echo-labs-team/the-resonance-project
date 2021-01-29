@@ -13,7 +13,7 @@ export async function getCategories() {
     (await axios
       .get(`${baseURL}/groups/rock-categories`, {})
       .catch((err) =>
-        logEvent('ERROR getting group categories', { error: err.message })
+        logEvent('ERROR getting group categories', { error: err })
       )) || {};
 
   if (status !== 200) {
@@ -34,19 +34,16 @@ export async function getCategories() {
  * https://rock.echo.church/api/docs/index#/GroupFinder
  */
 export async function getOpenGroups() {
-  const errorMessage = 'Error fetching groups';
   const { data } =
     (await axios.get(
       'https://rock.echo.church/api/GroupFinder/GetGroups/25?primaryAliasId=16536'
     )) || {};
 
-  const { Success: isSuccessful, Data = [] } = data;
+  const { Success: isSuccessful, Data = [], Error } = data;
 
   if (!isSuccessful || !Data || !Array.isArray(Data)) {
-    logEvent('ERROR loading groups', {
-      error: errorMessage,
-    });
-    throw Error(errorMessage);
+    logEvent('ERROR loading groups', { error: Error });
+    throw Error('Error loading groups');
   }
 
   return Data.filter(({ AtCapacity = false }) => !AtCapacity).sort(

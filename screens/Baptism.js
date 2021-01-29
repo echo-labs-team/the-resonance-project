@@ -50,7 +50,7 @@ const BaptismScreen = () => {
                 WebBrowser.openBrowserAsync('https://echo.church/baptism/', {
                   toolbarColor: Colors.darkestGray,
                 }).catch((err) => {
-                  logEvent('ERROR with WebBrowser', { error: err.message });
+                  logEvent('ERROR with WebBrowser', { error: err });
                   WebBrowser.dismissBrowser();
                 });
               }}

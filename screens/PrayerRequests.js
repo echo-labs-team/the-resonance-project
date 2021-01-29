@@ -34,7 +34,7 @@ const PrayerRequestsScreen = () => {
                   'https://echo.church/prayerrequest',
                   { toolbarColor: Colors.darkestGray }
                 ).catch((err) => {
-                  logEvent('ERROR with WebBrowser', { error: err.message });
+                  logEvent('ERROR with WebBrowser', { error: err });
                   WebBrowser.dismissBrowser();
                 });
               }}

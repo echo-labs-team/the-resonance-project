@@ -20,7 +20,7 @@ async function fetchPostImage({ imageUrl, blogUrl, title, formattedDate }) {
   const { data: imageData } = await axios.get(imageUrl).catch((err) => {
     logEvent('ERROR loading blog post image', {
       imageUrl,
-      error: err.message,
+      error: err,
     });
   });
   const [{ media_details } = {}] = Array.isArray(imageData)

@@ -48,7 +48,7 @@ const PlaylistScreen = ({ navigation, route }) => {
       setError(true);
       setErrorMessage("Make sure you're connected to the internet.");
       setLoading(false);
-      logEvent('ERROR loading playlist items', { error: err.message });
+      logEvent('ERROR loading playlist items', { error: err });
     }
   }
   if (isLoading) {

@@ -74,7 +74,7 @@ export async function useInstagramPosts() {
       };
     });
   } catch (err) {
-    logEvent('ERROR loading instagram posts', { error: err.message });
+    logEvent('ERROR loading instagram posts', { error: err });
   }
 
   if (!instagramPosts.length) {

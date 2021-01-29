@@ -80,7 +80,7 @@ function FeaturedScreen() {
                       toolbarColor: Colors.darkestGray,
                     }
                   ).catch((err) => {
-                    logEvent('ERROR with WebBrowser', { error: err.message });
+                    logEvent('ERROR with WebBrowser', { error: err });
                     WebBrowser.dismissBrowser();
                   });
                 }}
@@ -101,7 +101,7 @@ function FeaturedScreen() {
               WebBrowser.openBrowserAsync('https://echo.church/hopeproject/', {
                 toolbarColor: Colors.darkestGray,
               }).catch((err) => {
-                logEvent('ERROR with WebBrowser', { error: err.message });
+                logEvent('ERROR with WebBrowser', { error: err });
                 WebBrowser.dismissBrowser();
               });
             }}

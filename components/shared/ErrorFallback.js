@@ -1,12 +1,13 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, ScrollView } from 'react-native';
+import logEvent from '../../utils/logEvent';
 import Colors from '../../constants/Colors';
 import { Title } from './Typography';
 import Button from './Button';
 import EchoLogo from '../../components/EchoLogo';
 
 export function handleError(error, info) {
-  console.error({ error, info });
+  logEvent('ERROR', { error, info });
 }
 
 function ErrorFallback({ resetErrorBoundary }) {

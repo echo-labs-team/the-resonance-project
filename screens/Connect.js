@@ -25,7 +25,7 @@ function openBrowser({ title, url }) {
   WebBrowser.openBrowserAsync(url, {
     toolbarColor: Colors.darkestGray,
   }).catch((err) => {
-    logEvent('ERROR with WebBrowser', { error: err.message });
+    logEvent('ERROR with WebBrowser', { error: err });
     WebBrowser.dismissBrowser();
   });
 }
