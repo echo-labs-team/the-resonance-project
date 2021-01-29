@@ -13,7 +13,7 @@ export default function logEvent(name, data) {
     Amplitude.getInstance().logEvent(name, data);
 
     if (name.toLowerCase().includes('error')) {
-      Sentry.captureException(data?.error || { message: name });
+      Sentry.captureException(data?.error || new Error(name));
     }
   }
 }

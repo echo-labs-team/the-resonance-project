@@ -52,8 +52,8 @@ const HomeScreen = () => {
   const [tryAgain, setTryAgain] = useState(false);
 
   function handleRefresh() {
-    refetchBlogPosts();
-    refetchTweets();
+    refetchBlogPosts?.();
+    refetchTweets?.();
   }
 
   const cardData = [...postsData, ...tweetsData]

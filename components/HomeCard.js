@@ -78,7 +78,7 @@ function Card({ type, url, image, title, date }) {
       style={styles.card}
       onPress={() => {
         logEvent('TAP post', {
-          post_type: type.toLowerCase(),
+          post_type: type?.toLowerCase(),
         });
 
         if (url) {

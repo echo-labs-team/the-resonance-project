@@ -23,7 +23,10 @@ import Storybook from './storybook';
 enableScreens();
 
 // initialize Sentry and Amplitude
-Sentry.init({ dsn: keys.SENTRY_DSN, enableAutoSessionTracking: true });
+Sentry.init({
+  dsn: keys.SENTRY_DSN,
+  enableAutoSessionTracking: true,
+});
 Amplitude.getInstance().init(keys.AMPLITUDE, null, { platform: 'Mobile' });
 
 if (
@@ -72,9 +75,7 @@ function App() {
     };
 
     SplashScreen.preventAutoHideAsync().catch((err) =>
-      logEvent('ERROR: splashscreen preventAutoHideAsync', {
-        error: err,
-      })
+      logEvent('ERROR: splashscreen preventAutoHideAsync', { error: err })
     );
 
     loadResourcesAsync().then(() => {

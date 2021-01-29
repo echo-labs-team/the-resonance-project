@@ -359,7 +359,7 @@ PODS:
     - React-Core
   - RNScreens (2.15.0):
     - React-Core
-  - RNSentry (2.1.0):
+  - RNSentry (2.1.1):
     - React-Core
     - Sentry (= 6.0.9)
   - RNSVG (12.1.0):
@@ -692,7 +692,7 @@ SPEC CHECKSUMS:
   RNGestureHandler: 7a5833d0f788dbd107fbb913e09aa0c1ff333c39
   RNReanimated: e03f7425cb7a38dcf1b644d680d1bfc91c3337ad
   RNScreens: 2ad555d4d9fa10b91bb765ca07fe9b29d59573f0
-  RNSentry: 51972e3fe50e2fb38ae459af8c87d61f63f364db
+  RNSentry: 6b46b6fc1d715a378fbaa5d7d43bc9ce99b500e5
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   Sentry: 388c9dc093b2fd3a264466a5c5b21e25959610a9
   UMAppLoader: 515d02d30e29cf05bbe58f77c59f896840cc5895

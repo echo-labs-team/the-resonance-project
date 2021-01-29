@@ -89,6 +89,7 @@ import com.android.build.OutputFile
 project.ext.react = [
     entryFile: "index.js",
     enableHermes: true,
+    bundleInDebug: false,
     bundleInStaging: true,
     bundleInInternalTest: true,
     bundleInRelease: true
@@ -148,7 +149,7 @@ android {
         applicationId 'com.echo.church.app'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
+        versionCode 15
         versionName "1.0.7"
     }
     splits {
@@ -195,11 +196,13 @@ android {
     }
 
     packagingOptions {
-        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
         pickFirst 'lib/x86/libc++_shared.so'
-        pickFirst 'lib/arm64-v8a/libc++_shared.so'
-        pickFirst 'lib/x86_64/libc++_shared.so'
         pickFirst 'lib/x86/libjsc.so'
+        pickFirst 'lib/x86_64/libjsc.so'
+        pickFirst 'lib/x86_64/libc++_shared.so'
+        pickFirst 'lib/arm64-v8a/libjsc.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
         pickFirst 'lib/armeabi-v7a/libjsc.so'
     }
 }

@@ -8,6 +8,7 @@ import { Entypo, Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { ErrorBoundary } from 'react-error-boundary';
 
+import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import { Text } from '../components/shared/Typography';
 import EchoLogo from '../components/EchoLogo';
@@ -207,7 +208,9 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   useEffect(() => {
     async function hideSplashScreen() {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync().catch((err) =>
+        logEvent('ERROR: splashscreen hideAsync', { error: err })
+      );
     }
     hideSplashScreen();
   }, []);

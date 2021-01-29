@@ -13,6 +13,8 @@
 #import <UMCore/UMModuleRegistry.h>
 #import <UMReactNativeAdapter/UMNativeModulesProxy.h>
 #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
+#import <UMCore/UMModuleRegistryProvider.h>
+#import <EXSplashScreen/EXSplashScreenService.h>
 
 @interface AppDelegate () <RCTBridgeDelegate>
 
@@ -53,6 +55,9 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+
+  EXSplashScreenService *splashScreenService = (EXSplashScreenService *)[UMModuleRegistryProvider getSingletonModuleForClass:[EXSplashScreenService class]];
+  [splashScreenService showSplashScreenFor:rootViewController];
   
   return bridge;
 }
