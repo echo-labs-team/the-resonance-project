@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Text } from '../components/shared/Typography';
 
-export default function Leader({ name, photo }) {
+export default function Leader({ names, photo }) {
   const [showPhoto, setShowPhoto] = useState(true);
 
   return (
-    <View key={name} style={styles.leader}>
+    <View style={styles.leader}>
       {showPhoto && photo ? (
         <Image
           source={{ uri: photo }}
@@ -14,7 +14,7 @@ export default function Leader({ name, photo }) {
           onError={() => setShowPhoto(false)}
         />
       ) : null}
-      <Text>{name}</Text>
+      <Text>{names}</Text>
     </View>
   );
 }

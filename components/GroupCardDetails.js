@@ -29,7 +29,9 @@ export default ({ item }) => {
           {Name}
         </Title>
 
-        <Text style={styles.detail}>{FriendlyScheduleText}</Text>
+        {FriendlyScheduleText ? (
+          <Text style={styles.detail}>{FriendlyScheduleText}</Text>
+        ) : null}
 
         <Text bold style={styles.detail}>
           {GroupCampus}

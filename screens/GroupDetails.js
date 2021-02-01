@@ -42,12 +42,8 @@ const GroupDetails = ({ route }) => {
     GroupCampus,
     FriendlyScheduleText,
     Description,
-    LeaderFirstName,
-    LeaderLastName,
-    LeaderPhotoId,
-    HostFirstName,
-    HostLastName,
-    HostPhotoId,
+    LeaderNames,
+    GroupPhotoGuid,
     City,
     Online: isOnline,
     AudienceName,
@@ -57,20 +53,7 @@ const GroupDetails = ({ route }) => {
   const isMenOnly = AudienceName.includes('Men Only');
   const shouldShowLocation = Boolean(isOnline || City);
   const shouldShowAddress = Boolean(!isOnline && City);
-  const shouldShowLeaders = Boolean(LeaderFirstName) || Boolean(HostFirstName);
-  const leaders = [
-    {
-      name: `${LeaderFirstName} ${LeaderLastName}`,
-      photo: `https://rock.echo.church/GetImage.ashx?id=${LeaderPhotoId}&width=100&height=100&mode=crop`,
-    },
-  ];
-
-  if (HostFirstName) {
-    leaders.push({
-      name: `${HostFirstName} ${HostLastName}`,
-      photo: `https://rock.echo.church/GetImage.ashx?id=${HostPhotoId}&width=100&height=100&mode=crop`,
-    });
-  }
+  const shouldShowLeaders = Boolean(LeaderNames);
 
   const onShare = async () => {
     logEvent('TAP Group Share', {
@@ -142,9 +125,10 @@ const GroupDetails = ({ route }) => {
             {shouldShowLeaders && (
               <View style={{ marginBottom: 16 }}>
                 <Heading>Host(s)</Heading>
-                {leaders.map((leader) => (
-                  <Leader key={leader?.name} {...leader} />
-                ))}
+                <Leader
+                  names={LeaderNames}
+                  photo={`https://rock.echo.church/GetImage.ashx?guid=${GroupPhotoGuid}&width=100&height=100&mode=crop`}
+                />
               </View>
             )}
 
