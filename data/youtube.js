@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'redaxios';
 import Keys from '../constants/Keys';
 
 // Previous Series Channel Section

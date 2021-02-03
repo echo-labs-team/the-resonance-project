@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'redaxios';
 import { useQuery, useQueries } from 'react-query';
 import { AllHtmlEntities } from 'html-entities';
 import logEvent from '../utils/logEvent';

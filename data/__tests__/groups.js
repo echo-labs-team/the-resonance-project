@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from 'redaxios';
 import { getCategories } from '../groups';
 
-jest.mock('axios');
+jest.mock('redaxios');
 
 test('should get group categories', async () => {
   axios.get.mockResolvedValue({

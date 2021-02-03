@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from 'redaxios';
 import { sortByDate, fetchChannelSection, fetchPlaylists } from '../youtube';
 
-jest.mock('axios');
+jest.mock('redaxios');
 
 test('should sort playlist by publish date', () => {
   const items = [

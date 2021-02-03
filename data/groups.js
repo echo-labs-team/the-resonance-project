@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'redaxios';
 import config from './config';
 import logEvent from '../utils/logEvent';
 
