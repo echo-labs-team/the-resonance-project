@@ -3,11 +3,11 @@ import {
   FlatList,
   Image,
   ImageBackground,
-  StatusBar,
   StyleSheet,
   TouchableHighlight,
   View,
 } from 'react-native';
+import { setStatusBarHidden } from 'expo-status-bar';
 import { HeaderHeightContext } from '@react-navigation/stack';
 import * as WebBrowser from 'expo-web-browser';
 import logEvent from '../utils/logEvent';
@@ -20,7 +20,7 @@ function FeaturedScreen() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    StatusBar.setHidden(false);
+    setStatusBarHidden(false, 'fade');
 
     // set the post data for the list up to today's date
     const items = [];

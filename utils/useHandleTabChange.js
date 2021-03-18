@@ -4,15 +4,17 @@
  */
 
 import React from 'react';
-import { StatusBar } from 'react-native';
+import { setStatusBarHidden } from 'expo-status-bar';
 import { useFocusEffect } from '@react-navigation/native';
 import logEvent from '../utils/logEvent';
 
 export default (tab) => {
+  const shouldHideStatusBar = tab === 'Home';
+
   useFocusEffect(
     React.useCallback(() => {
+      setStatusBarHidden(shouldHideStatusBar, 'fade');
       logEvent(`PAGEVIEW ${tab} tab`);
-      StatusBar.setHidden(tab === 'Home', 'fade');
     }, [])
   );
 };

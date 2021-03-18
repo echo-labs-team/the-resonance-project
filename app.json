@@ -1,4 +1,6 @@
 {
+  "name": "Echo.Church",
+  "displayName": "Echo.Church",
   "expo": {
     "name": "Echo.Church",
     "description": "Echo.Church App",
@@ -15,7 +17,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
-    "assetBundlePatterns": ["assets/images/*"],
+    "assetBundlePatterns": ["**/*"],
     "isDetached": true,
     "detach": {
       "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.14.3-sdk36.0.0-00f587c0-b8c9-4b6b-88f6-2ccd4f20dc9c.tar.gz",

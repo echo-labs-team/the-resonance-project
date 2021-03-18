@@ -1,11 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {
-  AppState,
-  Platform,
-  StatusBar,
-  TouchableHighlight,
-  UIManager,
-} from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { enableScreens } from 'react-native-screens';
 import * as SplashScreen from 'expo-splash-screen';
@@ -14,6 +7,13 @@ import Amplitude from 'amplitude-js';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Entypo } from '@expo/vector-icons';
 import OneSignal from 'react-native-onesignal';
+import {
+  AppState,
+  Platform,
+  TouchableHighlight,
+  UIManager,
+} from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 import resources from './resources';
 import keys from './constants/Keys';
 import logEvent from './utils/logEvent';
@@ -22,12 +22,17 @@ import Storybook from './storybook';
 
 enableScreens();
 
-// initialize Sentry and Amplitude
+// initialize Sentry and Amplitude and OneSignal
 Sentry.init({
   dsn: keys.SENTRY_DSN,
   enableAutoSessionTracking: true,
 });
 Amplitude.getInstance().init(keys.AMPLITUDE, null, { platform: 'Mobile' });
+OneSignal.init(keys.ONESIGNAL_APP_ID, {
+  kOSSettingsKeyAutoPrompt: false,
+  kOSSettingsKeyInAppLaunchURL: false,
+  kOSSettingsKeyInFocusDisplayOption: 2,
+});
 
 if (
   Platform.OS === 'android' &&
@@ -42,13 +47,7 @@ function App() {
   const [isLoadingComplete, setIsLoadingComplete] = useState(false);
   const [showStorybook, setShowStorybook] = useState(false);
 
-  if (!__DEV__) {
-    OneSignal.init(keys.ONESIGNAL_APP_ID, {
-      kOSSettingsKeyAutoPrompt: false,
-      kOSSettingsKeyInAppLaunchURL: false,
-      kOSSettingsKeyInFocusDisplayOption: 2,
-    });
-
+  useEffect(() => {
     // Controls what should happen if a notification is received while the app is open. 2 means that the notification will
     // go directly to the device's notification center.
     OneSignal.inFocusDisplaying(2);
@@ -58,7 +57,20 @@ function App() {
     OneSignal.promptForPushNotificationsWithUserResponse((permission) =>
       logEvent(`${permission ? 'Allowed' : 'Disallowed'} push notifications`)
     );
-  }
+  }, []);
+
+  useEffect(() => {
+    async function loadResourcesAsync() {
+      await Promise.all(resources);
+      setIsLoadingComplete(true);
+    }
+
+    SplashScreen.preventAutoHideAsync().catch((err) =>
+      logEvent('ERROR: splashscreen preventAutoHideAsync', { error: err })
+    );
+
+    loadResourcesAsync();
+  }, []);
 
   /**
    * Log when our app
@@ -68,20 +80,6 @@ function App() {
    * https://reactnative.dev/docs/appstate
    */
   useEffect(() => {
-    const loadResourcesAsync = async () => {
-      return Promise.all(resources).then(() => {
-        setIsLoadingComplete(true);
-      });
-    };
-
-    SplashScreen.preventAutoHideAsync().catch((err) =>
-      logEvent('ERROR: splashscreen preventAutoHideAsync', { error: err })
-    );
-
-    loadResourcesAsync().then(() => {
-      setIsLoadingComplete(true);
-    });
-
     function handleAppStateChange(state) {
       if (state === 'active') {
         logEvent('Start session');
@@ -108,11 +106,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <SafeAreaProvider>
         <StatusBar
-          hidden={true}
+          hidden
           animated
-          barStyle="light-content"
+          style="light"
           networkActivityIndicatorVisible
-          showHideTransition="fade"
           translucent
         />
         <AppNavigator />
