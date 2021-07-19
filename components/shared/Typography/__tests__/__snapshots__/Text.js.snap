@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Text/> render text 1`] = `
+<Text
+  selectable={true}
+  style={
+    Array [
+      Object {
+        "color": "#cbd2d6",
+        "fontFamily": "NunitoSans-Regular",
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
+      },
+      undefined,
+    ]
+  }
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with a bold font 1`] = `
+<Text
+  bold={true}
+  selectable={true}
+  style={
+    Array [
+      Object {
+        "color": "#cbd2d6",
+        "fontFamily": "NunitoSans-Bold",
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
+      },
+      undefined,
+    ]
+  }
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with a light font 1`] = `
+<Text
+  light={true}
+  selectable={true}
+  style={
+    Array [
+      Object {
+        "color": "#cbd2d6",
+        "fontFamily": "NunitoSans-Light",
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
+      },
+      undefined,
+    ]
+  }
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with extra props 1`] = `
+<Text
+  disabled={true}
+  selectable={true}
+  style={
+    Array [
+      Object {
+        "color": "#cbd2d6",
+        "fontFamily": "NunitoSans-Regular",
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
+      },
+      undefined,
+    ]
+  }
+  testID="text-with-some-props"
+>
+  🔥
+</Text>
+`;
+
+exports[`<Text/> render text with style 1`] = `
+<Text
+  selectable={true}
+  style={
+    Array [
+      Object {
+        "color": "#cbd2d6",
+        "fontFamily": "NunitoSans-Regular",
+        "fontSize": 18,
+        "lineHeight": 24,
+        "textAlign": "auto",
+      },
+      Object {
+        "fontSize": 30,
+      },
+    ]
+  }
+>
+  🔥
+</Text>
+`;

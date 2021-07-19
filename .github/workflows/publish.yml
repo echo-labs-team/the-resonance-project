@@ -1,0 +1,55 @@
+# This workflow triggers when things are merged into the `master` branch
+# - run tests
+# - publish to staging channel
+
+name: Publish
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [main]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a command using the runners shell
+      - run: npm install
+      - run: echo "export default { TWITTER:'${{ secrets.TWITTER }}',YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',SENTRY_DSN:'${{ secrets.SENTRY_DSN }}' }" > constants/Keys.js
+      - run: npm test
+
+  update_release_draft:
+    runs-on: ubuntu-latest
+    steps:
+      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: expo/expo-github-action@v5
+        with:
+          expo-version: 3.x
+          expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
+          expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
+      - run: npm install
+      - run: echo "export default { TWITTER:'${{ secrets.TWITTER }}',YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',SENTRY_DSN:'${{ secrets.SENTRY_DSN }}' }" > constants/Keys.js
+      - run: npx expo-optimize . && npm run publish
+      - name: Slack notification
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        uses: Ilshidur/action-slack@master
+        with:
+          args: 'App has been published :shipitparrot:'

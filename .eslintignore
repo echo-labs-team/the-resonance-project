@@ -1,0 +1,11 @@
+node/
+coverage/
+build-tools
+tmpnpm
+!.eslintrc.js
+Gruntfile.js
+tasks/
+*.json
+node_modules/
+docs/
+__mocks__/

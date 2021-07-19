@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<GroupLocation/> render a group with a location 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 16,
+    }
+  }
+>
+  <Text
+    bold={true}
+    selectable={true}
+    style={
+      Array [
+        Object {
+          "color": "#cbd2d6",
+          "fontFamily": "NunitoSans-Bold",
+          "fontSize": 18,
+          "lineHeight": 24,
+          "textAlign": "auto",
+        },
+        Array [
+          Object {
+            "color": "#cbd2d6",
+            "fontSize": 18,
+            "lineHeight": 24,
+          },
+          undefined,
+        ],
+      ]
+    }
+  >
+    Location
+  </Text>
+  <Text
+    selectable={true}
+    style={
+      Array [
+        Object {
+          "color": "#cbd2d6",
+          "fontFamily": "NunitoSans-Regular",
+          "fontSize": 18,
+          "lineHeight": 24,
+          "textAlign": "auto",
+        },
+        undefined,
+      ]
+    }
+  >
+    San Jose
+  </Text>
+</View>
+`;
+
+exports[`<GroupLocation/> render a group with a location, but no description 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 16,
+    }
+  }
+>
+  <Text
+    bold={true}
+    selectable={true}
+    style={
+      Array [
+        Object {
+          "color": "#cbd2d6",
+          "fontFamily": "NunitoSans-Bold",
+          "fontSize": 18,
+          "lineHeight": 24,
+          "textAlign": "auto",
+        },
+        Array [
+          Object {
+            "color": "#cbd2d6",
+            "fontSize": 18,
+            "lineHeight": 24,
+          },
+          undefined,
+        ],
+      ]
+    }
+  >
+    Location
+  </Text>
+  <Text
+    selectable={true}
+    style={
+      Array [
+        Object {
+          "color": "#cbd2d6",
+          "fontFamily": "NunitoSans-Regular",
+          "fontSize": 18,
+          "lineHeight": 24,
+          "textAlign": "auto",
+        },
+        undefined,
+      ]
+    }
+  >
+    Sunnyvale
+  </Text>
+</View>
+`;
+
+exports[`<GroupLocation/> render an online group 1`] = `
+<View
+  style={
+    Object {
+      "marginBottom": 16,
+    }
+  }
+>
+  <Text
+    bold={true}
+    selectable={true}
+    style={
+      Array [
+        Object {
+          "color": "#cbd2d6",
+          "fontFamily": "NunitoSans-Bold",
+          "fontSize": 18,
+          "lineHeight": 24,
+          "textAlign": "auto",
+        },
+        Array [
+          Object {
+            "color": "#cbd2d6",
+            "fontSize": 18,
+            "lineHeight": 24,
+          },
+          undefined,
+        ],
+      ]
+    }
+  >
+    Location
+  </Text>
+  <Text
+    selectable={true}
+    style={
+      Array [
+        Object {
+          "color": "#cbd2d6",
+          "fontFamily": "NunitoSans-Regular",
+          "fontSize": 18,
+          "lineHeight": 24,
+          "textAlign": "auto",
+        },
+        Object {
+          "marginBottom": 10,
+        },
+      ]
+    }
+  >
+    Meets Online
+  </Text>
+</View>
+`;

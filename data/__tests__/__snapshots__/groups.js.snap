@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should get group categories 1`] = `
+Array [
+  "Sermon Discussion",
+  "Men Only",
+  "Women Only",
+  "Young Professionals",
+  "Students",
+  "Recreational / Social",
+  "Co-Ed",
+  "Family / Parenting",
+  "Service / Outreach / Prayer",
+  "Business / Finance",
+  "Exploring",
+  "Marriage",
+  "Bible Study",
+]
+`;
