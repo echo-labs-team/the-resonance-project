@@ -662,6 +662,7 @@ Array [
     scrollOffset={0}
     scrollOffsetMax={0}
     scrollTo={null}
+    statusBarTranslucent={false}
     supportedOrientations={
       Array [
         "portrait",
@@ -726,6 +727,7 @@ Array [
       scrollOffset={0}
       scrollOffsetMax={0}
       scrollTo={null}
+      statusBarTranslucent={false}
       style={
         Object {
           "flex": 1,
