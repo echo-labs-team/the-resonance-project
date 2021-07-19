@@ -9,7 +9,7 @@
     "ios": "expo start --ios",
     "lint": "eslint .",
     "prestorybook": "rnstl",
-    "publish:staging": "npx expo-optimize . && expo publish --release-channel staging",
+    "publish:staging": "npx expo-optimize . && npx expo publish --release-channel staging",
     "start": "expo start",
     "storybook": "start-storybook -p 7007",
     "test:watch": "jest --watchAll",
