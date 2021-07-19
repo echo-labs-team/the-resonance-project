@@ -9,7 +9,6 @@
     "ios": "expo start --ios",
     "lint": "eslint .",
     "prestorybook": "rnstl",
-    "publish:production": "npx expo-optimize . && expo publish --release-channel production",
     "publish:staging": "npx expo-optimize . && expo publish --release-channel staging",
     "start": "expo start",
     "storybook": "start-storybook -p 7007",
