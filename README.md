@@ -10,7 +10,7 @@ A React Native application for Echo.Church built by volunteers
 
 ## 🔌 Installation
 
-Open a bash terminal:
+Open a terminal:
 
 1. Clone the repo
 
@@ -18,17 +18,13 @@ Open a bash terminal:
    git clone https://github.com/echo-labs-team/the-resonance-project.git
    ```
 
-2. Install NPM
-
-   If `$ which npm` returns a path, then go to 3. If not, [download here](https://nodejs.org/en/download/).
-
-   `$ which npm` should now return a path
+2. Make sure you have node + npm + yarn installed
 
 3. Install modules
 
    ```sh
    cd the-resonance-project
-   npm i
+   yarn
    ```
 
 4. Install expo
@@ -36,53 +32,18 @@ Open a bash terminal:
    If `$ which expo` returns a path, skip this.
 
    ```sh
-   npm install expo-cli --globals
+   npm install expo-cli -g
    ```
 
-5. Install [CocoaPods](https://guides.cocoapods.org/using/getting-started.html)
-
-   If `$ which pod` returns a path, skip this.
-
-   ```sh
-   sudo gem install cocoapods
-   ```
-
-6. Install the pods
-
-   ```sh
-   cd the-resonance-project/ios/
-   pod install
-   ```
-
-7. Download xcode from the Mac App store
-8. Download android studio
-9. Ask to get access to app keys
+5. Download xcode from the Mac App store
+6. Download android studio
+7. Ask to get access to app keys
 
 ## 👩‍💻 Running the app 👨‍💻
 
-### 📱 iOS
-
-1. In a terminal:
-
-   ```sh
-   expo start
-   ```
-
-2. Open Xcode
-3. Open the-resonance-project/ios/echo-church.xcworkspace
-4. Click the play button in the upper left hand corner.
-
-### 🤖 Android
-
-1. In a terminal:
-
-   ```sh
-   expo start
-   ```
-
-2. Open Android Studio
-3. Open the-resonance-project/android folder
-4. Click the green play button.
+```sh
+yarn start
+```
 
 ## Documentation 📃
 
