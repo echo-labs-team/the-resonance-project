@@ -1,4 +1,4 @@
-import keys from './constants/Keys';
+import keys from './constants/Keys.json';
 
 export default {
   expo: {

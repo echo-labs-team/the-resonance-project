@@ -14,7 +14,7 @@ import Colors from '../constants/Colors';
 import { useHandleTabChange } from '../utils/useHandleTabChange';
 import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
-import Keys from '../constants/Keys';
+import Keys from '../constants/Keys.json';
 
 const build = Keys.GITHUB_SHA.substring(0, 7);
 const handleGive = (campus) => {

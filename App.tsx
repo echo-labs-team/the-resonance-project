@@ -16,7 +16,7 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { resources } from './resources';
-import keys from './constants/Keys';
+import keys from './constants/Keys.json';
 import logEvent from './utils/logEvent';
 import AppNavigator from './navigation/AppNavigator';
 

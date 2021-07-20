@@ -1,5 +1,5 @@
 import axios from 'redaxios';
-import Keys from '../constants/Keys';
+import Keys from '../constants/Keys.json';
 
 // Previous Series Channel Section
 // https://developers.google.com/youtube/v3/docs/channelSections/list?apix_params=%7B%22part%22%3A%5B%22contentDetails%22%2C%22snippet%22%5D%2C%22channelId%22%3A%22UCjycPAZuveusvPrk94-ClBw%22%7D

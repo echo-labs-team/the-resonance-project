@@ -24,7 +24,7 @@ jobs:
 
       # Runs a command using the runners shell
       - run: npm install
-      - run: echo "export default { TWITTER:'${{ secrets.TWITTER }}',YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',SENTRY_DSN:'${{ secrets.SENTRY_DSN }}',SENTRY_AUTH_TOKEN:'${{ secrets.SENTRY_AUTH_TOKEN }}', }" > constants/Keys.js
+      - run: echo '{"TWITTER":"${{ secrets.TWITTER }}","YOUTUBE_RELEASE_API_KEY":"${{ secrets.YOUTUBE_RELEASE_API_KEY }}","AMPLITUDE":"${{ secrets.AMPLITUDE }}","GITHUB_SHA":"${{ github.sha }}","SENTRY_DSN":"${{ secrets.SENTRY_DSN }}","SENTRY_AUTH_TOKEN":"${{ secrets.SENTRY_AUTH_TOKEN }}"}' > constants/Keys.json
       - run: npm test
 
   update_release_draft:
@@ -45,7 +45,7 @@ jobs:
           expo-username: ${{ secrets.EXPO_CLI_USERNAME }}
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: npm install
-      - run: echo "export default { TWITTER:'${{ secrets.TWITTER }}',YOUTUBE_RELEASE_API_KEY:'${{ secrets.YOUTUBE_RELEASE_API_KEY }}',AMPLITUDE:'${{ secrets.AMPLITUDE }}',GITHUB_SHA:'${{ github.sha }}',SENTRY_DSN:'${{ secrets.SENTRY_DSN }}',SENTRY_AUTH_TOKEN:'${{ secrets.SENTRY_AUTH_TOKEN }}', }" > constants/Keys.js
+      - run: echo '{"TWITTER":"${{ secrets.TWITTER }}","YOUTUBE_RELEASE_API_KEY":"${{ secrets.YOUTUBE_RELEASE_API_KEY }}","AMPLITUDE":"${{ secrets.AMPLITUDE }}","GITHUB_SHA":"${{ github.sha }}","SENTRY_DSN":"${{ secrets.SENTRY_DSN }}","SENTRY_AUTH_TOKEN":"${{ secrets.SENTRY_AUTH_TOKEN }}"}' > constants/Keys.json
       - run: npx expo-optimize . && npm run publish:staging
       - name: Slack notification
         env:

@@ -1,6 +1,6 @@
 import axios from 'redaxios';
 import { useQuery } from 'react-query';
-import keys from '../constants/Keys';
+import keys from '../constants/Keys.json';
 import logEvent from '../utils/logEvent';
 
 export function useTweets() {
