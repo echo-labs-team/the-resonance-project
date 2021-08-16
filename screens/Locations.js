@@ -22,7 +22,7 @@ const openMaps = (location) => {
       break;
 
     case 'SSJ':
-      url = 'https://goo.gl/maps/gb8xqC6pNbvZSZfj6';
+      url = 'https://goo.gl/maps/eMW9nvBWu4eJrxzR9';
       break;
 
     case 'SVL':
@@ -91,8 +91,8 @@ const LocationsScreen = () => {
                 style={styles.highlight}
               >
                 <Subtitle center style={styles.content}>
-                  South San Jose | Valley Christian Schools, 100 Skyway Dr #130,
-                  San Jose, CA 95111
+                  South San Jose | Santa Teresa High School, 6150 Snell Ave, San
+                  Jose, CA 95123
                 </Subtitle>
               </TouchableHighlight>
               <Heading center style={styles.subContent}>
