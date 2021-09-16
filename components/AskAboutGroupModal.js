@@ -2,6 +2,7 @@ import React, { useReducer, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Formik } from 'formik';
 import logEvent from '../utils/logEvent';
+import Colors from '../constants/Colors';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
 import { validateAskQuestionForm } from '../utils/formValidation';
@@ -27,13 +28,21 @@ function reducer(state, action) {
         ...state,
         success: action.value,
       };
+    case 'setError':
+      return {
+        ...state,
+        error: action.value,
+      };
     default:
       throw new Error();
   }
 }
 
 export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
-  const [{ loading, success }, dispatch] = useReducer(reducer, initialState);
+  const [{ loading, success, error }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
   const questionRef = useRef(null);
@@ -44,29 +53,46 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
     });
   };
 
-  const handleAsk = ({ firstName, lastName, email, question }) => {
+  const handleAsk = async ({ firstName, lastName, email, question }) => {
     dispatch({ type: 'setLoading', value: true });
-    logEvent('SUBMIT Group Ask Question', {
-      group: title,
-    });
-    askQuestion(groupID, firstName, lastName, email, question)
-      .then((askSuccess) => {
-        if (askSuccess) {
-          // close this modal
-          dispatch({ type: 'setLoading', value: false });
-          dispatch({ type: 'setSuccess', value: true });
-          setTimeout(() => dispatch({ type: 'setSuccess', value: false }), 0);
+    logEvent('SUBMIT Group Ask Question', { group: title });
 
-          showSuccess('Thanks for asking ☺️');
-        }
-      })
-      .catch((err) => {
-        dispatch({ type: 'setLoading', value: false });
-        logEvent('ERROR Group Ask Question', {
+    try {
+      const { data } = await askQuestion(
+        groupID,
+        firstName,
+        lastName,
+        email,
+        question
+      );
+
+      dispatch({ type: 'setLoading', value: false });
+
+      if (data.Success) {
+        // close this modal
+        dispatch({ type: 'setSuccess', value: true });
+        setTimeout(() => dispatch({ type: 'setSuccess', value: false }), 0);
+        showSuccess('Thanks for asking ☺️');
+        logEvent('SUCCESS Group Ask Question', {
           group: title,
-          error: err,
+          message: data.Message,
         });
+        return;
+      }
+
+      dispatch({ type: 'setLoading', value: false });
+      dispatch({ type: 'setError', value: true });
+      logEvent('ERROR Group Ask Question', {
+        group: title,
+        error: data.Message,
       });
+      setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
+    } catch (err) {
+      dispatch({ type: 'setLoading', value: false });
+      dispatch({ type: 'setError', value: true });
+      logEvent('ERROR Group Ask Question', { group: title, error: err });
+      setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
+    }
   };
 
   return (
@@ -79,6 +105,12 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
 
       <View style={styles.container}>
         <Title>Ask a question</Title>
+
+        {error && (
+          <Subtitle style={{ textAlign: 'center', color: Colors.red }}>
+            {'🤔 Something went wrong...\nTry again later'}
+          </Subtitle>
+        )}
 
         <Subtitle>
           {`The group leaders will reach out to you with more info about this group`}

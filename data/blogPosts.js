@@ -93,6 +93,7 @@ export function useBlogPosts() {
 
   if (isLoading) {
     return {
+      isLoading,
       data: [
         { type: 'BLOG', url: 'loadingPost1' },
         { type: 'BLOG', url: 'loadingPost2' },
@@ -104,12 +105,12 @@ export function useBlogPosts() {
   if (isError) {
     logEvent('ERROR loading blog posts', { error });
 
-    return { isFetching, data: [], refetch };
+    return { isLoading, isFetching, data: [], refetch };
   }
 
   if (!blogPosts.length) {
     logEvent('ERROR no blog posts');
   }
 
-  return { isFetching, data: blogPosts, refetch };
+  return { isLoading, isFetching, data: blogPosts, refetch };
 }

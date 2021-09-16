@@ -38,16 +38,17 @@ const HomeScreen = () => {
   useScrollToTop(ref);
 
   const {
+    isLoading: isLoadingBlogPosts,
     isFetching: isFetchingBlogPosts,
     data: postsData = [],
     refetch: refetchBlogPosts,
   } = useBlogPosts();
+
   const {
     isFetching: isFetchingTweets,
     data: tweetsData = [],
     refetch: refetchTweets,
   } = useTweets();
-  // const { isLoading: isLoadingVOTD, data: verseOfTheDay } = useVerseOfTheDay();
   const [tryAgain, setTryAgain] = useState(false);
 
   function handleRefresh() {
@@ -57,8 +58,28 @@ const HomeScreen = () => {
 
   const cardData = [...postsData].filter(Boolean).sort(sortPosts);
 
-  // insert the Verse of the Day
-  // cardData.splice(5, 0, isLoadingVOTD ? { url: 'loadingVOTD' } : verseOfTheDay);
+  if (!isLoadingBlogPosts && cardData.length < 1) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <View style={styles.logoContainer}>
+          <EchoLogo width={40} height={40} color={Colors.red} />
+          <Text XL style={styles.logo}>
+            ECHO.CHURCH
+          </Text>
+        </View>
+        <Subtitle center style={styles.error}>
+          No posts were found... 🤔
+        </Subtitle>
+        <Button
+          title="Try Again"
+          onPress={() => {
+            setTryAgain(true);
+            handleRefresh();
+          }}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -83,27 +104,12 @@ const HomeScreen = () => {
           </Text>
         </View>
 
-        {cardData.length ? (
-          cardData.map((item, index) =>
-            item?.url?.includes('loading') ? (
-              <HomeCardPlaceholder key={`placeholder${index}`} />
-            ) : (
-              <Card key={`card${index}`} {...item} />
-            )
+        {cardData.map((item, index) =>
+          item?.url?.includes('loading') ? (
+            <HomeCardPlaceholder key={`placeholder${index}`} />
+          ) : (
+            <Card key={`card${index}`} {...item} />
           )
-        ) : (
-          <>
-            <Subtitle center style={styles.error}>
-              No posts were found... 🤔
-            </Subtitle>
-            <Button
-              title="Try Again"
-              onPress={() => {
-                setTryAgain(true);
-                handleRefresh();
-              }}
-            />
-          </>
         )}
       </ScrollView>
     </View>

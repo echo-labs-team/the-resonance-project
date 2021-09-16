@@ -9,6 +9,8 @@ export default {
     version: '1.0.8',
     orientation: 'portrait',
     icon: './assets/images/app-icon.png',
+    userInterfaceStyle: 'dark',
+    backgroundColor: '#000000',
     splash: {
       image: './assets/images/splash.png',
       resizeMode: 'contain',

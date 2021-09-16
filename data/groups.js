@@ -52,8 +52,8 @@ export async function getOpenGroups() {
 }
 
 export function askQuestion(groupId, firstName, lastName, email, question) {
-  const params = {
-    GroupID: groupId,
+  const data = {
+    GroupId: groupId,
     FirstName: firstName.trim(),
     LastName: lastName.trim(),
     Email: email.trim(),
@@ -61,23 +61,33 @@ export function askQuestion(groupId, firstName, lastName, email, question) {
   };
 
   if (__DEV__) {
-    console.log({ params });
-    return Promise.resolve(true);
+    console.log({ data });
+    return Promise.resolve({ Success: true });
   }
-  return axios.get(`${baseURL}/groups/ask`, { params });
+
+  return axios({
+    method: 'post',
+    url: 'https://rock.echo.church/api/GroupFinder/AskQuestion',
+    data,
+  });
 }
 
 export function joinGroup(groupId, firstName, lastName, email) {
-  const params = {
-    GroupID: groupId,
+  const data = {
+    GroupId: groupId,
     FirstName: firstName.trim(),
     LastName: lastName.trim(),
     Email: email.trim(),
   };
 
   if (__DEV__) {
-    console.log({ params });
-    return Promise.resolve(true);
+    console.log({ data });
+    return Promise.resolve({ Success: true });
   }
-  return axios.get(`${baseURL}/groups/join`, { params });
+
+  return axios({
+    method: 'post',
+    url: 'https://rock.echo.church/api/GroupFinder/JoinGroup',
+    data,
+  });
 }

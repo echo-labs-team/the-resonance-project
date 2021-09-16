@@ -2,6 +2,7 @@ import React, { useReducer, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Formik } from 'formik';
 import logEvent from '../utils/logEvent';
+import Colors from '../constants/Colors';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
 import { validateSignUpForm } from '../utils/formValidation';
@@ -13,6 +14,7 @@ import Input from './shared/TextInput';
 const initialState = {
   loading: false,
   success: false,
+  error: false,
 };
 
 function reducer(state, action) {
@@ -27,13 +29,21 @@ function reducer(state, action) {
         ...state,
         success: action.value,
       };
+    case 'setError':
+      return {
+        ...state,
+        error: action.value,
+      };
     default:
       throw new Error();
   }
 }
 
 export default function JoinGroupModal({ groupID, title, showSuccess }) {
-  const [{ loading, success }, dispatch] = useReducer(reducer, initialState);
+  const [{ loading, success, error }, dispatch] = useReducer(
+    reducer,
+    initialState
+  );
   const lastNameRef = useRef(null);
   const emailRef = useRef(null);
 
@@ -43,29 +53,37 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
     });
   };
 
-  const handleSignUp = ({ firstName, lastName, email }) => {
+  const handleSignUp = async ({ firstName, lastName, email }) => {
     dispatch({ type: 'setLoading', value: true });
-    logEvent('SUBMIT Group Sign Up', {
-      group: title,
-    });
-    joinGroup(groupID, firstName, lastName, email)
-      .then((joinGroupSuccess) => {
-        if (joinGroupSuccess) {
-          // close this modal
-          dispatch({ type: 'setLoading', value: false });
-          dispatch({ type: 'setSuccess', value: true });
-          setTimeout(() => dispatch({ type: 'setSuccess', value: false }), 0);
+    logEvent('SUBMIT Group Sign Up', { group: title });
 
-          showSuccess('Thanks for joining ☺️');
-        }
-      })
-      .catch((err) => {
-        dispatch({ type: 'setLoading', value: false });
-        logEvent('ERROR Group Sign Up', {
+    try {
+      const { data } = await joinGroup(groupID, firstName, lastName, email);
+
+      dispatch({ type: 'setLoading', value: false });
+
+      if (data.Success) {
+        // close this modal
+        dispatch({ type: 'setSuccess', value: true });
+        setTimeout(() => dispatch({ type: 'setSuccess', value: false }), 0);
+        showSuccess('☺️ Thanks for joining!');
+        logEvent('SUCCESS Group Sign Up', {
           group: title,
-          error: err,
+          message: data.Message,
         });
-      });
+        return;
+      }
+
+      dispatch({ type: 'setLoading', value: false });
+      dispatch({ type: 'setError', value: true });
+      logEvent('ERROR Group Sign Up', { group: title, error: data.Message });
+      setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
+    } catch (err) {
+      dispatch({ type: 'setLoading', value: false });
+      dispatch({ type: 'setError', value: true });
+      logEvent('ERROR Group Sign Up', { group: title, error: err });
+      setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
+    }
   };
 
   return (
@@ -78,6 +96,12 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
 
       <View style={styles.container}>
         <Title>Sign up</Title>
+
+        {error && (
+          <Subtitle style={{ textAlign: 'center', color: Colors.red }}>
+            {'🤔 Something went wrong...\nTry again later'}
+          </Subtitle>
+        )}
 
         <Subtitle>
           {`The group leaders will reach out to you with more info once you've joined`}
