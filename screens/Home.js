@@ -4,8 +4,6 @@ import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import Colors from '../constants/Colors';
 import { useBlogPosts } from '../data/blogPosts';
-// import { useVerseOfTheDay } from '../data/verseOfTheDay';
-import { useTweets } from '../data/tweets';
 import { useHandleTabChange } from '../utils/useHandleTabChange';
 import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
@@ -37,28 +35,22 @@ const HomeScreen = () => {
 
   useScrollToTop(ref);
 
+  const [tryAgain, setTryAgain] = useState(false);
   const {
     isLoading: isLoadingBlogPosts,
     isFetching: isFetchingBlogPosts,
     data: postsData = [],
     refetch: refetchBlogPosts,
   } = useBlogPosts();
-
-  const {
-    isFetching: isFetchingTweets,
-    data: tweetsData = [],
-    refetch: refetchTweets,
-  } = useTweets();
-  const [tryAgain, setTryAgain] = useState(false);
+  const isLoading = isLoadingBlogPosts || isFetchingBlogPosts;
 
   function handleRefresh() {
     refetchBlogPosts?.();
-    refetchTweets?.();
   }
 
   const cardData = [...postsData].filter(Boolean).sort(sortPosts);
 
-  if (!isLoadingBlogPosts && cardData.length < 1) {
+  if (!isLoading && cardData.length < 1) {
     return (
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.logoContainer}>
@@ -89,7 +81,7 @@ const HomeScreen = () => {
           <RefreshControl
             tintColor={Colors.gray}
             colors={[Colors.gray]}
-            refreshing={isFetchingBlogPosts || isFetchingTweets}
+            refreshing={isFetchingBlogPosts}
             onRefresh={handleRefresh}
           />
         }

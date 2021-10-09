@@ -76,6 +76,7 @@ function App() {
   useEffect(() => {
     function handleAppStateChange(state: AppStateStatus) {
       if (state === 'active') {
+        queryClient.invalidateQueries();
         logEvent('Start session');
       }
       if (state === 'background') {

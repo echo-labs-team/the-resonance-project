@@ -73,7 +73,7 @@ const MediaScreen = () => {
 
       return {
         image: seriesImage,
-        link: series.link,
+        link: 'https://echo.church/teaching',
         title: series.title.rendered,
       };
     }
