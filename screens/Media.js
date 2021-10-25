@@ -28,18 +28,7 @@ import LiveCard from '../components/LiveCard';
 
 const screenWidth = Dimensions.get('window').width;
 
-const MediaScreen = () => {
-  useHandleTabChange('Media');
-  const insets = useSafeArea();
-  const navigation = useNavigation();
-  const ref = React.useRef(null);
-
-  useScrollToTop(ref);
-
-  const [isLoading, setLoading] = useState(true);
-  const [isError, setError] = useState(false);
-  const [data, setData] = useState([]);
-
+const CurrentSeries = () => {
   const { isLoading: isLoadingCurrentSeries, data: currentSeries } = useQuery(
     'current-series',
     async () => {
@@ -58,7 +47,7 @@ const MediaScreen = () => {
 
       const [series] = currentSeriesData;
 
-      // ! make sure the Featured Image is set under Elementor General Settings
+      // ! make sure the Featured Image is set under Elementor General Settings https://echo.church/wp-admin/
       const [{ href: getSeriesImageUrl }] = series._links['wp:featuredmedia'];
 
       // get the attachments, which includes the banner image
@@ -78,6 +67,80 @@ const MediaScreen = () => {
       };
     }
   );
+
+  if (isLoadingCurrentSeries) {
+    return (
+      <>
+        <Subtitle style={styles.sectionHeaderText}>CURRENT SERIES</Subtitle>
+        <View style={{ marginHorizontal: 16 }}>
+          <ContentLoader
+            viewBox="0 0 300 200"
+            backgroundColor={Colors.darkGray}
+            foregroundColor={Colors.darkerGray}
+            preserveAspectRatio="none"
+            style={{
+              height: 200,
+              marginBottom: 8,
+              borderRadius: 8,
+              backgroundColor: Colors.darkestGray,
+              overflow: 'hidden',
+            }}
+          >
+            <Rect x="0" y="0" rx="0" ry="0" width="100%" height="200" />
+          </ContentLoader>
+        </View>
+      </>
+    );
+  }
+
+  if (currentSeries) {
+    return (
+      <>
+        <Subtitle style={styles.sectionHeaderText}>CURRENT SERIES</Subtitle>
+        <TouchableOpacity
+          onPress={() => {
+            WebBrowser.openBrowserAsync(currentSeries.link, {
+              toolbarColor: Colors.darkestGray,
+            }).catch((err) => {
+              logEvent('ERROR with WebBrowser', { error: err });
+              WebBrowser.dismissBrowser();
+            });
+          }}
+          style={{ marginHorizontal: 16 }}
+        >
+          <View>
+            <Image
+              source={{ uri: currentSeries.image }}
+              style={{
+                width: '100%',
+                height: 200,
+                resizeMode: 'cover',
+                borderRadius: 8,
+              }}
+            />
+            <Text style={{ marginVertical: 8, textAlign: 'center' }}>
+              {currentSeries.title}
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </>
+    );
+  }
+
+  return null;
+};
+
+const MediaScreen = () => {
+  useHandleTabChange('Media');
+  const insets = useSafeArea();
+  const navigation = useNavigation();
+  const ref = React.useRef(null);
+
+  useScrollToTop(ref);
+
+  const [isLoading, setLoading] = useState(true);
+  const [isError, setError] = useState(false);
+  const [data, setData] = useState([]);
 
   async function getPlaylists() {
     const channelSection = await fetchChannelSection().catch((err) => {
@@ -234,53 +297,7 @@ const MediaScreen = () => {
         </>
       )}
 
-      <Subtitle style={styles.sectionHeaderText}>CURRENT SERIES</Subtitle>
-      {isLoadingCurrentSeries ? (
-        <View style={{ marginHorizontal: 16 }}>
-          <ContentLoader
-            viewBox="0 0 300 200"
-            backgroundColor={Colors.darkGray}
-            foregroundColor={Colors.darkerGray}
-            preserveAspectRatio="none"
-            style={{
-              height: 200,
-              marginBottom: 8,
-              borderRadius: 8,
-              backgroundColor: Colors.darkestGray,
-              overflow: 'hidden',
-            }}
-          >
-            <Rect x="0" y="0" rx="0" ry="0" width="100%" height="200" />
-          </ContentLoader>
-        </View>
-      ) : (
-        <TouchableOpacity
-          onPress={() => {
-            WebBrowser.openBrowserAsync(currentSeries.link, {
-              toolbarColor: Colors.darkestGray,
-            }).catch((err) => {
-              logEvent('ERROR with WebBrowser', { error: err });
-              WebBrowser.dismissBrowser();
-            });
-          }}
-          style={{ marginHorizontal: 16 }}
-        >
-          <View>
-            <Image
-              source={{ uri: currentSeries.image }}
-              style={{
-                width: '100%',
-                height: 200,
-                resizeMode: 'cover',
-                borderRadius: 8,
-              }}
-            />
-            <Text style={{ marginVertical: 8, textAlign: 'center' }}>
-              {currentSeries.title}
-            </Text>
-          </View>
-        </TouchableOpacity>
-      )}
+      <CurrentSeries />
 
       <Button
         icon={
