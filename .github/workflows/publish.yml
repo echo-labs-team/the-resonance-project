@@ -46,10 +46,10 @@ jobs:
           expo-password: ${{ secrets.EXPO_CLI_PASSWORD }}
       - run: npm install
       - run: echo '{"TWITTER":"${{ secrets.TWITTER }}","YOUTUBE_RELEASE_API_KEY":"${{ secrets.YOUTUBE_RELEASE_API_KEY }}","AMPLITUDE":"${{ secrets.AMPLITUDE }}","GITHUB_SHA":"${{ github.sha }}","SENTRY_DSN":"${{ secrets.SENTRY_DSN }}","SENTRY_AUTH_TOKEN":"${{ secrets.SENTRY_AUTH_TOKEN }}"}' > constants/Keys.json
-      - run: npx expo-optimize . && npm run publish:staging
+      - run: npx expo-optimize . && npm run publish
       - name: Slack notification
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         uses: Ilshidur/action-slack@master
         with:
-          args: ':shipitparrot: App has been published to staging'
+          args: ':shipitparrot: App has been published to the `default` release channel. Check your Expo Go app to test changes.'
