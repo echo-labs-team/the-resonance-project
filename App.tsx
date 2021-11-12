@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
 import { enableScreens } from 'react-native-screens';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from 'sentry-expo';
@@ -31,8 +31,26 @@ Sentry.init({
   debug: __DEV__,
 });
 
+Amplitude.initializeAsync(keys.AMPLITUDE);
+
 if (__DEV__) {
-  Amplitude.initializeAsync(keys.AMPLITUDE);
+  setLogger({
+    log: console.log,
+    warn: console.warn,
+    error: console.error,
+  });
+} else {
+  setLogger({
+    log: (message) => {
+      Sentry.Native.captureMessage(message);
+    },
+    warn: (message) => {
+      Sentry.Native.captureMessage(message);
+    },
+    error: (error) => {
+      Sentry.Native.captureException(error);
+    },
+  });
 }
 
 if (

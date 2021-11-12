@@ -91,17 +91,6 @@ export function useBlogPosts() {
     )
   ).map(({ data }) => data);
 
-  if (isLoading) {
-    return {
-      isLoading,
-      data: [
-        { type: 'BLOG', url: 'loadingPost1' },
-        { type: 'BLOG', url: 'loadingPost2' },
-        { type: 'BLOG', url: 'loadingPost3' },
-      ],
-    };
-  }
-
   if (isError) {
     logEvent('ERROR loading blog posts', { error });
 

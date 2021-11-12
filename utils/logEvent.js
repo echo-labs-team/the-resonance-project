@@ -14,8 +14,8 @@ export default function logEvent(name, data) {
       Amplitude.logEventWithPropertiesAsync(name, data);
     }
 
-    if (name.toLowerCase().includes('error')) {
-      Sentry.captureException(data?.error || new Error(name));
+    if (Sentry && name.toLowerCase().includes('error')) {
+      Sentry.Native.captureException(data?.error || new Error(name));
     }
   }
 }

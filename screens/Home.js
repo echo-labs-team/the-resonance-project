@@ -50,7 +50,25 @@ const HomeScreen = () => {
 
   const cardData = [...postsData].filter(Boolean).sort(sortPosts);
 
-  if (!isLoading && cardData.length < 1) {
+  if (isLoading) {
+    return (
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <ScrollView ref={ref} contentContainerStyle={styles.contentContainer}>
+          <View style={styles.logoContainer}>
+            <EchoLogo width={40} height={40} color={Colors.red} />
+            <Text XL style={styles.logo}>
+              ECHO.CHURCH
+            </Text>
+          </View>
+          {Array.from({ length: 5 }).map((_, index) => (
+            <HomeCardPlaceholder key={`placeholder${index}`} />
+          ))}
+        </ScrollView>
+      </View>
+    );
+  }
+
+  if (cardData.length < 1) {
     return (
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <View style={styles.logoContainer}>
@@ -96,13 +114,9 @@ const HomeScreen = () => {
           </Text>
         </View>
 
-        {cardData.map((item, index) =>
-          item?.url?.includes('loading') ? (
-            <HomeCardPlaceholder key={`placeholder${index}`} />
-          ) : (
-            <Card key={`card${index}`} {...item} />
-          )
-        )}
+        {cardData.map((item, index) => (
+          <Card key={`card${index}`} {...item} />
+        ))}
       </ScrollView>
     </View>
   );
