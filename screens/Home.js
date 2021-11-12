@@ -42,7 +42,7 @@ const HomeScreen = () => {
     data: postsData = [],
     refetch: refetchBlogPosts,
   } = useBlogPosts();
-  const isLoading = isLoadingBlogPosts || isFetchingBlogPosts;
+  const isLoading = isLoadingBlogPosts;
 
   function handleRefresh() {
     refetchBlogPosts?.();
