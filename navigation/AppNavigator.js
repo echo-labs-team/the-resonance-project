@@ -17,8 +17,6 @@ import ErrorFallback, { handleError } from '../components/shared/ErrorFallback';
  * Home Tab
  */
 import HomeScreen from '../screens/Home';
-import FeaturedScreen from '../screens/Featured';
-import FeaturedDetailsScreen from '../screens/FeaturedDetails';
 
 /**
  * Media Tab
@@ -93,19 +91,6 @@ function HomeStackScreen() {
           name="Home"
           component={HomeScreen}
           options={{ headerShown: false }}
-        />
-        <HomeStack.Screen
-          name="Featured"
-          component={FeaturedScreen}
-          options={{ ...defaultOptions, title: 'Hope Project' }}
-        />
-        <HomeStack.Screen
-          name="FeaturedDetails"
-          component={FeaturedDetailsScreen}
-          options={({ route }) => ({
-            ...defaultOptions,
-            title: route.params.value,
-          })}
         />
       </HomeStack.Navigator>
     </ErrorBoundary>

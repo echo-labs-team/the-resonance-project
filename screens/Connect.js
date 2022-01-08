@@ -8,8 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
-import * as WebBrowser from 'expo-web-browser';
+import { Feather } from '@expo/vector-icons';
 import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
@@ -17,18 +16,9 @@ import { useHandleTabChange } from '../utils/useHandleTabChange';
 import { listItems, callToActionButtons } from '../config/connect';
 import { Text } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
+import { openBrowser } from '../utils/openBrowser';
 
 const numberOfCTAs = callToActionButtons.length;
-
-function openBrowser({ title, url }) {
-  logEvent(`TAP ${title}`);
-  WebBrowser.openBrowserAsync(url, {
-    toolbarColor: Colors.darkestGray,
-  }).catch((err) => {
-    logEvent('ERROR with WebBrowser', { error: err });
-    WebBrowser.dismissBrowser();
-  });
-}
 
 const ConnectScreen = ({ navigation }) => {
   useHandleTabChange('Connect');
@@ -61,7 +51,7 @@ const ConnectScreen = ({ navigation }) => {
                 {value}
               </Text>
               <Feather
-                name={'chevron-right'}
+                name="chevron-right"
                 size={30}
                 color={Colors.lightGray}
               />
@@ -82,18 +72,14 @@ const ConnectScreen = ({ navigation }) => {
         >
           <Button
             icon={
-              <MaterialCommunityIcons
-                name={'account-heart'}
-                size={28}
-                color={Colors.gray}
-              />
+              <Feather name="check-square" size={28} color={Colors.white} />
             }
-            title="Connection Card"
-            style={styles.connectionCard}
+            title="Check In"
+            style={styles.checkIn}
             onPress={() =>
               openBrowser({
-                title: 'Connection Card',
-                url: 'https://echo.church/connectioncard',
+                title: 'Check In',
+                url: 'http://echo.church/checkin',
               })
             }
           />
@@ -102,7 +88,7 @@ const ConnectScreen = ({ navigation }) => {
               <Button
                 key={title}
                 title={title}
-                style={[styles.connectionCard, { backgroundColor }]}
+                style={[styles.checkIn, { backgroundColor }]}
                 onPress={() => openBrowser({ title, url })}
               />
             ))}
@@ -143,8 +129,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingLeft: 8,
   },
-  connectionCard: { margin: 10 },
-  callToActions: { maxHeight: 360 },
+  checkIn: {
+    margin: 10,
+    backgroundColor: Colors.red,
+  },
+  callToActions: {
+    maxHeight: 360,
+  },
 });
 
 export default ConnectScreen;

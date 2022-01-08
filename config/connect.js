@@ -20,7 +20,7 @@ export const listItems = [
  */
 export const callToActionButtons = [
   {
-    title: 'Echo Compassion (COVID-19)',
+    title: '🤍  Echo Compassion',
     url: 'https://www.echocompassion.com/',
     backgroundColor: Colors.red,
   },

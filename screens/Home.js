@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
 import { useScrollToTop } from '@react-navigation/native';
 import Colors from '../constants/Colors';
 import { useBlogPosts } from '../data/blogPosts';
 import { useHandleTabChange } from '../utils/useHandleTabChange';
-import { Text, Subtitle } from '../components/shared/Typography';
+import { Text } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
-import Spinner from '../components/shared/Spinner';
 import EchoLogo from '../components/EchoLogo';
 import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 import Card from '../components/HomeCard';
+import { openBrowser } from '../utils/openBrowser';
+import { Feather } from '@expo/vector-icons';
+import FeaturedCard from '../components/FeaturedCard';
 
 const sortPosts = (firstPost = {}, secondPost = {}) => {
   const { date: firstDate, type: firstType } = firstPost;
@@ -35,7 +37,6 @@ const HomeScreen = () => {
 
   useScrollToTop(ref);
 
-  const [tryAgain, setTryAgain] = useState(false);
   const {
     isLoading: isLoadingBlogPosts,
     isFetching: isFetchingBlogPosts,
@@ -68,29 +69,6 @@ const HomeScreen = () => {
     );
   }
 
-  if (cardData.length < 1) {
-    return (
-      <View style={[styles.container, { paddingTop: insets.top }]}>
-        <View style={styles.logoContainer}>
-          <EchoLogo width={40} height={40} color={Colors.red} />
-          <Text XL style={styles.logo}>
-            ECHO.CHURCH
-          </Text>
-        </View>
-        <Subtitle center style={styles.error}>
-          No posts were found... 🤔
-        </Subtitle>
-        <Button
-          title="Try Again"
-          onPress={() => {
-            setTryAgain(true);
-            handleRefresh();
-          }}
-        />
-      </View>
-    );
-  }
-
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
       <ScrollView
@@ -105,8 +83,6 @@ const HomeScreen = () => {
         }
         contentContainerStyle={styles.contentContainer}
       >
-        {tryAgain && <Spinner />}
-
         <View style={styles.logoContainer}>
           <EchoLogo width={40} height={40} color={Colors.red} />
           <Text XL style={styles.logo}>
@@ -114,10 +90,24 @@ const HomeScreen = () => {
           </Text>
         </View>
 
+        <FeaturedCard />
+
         {cardData.map((item, index) => (
           <Card key={`card${index}`} {...item} />
         ))}
       </ScrollView>
+
+      <Button
+        icon={<Feather name="check-square" size={28} color={Colors.white} />}
+        title="Check In"
+        style={styles.checkIn}
+        onPress={() =>
+          openBrowser({
+            title: 'Check In',
+            url: 'http://echo.church/checkin',
+          })
+        }
+      />
     </View>
   );
 };
@@ -141,7 +131,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: Colors.white,
   },
-  error: { marginBottom: 10 },
+  checkIn: {
+    marginBottom: 10,
+    backgroundColor: Colors.red,
+  },
 });
 
 export default HomeScreen;

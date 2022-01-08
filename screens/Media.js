@@ -284,7 +284,7 @@ const MediaScreen = () => {
           <TouchableHighlight
             onPress={() => {
               logEvent('TAP Watch Live');
-              WebBrowser.openBrowserAsync('https://echo.online.church/', {
+              WebBrowser.openBrowserAsync('https://echo.church/online/', {
                 toolbarColor: Colors.darkestGray,
               }).catch((err) => {
                 logEvent('ERROR with WebBrowser', { error: err });
