@@ -599,7 +599,7 @@ Array [
         Object {
           "alignItems": "center",
           "backgroundColor": "#313d48",
-          "borderRadius": 6,
+          "borderRadius": 30,
           "justifyContent": "center",
           "minHeight": 60,
           "paddingHorizontal": 16,
