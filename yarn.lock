@@ -5909,7 +5909,8 @@ caniuse-api@^3.0.0:
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000989, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001219:
   version "1.0.30001298"
-  resolved "https://artifactory.infra.alto.com/artifactory/api/npm/alto-npm/caniuse-lite/-/caniuse-lite-1.0.30001298.tgz"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001298.tgz#0e690039f62e91c3ea581673d716890512e7ec52"
+  integrity sha512-AcKqikjMLlvghZL/vfTHorlQsLDhGRalYf1+GmWCf5SCMziSGjRYQW/JEksj14NaYHIR6KIhrFAy0HV5C25UzQ==
 
 capture-exit@^2.0.0:
   version "2.0.0"
