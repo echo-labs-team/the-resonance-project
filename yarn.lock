@@ -3578,10 +3578,10 @@
   dependencies:
     defer-to-connect "^2.0.0"
 
-"@testing-library/react-native@^7.2.0":
-  version "7.2.0"
-  resolved "https://registry.npmjs.org/@testing-library/react-native/-/react-native-7.2.0.tgz#e5ec5b0974e4e5f525f8057563417d1e9f820d96"
-  integrity sha512-rDKzJjAAeGgyoJT0gFQiMsIL09chdWcwZyYx6WZHMgm2c5NDqY52hUuyTkzhqddMYWmSRklFphSg7B2HX+246Q==
+"@testing-library/react-native@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.npmjs.org/@testing-library/react-native/-/react-native-7.0.0.tgz#86745f5a14e7a9f19c236d828cd6a3bfd7e45726"
+  integrity sha512-GF67VnpfdY5XLxY5hJyQCVZfi0icYl+bfau5mL4MsXh85F9Wf8ged3vklP4JjQL2i/rZGJV6YosKK0PEj18aIQ==
   dependencies:
     pretty-format "^26.0.1"
 
