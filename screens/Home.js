@@ -90,8 +90,6 @@ const HomeScreen = () => {
           </Text>
         </View>
 
-        <FeaturedCard />
-
         {cardData.map((item, index) => (
           <Card key={`card${index}`} {...item} />
         ))}
@@ -132,7 +130,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   checkIn: {
-    marginBottom: 10,
     backgroundColor: Colors.red,
   },
 });
