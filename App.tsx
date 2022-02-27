@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
 import { enableScreens } from 'react-native-screens';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Sentry from 'sentry-expo';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Storybook from './storybook';
 import {
@@ -123,20 +124,22 @@ function App() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <SafeAreaProvider>
-        <StatusBar
-          hidden
-          animated
-          style="light"
-          networkActivityIndicatorVisible
-          translucent
-        />
-        <View style={styles.container} onLayout={onLayoutRootView}>
-          <AppNavigator />
-        </View>
-      </SafeAreaProvider>
-    </QueryClientProvider>
+    <GestureHandlerRootView style={styles.container}>
+      <QueryClientProvider client={queryClient}>
+        <SafeAreaProvider>
+          <StatusBar
+            hidden
+            animated
+            style="light"
+            networkActivityIndicatorVisible
+            translucent
+          />
+          <View style={styles.container} onLayout={onLayoutRootView}>
+            <AppNavigator />
+          </View>
+        </SafeAreaProvider>
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }
 

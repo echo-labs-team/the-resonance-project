@@ -15,12 +15,24 @@ function formatDate(date) {
 }
 
 async function fetchPostImage({ imageUrl, blogUrl, title, formattedDate }) {
-  const { data: imageData } = await axios.get(imageUrl).catch((err) => {
+  const response = await axios.get(imageUrl).catch((err) => {
     logEvent('ERROR loading blog post image', {
       imageUrl,
       error: err,
     });
   });
+
+  if (!response) {
+    return {
+      date: formattedDate,
+      image: null,
+      title: decode(title),
+      type: 'BLOG',
+      url: blogUrl,
+    };
+  }
+
+  const imageData = response.data;
   const [{ media_details } = {}] = Array.isArray(imageData)
     ? imageData
     : [imageData];
@@ -95,10 +107,6 @@ export function useBlogPosts() {
     logEvent('ERROR loading blog posts', { error });
 
     return { isLoading, isFetching, data: [], refetch };
-  }
-
-  if (!blogPosts.length) {
-    logEvent('ERROR no blog posts');
   }
 
   return { isLoading, isFetching, data: blogPosts, refetch };

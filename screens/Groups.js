@@ -14,7 +14,7 @@ import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { useHandleTabChange } from '../utils/useHandleTabChange';
-import { getOpenGroups, getCategories } from '../data/groups';
+import { getOpenGroups } from '../data/groups';
 import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import GroupCardPlaceholder from '../components/GroupCardPlaceholder';
@@ -103,7 +103,6 @@ const GroupsScreen = () => {
     { Id: 'loading7' },
     { Id: 'loading8' },
   ]);
-  const [categories, setCategories] = useState([]);
   const [query, setQuery, queriedGroups] = useSearchQuery(groups);
   const [isFilterModalVisible, setIsFilterModalVisible] = useState(false);
   const [filters, setFilters] = useState(initialFilters);
@@ -126,19 +125,14 @@ const GroupsScreen = () => {
       setRefreshing(false);
       setTryAgain(false);
     };
-    const getGroupCategories = async () => {
-      const fetchedCategories = (await getCategories()) || [];
-
-      setCategories(fetchedCategories);
-    };
 
     if (refreshing || tryAgain) {
-      Promise.all([getGroups(), getGroupCategories()]);
+      getGroups();
       return;
     }
 
-    Promise.all([getGroups(), getGroupCategories()]);
-  }, [setGroups, setCategories, refreshing, tryAgain]);
+    getGroups();
+  }, [setGroups, refreshing, tryAgain]);
 
   const filterGroups = ({
     GroupCampus = '',
@@ -306,7 +300,6 @@ const GroupsScreen = () => {
       )}
 
       <GroupFilterModal
-        categories={categories}
         isVisible={isFilterModalVisible}
         setIsVisible={setIsFilterModalVisible}
         appliedFilters={filters}

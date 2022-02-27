@@ -57,7 +57,6 @@ const Item = ({ item, isSelected, onSelected }) => {
 const initialFilters = { Campus: [], Day: [], Categories: [] };
 
 export default ({
-  categories,
   isVisible,
   setIsVisible,
   appliedFilters = initialFilters,
@@ -121,9 +120,6 @@ export default ({
                 'Sunday',
               ],
             },
-            categories.length > 0
-              ? { title: 'Categories', data: categories }
-              : null,
           ].filter(Boolean)}
           renderSectionHeader={({ section: { title } }) => (
             <BlurView tint="dark" intensity={100} style={styles.section}>

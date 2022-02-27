@@ -2,24 +2,9 @@ import axios from 'redaxios';
 import config from './config';
 import logEvent from '../utils/logEvent';
 
-const baseURL = 'https://echo-api.westus.cloudapp.azure.com';
-
 // set the featured group, which is sorted to the top of the list of groups
 const isFeaturedGroup = (groupName) =>
   groupName.toLowerCase().includes(config.featuredGroup);
-
-export async function getCategories() {
-  const { data } =
-    (await axios
-      .get(`${baseURL}/groups/rock-categories`, {})
-      .catch((err) =>
-        logEvent('ERROR getting group categories', { error: err })
-      )) || {};
-
-  const { categories = [] } = data;
-
-  return categories.map(({ name }) => name).filter(Boolean);
-}
 
 /**
  * Get groups using the Rock's GroupFinder API
