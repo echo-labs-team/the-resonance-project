@@ -45,7 +45,7 @@ jobs:
       - name: 🗝 Expose secrets
         run: echo '{"TWITTER":"${{ secrets.TWITTER }}","YOUTUBE_RELEASE_API_KEY":"${{ secrets.YOUTUBE_RELEASE_API_KEY }}","AMPLITUDE":"${{ secrets.AMPLITUDE }}","GITHUB_SHA":"${{ github.sha }}","SENTRY_DSN":"${{ secrets.SENTRY_DSN }}","SENTRY_AUTH_TOKEN":"${{ secrets.SENTRY_AUTH_TOKEN }}"}' > constants/Keys.json
 
-      - 🧪 Run tests
+      - name: 🧪 Run tests
         run: npm test
 
       - name: 🚀 Publish preview
