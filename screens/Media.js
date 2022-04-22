@@ -36,19 +36,28 @@ const CurrentSeries = () => {
       const wordpressPage = await axios.get('https://echo.church/teaching');
 
       // the page then redirects to the actual series page, then we can grab the slug
-      const currentSeriesSlug = wordpressPage.url
-        .replace('https://echo.church/', '')
-        .replace('/', '');
+      const currentSeriesSlug = (
+        /echo.church\/(.+)/.exec(wordpressPage.url)?.[1] || ''
+      ).replace('/', '');
 
       const { data: currentSeriesData } = await axios(
         `https://echo.church/wp-json/wp/v2/pages?slug=${currentSeriesSlug}&timestamp=${new Date().getTime()}`,
         { headers: { 'Cache-Control': 'no-cache' } }
       );
 
-      const [series] = currentSeriesData;
+      const series = currentSeriesData?.[0] || {};
 
       // ! make sure the Featured Image is set under Elementor General Settings https://echo.church/wp-admin/
-      const [{ href: getSeriesImageUrl }] = series._links['wp:featuredmedia'];
+      const getSeriesImageUrl =
+        series?._links?.['wp:featuredmedia']?.[0]?.href || '';
+
+      if (!getSeriesImageUrl) {
+        return {
+          image: null,
+          link: 'https://echo.church/teaching',
+          title: series?.title?.rendered || 'Current Series',
+        };
+      }
 
       // get the attachments, which includes the banner image
       const { data: attachmentData } = await axios(
@@ -94,33 +103,39 @@ const CurrentSeries = () => {
   }
 
   if (currentSeries) {
+    const openCurrentSeries = () => {
+      WebBrowser.openBrowserAsync(currentSeries.link, {
+        toolbarColor: Colors.darkestGray,
+      }).catch((err) => {
+        logEvent('ERROR with WebBrowser', { error: err });
+        WebBrowser.dismissBrowser();
+      });
+    };
+
     return (
       <>
         <Subtitle style={styles.sectionHeaderText}>CURRENT SERIES</Subtitle>
         <TouchableOpacity
-          onPress={() => {
-            WebBrowser.openBrowserAsync(currentSeries.link, {
-              toolbarColor: Colors.darkestGray,
-            }).catch((err) => {
-              logEvent('ERROR with WebBrowser', { error: err });
-              WebBrowser.dismissBrowser();
-            });
-          }}
+          onPress={openCurrentSeries}
           style={{ marginHorizontal: 16 }}
         >
           <View>
-            <Image
-              source={{ uri: currentSeries.image }}
-              style={{
-                width: '100%',
-                height: 200,
-                resizeMode: 'cover',
-                borderRadius: 8,
-              }}
+            {currentSeries.image ? (
+              <Image
+                source={{ uri: currentSeries.image }}
+                style={{
+                  width: '100%',
+                  height: 200,
+                  resizeMode: 'cover',
+                  borderRadius: 8,
+                }}
+              />
+            ) : null}
+            <Button
+              onPress={openCurrentSeries}
+              style={{ marginVertical: 8, ButtonAlign: 'center' }}
+              title={currentSeries.title}
             />
-            <Text style={{ marginVertical: 8, textAlign: 'center' }}>
-              {currentSeries.title}
-            </Text>
           </View>
         </TouchableOpacity>
       </>

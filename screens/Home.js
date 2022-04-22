@@ -12,7 +12,6 @@ import HomeCardPlaceholder from '../components/HomeCardPlaceholder';
 import Card from '../components/HomeCard';
 import { openBrowser } from '../utils/openBrowser';
 import { Feather } from '@expo/vector-icons';
-import FeaturedCard from '../components/FeaturedCard';
 
 const sortPosts = (firstPost = {}, secondPost = {}) => {
   const { date: firstDate, type: firstType } = firstPost;
@@ -29,6 +28,20 @@ const sortPosts = (firstPost = {}, secondPost = {}) => {
 
   return new Date(secondDate) - new Date(firstDate);
 };
+
+const CheckInButton = () => (
+  <Button
+    icon={<Feather name="check-square" size={28} color={Colors.white} />}
+    title="Check In"
+    style={styles.checkIn}
+    onPress={() =>
+      openBrowser({
+        title: 'Check In',
+        url: 'http://echo.church/checkin',
+      })
+    }
+  />
+);
 
 const HomeScreen = () => {
   useHandleTabChange('Home');
@@ -65,6 +78,7 @@ const HomeScreen = () => {
             <HomeCardPlaceholder key={`placeholder${index}`} />
           ))}
         </ScrollView>
+        <CheckInButton />
       </View>
     );
   }
@@ -94,18 +108,7 @@ const HomeScreen = () => {
           <Card key={`card${index}`} {...item} />
         ))}
       </ScrollView>
-
-      <Button
-        icon={<Feather name="check-square" size={28} color={Colors.white} />}
-        title="Check In"
-        style={styles.checkIn}
-        onPress={() =>
-          openBrowser({
-            title: 'Check In',
-            url: 'http://echo.church/checkin',
-          })
-        }
-      />
+      <CheckInButton />
     </View>
   );
 };
