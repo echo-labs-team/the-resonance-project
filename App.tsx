@@ -14,10 +14,10 @@ import {
   UIManager,
   View,
 } from 'react-native';
+import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
 import * as Amplitude from 'expo-analytics-amplitude';
 import { resources } from './resources';
-import keys from './constants/Keys.json';
 import logEvent from './utils/logEvent';
 import AppNavigator from './navigation/AppNavigator';
 
@@ -27,12 +27,14 @@ enableScreens();
 
 // initialize Sentry and Amplitude
 Sentry.init({
-  dsn: keys.SENTRY_DSN,
+  dsn: Constants.manifest?.extra?.SENTRY_DSN,
   enableAutoSessionTracking: true,
   debug: __DEV__,
 });
 
-Amplitude.initializeAsync(keys.AMPLITUDE);
+if (Constants.manifest?.extra?.AMPLITUDE) {
+  Amplitude.initializeAsync(Constants.manifest.extra.AMPLITUDE);
+}
 
 if (__DEV__) {
   setLogger({

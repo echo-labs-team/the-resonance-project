@@ -13,5 +13,5 @@ web-build/
 .DS_Store
 
 # app
-Keys.json
+.env
 Keystore

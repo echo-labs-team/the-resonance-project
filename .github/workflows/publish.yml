@@ -43,7 +43,7 @@ jobs:
         run: yarn install
 
       - name: 🗝 Expose secrets
-        run: echo '{"TWITTER":"${{ secrets.TWITTER }}","YOUTUBE_RELEASE_API_KEY":"${{ secrets.YOUTUBE_RELEASE_API_KEY }}","AMPLITUDE":"${{ secrets.AMPLITUDE }}","GITHUB_SHA":"${{ github.sha }}","SENTRY_DSN":"${{ secrets.SENTRY_DSN }}","SENTRY_AUTH_TOKEN":"${{ secrets.SENTRY_AUTH_TOKEN }}"}' > constants/Keys.json
+        run: echo 'TWITTER="${{ secrets.TWITTER }}"\nYOUTUBE_API_KEY="${{ secrets.YOUTUBE_API_KEY }}"\nAMPLITUDE="${{ secrets.AMPLITUDE }}"\nGITHUB_SHA="${{ github.sha }}"\nSENTRY_DSN="${{ secrets.SENTRY_DSN }}"\nSENTRY_AUTH_TOKEN="${{ secrets.SENTRY_AUTH_TOKEN }}"}' > .env
 
       - name: 🧪 Run tests
         run: npm test

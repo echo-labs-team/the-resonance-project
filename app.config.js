@@ -1,4 +1,4 @@
-import keys from './constants/Keys.json';
+import 'dotenv/config';
 
 export default {
   expo: {
@@ -27,7 +27,7 @@ export default {
           config: {
             organization: 'echo-labs-team',
             project: 'echo-app',
-            authToken: keys.SENTRY_AUTH_TOKEN,
+            authToken: process.env.SENTRY_AUTH_TOKEN,
           },
         },
       ],
@@ -46,5 +46,14 @@ export default {
       versionCode: 15,
     },
     plugins: ['expo-updates', 'expo-splash-screen', 'sentry-expo'],
+    extra: {
+      AMPLITUDE: process.env.AMPLITUDE,
+      GITHUB_SHA: '🍺',
+      ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID,
+      SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
+      SENTRY_DSN: process.env.SENTRY_DSN,
+      TWITTER: process.env.TWITTER,
+      YOUTUBE_API_KEY: process.env.YOUTUBE_API_KEY,
+    },
   },
 };

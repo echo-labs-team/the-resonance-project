@@ -8,15 +8,15 @@ import {
   Clipboard,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
+import Constants from 'expo-constants';
 import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { useHandleTabChange } from '../utils/useHandleTabChange';
 import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
-import Keys from '../constants/Keys.json';
 
-const build = Keys.GITHUB_SHA.substring(0, 7);
+const build = (Constants.manifest?.extra?.GITHUB_SHA || '').substring(0, 7);
 const handleGive = (campus) => {
   logEvent(`TAP Giving ${campus}`);
   Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);

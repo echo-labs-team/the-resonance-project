@@ -1,6 +1,6 @@
+import Constants from 'expo-constants';
 import axios from 'redaxios';
 import { useQuery } from 'react-query';
-import keys from '../constants/Keys.json';
 import logEvent from '../utils/logEvent';
 
 export function useTweets() {
@@ -8,7 +8,7 @@ export function useTweets() {
     'tweets',
     () =>
       axios('https://api.twitter.com/2/users/14815217/tweets', {
-        headers: { Authorization: keys.TWITTER },
+        headers: { Authorization: Constants.manifest?.extra?.TWITTER },
         params: {
           'media.fields': 'media_key,preview_image_url,type,url',
           'tweet.fields': 'created_at',
