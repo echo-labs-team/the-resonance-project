@@ -22,6 +22,7 @@
     "@react-navigation/bottom-tabs": "^5.11.11",
     "@react-navigation/native": "^5.9.4",
     "@react-navigation/stack": "^5.14.5",
+    "babel-plugin-inline-dotenv": "^1.7.0",
     "dotenv": "^16.0.0",
     "expo": "^44.0.0",
     "expo-analytics-amplitude": "~11.1.0",

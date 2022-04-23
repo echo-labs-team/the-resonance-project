@@ -6,6 +6,7 @@ module.exports = function (api) {
   return {
     presets: ['babel-preset-expo'],
     plugins: [
+      'inline-dotenv',
       'react-native-reanimated/plugin',
       '@babel/plugin-proposal-optional-chaining',
       ...(isProd ? ['transform-remove-console'] : []),
