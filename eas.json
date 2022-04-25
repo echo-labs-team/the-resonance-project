@@ -5,14 +5,24 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "releaseChannel": "default"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "releaseChannel": "default"
     },
-    "production": {}
+    "production": {
+      "releaseChannel": "production"
+    }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "central-sysadmin@southbaychurch.org",
+        "ascAppId": "1496564910",
+        "appleTeamId": "CYZ6V3K643"
+      }
+    }
   }
 }

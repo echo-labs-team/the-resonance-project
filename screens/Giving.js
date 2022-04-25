@@ -16,7 +16,7 @@ import { useHandleTabChange } from '../utils/useHandleTabChange';
 import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 
-const build = (Constants.manifest?.extra?.GITHUB_SHA || '').substring(0, 7);
+const build = Constants.manifest?.extra?.TIMESTAMP || '';
 const handleGive = (campus) => {
   logEvent(`TAP Giving ${campus}`);
   Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);

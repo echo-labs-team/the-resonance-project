@@ -1,12 +1,14 @@
 import 'dotenv/config';
 
+const timestamp = Math.floor(new Date().getTime() / 10000);
+
 export default {
   expo: {
     name: 'Echo.Church',
     description: 'Echo.Church App',
     slug: 'echo',
     scheme: 'echo',
-    version: '1.0.8',
+    version: '2.0.0',
     orientation: 'portrait',
     icon: './assets/images/app-icon.png',
     userInterfaceStyle: 'dark',
@@ -33,7 +35,7 @@ export default {
       ],
     },
     ios: {
-      buildNumber: '3',
+      buildNumber: String(timestamp),
       bundleIdentifier: 'com.echo.church.app',
       supportsTablet: false,
     },
@@ -43,12 +45,12 @@ export default {
         backgroundColor: '#FFFFFF',
       },
       package: 'com.echo.church.app',
-      versionCode: 15,
+      versionCode: timestamp,
     },
     plugins: ['expo-updates', 'expo-splash-screen', 'sentry-expo'],
     extra: {
       AMPLITUDE: process.env.AMPLITUDE,
-      GITHUB_SHA: '🍺',
+      TIMESTAMP: timestamp,
       ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID,
       SENTRY_AUTH_TOKEN: process.env.SENTRY_AUTH_TOKEN,
       SENTRY_DSN: process.env.SENTRY_DSN,
