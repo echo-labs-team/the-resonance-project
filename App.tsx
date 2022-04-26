@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
 import { enableScreens } from 'react-native-screens';
 import * as SplashScreen from 'expo-splash-screen';
+import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
 import * as Sentry from 'sentry-expo';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -85,6 +86,14 @@ function App() {
     }
 
     prepare();
+  }, []);
+
+  // https://docs.expo.dev/versions/latest/sdk/tracking-transparency/
+  // The `TrackingTransparency` permission is necessary on iOS 14+
+  useEffect(() => {
+    (async () => {
+      await requestTrackingPermissionsAsync();
+    })();
   }, []);
 
   /**

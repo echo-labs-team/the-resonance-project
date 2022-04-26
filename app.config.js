@@ -8,7 +8,7 @@ export default {
     description: 'Echo.Church App',
     slug: 'echo',
     scheme: 'echo',
-    version: '2.0.0',
+    version: '2.0.1',
     orientation: 'portrait',
     icon: './assets/images/app-icon.png',
     userInterfaceStyle: 'dark',
@@ -47,7 +47,18 @@ export default {
       package: 'com.echo.church.app',
       versionCode: timestamp,
     },
-    plugins: ['expo-updates', 'expo-splash-screen', 'sentry-expo'],
+    plugins: [
+      'expo-updates',
+      'expo-splash-screen',
+      'sentry-expo',
+      [
+        'expo-tracking-transparency',
+        {
+          userTrackingPermission:
+            'Allow this app to collect app-related tracking data that can be used to improve your experience.',
+        },
+      ],
+    ],
     extra: {
       AMPLITUDE: process.env.AMPLITUDE,
       TIMESTAMP: timestamp,

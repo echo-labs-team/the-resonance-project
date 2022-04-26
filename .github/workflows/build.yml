@@ -39,5 +39,5 @@ jobs:
       - name: 🧪 Run tests
         run: npm test
 
-      - name: 🚀 Build app and submit to app stores
+      - name: 🚀 Build app for both platforms
         run: npx eas-cli build --platform all --non-interactive
