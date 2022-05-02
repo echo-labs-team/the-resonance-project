@@ -24,4 +24,14 @@ export const callToActionButtons = [
     url: 'https://www.echocompassion.com/',
     backgroundColor: Colors.red,
   },
+  {
+    title: '😊  Activate',
+    url: 'https://www.echo.church/activate/',
+    backgroundColor: Colors.red,
+  },
+  {
+    title: "💐  Mother's Day",
+    url: 'https://www.echo.church/mothersday',
+    backgroundColor: Colors.red,
+  },
 ];

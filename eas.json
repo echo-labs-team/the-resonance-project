@@ -20,8 +20,10 @@
     "production": {
       "ios": {
         "appleId": "central-sysadmin@southbaychurch.org",
-        "ascAppId": "1496564910",
-        "appleTeamId": "CYZ6V3K643"
+        "appleTeamId": "CYZ6V3K643",
+        "ascApiKeyId": "8SVL8ZW488",
+        "ascApiKeyIssuerId": "67f046fc-ce81-428e-85e9-39973429028a",
+        "ascAppId": "1496564910"
       }
     }
   }

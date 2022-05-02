@@ -70,6 +70,15 @@ const ConnectScreen = ({ navigation }) => {
           scrollEnabled={numberOfCTAs > 2}
           style={styles.callToActions}
         >
+          {numberOfCTAs &&
+            callToActionButtons.map(({ title, url, backgroundColor }) => (
+              <Button
+                key={title}
+                title={title}
+                style={[styles.checkIn, { backgroundColor }]}
+                onPress={() => openBrowser({ title, url })}
+              />
+            ))}
           <Button
             icon={
               <Feather name="check-square" size={28} color={Colors.white} />
@@ -83,15 +92,6 @@ const ConnectScreen = ({ navigation }) => {
               })
             }
           />
-          {numberOfCTAs &&
-            callToActionButtons.map(({ title, url, backgroundColor }) => (
-              <Button
-                key={title}
-                title={title}
-                style={[styles.checkIn, { backgroundColor }]}
-                onPress={() => openBrowser({ title, url })}
-              />
-            ))}
         </ScrollView>
       </View>
     </View>
