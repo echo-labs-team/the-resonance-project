@@ -145,10 +145,86 @@ const CurrentSeries = () => {
   return null;
 };
 
+const useNavigateToItem = () => {
+  const navigation = useNavigation();
+  const navigateToItem = (item) => {
+    const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
+
+    logEvent('TAP Past Series', { series_name: title });
+    navigation.navigate('Playlist', {
+      playlistID: id,
+      playlistTitle: title,
+      playlistDescription: description,
+      playlistURI: maxres.url,
+    });
+  };
+
+  return { navigateToItem };
+};
+
+const YouTubeDataView = ({ item = {}, style, thumbnailStyle } = {}) => {
+  const { title, thumbnails: { maxres = {} } = {} } = item;
+  const { navigateToItem } = useNavigateToItem();
+
+  return (
+    <TouchableOpacity
+      onPress={() => {
+        navigateToItem(item);
+      }}
+    >
+      <View style={style}>
+        {maxres.url ? (
+          <Image
+            source={{ uri: maxres.url }}
+            style={thumbnailStyle}
+            resizeMode="cover"
+          />
+        ) : (
+          <Text
+            style={{
+              color: Colors.darkestGray,
+              margin: 8,
+              textAlign: 'center',
+            }}
+          >
+            {title}
+          </Text>
+        )}
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const PastSeriesSection = ({ sectionData = [] }) => {
+  if (!sectionData || !sectionData.length) {
+    return null;
+  }
+
+  return (
+    <>
+      <Subtitle style={styles.sectionHeaderText}>PAST SERIES</Subtitle>
+      <View style={styles.pastSeriesList}>
+        {sectionData.map((item) => {
+          if (item) {
+            return (
+              <YouTubeDataView
+                key={item.title}
+                item={item}
+                thumbnailStyle={styles.youtubeThumbnailImageSmall}
+                style={styles.smallCard}
+              />
+            );
+          }
+          return null;
+        })}
+      </View>
+    </>
+  );
+};
+
 const MediaScreen = () => {
   useHandleTabChange('Media');
   const insets = useSafeArea();
-  const navigation = useNavigation();
   const ref = React.useRef(null);
 
   useScrollToTop(ref);
@@ -175,77 +251,6 @@ const MediaScreen = () => {
   useEffect(() => {
     getPlaylists();
   }, []);
-
-  const takeToItem = (item) => {
-    const { id, title, description, thumbnails: { maxres = {} } = {} } = item;
-
-    logEvent('TAP Past Series', { series_name: title });
-    navigation.navigate('Playlist', {
-      playlistID: id,
-      playlistTitle: title,
-      playlistDescription: description,
-      playlistURI: maxres.url,
-    });
-  };
-
-  const PastSeriesSection = ({ sectionData = [] }) => {
-    if (!sectionData || !sectionData.length) {
-      return null;
-    }
-
-    return (
-      <>
-        <Text style={styles.sectionHeaderText}>PAST SERIES</Text>
-        <View style={styles.pastSeriesList}>
-          {sectionData.map((item) => {
-            if (item) {
-              return (
-                <YouTubeDataView
-                  key={item.title}
-                  item={item}
-                  thumbnailStyle={styles.youtubeThumbnailImageSmall}
-                  style={styles.smallCard}
-                />
-              );
-            }
-            return null;
-          })}
-        </View>
-      </>
-    );
-  };
-
-  const YouTubeDataView = ({ item = {}, style, thumbnailStyle } = {}) => {
-    const { title, thumbnails: { maxres = {} } = {} } = item;
-
-    return (
-      <TouchableOpacity
-        onPress={() => {
-          takeToItem(item);
-        }}
-      >
-        <View style={style}>
-          {maxres.url ? (
-            <Image
-              source={{ uri: maxres.url }}
-              style={thumbnailStyle}
-              resizeMode="cover"
-            />
-          ) : (
-            <Text
-              style={{
-                color: Colors.darkestGray,
-                margin: 8,
-                textAlign: 'center',
-              }}
-            >
-              {title}
-            </Text>
-          )}
-        </View>
-      </TouchableOpacity>
-    );
-  };
 
   if (isLoading) {
     return (
@@ -325,6 +330,63 @@ const MediaScreen = () => {
           Linking.openURL('https://echo.church/messagenotes');
         }}
       />
+
+      <Image
+        accessibilityLabel="Echo Leadership Podcast"
+        source={require('../assets/images/leadership-pod.jpg')}
+        style={{
+          aspectRatio: 1,
+          width: screenWidth,
+          height: undefined,
+          marginBottom: 16,
+        }}
+        resizeMode="cover"
+      />
+      <View style={{ alignItems: 'center', marginBottom: 32 }}>
+        <TouchableHighlight
+          style={{ marginBottom: 10 }}
+          onPress={() => {
+            logEvent('TAP Apple Podcasts');
+            Linking.openURL(
+              'https://podcasts.apple.com/us/podcast/echo-leadership/id1513292472'
+            );
+          }}
+        >
+          <Image source={require('../assets/images/apple-podcasts.png')} />
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={{ marginBottom: 10 }}
+          onPress={() => {
+            logEvent('TAP Spotify Podcasts');
+            Linking.openURL(
+              'https://open.spotify.com/show/4Y8Z9Xwsf0EQHXO04YY7Gh'
+            );
+          }}
+        >
+          <Image source={require('../assets/images/spotify.png')} />
+        </TouchableHighlight>
+        <TouchableHighlight
+          style={{ marginBottom: 10 }}
+          onPress={() => {
+            logEvent('TAP Google Podcasts');
+            Linking.openURL(
+              'https://podcasts.google.com/?feed=aHR0cHM6Ly9mZWVkcy5zb3VuZGNsb3VkLmNvbS91c2Vycy9zb3VuZGNsb3VkOnVzZXJzOjgyMjc5MjczMy9zb3VuZHMucnNz'
+            );
+          }}
+        >
+          <Image source={require('../assets/images/google-podcasts.png')} />
+        </TouchableHighlight>
+        <TouchableHighlight
+          onPress={() => {
+            logEvent('TAP Youtube for Podcast');
+            Linking.openURL(
+              'https://www.youtube.com/channel/UCdIqxycEt_xu1ASUIplf6Ww'
+            );
+          }}
+        >
+          <Image source={require('../assets/images/youtube.png')} />
+        </TouchableHighlight>
+      </View>
 
       <PastSeriesSection sectionData={data} />
 
