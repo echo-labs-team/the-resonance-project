@@ -77,26 +77,11 @@ const LocationsScreen = () => {
                 style={styles.highlight}
               >
                 <Subtitle center style={styles.content}>
-                  North San Jose | 1180 Murphy Ave
+                  North San Jose | 1180 Murphy Ave, San Jose, CA 95131
                 </Subtitle>
               </TouchableHighlight>
               <Heading center style={styles.subContent}>
-                Every Sunday at 8:30am, 10:00am, 11:30am, & 5:00pm
-              </Heading>
-            </View>
-            <View style={styles.location}>
-              <TouchableHighlight
-                underlayColor={Colors.darkBlue}
-                onPress={() => openMaps('SSJ')}
-                style={styles.highlight}
-              >
-                <Subtitle center style={styles.content}>
-                  South San Jose | Santa Teresa High School, 6150 Snell Ave, San
-                  Jose, CA 95123
-                </Subtitle>
-              </TouchableHighlight>
-              <Heading center style={styles.subContent}>
-                Every Sunday at 10:00am
+                Every Sunday at 8:30am, 10:00am, or 11:30am
               </Heading>
             </View>
             <View style={styles.location}>
@@ -106,11 +91,11 @@ const LocationsScreen = () => {
                 style={styles.highlight}
               >
                 <Subtitle center style={styles.content}>
-                  Sunnyvale | 1145 E Arques Ave
+                  Sunnyvale | 1145 E Arques Ave, Sunnyvale, CA 94085
                 </Subtitle>
               </TouchableHighlight>
               <Heading center style={styles.subContent}>
-                Every Sunday at 10:00am
+                Every Sunday at 9:30am or 11:00am
               </Heading>
             </View>
             <View style={styles.location}>
@@ -125,7 +110,7 @@ const LocationsScreen = () => {
                 </Subtitle>
               </TouchableHighlight>
               <Heading center style={styles.subContent}>
-                Every Sunday at 10:00am & 11:30am
+                Every Sunday at 10:00am or 11:30am
               </Heading>
             </View>
           </View>

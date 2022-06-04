@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { Feather } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
 import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
@@ -80,15 +80,13 @@ const ConnectScreen = ({ navigation }) => {
               />
             ))}
           <Button
-            icon={
-              <Feather name="check-square" size={28} color={Colors.white} />
-            }
-            title="Check In"
+            icon={<AntDesign name="team" size={28} color={Colors.white} />}
+            title="Connect"
             style={styles.checkIn}
             onPress={() =>
               openBrowser({
-                title: 'Check In',
-                url: 'http://echo.church/checkin',
+                title: 'Connect',
+                url: 'https://www.echo.church/connect/',
               })
             }
           />
