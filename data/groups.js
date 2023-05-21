@@ -1,10 +1,5 @@
 import axios from 'redaxios';
-import config from './config';
 import logEvent from '../utils/logEvent';
-
-// set the featured group, which is sorted to the top of the list of groups
-const isFeaturedGroup = (groupName) =>
-  groupName.toLowerCase().includes(config.featuredGroup);
 
 /**
  * Get groups using the Rock's GroupFinder API
@@ -13,7 +8,7 @@ const isFeaturedGroup = (groupName) =>
 export async function getOpenGroups() {
   const { data } =
     (await axios.get(
-      'https://rock.echo.church/api/GroupFinder/GetGroups/25?primaryAliasId=16536'
+      'https://my.echo.church/api/GroupFinder/GetGroups/25,161?primaryAliasId=16536'
     )) || {};
 
   const { Success: isSuccessful, Data = [], Error } = data;
@@ -24,11 +19,11 @@ export async function getOpenGroups() {
   }
 
   return Data.filter(({ AtCapacity = false }) => !AtCapacity).sort(
-    ({ Name = '' }, { Name: otherName = '' }) => {
-      if (isFeaturedGroup(Name) && !isFeaturedGroup(otherName)) {
+    ({ Featured: FeaturedOne }, { Featured: FeaturedTwo }) => {
+      if (FeaturedOne && !FeaturedTwo) {
         return -1;
       }
-      if (!isFeaturedGroup(Name) && isFeaturedGroup(otherName)) {
+      if (FeaturedTwo && !FeaturedOne) {
         return 1;
       }
       return 0;

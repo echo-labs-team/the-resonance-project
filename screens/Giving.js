@@ -52,11 +52,6 @@ const GivingScreen = () => {
           style={styles.button}
         />
         <Button
-          title="South San Jose"
-          onPress={() => handleGive('south')}
-          style={styles.button}
-        />
-        <Button
           title="Sunnyvale"
           onPress={() => handleGive('sunnyvale')}
           style={styles.button}
