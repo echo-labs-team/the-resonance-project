@@ -6,6 +6,7 @@ export default {
   expo: {
     name: 'Echo.Church',
     description: 'Echo.Church App',
+    owner: 'echo-church',
     slug: 'echo',
     scheme: 'echo',
     version: '2.0.1',
@@ -60,6 +61,9 @@ export default {
       ],
     ],
     extra: {
+      eas: {
+        projectId: '7ce5e2a0-a01a-4585-8211-371d22c90172',
+      },
       AMPLITUDE: process.env.AMPLITUDE,
       TIMESTAMP: timestamp,
       ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID,
