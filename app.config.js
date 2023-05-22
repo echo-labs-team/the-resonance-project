@@ -9,7 +9,10 @@ export default {
     owner: 'echo-church',
     slug: 'echo',
     scheme: 'echo',
-    version: '2.0.1',
+    version: '3.0.0',
+    runtimeVersion: {
+      policy: 'sdkVersion',
+    },
     orientation: 'portrait',
     icon: './assets/images/app-icon.png',
     userInterfaceStyle: 'dark',
