@@ -1,28 +1,107 @@
 import React from 'react';
-import {
-  FlatList,
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  TouchableHighlight,
-  View,
-} from 'react-native';
+import { ImageBackground, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { AntDesign, Feather } from '@expo/vector-icons';
-import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { useHandleTabChange } from '../utils/useHandleTabChange';
-import { listItems, callToActionButtons } from '../config/connect';
 import { Text } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import { openBrowser } from '../utils/openBrowser';
+import { useQuery } from 'react-query';
+import axios from 'redaxios';
+import htmlParser from 'fast-html-parser';
+import ContentLoader, { Rect } from 'react-content-loader/native';
 
-const numberOfCTAs = callToActionButtons.length;
+function LoadingButtons() {
+  return (
+    <View style={{ paddingTop: 8, paddingHorizontal: 16, gap: 24 }}>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <ContentLoader
+          key={`loading-button-${index}`}
+          viewBox="0 0 300 60"
+          backgroundColor={Colors.darkGray}
+          foregroundColor={Colors.darkerGray}
+          preserveAspectRatio="none"
+          style={{
+            height: 60,
+            borderRadius: 30,
+            backgroundColor: Colors.darkestGray,
+            overflow: 'hidden',
+          }}
+        >
+          <Rect x="0" y="0" rx="0" ry="0" width="100%" height="60" />
+        </ContentLoader>
+      ))}
+    </View>
+  );
+}
 
-const ConnectScreen = ({ navigation }) => {
+function getButtonColor({ text }) {
+  if (text === 'Check In') {
+    return Colors.red;
+  }
+  if (text === 'Attend Activate') {
+    return Colors.red;
+  }
+  if (text === 'Give') {
+    return Colors.red;
+  }
+  if (text === 'View the Message Notes') {
+    return Colors.darkBlue;
+  }
+
+  return Colors.darkGray;
+}
+
+const ConnectScreen = () => {
   useHandleTabChange('Connect');
   const insets = useSafeArea();
+  const { isLoading, data } = useQuery('connect', async () => {
+    const response = await axios(
+      `https://echo.church/wp-json/wp/v2/pages?slug=connect&timestamp=${new Date().getTime()}`,
+      { headers: { 'Cache-Control': 'no-cache' } }
+    );
+    const connectPage = response?.data?.[0] || {};
+    const html = connectPage?.content?.rendered || '';
+    const $ = htmlParser.parse(html);
+    const [, ...sections] = $.querySelectorAll('.elementor-section-boxed');
+    const visibleSections = sections.filter((section) => {
+      return !section.classNames.includes('elementor-hidden-desktop');
+    });
+    const buttons = visibleSections.map((section) => {
+      const button = {};
+
+      let target = section?.childNodes?.find((node) => Boolean(node.tagName));
+
+      while (target) {
+        target = target?.childNodes.find((node) => Boolean(node.tagName));
+
+        if (target?.tagName === 'a') {
+          // get the link inside the `href` attribute
+          const regex = /href=["']([^"']+)["']/i;
+          const link = target?.rawAttrs.match(regex)[1];
+          const safeLink = link.replace('http://', 'https://');
+
+          if (safeLink.charAt(0) === '/') {
+            button.link = safeLink.replace('/', 'https://www.echo.church/');
+          } else {
+            button.link = safeLink;
+          }
+        }
+        const buttonText = target?.childNodes.find(
+          (node) => node.rawAttrs === 'class="elementor-button-text"'
+        );
+
+        if (buttonText) {
+          button.text = buttonText?.childNodes[0]?.rawText;
+        }
+      }
+
+      return button;
+    });
+
+    return { buttons };
+  });
 
   return (
     <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
@@ -35,63 +114,29 @@ const ConnectScreen = ({ navigation }) => {
         CONNECT
       </Text>
 
-      <FlatList
-        keyExtractor={({ value }) => value}
-        data={listItems}
-        renderItem={({ item: { value, page } = {} }) => (
-          <TouchableHighlight
-            underlayColor="transparent"
-            onPress={() => {
-              logEvent(`OPEN ${page}`);
-              navigation.navigate(page);
-            }}
-          >
-            <View style={styles.item}>
-              <Text XL style={styles.text}>
-                {value}
-              </Text>
-              <Feather
-                name="chevron-right"
-                size={30}
-                color={Colors.lightGray}
-              />
-            </View>
-          </TouchableHighlight>
-        )}
-        style={styles.list}
-      />
-
-      <View>
-        {/* 
-          only allow the ScrollView around the CTAs to
-          scroll if there's more than 2 extra ones 
-        */}
+      {isLoading ? (
+        <LoadingButtons />
+      ) : (
         <ScrollView
-          scrollEnabled={numberOfCTAs > 2}
-          style={styles.callToActions}
+          contentContainerStyle={{
+            paddingTop: 8,
+            paddingHorizontal: 16,
+            paddingBottom: insets.bottom || 24,
+            gap: 24,
+          }}
         >
-          {numberOfCTAs &&
-            callToActionButtons.map(({ title, url, backgroundColor }) => (
-              <Button
-                key={title}
-                title={title}
-                style={[styles.checkIn, { backgroundColor }]}
-                onPress={() => openBrowser({ title, url })}
-              />
-            ))}
-          <Button
-            icon={<AntDesign name="team" size={28} color={Colors.white} />}
-            title="Connect"
-            style={styles.checkIn}
-            onPress={() =>
-              openBrowser({
-                title: 'Connect',
-                url: 'https://www.echo.church/connect/',
-              })
-            }
-          />
+          {data?.buttons.map((button) => (
+            <Button
+              key={button.text}
+              style={{ backgroundColor: getButtonColor(button) }}
+              title={button.text}
+              onPress={() =>
+                openBrowser({ title: button.text, url: button.link })
+              }
+            />
+          ))}
         </ScrollView>
-      </View>
+      )}
     </View>
   );
 };
@@ -113,26 +158,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 0,
     left: 0,
-  },
-  list: {
-    paddingHorizontal: 10,
-    paddingBottom: 20,
-  },
-  item: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  text: {
-    paddingVertical: 10,
-    paddingLeft: 8,
-  },
-  checkIn: {
-    margin: 10,
-    backgroundColor: Colors.red,
-  },
-  callToActions: {
-    maxHeight: 360,
   },
 });
 

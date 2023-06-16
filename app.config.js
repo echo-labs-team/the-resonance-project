@@ -10,9 +10,10 @@ export default {
     slug: 'echo',
     scheme: 'echo',
     version: '3.0.0',
-    runtimeVersion: {
-      policy: 'sdkVersion',
-    },
+    runtimeVersion:
+      process.env.NODE_ENV === 'development'
+        ? undefined
+        : { policy: 'sdkVersion' },
     orientation: 'portrait',
     icon: './assets/images/app-icon.png',
     userInterfaceStyle: 'dark',

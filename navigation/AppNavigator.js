@@ -22,18 +22,11 @@ import HomeScreen from '../screens/Home';
  * Media Tab
  */
 import MediaScreen from '../screens/Media';
-import PlaylistScreen from '../screens/Playlist';
 
 /**
  * Connect Tab
  */
 import ConnectScreen from '../screens/Connect';
-import LocationsScreen from '../screens/Locations';
-import ActivateScreen from '../screens/Activate';
-import BaptismScreen from '../screens/Baptism';
-import VolunteerScreen from '../screens/Volunteer';
-import PrayerRequestsScreen from '../screens/PrayerRequests';
-import MissionsScreen from '../screens/Missions';
 
 /**
  * Groups Tab
@@ -108,14 +101,6 @@ function MediaStackScreen() {
           component={MediaScreen}
           options={{ headerShown: false }}
         />
-        <MediaStack.Screen
-          name="Playlist"
-          component={PlaylistScreen}
-          options={({ route }) => ({
-            ...defaultOptions,
-            title: route.params.playlistTitle,
-          })}
-        />
       </MediaStack.Navigator>
     </ErrorBoundary>
   );
@@ -131,36 +116,6 @@ function ConnectStackScreen() {
           name="Connect"
           component={ConnectScreen}
           options={{ headerShown: false }}
-        />
-        <ConnectStack.Screen
-          name="Locations"
-          component={LocationsScreen}
-          options={defaultOptions}
-        />
-        <ConnectStack.Screen
-          name="Activate"
-          component={ActivateScreen}
-          options={defaultOptions}
-        />
-        <ConnectStack.Screen
-          name="Baptism"
-          component={BaptismScreen}
-          options={defaultOptions}
-        />
-        <ConnectStack.Screen
-          name="Volunteer"
-          component={VolunteerScreen}
-          options={defaultOptions}
-        />
-        <ConnectStack.Screen
-          name="Prayer Requests"
-          component={PrayerRequestsScreen}
-          options={defaultOptions}
-        />
-        <ConnectStack.Screen
-          name="Missions"
-          component={MissionsScreen}
-          options={defaultOptions}
         />
       </ConnectStack.Navigator>
     </ErrorBoundary>

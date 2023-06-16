@@ -37,7 +37,7 @@ const CheckInButton = () => (
     onPress={() =>
       openBrowser({
         title: 'Check In',
-        url: 'http://echo.church/checkin',
+        url: 'https://my.echo.church/check-in',
       })
     }
   />
