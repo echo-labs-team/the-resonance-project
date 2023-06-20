@@ -1,20 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
 import { enableScreens } from 'react-native-screens';
 import * as SplashScreen from 'expo-splash-screen';
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
+import { useTrackingPermissions } from 'expo-tracking-transparency';
 import * as Sentry from 'sentry-expo';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Storybook from './storybook';
-import {
-  AppState,
-  AppStateStatus,
-  Platform,
-  StyleSheet,
-  UIManager,
-  View,
-} from 'react-native';
+import { AppState, Platform, StyleSheet, UIManager, View } from 'react-native';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
 import * as Amplitude from 'expo-analytics-amplitude';
@@ -67,7 +60,9 @@ if (
 const queryClient = new QueryClient();
 
 function App() {
+  const appState = useRef(AppState.currentState);
   const [appIsReady, setAppIsReady] = useState(false);
+  const [status, requestPermission] = useTrackingPermissions();
 
   useEffect(() => {
     async function prepare() {
@@ -88,35 +83,21 @@ function App() {
     prepare();
   }, []);
 
-  // https://docs.expo.dev/versions/latest/sdk/tracking-transparency/
-  // The `TrackingTransparency` permission is necessary on iOS 14+
   useEffect(() => {
-    (async () => {
-      await requestTrackingPermissionsAsync();
-    })();
-  }, []);
-
-  /**
-   * Log when our app
-   * becomes active (The app is running in the foreground)
-   * or runs in the background (The user is either: in another app, on the home screen,
-   * or [Android-only] on another Activity, even if it was launched by the app)
-   * https://reactnative.dev/docs/appstate
-   */
-  useEffect(() => {
-    function handleAppStateChange(state: AppStateStatus) {
-      if (state === 'active') {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
         queryClient.invalidateQueries();
-        logEvent('Start session');
       }
-      if (state === 'background') {
-        logEvent('End session');
-      }
-    }
 
-    AppState.addEventListener('change', handleAppStateChange);
+      appState.current = nextAppState;
+    });
 
-    return () => AppState.removeEventListener('change', handleAppStateChange);
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -127,8 +108,12 @@ function App() {
       // we hide the splash screen once we know the root view has already
       // performed layout.
       await SplashScreen.hideAsync();
+
+      if (!status?.granted) {
+        await requestPermission();
+      }
     }
-  }, [appIsReady]);
+  }, [appIsReady, requestPermission, status?.granted]);
 
   if (!appIsReady) {
     return null;

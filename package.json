@@ -1,11 +1,9 @@
 {
   "scripts": {
     "android": "expo start --android",
-    "build-android": "expo build:android -t app-bundle --release-channel production",
-    "build-ios": "expo build:ios -t archive --release-channel production",
+    "build-android": "eas build --profile production --platform android",
+    "build-ios": "expo build build --profile production --platform ios",
     "build-storybook": "build-storybook",
-    "eas-submit-android": "npx eas-cli submit -p android --latest",
-    "eas-submit-ios": "npx eas-cli submit -p ios --latest",
     "format": "prettier --write \"**/*.js\"",
     "ios": "expo start --ios",
     "lint": "eslint .",
