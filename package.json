@@ -1,19 +1,20 @@
 {
   "scripts": {
     "android": "expo start --android",
-    "build-android": "eas build --profile production --platform android",
-    "build-ios": "expo build build --profile production --platform ios",
     "build-storybook": "build-storybook",
+    "build:android": "eas build --profile production --platform android",
+    "build:ios-sim": "eas build --profile development-simulator --platform ios",
+    "build:ios": "expo build build --profile production --platform ios",
     "format": "prettier --write \"**/*.js\"",
     "ios": "expo start --ios",
     "lint": "eslint .",
     "prestorybook": "rnstl",
-    "publish:history": "npx expo publish:history",
-    "publish": "expo publish --non-interactive",
+    "start:dev-client": "expo start --dev-client",
     "start": "expo start",
     "storybook": "start-storybook -p 7007",
     "test:watch": "jest --watchAll",
-    "test": "jest"
+    "test": "jest",
+    "update:production": "APP_ENV=production eas update --channel production"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.17.11",
@@ -28,6 +29,7 @@
     "expo-application": "~5.1.1",
     "expo-blur": "~12.2.2",
     "expo-constants": "~14.2.1",
+    "expo-dev-client": "~2.2.1",
     "expo-device": "~5.2.1",
     "expo-font": "~11.1.1",
     "expo-splash-screen": "~0.18.2",

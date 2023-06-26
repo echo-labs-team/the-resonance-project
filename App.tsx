@@ -110,7 +110,9 @@ function App() {
       await SplashScreen.hideAsync();
 
       if (!status?.granted) {
-        await requestPermission();
+        setTimeout(async () => {
+          await requestPermission();
+        }, 500);
       }
     }
   }, [appIsReady, requestPermission, status?.granted]);
