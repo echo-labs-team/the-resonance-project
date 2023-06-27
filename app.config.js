@@ -24,7 +24,8 @@ export default {
       backgroundColor: '#000000',
     },
     updates: {
-      fallbackToCacheTimeout: 0,
+      fallbackToCacheTimeout: 3000,
+      url: 'https://u.expo.dev/7ce5e2a0-a01a-4585-8211-371d22c90172',
     },
     assetBundlePatterns: ['**/*'],
     hooks: {
