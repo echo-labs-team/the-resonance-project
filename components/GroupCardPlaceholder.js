@@ -31,7 +31,7 @@ const GroupCardPlaceholder = () => (
 const styles = StyleSheet.create({
   card: {
     height: 276,
-    borderRadius: 8,
+    borderRadius: 16,
     backgroundColor: Colors.darkestGray,
     overflow: 'hidden',
   },

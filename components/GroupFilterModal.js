@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   container: {
-    height: '95%',
+    height: '90%',
     paddingTop: 10,
     paddingBottom: 20,
     paddingHorizontal: 16,

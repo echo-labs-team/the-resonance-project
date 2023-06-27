@@ -356,6 +356,7 @@ export const styles = StyleSheet.create({
   card: {
     marginBottom: 16,
     borderRadius: 16,
+    overflow: 'hidden',
   },
   cardShadow: {
     shadowColor: Colors.black,

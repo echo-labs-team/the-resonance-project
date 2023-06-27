@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { HeaderHeightContext } from '@react-navigation/stack';
+import { useHeaderHeight } from '@react-navigation/elements';
 import { Feather } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Hyperlink from 'react-native-hyperlink';
@@ -26,6 +26,7 @@ import Ask from '../components/AskAboutGroupModal';
 
 const GroupDetails = ({ route }) => {
   const insets = useSafeArea();
+  const headerHeight = useHeaderHeight();
   const scrollViewRef = useRef(null);
   const dropdownAlertRef = useRef(null);
 
@@ -81,92 +82,88 @@ const GroupDetails = ({ route }) => {
   };
 
   return (
-    <HeaderHeightContext.Consumer>
-      {(headerHeight) => (
-        <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
-          <ImageBackground
-            source={require('../assets/images/groups_bg.png')}
-            style={styles.backgroundImage}
-          />
+    <View style={[styles.mainContainer, { paddingTop: headerHeight }]}>
+      <ImageBackground
+        source={require('../assets/images/groups_bg.png')}
+        style={styles.backgroundImage}
+      />
 
-          <ScrollView ref={scrollViewRef} style={styles.container}>
-            <Title
-              light
-              adjustsFontSizeToFit
-              numberOfLines={2}
-              style={groupStyles.title}
-            >
-              {Name}
-            </Title>
+      <ScrollView ref={scrollViewRef} style={styles.container}>
+        <Title
+          light
+          adjustsFontSizeToFit
+          numberOfLines={2}
+          style={groupStyles.title}
+        >
+          {Name}
+        </Title>
 
-            <View style={groupStyles.when}>
-              <Text>{FriendlyScheduleText}</Text>
-            </View>
-
-            <View style={[groupStyles.details, { marginBottom: 16 }]}>
-              <Heading>{GroupCampus}</Heading>
-            </View>
-
-            {isWomenOnly && (
-              <View style={[groupStyles.details, { marginBottom: 16 }]}>
-                <Text light>👩 WOMEN ONLY</Text>
-              </View>
-            )}
-            {isMenOnly && (
-              <View style={[groupStyles.details, { marginBottom: 16 }]}>
-                <Text light>👨 MEN ONLY</Text>
-              </View>
-            )}
-
-            {shouldShowLocation && <Location isOnline={isOnline} city={City} />}
-
-            {shouldShowAddress && <Address title={Name} city={City} />}
-
-            {shouldShowLeaders && (
-              <View style={{ marginBottom: 16 }}>
-                <Heading>Host(s)</Heading>
-                <Leader
-                  names={LeaderNames}
-                  photo={`https://rock.echo.church/GetImage.ashx?guid=${GroupPhotoGuid}&width=100&height=100&mode=crop`}
-                />
-              </View>
-            )}
-
-            {/* make any links clickable */}
-            <Hyperlink linkDefault>
-              <Text style={{ marginVertical: 20 }}>{Description}</Text>
-            </Hyperlink>
-
-            <SignUp groupID={Id} title={Name} showSuccess={showSuccess} />
-            <Ask groupID={Id} title={Name} showSuccess={showSuccess} />
-            <Button
-              icon={<Feather name={'share'} size={24} color={Colors.gray} />}
-              title="Share"
-              onPress={onShare}
-              style={{
-                marginBottom:
-                  Platform.OS === 'ios' ? insets.bottom : insets.bottom + 20,
-              }}
-            />
-
-            <DropdownAlert
-              ref={dropdownAlertRef}
-              successColor={Colors.blue}
-              wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
-              renderImage={() => (
-                <Feather
-                  name={'check-circle'}
-                  size={30}
-                  color={Colors.white}
-                  style={{ padding: 8, alignSelf: 'center' }}
-                />
-              )}
-              zIndex={1}
-            />
-          </ScrollView>
+        <View style={groupStyles.when}>
+          <Text>{FriendlyScheduleText}</Text>
         </View>
-      )}
-    </HeaderHeightContext.Consumer>
+
+        <View style={[groupStyles.details, { marginBottom: 16 }]}>
+          <Heading>{GroupCampus}</Heading>
+        </View>
+
+        {isWomenOnly && (
+          <View style={[groupStyles.details, { marginBottom: 16 }]}>
+            <Text light>👩 WOMEN ONLY</Text>
+          </View>
+        )}
+        {isMenOnly && (
+          <View style={[groupStyles.details, { marginBottom: 16 }]}>
+            <Text light>👨 MEN ONLY</Text>
+          </View>
+        )}
+
+        {shouldShowLocation && <Location isOnline={isOnline} city={City} />}
+
+        {shouldShowAddress && <Address title={Name} city={City} />}
+
+        {shouldShowLeaders && (
+          <View style={{ marginBottom: 16 }}>
+            <Heading>Host(s)</Heading>
+            <Leader
+              names={LeaderNames}
+              photo={`https://rock.echo.church/GetImage.ashx?guid=${GroupPhotoGuid}&width=100&height=100&mode=crop`}
+            />
+          </View>
+        )}
+
+        {/* make any links clickable */}
+        <Hyperlink linkDefault>
+          <Text style={{ marginVertical: 20 }}>{Description}</Text>
+        </Hyperlink>
+
+        <SignUp groupID={Id} title={Name} showSuccess={showSuccess} />
+        <Ask groupID={Id} title={Name} showSuccess={showSuccess} />
+        <Button
+          icon={<Feather name={'share'} size={24} color={Colors.gray} />}
+          title="Share"
+          onPress={onShare}
+          style={{
+            marginBottom:
+              Platform.OS === 'ios' ? insets.bottom : insets.bottom + 20,
+          }}
+        />
+
+        <DropdownAlert
+          ref={dropdownAlertRef}
+          successColor={Colors.blue}
+          wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
+          renderImage={() => (
+            <Feather
+              name={'check-circle'}
+              size={30}
+              color={Colors.white}
+              style={{ padding: 8, alignSelf: 'center' }}
+            />
+          )}
+          zIndex={1}
+        />
+      </ScrollView>
+    </View>
   );
 };
 

@@ -145,27 +145,27 @@ function GroupsStackScreen() {
 
 const Tab = createBottomTabNavigator();
 
+const tabBarOptions = {
+  headerShown: false,
+  tabBarActiveTintColor: Colors.tabIconSelected,
+  tabBarInactiveTintColor: Colors.tabIconDefault,
+  tabBarLabelStyle: {
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 10,
+    includeFontPadding: false,
+  },
+  tabBarStyle: {
+    paddingTop: 10,
+    borderTopColor: 'transparent',
+    backgroundColor: Colors.tabBar,
+  },
+  tabBarAllowFontScaling: false,
+};
+
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        initialRouteName={'Home'}
-        tabBarOptions={{
-          activeTintColor: Colors.tabIconSelected,
-          inactiveTintColor: Colors.tabIconDefault,
-          style: {
-            paddingTop: 10,
-            borderTopColor: 'transparent',
-            backgroundColor: Colors.tabBar,
-          },
-          labelStyle: {
-            fontFamily: 'NunitoSans-Regular',
-            fontSize: 10,
-            includeFontPadding: false,
-          },
-          allowFontScaling: false,
-        }}
-      >
+      <Tab.Navigator initialRouteName={'Home'}>
         <Tab.Screen
           name="Home"
           component={HomeStackScreen}
@@ -174,6 +174,7 @@ export default function App() {
             tabBarIcon: ({ size, color }) => (
               <EchoLogo width={size} height={size} color={color} />
             ),
+            ...tabBarOptions,
           }}
         />
         <Tab.Screen
@@ -184,6 +185,7 @@ export default function App() {
             tabBarIcon: ({ color, size }) => (
               <Entypo name={'controller-play'} size={size} color={color} />
             ),
+            ...tabBarOptions,
           }}
         />
         <Tab.Screen
@@ -194,6 +196,7 @@ export default function App() {
             tabBarIcon: ({ color }) => (
               <ConnectLogo width={34} height={34} color={color} />
             ),
+            ...tabBarOptions,
           }}
         />
         <Tab.Screen
@@ -204,6 +207,7 @@ export default function App() {
             tabBarIcon: ({ color }) => (
               <GroupsLogo width={34} height={34} color={color} />
             ),
+            ...tabBarOptions,
           }}
         />
         <Tab.Screen
@@ -214,6 +218,7 @@ export default function App() {
             tabBarIcon: ({ color, size }) => (
               <Feather name={'gift'} size={size} color={color} />
             ),
+            ...tabBarOptions,
           }}
         />
       </Tab.Navigator>
