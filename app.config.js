@@ -9,7 +9,7 @@ export default {
     owner: 'echo-church',
     slug: 'echo',
     scheme: 'echo',
-    version: '3.0.0',
+    version: '3.0.1',
     runtimeVersion:
       process.env.NODE_ENV === 'development'
         ? undefined
