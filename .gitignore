@@ -16,3 +16,4 @@ web-build/
 .env
 Keystore
 api-*.json
+dist/
