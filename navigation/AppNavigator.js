@@ -147,7 +147,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator initialRouteName={'Home'}>
         <Tab.Screen
-          name="Home"
+          name="HomeStack"
           component={HomeStackScreen}
           options={{
             tabBarLabel: 'ECHO',
@@ -158,7 +158,7 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Connect"
+          name="ConnectStack"
           component={ConnectStackScreen}
           options={{
             tabBarLabel: 'CONNECT',
@@ -169,7 +169,7 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Groups"
+          name="GroupsStack"
           component={GroupsStackScreen}
           options={{
             tabBarLabel: 'GROUPS',
@@ -180,7 +180,7 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Giving"
+          name="GivingStack"
           component={GivingScreen}
           options={{
             tabBarLabel: 'GIVING',
