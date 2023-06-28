@@ -109,5 +109,10 @@ export function useBlogPosts() {
     return { isLoading, isFetching, data: [], refetch };
   }
 
-  return { isLoading, isFetching, data: blogPosts, refetch };
+  return {
+    isLoadingBlogPosts: isLoading,
+    isFetching,
+    data: blogPosts,
+    refetch,
+  };
 }

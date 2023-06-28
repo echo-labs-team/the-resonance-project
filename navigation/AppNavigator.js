@@ -3,7 +3,7 @@ import { StyleSheet, Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Entypo, Feather } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { ErrorBoundary } from 'react-error-boundary';
 import Colors from '../constants/Colors';
@@ -17,11 +17,6 @@ import ErrorFallback, { handleError } from '../components/shared/ErrorFallback';
  * Home Tab
  */
 import HomeScreen from '../screens/Home';
-
-/**
- * Media Tab
- */
-import MediaScreen from '../screens/Media';
 
 /**
  * Connect Tab
@@ -70,7 +65,8 @@ const defaultOptions = {
   headerBackTitleVisible: false,
   headerLeftContainerStyle: {
     alignSelf: 'flex-end',
-    marginLeft: Platform.OS === 'ios' ? 16 : 0,
+    paddingLeft: Platform.OS === 'ios' ? 10 : 0,
+    marginBottom: 16,
   },
 };
 
@@ -86,22 +82,6 @@ function HomeStackScreen() {
           options={{ headerShown: false }}
         />
       </HomeStack.Navigator>
-    </ErrorBoundary>
-  );
-}
-
-const MediaStack = createStackNavigator();
-
-function MediaStackScreen() {
-  return (
-    <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
-      <MediaStack.Navigator>
-        <MediaStack.Screen
-          name="Media"
-          component={MediaScreen}
-          options={{ headerShown: false }}
-        />
-      </MediaStack.Navigator>
     </ErrorBoundary>
   );
 }
@@ -136,7 +116,7 @@ function GroupsStackScreen() {
         <GroupsStack.Screen
           name="GroupDetails"
           component={GroupDetailsScreen}
-          options={{ ...defaultOptions, headerTitle: null }}
+          options={{ ...defaultOptions, headerTitle: '' }}
         />
       </GroupsStack.Navigator>
     </ErrorBoundary>
@@ -173,17 +153,6 @@ export default function App() {
             tabBarLabel: 'ECHO',
             tabBarIcon: ({ size, color }) => (
               <EchoLogo width={size} height={size} color={color} />
-            ),
-            ...tabBarOptions,
-          }}
-        />
-        <Tab.Screen
-          name="Media"
-          component={MediaStackScreen}
-          options={{
-            tabBarLabel: 'MEDIA',
-            tabBarIcon: ({ color, size }) => (
-              <Entypo name={'controller-play'} size={size} color={color} />
             ),
             ...tabBarOptions,
           }}

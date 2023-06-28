@@ -6,7 +6,7 @@ import Colors from '../constants/Colors';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
 import { validateSignUpForm } from '../utils/formValidation';
-import { joinGroup } from '../data/groups';
+import { joinGroup } from '../queries/groups';
 import ModalSheet from './ModalSheet';
 import Spinner from './shared/Spinner';
 import Input from './shared/TextInput';

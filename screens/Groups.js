@@ -14,7 +14,7 @@ import logEvent from '../utils/logEvent';
 import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
 import { useHandleTabChange } from '../utils/useHandleTabChange';
-import { getOpenGroups } from '../data/groups';
+import { getOpenGroups } from '../queries/groups';
 import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
 import GroupCardPlaceholder from '../components/GroupCardPlaceholder';
@@ -291,6 +291,7 @@ const GroupsScreen = () => {
                   onRefresh={() => setRefreshing(true)}
                 />
               }
+              contentContainerStyle={styles.contentContainer}
               style={styles.list}
             />
           ) : (
@@ -348,6 +349,9 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
   },
   badgeCount: { paddingTop: 1 },
+  contentContainer: {
+    paddingTop: 16,
+  },
   list: {
     height: '100%',
     paddingHorizontal: 10,

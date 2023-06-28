@@ -100,13 +100,7 @@ export default ({
           sections={[
             {
               title: 'Campus',
-              data: [
-                'North San Jose',
-                'South San Jose',
-                'Sunnyvale',
-                'Fremont',
-                'Online',
-              ],
+              data: ['North San Jose', 'Sunnyvale', 'Fremont', 'Online'],
             },
             {
               title: 'Day',

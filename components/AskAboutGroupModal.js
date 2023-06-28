@@ -6,7 +6,7 @@ import Colors from '../constants/Colors';
 import { Title, Subtitle } from './shared/Typography';
 import Button from './shared/Button';
 import { validateAskQuestionForm } from '../utils/formValidation';
-import { askQuestion } from '../data/groups';
+import { askQuestion } from '../queries/groups';
 import ModalSheet from './ModalSheet';
 import Spinner from './shared/Spinner';
 import Input from './shared/TextInput';
