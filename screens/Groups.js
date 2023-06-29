@@ -66,10 +66,10 @@ function useSearchQuery(groups) {
   return [query, setQuery, queriedGroups];
 }
 
-const Card = ({ item }) => {
+function Card({ item }) {
   return (
     <View style={styles.cardShadow}>
-      <BlurView tint="dark" intensity={100} style={styles.card}>
+      <BlurView intensity={100} style={styles.card} tint="dark">
         {item?.Id?.toString().includes('loading') ? (
           <GroupCardPlaceholder />
         ) : (
@@ -78,15 +78,15 @@ const Card = ({ item }) => {
       </BlurView>
     </View>
   );
-};
+}
 
 const initialFilters = {
   Campus: [],
-  Day: [],
   Categories: [],
+  Day: [],
 };
 
-const GroupsScreen = () => {
+function GroupsScreen() {
   useHandleTabChange('Groups');
   const insets = useSafeArea();
   const ref = React.useRef(null);
@@ -135,15 +135,15 @@ const GroupsScreen = () => {
   }, [setGroups, refreshing, tryAgain]);
 
   const filterGroups = ({
-    GroupCampus = '',
-    DayOfWeek = '',
     AudienceName = '',
+    DayOfWeek = '',
+    GroupCampus = '',
     TopicName = '',
   } = {}) => {
     const {
       Campus: campusFilter = [],
-      Day: dayFilter = [],
       Categories: categoriesFilter = [],
+      Day: dayFilter = [],
     } = filters;
 
     if (!campusFilter.length && !dayFilter.length && !categoriesFilter.length) {
@@ -200,18 +200,18 @@ const GroupsScreen = () => {
             &quot;Alpha&quot;
           </Text>
           <Button
-            title="Clear Search"
-            style={styles.button}
             onPress={() => {
               setQuery('');
             }}
+            style={styles.button}
+            title="Clear Search"
           />
           <Button
-            title="Try Alpha"
-            style={styles.button}
             onPress={() => {
               setQuery('Alpha');
             }}
+            style={styles.button}
+            title="Try Alpha"
           />
         </View>
       );
@@ -225,9 +225,9 @@ const GroupsScreen = () => {
             Try removing some of the filters that you&apos;ve applied
           </Text>
           <Button
-            title="Change Filters"
-            style={styles.button}
             onPress={showFilterModal}
+            style={styles.button}
+            title="Change Filters"
           />
         </View>
       );
@@ -248,7 +248,7 @@ const GroupsScreen = () => {
         style={styles.backgroundImage}
       />
 
-      {tryAgain && <Spinner />}
+      {tryAgain ? <Spinner /> : null}
 
       <Text XXL bold style={styles.headerTitle}>
         GROUPS
@@ -260,10 +260,10 @@ const GroupsScreen = () => {
         <>
           <View style={[styles.searchBar, { flex: data.length ? 1 : 0 }]}>
             <SearchBar
-              value={query}
               onChangeText={(value) => setQuery(value)}
+              value={query}
             />
-            <TouchableOpacity style={styles.filter} onPress={showFilterModal}>
+            <TouchableOpacity onPress={showFilterModal} style={styles.filter}>
               <Text L adjustsFontSizeToFit allowFontScaling={false}>
                 Filter
               </Text>
@@ -279,19 +279,19 @@ const GroupsScreen = () => {
 
           {data.length ? (
             <FlatList
-              ref={ref}
-              keyExtractor={({ Id }) => Id.toString()}
+              contentContainerStyle={styles.contentContainer}
               data={data}
-              renderItem={({ item }) => <Card item={item} />}
+              keyExtractor={({ Id }) => Id.toString()}
+              ref={ref}
               refreshControl={
                 <RefreshControl
-                  tintColor={Colors.gray}
                   colors={[Colors.gray]}
-                  refreshing={refreshing}
                   onRefresh={() => setRefreshing(true)}
+                  refreshing={refreshing}
+                  tintColor={Colors.gray}
                 />
               }
-              contentContainerStyle={styles.contentContainer}
+              renderItem={({ item }) => <Card item={item} />}
               style={styles.list}
             />
           ) : (
@@ -301,77 +301,77 @@ const GroupsScreen = () => {
       )}
 
       <GroupFilterModal
-        isVisible={isFilterModalVisible}
-        setIsVisible={setIsFilterModalVisible}
         appliedFilters={filters}
         applyFilters={setFilters}
+        isVisible={isFilterModalVisible}
+        setIsVisible={setIsFilterModalVisible}
       />
     </View>
   );
-};
+}
 
 export const styles = StyleSheet.create({
-  mainContainer: {
+  backgroundImage: {
     flex: 1,
+    height: Layout.window.height,
+    left: 0,
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+  },
+  badge: {
+    height: 20,
+    backgroundColor: Colors.blue,
+    position: 'absolute',
+    borderRadius: 10,
+    right: 0,
+    top: 0,
+    width: 20,
+  },
+  badgeCount: { paddingTop: 1 },
+  card: {
+    borderRadius: 16,
+    marginBottom: 16,
+    overflow: 'hidden',
+  },
+  button: { marginTop: 20 },
+  cardShadow: {
+    shadowColor: Colors.black,
+    elevation: 8,
+    shadowOffset: { height: 4, width: 0 },
+    shadowOpacity: 0.8,
+    shadowRadius: 8,
+  },
+  contentContainer: {
+    paddingTop: 16,
+  },
+  headerTitle: {
+    marginLeft: 16,
+    marginVertical: 10,
+    color: Colors.red,
+  },
+  filter: {
+    height: 40,
+    alignItems: 'center',
+    width: 80,
+    justifyContent: 'center',
+  },
+  mainContainer: {
     backgroundColor: Colors.black,
+    flex: 1,
+  },
+  list: {
+    height: '100%',
+    marginTop: 40,
+    paddingHorizontal: 10,
   },
   searchBar: {
     paddingBottom: 10,
     paddingHorizontal: 10,
     flexDirection: 'row',
   },
-  headerTitle: {
-    marginVertical: 10,
-    marginLeft: 16,
-    color: Colors.red,
-  },
-  backgroundImage: {
-    width: '100%',
-    height: Layout.window.height,
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-  },
-  filter: {
-    width: 80,
-    height: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  badge: {
-    width: 20,
-    height: 20,
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    backgroundColor: Colors.blue,
-    borderRadius: 10,
-  },
-  badgeCount: { paddingTop: 1 },
-  contentContainer: {
-    paddingTop: 16,
-  },
-  list: {
-    height: '100%',
-    paddingHorizontal: 10,
-    marginTop: 40,
-  },
-  card: {
-    marginBottom: 16,
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  cardShadow: {
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.8,
-    shadowRadius: 8,
-    elevation: 8,
-  },
   noResults: { paddingHorizontal: 20 },
   noResultsHeader: { marginTop: 10 },
-  button: { marginTop: 20 },
 });
 
 export default GroupsScreen;

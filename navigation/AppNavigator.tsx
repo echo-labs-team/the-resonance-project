@@ -1,74 +1,34 @@
-import React from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feather } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { ErrorBoundary } from 'react-error-boundary';
-import Colors from '../constants/Colors';
-import { Text } from '../components/shared/Typography';
-import EchoLogo from '../components/EchoLogo';
+import { Platform, StyleSheet } from 'react-native';
 import ConnectLogo from '../components/ConnectLogo';
+import EchoLogo from '../components/EchoLogo';
 import GroupsLogo from '../components/GroupsLogo';
 import ErrorFallback, { handleError } from '../components/shared/ErrorFallback';
-
-/**
- * Home Tab
- */
+import Colors, { Color } from '../constants/Colors';
+import ConnectScreen from '../screens/Connect';
+import GivingScreen from '../screens/Giving';
+import GroupDetailsScreen from '../screens/GroupDetails';
+import GroupsScreen from '../screens/Groups';
 import HomeScreen from '../screens/Home';
 
-/**
- * Connect Tab
- */
-import ConnectScreen from '../screens/Connect';
+function BackButtonIcon() {
+  return <Feather color={Colors.lightGray} name="chevron-left" size={30} />;
+}
 
-/**
- * Groups Tab
- */
-import GroupsScreen from '../screens/Groups';
-import GroupDetailsScreen from '../screens/GroupDetails';
-
-/**
- * Giving Tab
- */
-import GivingScreen from '../screens/Giving';
-
-const defaultOptions = {
-  headerTransparent: true,
-  headerStyle: {
-    shadowColor: 'transparent',
-    borderBottomWidth: 0,
-  },
-  headerBackground: () => (
+function HeaderBackground() {
+  return (
     <BlurView
+      intensity={Platform.OS === 'ios' ? 100 : 175}
       style={StyleSheet.absoluteFill}
       tint="dark"
-      intensity={Platform.OS === 'ios' ? 100 : 175}
     />
-  ),
-  headerTitle: (props) => (
-    <Text
-      {...props}
-      L
-      adjustsFontSizeToFit
-      allowFontScaling={false}
-      numberOfLines={1}
-      style={{ paddingHorizontal: 16 }}
-    >
-      {props.children}
-    </Text>
-  ),
-  headerBackImage: () => (
-    <Feather name={'chevron-left'} size={30} color={Colors.lightGray} />
-  ),
-  headerBackTitleVisible: false,
-  headerLeftContainerStyle: {
-    alignSelf: 'flex-end',
-    paddingLeft: Platform.OS === 'ios' ? 10 : 0,
-    marginBottom: 16,
-  },
-};
+  );
+}
 
 const HomeStack = createStackNavigator();
 
@@ -77,8 +37,8 @@ function HomeStackScreen() {
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
       <HomeStack.Navigator>
         <HomeStack.Screen
-          name="Home"
           component={HomeScreen}
+          name="Home"
           options={{ headerShown: false }}
         />
       </HomeStack.Navigator>
@@ -93,8 +53,8 @@ function ConnectStackScreen() {
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
       <ConnectStack.Navigator>
         <ConnectStack.Screen
-          name="Connect"
           component={ConnectScreen}
+          name="Connect"
           options={{ headerShown: false }}
         />
       </ConnectStack.Navigator>
@@ -109,14 +69,29 @@ function GroupsStackScreen() {
     <ErrorBoundary FallbackComponent={ErrorFallback} onError={handleError}>
       <GroupsStack.Navigator>
         <GroupsStack.Screen
-          name="Groups"
           component={GroupsScreen}
+          name="Groups"
           options={{ headerShown: false }}
         />
         <GroupsStack.Screen
-          name="GroupDetails"
           component={GroupDetailsScreen}
-          options={{ ...defaultOptions, headerTitle: '' }}
+          name="GroupDetails"
+          options={{
+            headerBackImage: BackButtonIcon,
+            headerBackTitleVisible: false,
+            headerBackground: HeaderBackground,
+            headerLeftContainerStyle: {
+              alignSelf: 'flex-end',
+              marginBottom: 16,
+              paddingLeft: Platform.OS === 'ios' ? 10 : 0,
+            },
+            headerStyle: {
+              borderBottomWidth: 0,
+              shadowColor: 'transparent',
+            },
+            headerTitle: '',
+            headerTransparent: true,
+          }}
         />
       </GroupsStack.Navigator>
     </ErrorBoundary>
@@ -128,6 +103,7 @@ const Tab = createBottomTabNavigator();
 const tabBarOptions = {
   headerShown: false,
   tabBarActiveTintColor: Colors.tabIconSelected,
+  tabBarAllowFontScaling: false,
   tabBarInactiveTintColor: Colors.tabIconDefault,
   tabBarLabelStyle: {
     fontFamily: 'NunitoSans-Regular',
@@ -135,58 +111,62 @@ const tabBarOptions = {
     includeFontPadding: false,
   },
   tabBarStyle: {
-    paddingTop: 10,
-    borderTopColor: 'transparent',
     backgroundColor: Colors.tabBar,
+    borderTopColor: 'transparent',
+    paddingTop: 10,
   },
-  tabBarAllowFontScaling: false,
 };
+
+function EchoTabBarIcon({ color, size }: { color: string; size: number }) {
+  return <EchoLogo color={color as Color} height={size} width={size} />;
+}
+function ConnectTabBarIcon({ color }: { color: string }) {
+  return <ConnectLogo color={color as Color} height={34} width={34} />;
+}
+function GroupsTabBarIcon({ color }: { color: string }) {
+  return <GroupsLogo color={color as Color} height={34} width={34} />;
+}
+function GivingTabBarIcon({ color, size }: { color: string; size: number }) {
+  return <Feather color={color} name="gift" size={size} />;
+}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName={'Home'}>
+      <Tab.Navigator initialRouteName="Home">
         <Tab.Screen
-          name="HomeStack"
           component={HomeStackScreen}
+          name="HomeStack"
           options={{
+            tabBarIcon: EchoTabBarIcon,
             tabBarLabel: 'ECHO',
-            tabBarIcon: ({ size, color }) => (
-              <EchoLogo width={size} height={size} color={color} />
-            ),
             ...tabBarOptions,
           }}
         />
         <Tab.Screen
-          name="ConnectStack"
           component={ConnectStackScreen}
+          name="ConnectStack"
           options={{
+            tabBarIcon: ConnectTabBarIcon,
             tabBarLabel: 'CONNECT',
-            tabBarIcon: ({ color }) => (
-              <ConnectLogo width={34} height={34} color={color} />
-            ),
             ...tabBarOptions,
           }}
         />
         <Tab.Screen
-          name="GroupsStack"
           component={GroupsStackScreen}
+          name="GroupsStack"
           options={{
+            tabBarIcon: GroupsTabBarIcon,
             tabBarLabel: 'GROUPS',
-            tabBarIcon: ({ color }) => (
-              <GroupsLogo width={34} height={34} color={color} />
-            ),
             ...tabBarOptions,
           }}
         />
         <Tab.Screen
-          name="GivingStack"
           component={GivingScreen}
+          name="GivingStack"
           options={{
+            tabBarIcon: GivingTabBarIcon,
             tabBarLabel: 'GIVING',
-            tabBarIcon: ({ color, size }) => (
-              <Feather name={'gift'} size={size} color={color} />
-            ),
             ...tabBarOptions,
           }}
         />

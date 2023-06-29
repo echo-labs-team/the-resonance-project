@@ -20,7 +20,7 @@ import { Text, Title, Subtitle, Heading } from './shared/Typography';
 import Button from './shared/Button';
 import Checkbox from './shared/Checkbox';
 
-const Item = ({ item, isSelected, onSelected }) => {
+function Item({ isSelected, item, onSelected }) {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
@@ -32,17 +32,17 @@ const Item = ({ item, isSelected, onSelected }) => {
 
   return (
     <TouchableHighlight
-      underlayColor="transparent"
       onPress={() => {
         onSelected(!selected);
         setSelected(!selected);
       }}
+      underlayColor="transparent"
     >
       <View style={styles.item}>
         <Text
           L
-          light
           adjustsFontSizeToFit
+          light
           numberOfLines={1}
           style={styles.category}
         >
@@ -52,15 +52,15 @@ const Item = ({ item, isSelected, onSelected }) => {
       </View>
     </TouchableHighlight>
   );
-};
+}
 
-const initialFilters = { Campus: [], Day: [], Categories: [] };
+const initialFilters = { Campus: [], Categories: [], Day: [] };
 
 export default ({
-  isVisible,
-  setIsVisible,
   appliedFilters = initialFilters,
   applyFilters,
+  isVisible,
+  setIsVisible,
 }) => {
   const [filters, setFilters] = useState(appliedFilters);
 
@@ -80,9 +80,9 @@ export default ({
       onBackButtonPress={handleCancel}
       onBackdropPress={handleCancel}
       onSwipeComplete={handleCancel}
-      swipeDirection="down"
-      propagateSwipe={true}
+      propagateSwipe
       style={styles.modal}
+      swipeDirection="down"
     >
       <View style={styles.container}>
         <View style={styles.dragBar} />
@@ -97,37 +97,12 @@ export default ({
 
         <SectionList
           keyExtractor={(item) => item}
-          sections={[
-            {
-              title: 'Campus',
-              data: ['North San Jose', 'Sunnyvale', 'Fremont', 'Online'],
-            },
-            {
-              title: 'Day',
-              data: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-              ],
-            },
-          ].filter(Boolean)}
-          renderSectionHeader={({ section: { title } }) => (
-            <BlurView tint="dark" intensity={100} style={styles.section}>
-              <Heading center style={styles.sectionTitle}>
-                {title}
-              </Heading>
-            </BlurView>
-          )}
-          renderItem={({ section: { title }, item }) => {
+          renderItem={({ item, section: { title } }) => {
             return (
               <Item
-                key={item}
-                item={item}
                 isSelected={filters[title].find((filter) => filter === item)}
+                item={item}
+                key={item}
                 onSelected={(selected) => {
                   if (selected) {
                     // add the item to array of filters
@@ -150,11 +125,36 @@ export default ({
               />
             );
           }}
+          renderSectionHeader={({ section: { title } }) => (
+            <BlurView intensity={100} style={styles.section} tint="dark">
+              <Heading center style={styles.sectionTitle}>
+                {title}
+              </Heading>
+            </BlurView>
+          )}
+          sections={[
+            {
+              data: ['North San Jose', 'Sunnyvale', 'Fremont', 'Online'],
+              title: 'Campus',
+            },
+            {
+              data: [
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday',
+              ],
+              title: 'Day',
+            },
+          ].filter(Boolean)}
           style={styles.contentContainer}
         />
 
         <View style={styles.buttonContainer}>
-          <Button title="Apply" style={styles.button} onPress={handleApply} />
+          <Button onPress={handleApply} style={styles.button} title="Apply" />
         </View>
       </View>
     </Modal>
@@ -164,64 +164,66 @@ export default ({
 const dragBarColor = 'rgba(255,255,255,0.3)';
 
 const styles = StyleSheet.create({
-  modal: {
-    margin: 0,
-    justifyContent: 'flex-end',
-  },
   container: {
-    height: '90%',
-    paddingTop: 10,
-    paddingBottom: 20,
-    paddingHorizontal: 16,
-    position: 'relative',
+    backgroundColor: Colors.darkerGray,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+    height: '90%',
+    paddingBottom: 20,
+    paddingHorizontal: 16,
+    paddingTop: 10,
+    position: 'relative',
+  },
+  
+  buttonContainer: {
+    paddingTop: 14,
+    width: Layout.window.width,
+    bottom: 20,
+    position: 'absolute',
+    alignItems: 'center',
+    flex: 1,
+    borderColor: Colors.darkGray,
+    borderTopWidth: 1,
     backgroundColor: Colors.darkerGray,
   },
+
   // needed to allow scrolling on android
-  contentContainer: { flexGrow: 1, marginBottom: 76 },
+contentContainer: { flexGrow: 1, marginBottom: 76 },
+  button: { paddingHorizontal: 60 },
   dragBar: {
-    width: 100,
+    alignSelf: 'center',
+    backgroundColor: dragBarColor,
+    borderRadius: 6,
     height: 6,
     marginBottom: 10,
-    alignSelf: 'center',
-    borderRadius: 6,
-    backgroundColor: dragBarColor,
+    width: 100,
   },
-  heading: {
-    marginVertical: 10,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  category: {
+    maxWidth: '80%',
   },
   header: {
     marginBottom: 0,
+  },
+  heading: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    paddingHorizontal: 16,
+  },
+  item: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    justifyContent: 'space-between',
+    paddingVertical: 16,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
   },
   section: { borderRadius: 8 },
   sectionTitle: {
     paddingVertical: 8,
   },
-  item: {
-    paddingVertical: 16,
-    paddingHorizontal: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  category: {
-    maxWidth: '80%',
-  },
-  buttonContainer: {
-    width: Layout.window.width,
-    paddingTop: 14,
-    position: 'absolute',
-    bottom: 20,
-    flex: 1,
-    alignItems: 'center',
-    borderTopWidth: 1,
-    borderColor: Colors.darkGray,
-    backgroundColor: Colors.darkerGray,
-  },
-  button: { paddingHorizontal: 60 },
 });

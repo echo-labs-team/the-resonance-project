@@ -38,8 +38,8 @@ function reducer(state, action) {
   }
 }
 
-export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
-  const [{ loading, success, error }, dispatch] = useReducer(
+export default function AskAboutGroupModal({ groupID, showSuccess, title }) {
+  const [{ error, loading, success }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -53,7 +53,7 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
     });
   };
 
-  const handleAsk = async ({ firstName, lastName, email, question }) => {
+  const handleAsk = async ({ email, firstName, lastName, question }) => {
     dispatch({ type: 'setLoading', value: true });
     logEvent('SUBMIT Group Ask Question', { group: title });
 
@@ -83,14 +83,14 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
       dispatch({ type: 'setLoading', value: false });
       dispatch({ type: 'setError', value: true });
       logEvent('ERROR Group Ask Question', {
-        group: title,
         error: data.Message,
+        group: title,
       });
       setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
     } catch (err) {
       dispatch({ type: 'setLoading', value: false });
       dispatch({ type: 'setError', value: true });
-      logEvent('ERROR Group Ask Question', { group: title, error: err });
+      logEvent('ERROR Group Ask Question', { error: err, group: title });
       setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
     }
   };
@@ -98,71 +98,72 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
   return (
     <ModalSheet
       buttonTitle="Ask a Question"
-      success={success}
       handleOpenModal={handleOpenModal}
+      success={success}
     >
-      {loading && <Spinner style={{ backgroundColor: 'transparent' }} />}
+      {loading ? <Spinner style={{ backgroundColor: 'transparent' }} /> : null}
 
       <View style={styles.container}>
         <Title>Ask a question</Title>
 
-        {error && (
-          <Subtitle style={{ textAlign: 'center', color: Colors.red }}>
+        {error ? (
+          <Subtitle style={{ color: Colors.red, textAlign: 'center' }}>
             {'🤔 Something went wrong...\nTry again later'}
           </Subtitle>
-        )}
+        ) : null}
 
         <Subtitle>
-          {`The group leaders will reach out to you with more info about this group`}
+          The group leaders will reach out to you with more info about this
+          group
         </Subtitle>
 
         <Formik
           initialValues={{
+            email: '',
             firstName: '',
             lastName: '',
-            email: '',
             question: '',
           }}
-          validate={validateAskQuestionForm}
           onSubmit={handleAsk}
+          validate={validateAskQuestionForm}
         >
           {({
-            handleChange,
+            errors,
             handleBlur,
+            handleChange,
             handleSubmit,
             touched,
             values,
-            errors,
           }) => (
             <View>
               <Input
                 autoCompleteType="name"
                 blurOnSubmit={false}
+                errors={errors.firstName}
                 label="First Name"
+                onBlur={handleBlur('firstName')}
+                onChangeText={handleChange('firstName')}
+                onSubmitEditing={() => lastNameRef.current.focus()}
                 placeholder="Andy"
                 returnKeyType="next"
                 textContentType="givenName"
                 touched={touched.firstName}
                 value={values.firstName}
-                errors={errors.firstName}
-                onChangeText={handleChange('firstName')}
-                onBlur={handleBlur('firstName')}
-                onSubmitEditing={() => lastNameRef.current.focus()}
               />
               <Input
                 autoCompleteType="name"
                 blurOnSubmit={false}
+                errors={errors.lastName}
                 label="Last Name"
+                onBlur={handleBlur('lastName')}
+                onChangeText={handleChange('lastName')}
+                onSubmitEditing={() => emailRef.current.focus()}
                 placeholder="Wood"
                 ref={lastNameRef}
                 returnKeyType="next"
                 textContentType="familyName"
                 touched={touched.lastName}
                 value={values.lastName}
-                errors={errors.lastName}
-                onChangeText={handleChange('lastName')}
-                onBlur={handleBlur('lastName')}
-                onSubmitEditing={() => emailRef.current.focus()}
               />
               <Input
                 autoCapitalize="none"
@@ -170,32 +171,32 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
                 autoCorrect={false}
                 blurOnSubmit={false}
                 clearButtonMode="while-editing"
+                errors={errors.email}
                 keyboardType="email-address"
                 label="Email"
+                onBlur={handleBlur('email')}
+                onChangeText={handleChange('email')}
+                onSubmitEditing={() => questionRef.current.focus()}
                 placeholder="andy@echo.church"
                 ref={emailRef}
                 returnKeyType="next"
                 textContentType="emailAddress"
                 touched={touched.email}
                 value={values.email}
-                errors={errors.email}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                onSubmitEditing={() => questionRef.current.focus()}
               />
               <Input
+                errors={errors.question}
                 label="Question"
+                onBlur={handleBlur('question')}
+                onChangeText={handleChange('question')}
                 placeholder="Ask a question..."
                 ref={questionRef}
                 touched={touched.question}
                 value={values.question}
-                errors={errors.question}
-                onChangeText={handleChange('question')}
-                onBlur={handleBlur('question')}
               />
 
               <View style={styles.submitButton}>
-                <Button title="Ask" onPress={handleSubmit} />
+                <Button onPress={handleSubmit} title="Ask" />
               </View>
             </View>
           )}
@@ -207,12 +208,12 @@ export default function AskAboutGroupModal({ groupID, title, showSuccess }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
     flex: 1,
+    paddingHorizontal: 16,
   },
   submitButton: {
     flex: 1,
-    marginVertical: 10,
     justifyContent: 'flex-end',
+    marginVertical: 10,
   },
 });

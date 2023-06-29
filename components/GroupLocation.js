@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, Heading } from './shared/Typography';
 
-export default ({ isOnline = false, city }) => {
+export default ({ city, isOnline = false }) => {
   if (isOnline) {
     return (
       <View style={styles.container}>

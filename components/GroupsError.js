@@ -13,15 +13,17 @@ export default ({ tryAgain }) => {
       <Subtitle center style={styles.title}>
         Something went wrong...
       </Subtitle>
-      {hasTryAgain && <Button title="Try Again" onPress={() => tryAgain()} />}
+      {hasTryAgain ? (
+        <Button onPress={() => tryAgain()} title="Try Again" />
+      ) : null}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 40,
     justifyContent: 'center',
+    padding: 40,
   },
   title: { marginBottom: 20 },
 });

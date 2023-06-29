@@ -22,7 +22,7 @@ const handleGive = (campus) => {
   Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);
 };
 
-const GivingScreen = () => {
+function GivingScreen() {
   useHandleTabChange('Giving');
 
   const insets = useSafeArea();
@@ -47,64 +47,64 @@ const GivingScreen = () => {
         </Text>
 
         <Button
-          title="North San Jose"
           onPress={() => handleGive('north')}
           style={styles.button}
+          title="North San Jose"
         />
         <Button
-          title="Sunnyvale"
           onPress={() => handleGive('sunnyvale')}
           style={styles.button}
+          title="Sunnyvale"
         />
         <Button
-          title="Fremont"
           onPress={() => handleGive('fremont')}
           style={styles.button}
+          title="Fremont"
         />
         <Button
-          title="Online"
           onPress={() => handleGive('online')}
           style={styles.button}
+          title="Online"
         />
         <Button
-          title={build}
           onPress={() => Clipboard.setString(build)}
           style={styles.sha_button}
           textStyle={{ color: 'rgba(255, 255, 255, 0.20)', fontSize: 14 }}
+          title={build}
         />
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: Colors.black,
+    height: Layout.window.height,
+    left: 0,
+    opacity: 0.7,
+    position: 'absolute',
+    top: 0,
+    width: '100%',
   },
+  button: { marginVertical: 10 },
   container: {
     flex: 1,
     paddingHorizontal: 16,
   },
-  headerTitle: {
-    marginVertical: 10,
-    color: Colors.red,
-  },
-  backgroundImage: {
-    width: '100%',
-    height: Layout.window.height,
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    opacity: 0.7,
-  },
   content: { marginBottom: 20 },
-  button: { marginVertical: 10 },
-  sha_button: {
-    minHeight: 15,
+  headerTitle: {
+    color: Colors.red,
     marginVertical: 10,
+  },
+  mainContainer: {
+    backgroundColor: Colors.black,
+    flex: 1,
+  },
+  sha_button: {
     backgroundColor: 'rgba(0, 0, 0, 0)',
+    marginVertical: 10,
+    minHeight: 15,
   },
 });
 

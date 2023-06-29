@@ -14,11 +14,11 @@ function formatDate(date) {
   )}`;
 }
 
-async function fetchPostImage({ imageUrl, blogUrl, title, formattedDate }) {
+async function fetchPostImage({ blogUrl, formattedDate, imageUrl, title }) {
   const response = await axios.get(imageUrl).catch((err) => {
     logEvent('ERROR loading blog post image', {
-      imageUrl,
       error: err,
+      imageUrl,
     });
   });
 
@@ -49,11 +49,11 @@ async function fetchPostImage({ imageUrl, blogUrl, title, formattedDate }) {
 
 export function useBlogPosts() {
   const {
-    isFetching,
-    isLoading,
-    isError,
     data: postsData,
     error,
+    isError,
+    isFetching,
+    isLoading,
     refetch,
   } = useQuery('posts', () =>
     axios(
@@ -67,11 +67,11 @@ export function useBlogPosts() {
   const blogPosts = useQueries(
     posts.map(
       ({
+        _links: links = {},
+        date,
         id,
         link: blogUrl,
         title: { rendered: title } = {},
-        date,
-        _links: links = {},
       } = {}) => {
         const [{ href: imageUrl } = {}] =
           links['wp:featuredmedia'] || links['wp:attachment'] || [];
@@ -79,18 +79,17 @@ export function useBlogPosts() {
 
         if (!imageUrl) {
           return {
-            queryKey: ['post', id],
             queryFn: async () => ({
               date: formattedDate,
               title: decode(title),
               type: 'BLOG',
               url: blogUrl,
             }),
+            queryKey: ['post', id],
           };
         }
 
         return {
-          queryKey: ['post', id],
           queryFn: () =>
             fetchPostImage({
               blogUrl,
@@ -98,6 +97,7 @@ export function useBlogPosts() {
               imageUrl,
               title,
             }),
+          queryKey: ['post', id],
         };
       }
     )
@@ -106,13 +106,13 @@ export function useBlogPosts() {
   if (isError) {
     logEvent('ERROR loading blog posts', { error });
 
-    return { isLoading, isFetching, data: [], refetch };
+    return { data: [], isFetching, isLoading, refetch };
   }
 
   return {
-    isLoadingBlogPosts: isLoading,
-    isFetching,
     data: blogPosts,
+    isFetching,
+    isLoadingBlogPosts: isLoading,
     refetch,
   };
 }

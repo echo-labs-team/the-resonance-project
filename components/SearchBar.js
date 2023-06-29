@@ -4,31 +4,31 @@ import { Feather, AntDesign } from '@expo/vector-icons';
 import Colors from '../constants/Colors';
 
 export default ({
-  value = '',
   onChangeText = () => {
     throw new Error('`onChangeText` required');
   },
+  value = '',
 }) => {
   return (
     <View style={styles.searchBar}>
       <Feather
-        name={'search'}
-        size={22}
         color={Colors.gray}
+        name="search"
+        size={22}
         style={styles.icon}
       />
       <TextInput
-        testID="search-bar-input"
-        style={styles.input}
-        keyboardAppearance="dark"
         autoCorrect={false}
-        returnKeyType="search"
-        value={value}
+        keyboardAppearance="dark"
         onChangeText={onChangeText}
+        returnKeyType="search"
+        style={styles.input}
+        testID="search-bar-input"
+        value={value}
       />
       {Boolean(value) && (
-        <TouchableOpacity style={styles.clear} onPress={() => onChangeText('')}>
-          <AntDesign name={'close'} size={22} color={Colors.gray} />
+        <TouchableOpacity onPress={() => onChangeText('')} style={styles.clear}>
+          <AntDesign color={Colors.gray} name="close" size={22} />
         </TouchableOpacity>
       )}
     </View>
@@ -38,30 +38,30 @@ export default ({
 const searchBarBackgroundColor = 'rgba(255,255,255,0.2)';
 
 const styles = StyleSheet.create({
-  searchBar: {
-    flex: 1,
-    height: 40,
-    position: 'relative',
-    backgroundColor: searchBarBackgroundColor,
-    borderRadius: 25,
-  },
-  icon: {
-    position: 'absolute',
-    left: 10,
-    top: 8,
-  },
-  input: {
-    height: 40,
-    paddingHorizontal: 40,
-    borderWidth: 0,
-    fontSize: 18,
-    fontFamily: 'NunitoSans-Regular',
-    color: Colors.white,
-  },
   clear: {
     padding: 8,
     position: 'absolute',
-    top: 0,
     right: 4,
+    top: 0,
+  },
+  icon: {
+    left: 10,
+    position: 'absolute',
+    top: 8,
+  },
+  input: {
+    borderWidth: 0,
+    color: Colors.white,
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 18,
+    height: 40,
+    paddingHorizontal: 40,
+  },
+  searchBar: {
+    backgroundColor: searchBarBackgroundColor,
+    borderRadius: 25,
+    flex: 1,
+    height: 40,
+    position: 'relative',
   },
 });

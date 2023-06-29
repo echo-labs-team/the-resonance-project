@@ -11,7 +11,7 @@ export async function getOpenGroups() {
       'https://my.echo.church/api/GroupFinder/GetGroups/25,161?primaryAliasId=16536'
     )) || {};
 
-  const { Success: isSuccessful, Data = [], Error } = data;
+  const { Data = [], Error, Success: isSuccessful } = data;
 
   if (!isSuccessful || !Data || !Array.isArray(Data)) {
     logEvent('ERROR loading groups', { error: Error });
@@ -33,10 +33,10 @@ export async function getOpenGroups() {
 
 export function askQuestion(groupId, firstName, lastName, email, question) {
   const data = {
-    GroupId: groupId,
-    FirstName: firstName.trim(),
-    LastName: lastName.trim(),
     Email: email.trim(),
+    FirstName: firstName.trim(),
+    GroupId: groupId,
+    LastName: lastName.trim(),
     Question: question.trim(),
   };
 
@@ -46,18 +46,18 @@ export function askQuestion(groupId, firstName, lastName, email, question) {
   }
 
   return axios({
+    data,
     method: 'post',
     url: 'https://rock.echo.church/api/GroupFinder/AskQuestion',
-    data,
   });
 }
 
 export function joinGroup(groupId, firstName, lastName, email) {
   const data = {
-    GroupId: groupId,
-    FirstName: firstName.trim(),
-    LastName: lastName.trim(),
     Email: email.trim(),
+    FirstName: firstName.trim(),
+    GroupId: groupId,
+    LastName: lastName.trim(),
   };
 
   if (__DEV__) {
@@ -66,8 +66,8 @@ export function joinGroup(groupId, firstName, lastName, email) {
   }
 
   return axios({
+    data,
     method: 'post',
     url: 'https://rock.echo.church/api/GroupFinder/JoinGroup',
-    data,
   });
 }

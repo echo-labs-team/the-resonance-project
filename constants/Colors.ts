@@ -11,27 +11,31 @@ const darkestGray = '#25282c';
 const darkestGray2 = '#131313';
 const darkBlue = '#183f50';
 
-export default {
-  red,
+const colors = {
   black,
-  lightGray,
-  gray,
   blue,
-  green,
-  white,
+  darkBlue,
   darkGray,
   darkerGray,
   darkestGray,
   darkestGray2,
-  darkBlue,
-  tabIconDefault: gray,
-  tabIconSelected: white,
-  tabBar: darkestGray2,
-  headerBackground: black,
   errorBackground: red,
   errorText: white,
-  warningBackground: '#EAEB5E',
-  warningText: '#666804',
+  gray,
+  green,
+  headerBackground: black,
+  lightGray,
   noticeBackground: red,
   noticeText: white,
+  red,
+  tabBar: darkestGray2,
+  tabIconDefault: gray,
+  tabIconSelected: white,
+  warningBackground: '#EAEB5E',
+  warningText: '#666804',
+  white,
 };
+
+export type Color = keyof typeof colors;
+
+export default colors;

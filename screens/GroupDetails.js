@@ -24,7 +24,7 @@ import Leader from '../components/Leader';
 import SignUp from '../components/JoinGroupModal';
 import Ask from '../components/AskAboutGroupModal';
 
-const GroupDetails = ({ route }) => {
+function GroupDetails({ route }) {
   const insets = useSafeArea();
   const headerHeight = useHeaderHeight();
   const scrollViewRef = useRef(null);
@@ -32,22 +32,22 @@ const GroupDetails = ({ route }) => {
 
   function showSuccess(message) {
     if (scrollViewRef.current && dropdownAlertRef.current) {
-      scrollViewRef.current.scrollTo({ x: 0, y: -100, animated: true });
+      scrollViewRef.current.scrollTo({ animated: true, x: 0, y: -100 });
       dropdownAlertRef.current.alertWithType('success', 'Success!', message);
     }
   }
 
   const {
-    Id,
-    Name = '',
-    GroupCampus,
-    FriendlyScheduleText,
-    Description,
-    LeaderNames,
-    GroupPhotoGuid,
-    City,
-    Online: isOnline,
     AudienceName,
+    City,
+    Description,
+    FriendlyScheduleText,
+    GroupCampus,
+    GroupPhotoGuid,
+    Id,
+    LeaderNames,
+    Name = '',
+    Online: isOnline,
   } = route.params?.group ?? {};
 
   const isWomenOnly = AudienceName.includes('Women Only');
@@ -63,8 +63,8 @@ const GroupDetails = ({ route }) => {
 
     try {
       const result = await Share.share({
-        title: 'Echo Groups',
         message: `Check out this Echo Group: ${Name}`,
+        title: 'Echo Groups',
         url: `https://rock.echo.church/groupfinder?GroupId=${Id}`,
       });
 
@@ -72,12 +72,12 @@ const GroupDetails = ({ route }) => {
 
       if (action === Share.sharedAction) {
         logEvent('SHARED Group', {
-          group: Name,
           activityType,
+          group: Name,
         });
       }
     } catch (error) {
-      logEvent('ERROR sharing group', { group: Name, error });
+      logEvent('ERROR sharing group', { error, group: Name });
     }
   };
 
@@ -90,8 +90,8 @@ const GroupDetails = ({ route }) => {
 
       <ScrollView ref={scrollViewRef} style={styles.container}>
         <Title
-          light
           adjustsFontSizeToFit
+          light
           numberOfLines={2}
           style={groupStyles.title}
         >
@@ -106,22 +106,24 @@ const GroupDetails = ({ route }) => {
           <Heading>{GroupCampus}</Heading>
         </View>
 
-        {isWomenOnly && (
+        {isWomenOnly ? (
           <View style={[groupStyles.details, { marginBottom: 16 }]}>
             <Text light>👩 WOMEN ONLY</Text>
           </View>
-        )}
-        {isMenOnly && (
+        ) : null}
+        {isMenOnly ? (
           <View style={[groupStyles.details, { marginBottom: 16 }]}>
             <Text light>👨 MEN ONLY</Text>
           </View>
-        )}
+        ) : null}
 
-        {shouldShowLocation && <Location isOnline={isOnline} city={City} />}
+        {shouldShowLocation ? (
+          <Location city={City} isOnline={isOnline} />
+        ) : null}
 
-        {shouldShowAddress && <Address title={Name} city={City} />}
+        {shouldShowAddress ? <Address city={City} title={Name} /> : null}
 
-        {shouldShowLeaders && (
+        {shouldShowLeaders ? (
           <View style={{ marginBottom: 16 }}>
             <Heading>Host(s)</Heading>
             <Leader
@@ -129,62 +131,62 @@ const GroupDetails = ({ route }) => {
               photo={`https://rock.echo.church/GetImage.ashx?guid=${GroupPhotoGuid}&width=100&height=100&mode=crop`}
             />
           </View>
-        )}
+        ) : null}
 
         {/* make any links clickable */}
         <Hyperlink linkDefault>
           <Text style={{ marginVertical: 20 }}>{Description}</Text>
         </Hyperlink>
 
-        <SignUp groupID={Id} title={Name} showSuccess={showSuccess} />
-        <Ask groupID={Id} title={Name} showSuccess={showSuccess} />
+        <SignUp groupID={Id} showSuccess={showSuccess} title={Name} />
+        <Ask groupID={Id} showSuccess={showSuccess} title={Name} />
         <Button
-          icon={<Feather name={'share'} size={24} color={Colors.gray} />}
-          title="Share"
+          icon={<Feather color={Colors.gray} name="share" size={24} />}
           onPress={onShare}
           style={{
             marginBottom:
               Platform.OS === 'ios' ? insets.bottom : insets.bottom + 20,
           }}
+          title="Share"
         />
 
         <DropdownAlert
           ref={dropdownAlertRef}
-          successColor={Colors.blue}
-          wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
           renderImage={() => (
             <Feather
-              name={'check-circle'}
-              size={30}
               color={Colors.white}
-              style={{ padding: 8, alignSelf: 'center' }}
+              name="check-circle"
+              size={30}
+              style={{ alignSelf: 'center', padding: 8 }}
             />
           )}
+          successColor={Colors.blue}
+          wrapperStyle={{ marginTop: Platform.OS === 'ios' ? 0 : 80 }}
           zIndex={1}
         />
       </ScrollView>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    position: 'relative',
-    backgroundColor: Colors.black,
-  },
   backgroundImage: {
-    width: '100%',
-    height: Layout.window.height,
     flex: 1,
-    position: 'absolute',
-    top: 0,
+    height: Layout.window.height,
     left: 0,
     opacity: 0.75,
+    position: 'absolute',
+    top: 0,
+    width: '100%',
   },
   container: {
     flex: 1,
     paddingHorizontal: 16,
+  },
+  mainContainer: {
+    backgroundColor: Colors.black,
+    flex: 1,
+    position: 'relative',
   },
 });
 

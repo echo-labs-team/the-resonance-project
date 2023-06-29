@@ -12,9 +12,9 @@ import Spinner from './shared/Spinner';
 import Input from './shared/TextInput';
 
 const initialState = {
+  error: false,
   loading: false,
   success: false,
-  error: false,
 };
 
 function reducer(state, action) {
@@ -39,8 +39,8 @@ function reducer(state, action) {
   }
 }
 
-export default function JoinGroupModal({ groupID, title, showSuccess }) {
-  const [{ loading, success, error }, dispatch] = useReducer(
+export default function JoinGroupModal({ groupID, showSuccess, title }) {
+  const [{ error, loading, success }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -53,7 +53,7 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
     });
   };
 
-  const handleSignUp = async ({ firstName, lastName, email }) => {
+  const handleSignUp = async ({ email, firstName, lastName }) => {
     dispatch({ type: 'setLoading', value: true });
     logEvent('SUBMIT Group Sign Up', { group: title });
 
@@ -76,12 +76,12 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
 
       dispatch({ type: 'setLoading', value: false });
       dispatch({ type: 'setError', value: true });
-      logEvent('ERROR Group Sign Up', { group: title, error: data.Message });
+      logEvent('ERROR Group Sign Up', { error: data.Message, group: title });
       setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
     } catch (err) {
       dispatch({ type: 'setLoading', value: false });
       dispatch({ type: 'setError', value: true });
-      logEvent('ERROR Group Sign Up', { group: title, error: err });
+      logEvent('ERROR Group Sign Up', { error: err, group: title });
       setTimeout(() => dispatch({ type: 'setError', value: false }), 5000);
     }
   };
@@ -89,19 +89,19 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
   return (
     <ModalSheet
       buttonTitle="Sign Up"
-      success={success}
       handleOpenModal={handleOpenModal}
+      success={success}
     >
-      {loading && <Spinner style={{ backgroundColor: 'transparent' }} />}
+      {loading ? <Spinner style={{ backgroundColor: 'transparent' }} /> : null}
 
       <View style={styles.container}>
         <Title>Sign up</Title>
 
-        {error && (
-          <Subtitle style={{ textAlign: 'center', color: Colors.red }}>
+        {error ? (
+          <Subtitle style={{ color: Colors.red, textAlign: 'center' }}>
             {'🤔 Something went wrong...\nTry again later'}
           </Subtitle>
-        )}
+        ) : null}
 
         <Subtitle>
           {`The group leaders will reach out to you with more info once you've joined`}
@@ -109,70 +109,70 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
 
         <Formik
           initialValues={{
+            email: '',
             firstName: '',
             lastName: '',
-            email: '',
           }}
-          validate={validateSignUpForm}
           onSubmit={handleSignUp}
+          validate={validateSignUpForm}
         >
           {({
-            handleChange,
+            errors,
             handleBlur,
+            handleChange,
             handleSubmit,
             touched,
             values,
-            errors,
           }) => (
             <View>
               <Input
                 autoCompleteType="name"
                 blurOnSubmit={false}
+                errors={errors.firstName}
                 label="First Name"
+                onBlur={handleBlur('firstName')}
+                onChangeText={handleChange('firstName')}
+                onSubmitEditing={() => lastNameRef.current.focus()}
                 placeholder="Andy"
                 returnKeyType="next"
                 textContentType="givenName"
                 touched={touched.firstName}
                 value={values.firstName}
-                errors={errors.firstName}
-                onChangeText={handleChange('firstName')}
-                onBlur={handleBlur('firstName')}
-                onSubmitEditing={() => lastNameRef.current.focus()}
               />
               <Input
                 autoCompleteType="name"
                 blurOnSubmit={false}
+                errors={errors.lastName}
                 label="Last Name"
+                onBlur={handleBlur('lastName')}
+                onChangeText={handleChange('lastName')}
+                onSubmitEditing={() => emailRef.current.focus()}
                 placeholder="Wood"
                 ref={lastNameRef}
                 returnKeyType="next"
                 textContentType="familyName"
                 touched={touched.lastName}
                 value={values.lastName}
-                errors={errors.lastName}
-                onChangeText={handleChange('lastName')}
-                onBlur={handleBlur('lastName')}
-                onSubmitEditing={() => emailRef.current.focus()}
               />
               <Input
                 autoCapitalize="none"
                 autoCompleteType="email"
                 autoCorrect={false}
                 clearButtonMode="while-editing"
+                errors={errors.email}
                 keyboardType="email-address"
                 label="Email"
+                onBlur={handleBlur('email')}
+                onChangeText={handleChange('email')}
                 placeholder="andy@echo.church"
                 ref={emailRef}
                 textContentType="emailAddress"
                 touched={touched.email}
                 value={values.email}
-                errors={errors.email}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
               />
 
               <View style={styles.submitButton}>
-                <Button title="Sign Up" onPress={handleSubmit} />
+                <Button onPress={handleSubmit} title="Sign Up" />
               </View>
             </View>
           )}
@@ -184,12 +184,12 @@ export default function JoinGroupModal({ groupID, title, showSuccess }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
     flex: 1,
+    paddingHorizontal: 16,
   },
   submitButton: {
     flex: 1,
-    marginVertical: 10,
     justifyContent: 'flex-end',
+    marginVertical: 10,
   },
 });

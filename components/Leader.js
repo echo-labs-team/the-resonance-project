@@ -9,9 +9,9 @@ export default function Leader({ names, photo }) {
     <View style={styles.leader}>
       {showPhoto && photo ? (
         <Image
+          onError={() => setShowPhoto(false)}
           source={{ uri: photo }}
           style={styles.image}
-          onError={() => setShowPhoto(false)}
         />
       ) : null}
       <Text>{names}</Text>
@@ -20,15 +20,15 @@ export default function Leader({ names, photo }) {
 }
 
 const styles = StyleSheet.create({
-  leader: {
-    marginTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   image: {
-    width: 80,
+    borderRadius: 40,
     height: 80,
     marginRight: 16,
-    borderRadius: 40,
+    width: 80,
+  },
+  leader: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    marginTop: 10,
   },
 });

@@ -1,6 +1,5 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
 import ContentLoader, { Rect } from 'react-content-loader/native';
+import { StyleSheet } from 'react-native';
 import Colors from '../constants/Colors';
 
 const GroupCardPlaceholder = () => (

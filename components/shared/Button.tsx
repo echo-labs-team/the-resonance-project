@@ -1,5 +1,11 @@
 import React from 'react';
-import { StyleSheet, View, TouchableHighlight } from 'react-native';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  ViewStyle,
+} from 'react-native';
 import Colors from '../../constants/Colors';
 import { Text } from './Typography';
 
@@ -11,6 +17,12 @@ export default ({
   onPress = () => {
     throw new Error('no `onPress` handler supplied');
   },
+}: {
+  title?: string;
+  style?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<ViewStyle>;
+  icon?: React.ReactNode;
+  onPress?: () => void;
 }) => (
   <TouchableHighlight
     onPress={onPress}

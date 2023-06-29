@@ -7,22 +7,22 @@ import Colors from '../constants/Colors';
 
 export default ({ item }) => {
   const navigation = useNavigation();
-  const { Name = '', GroupCampus, FriendlyScheduleText, Description } = item;
+  const { Description, FriendlyScheduleText, GroupCampus, Name = '' } = item;
 
   return (
     <TouchableHighlight
-      testID="GroupCardDetails"
-      style={styles.group}
-      underlayColor={Colors.darkestGray}
       onPress={() => {
         logEvent('OPEN Group Details', { group: Name });
         navigation.navigate('GroupDetails', { group: { ...item } });
       }}
+      style={styles.group}
+      testID="GroupCardDetails"
+      underlayColor={Colors.darkestGray}
     >
       <View>
         <Title
-          light
           adjustsFontSizeToFit
+          light
           numberOfLines={2}
           style={styles.title}
         >
@@ -37,7 +37,7 @@ export default ({ item }) => {
           {GroupCampus}
         </Text>
 
-        <Text light numberOfLines={3} ellipsizeMode="tail">
+        <Text ellipsizeMode="tail" light numberOfLines={3}>
           {Description}
         </Text>
       </View>
@@ -46,15 +46,15 @@ export default ({ item }) => {
 };
 
 export const styles = StyleSheet.create({
+  detail: {
+    marginBottom: 10,
+  },
   group: {
+    borderRadius: 16,
     padding: 16,
     position: 'relative',
-    borderRadius: 16,
   },
   title: {
     marginVertical: 10,
-  },
-  detail: {
-    marginBottom: 10,
   },
 });

@@ -3,9 +3,9 @@ import { StyleSheet, ScrollView } from 'react-native';
 
 const styles = StyleSheet.create({
   main: {
+    alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 

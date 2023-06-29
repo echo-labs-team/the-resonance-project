@@ -14,22 +14,22 @@ import ContentLoader, { Rect } from 'react-content-loader/native';
 
 function LoadingButtons() {
   return (
-    <View style={{ paddingTop: 8, paddingHorizontal: 16, gap: 24 }}>
+    <View style={{ gap: 24, paddingHorizontal: 16, paddingTop: 8 }}>
       {Array.from({ length: 5 }).map((_, index) => (
         <ContentLoader
-          key={`loading-button-${index}`}
-          viewBox="0 0 300 60"
           backgroundColor={Colors.darkGray}
           foregroundColor={Colors.darkerGray}
+          key={`loading-button-${index}`}
           preserveAspectRatio="none"
           style={{
-            height: 60,
-            borderRadius: 30,
             backgroundColor: Colors.darkestGray,
+            borderRadius: 30,
+            height: 60,
             overflow: 'hidden',
           }}
+          viewBox="0 0 300 60"
         >
-          <Rect x="0" y="0" rx="0" ry="0" width="100%" height="60" />
+          <Rect height="60" rx="0" ry="0" width="100%" x="0" y="0" />
         </ContentLoader>
       ))}
     </View>
@@ -53,10 +53,10 @@ function getButtonColor({ text }) {
   return Colors.darkGray;
 }
 
-const ConnectScreen = () => {
+function ConnectScreen() {
   useHandleTabChange('Connect');
   const insets = useSafeArea();
-  const { isLoading, data } = useQuery('connect', async () => {
+  const { data, isLoading } = useQuery('connect', async () => {
     const response = await axios(
       `https://echo.church/wp-json/wp/v2/pages?slug=connect&timestamp=${new Date().getTime()}`,
       { headers: { 'Cache-Control': 'no-cache' } }
@@ -119,45 +119,45 @@ const ConnectScreen = () => {
       ) : (
         <ScrollView
           contentContainerStyle={{
-            paddingTop: 8,
-            paddingHorizontal: 16,
-            paddingBottom: insets.bottom || 24,
             gap: 24,
+            paddingBottom: insets.bottom || 24,
+            paddingHorizontal: 16,
+            paddingTop: 8,
           }}
         >
           {data?.buttons.map((button) => (
             <Button
               key={button.text}
-              style={{ backgroundColor: getButtonColor(button) }}
-              title={button.text}
               onPress={() =>
                 openBrowser({ title: button.text, url: button.link })
               }
+              style={{ backgroundColor: getButtonColor(button) }}
+              title={button.text}
             />
           ))}
         </ScrollView>
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: Colors.black,
-  },
-  headerTitle: {
-    marginVertical: 10,
-    marginLeft: 16,
-    color: Colors.red,
-  },
   backgroundImage: {
-    width: '100%',
-    height: Layout.window.height,
     flex: 1,
+    height: Layout.window.height,
+    left: 0,
     position: 'absolute',
     top: 0,
-    left: 0,
+    width: '100%',
+  },
+  headerTitle: {
+    color: Colors.red,
+    marginLeft: 16,
+    marginVertical: 10,
+  },
+  mainContainer: {
+    backgroundColor: Colors.black,
+    flex: 1,
   },
 });
 
