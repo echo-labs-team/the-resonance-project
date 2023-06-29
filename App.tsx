@@ -127,7 +127,6 @@ function App() {
         <SafeAreaProvider>
           <StatusBar
             animated
-            hidden
             networkActivityIndicatorVisible
             style="light"
             translucent

@@ -3,17 +3,13 @@
  * tab is focused. Call this hook from each main tab.
  */
 
-import React from 'react';
-import { setStatusBarHidden } from 'expo-status-bar';
 import { useFocusEffect } from '@react-navigation/native';
-import logEvent from '../utils/logEvent';
+import React from 'react';
+import logEvent from './logEvent';
 
-export function useHandleTabChange(tab) {
+export function useHandleTabChange(tab: string) {
   useFocusEffect(
     React.useCallback(() => {
-      const shouldHideStatusBar = tab === 'Home';
-
-      setStatusBarHidden(shouldHideStatusBar, 'fade');
       logEvent(`PAGEVIEW ${tab} tab`);
     }, [tab])
   );
