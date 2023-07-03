@@ -27,17 +27,19 @@ import { useHandleTabChange } from '../utils/useHandleTabChange';
 
 function CheckInButton() {
   return (
-    <Button
-      icon={<Feather color={Colors.white} name="check-square" size={28} />}
-      onPress={() => {
-        openBrowser({
-          title: 'Check In',
-          url: 'https://my.echo.church/check-in',
-        });
-      }}
-      style={styles.checkIn}
-      title="Check In"
-    />
+    <View style={styles.checkInContainer}>
+      <Button
+        icon={<Feather color={Colors.white} name="check-square" size={28} />}
+        onPress={() => {
+          openBrowser({
+            title: 'Check In',
+            url: 'https://my.echo.church/check-in',
+          });
+        }}
+        style={styles.checkIn}
+        title="Check In"
+      />
+    </View>
   );
 }
 
@@ -193,6 +195,20 @@ function HomeScreen() {
 const styles = StyleSheet.create({
   checkIn: {
     backgroundColor: Colors.red,
+    elevation: 24,
+    shadowColor: Colors.red,
+    shadowOffset: {
+      height: 8,
+      width: 0,
+    },
+    shadowOpacity: 0.75,
+    shadowRadius: 16.0,
+  },
+  checkInContainer: {
+    bottom: 20,
+    paddingHorizontal: 10,
+    position: 'absolute',
+    width: '100%',
   },
   container: {
     backgroundColor: Colors.headerBackground,
@@ -200,6 +216,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginTop: 0,
+    paddingBottom: 100,
     paddingHorizontal: 10,
   },
   logo: {
