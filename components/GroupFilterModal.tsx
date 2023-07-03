@@ -3,24 +3,80 @@
  * similar to Facebook's webviews
  */
 
-import React, { useState, useEffect } from 'react';
+import { BlurView } from 'expo-blur';
+import { useEffect, useState } from 'react';
 import {
-  StyleSheet,
-  View,
   SectionList,
+  StyleSheet,
   TouchableHighlight,
   TouchableOpacity,
+  View,
 } from 'react-native';
 import Modal from 'react-native-modal';
-import { BlurView } from 'expo-blur';
-import logEvent from '../utils/logEvent';
-import Layout from '../constants/Layout';
 import Colors from '../constants/Colors';
-import { Text, Title, Subtitle, Heading } from './shared/Typography';
+import Layout from '../constants/Layout';
+import { Filters, initialFilters } from '../queries/groups';
+import logEvent from '../utils/logEvent';
 import Button from './shared/Button';
 import Checkbox from './shared/Checkbox';
+import { Heading, Subtitle, Text, Title } from './shared/Typography';
 
-function Item({ isSelected, item, onSelected }) {
+const sections = [
+  {
+    data: ['North San Jose', 'Sunnyvale', 'Fremont', 'Online'],
+    filterType: 'campus',
+  },
+  {
+    data: [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ],
+    filterType: 'day',
+  },
+  {
+    data: [
+      'Everyone Welcome',
+      'Couples',
+      'Men',
+      'Women',
+      'Kids',
+      'Students',
+      'Young Professionals',
+      'College and Young Adults',
+    ],
+    filterType: 'audiences',
+  },
+  {
+    data: [
+      'Sermon Discussion',
+      'Bible Study',
+      'Book Discussion',
+      'Alpha and New Believers',
+      'Marriage and Relationships',
+      'Family and Parenting',
+      'Prayer',
+      'Leadership, Business, and Finance',
+      'Recreational',
+      'Outreach',
+    ],
+    filterType: 'topics',
+  },
+];
+
+function Item({
+  isSelected,
+  item,
+  onSelected,
+}: {
+  isSelected: boolean;
+  item: string;
+  onSelected: (value: boolean) => void;
+}) {
   const [selected, setSelected] = useState(false);
 
   useEffect(() => {
@@ -54,14 +110,17 @@ function Item({ isSelected, item, onSelected }) {
   );
 }
 
-const initialFilters = { Campus: [], Categories: [], Day: [] };
-
-export default ({
-  appliedFilters = initialFilters,
+export function GroupFilterModal({
+  appliedFilters,
   applyFilters,
   isVisible,
   setIsVisible,
-}) => {
+}: {
+  appliedFilters: Filters;
+  applyFilters: (filters: Filters) => void;
+  isVisible: boolean;
+  setIsVisible: (value: boolean) => void;
+}) {
   const [filters, setFilters] = useState(appliedFilters);
 
   const handleCancel = () => {
@@ -97,10 +156,12 @@ export default ({
 
         <SectionList
           keyExtractor={(item) => item}
-          renderItem={({ item, section: { title } }) => {
+          renderItem={({ item, section: { filterType } }) => {
+            const type = filterType as keyof Filters;
+
             return (
               <Item
-                isSelected={filters[title].find((filter) => filter === item)}
+                isSelected={!!filters[type].find((filter) => filter === item)}
                 item={item}
                 key={item}
                 onSelected={(selected) => {
@@ -108,14 +169,14 @@ export default ({
                     // add the item to array of filters
                     setFilters({
                       ...filters,
-                      [title]: [...filters[title], item],
+                      [filterType]: [...filters[type], item],
                     });
                   } else {
                     // remove the item to array of filters
                     setFilters({
                       ...filters,
-                      [title]: [
-                        ...filters[title].filter(
+                      [filterType]: [
+                        ...filters[type].filter(
                           (groupFilter) => groupFilter !== item
                         ),
                       ],
@@ -125,45 +186,50 @@ export default ({
               />
             );
           }}
-          renderSectionHeader={({ section: { title } }) => (
+          renderSectionHeader={({ section: { filterType } }) => (
             <BlurView intensity={100} style={styles.section} tint="dark">
               <Heading center style={styles.sectionTitle}>
-                {title}
+                {`${filterType.charAt(0).toUpperCase()}${filterType.slice(1)}`}
               </Heading>
             </BlurView>
           )}
-          sections={[
-            {
-              data: ['North San Jose', 'Sunnyvale', 'Fremont', 'Online'],
-              title: 'Campus',
-            },
-            {
-              data: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
-              ],
-              title: 'Day',
-            },
-          ].filter(Boolean)}
+          sections={sections}
           style={styles.contentContainer}
         />
 
         <View style={styles.buttonContainer}>
-          <Button onPress={handleApply} style={styles.button} title="Apply" />
+          <Button
+            onPress={handleApply}
+            style={styles.button}
+            title="Apply Filters"
+          />
         </View>
       </View>
     </Modal>
   );
-};
+}
 
 const dragBarColor = 'rgba(255,255,255,0.3)';
 
 const styles = StyleSheet.create({
+  button: { paddingHorizontal: 60 },
+
+  buttonContainer: {
+    alignItems: 'center',
+    backgroundColor: Colors.darkerGray,
+    borderColor: Colors.darkGray,
+    borderTopWidth: 1,
+    bottom: 20,
+    flex: 1,
+    paddingTop: 14,
+    position: 'absolute',
+    width: Layout.window.width,
+  },
+
+  category: {
+    maxWidth: '80%',
+  },
+
   container: {
     backgroundColor: Colors.darkerGray,
     borderTopLeftRadius: 10,
@@ -174,22 +240,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     position: 'relative',
   },
-  
-  buttonContainer: {
-    paddingTop: 14,
-    width: Layout.window.width,
-    bottom: 20,
-    position: 'absolute',
-    alignItems: 'center',
-    flex: 1,
-    borderColor: Colors.darkGray,
-    borderTopWidth: 1,
-    backgroundColor: Colors.darkerGray,
-  },
-
   // needed to allow scrolling on android
-contentContainer: { flexGrow: 1, marginBottom: 76 },
-  button: { paddingHorizontal: 60 },
+  contentContainer: { flexGrow: 1, marginBottom: 76 },
   dragBar: {
     alignSelf: 'center',
     backgroundColor: dragBarColor,
@@ -197,9 +249,6 @@ contentContainer: { flexGrow: 1, marginBottom: 76 },
     height: 6,
     marginBottom: 10,
     width: 100,
-  },
-  category: {
-    maxWidth: '80%',
   },
   header: {
     marginBottom: 0,
@@ -214,8 +263,8 @@ contentContainer: { flexGrow: 1, marginBottom: 76 },
   item: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: 16,
     justifyContent: 'space-between',
+    paddingHorizontal: 16,
     paddingVertical: 16,
   },
   modal: {

@@ -98,7 +98,6 @@ function HomeScreen() {
   useHandleTabChange('Home');
   const insets = useSafeArea();
   const ref = React.useRef(null);
-
   useScrollToTop(ref);
 
   const { data: postsData = [], isLoadingBlogPosts } = useBlogPosts();

@@ -1,14 +1,8 @@
-import React from 'react';
-import { StyleSheet, View, TextInput, TouchableOpacity } from 'react-native';
-import { Feather, AntDesign } from '@expo/vector-icons';
+import { AntDesign, Feather } from '@expo/vector-icons';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import Colors from '../constants/Colors';
 
-export default ({
-  onChangeText = () => {
-    throw new Error('`onChangeText` required');
-  },
-  value = '',
-}) => {
+export function SearchBar({ onChangeText, value = '' }) {
   return (
     <View style={styles.searchBar}>
       <Feather
@@ -33,7 +27,7 @@ export default ({
       )}
     </View>
   );
-};
+}
 
 const searchBarBackgroundColor = 'rgba(255,255,255,0.2)';
 

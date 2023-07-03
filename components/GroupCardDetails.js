@@ -1,9 +1,8 @@
-import React from 'react';
-import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import logEvent from '../utils/logEvent';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { Text, Title } from '../components/shared/Typography';
 import Colors from '../constants/Colors';
+import logEvent from '../utils/logEvent';
 
 export default ({ item }) => {
   const navigation = useNavigation();
@@ -23,14 +22,16 @@ export default ({ item }) => {
         <Title
           adjustsFontSizeToFit
           light
-          numberOfLines={2}
+          numberOfLines={4}
           style={styles.title}
         >
           {Name}
         </Title>
 
         {FriendlyScheduleText ? (
-          <Text style={styles.detail}>{FriendlyScheduleText}</Text>
+          <Text style={styles.detail}>
+            {FriendlyScheduleText.replace(/<[^>]*>/g, '')}
+          </Text>
         ) : null}
 
         <Text bold style={styles.detail}>

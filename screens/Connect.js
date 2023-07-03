@@ -1,16 +1,22 @@
-import React from 'react';
-import { ImageBackground, ScrollView, StyleSheet, View } from 'react-native';
-import { useSafeArea } from 'react-native-safe-area-context';
-import Layout from '../constants/Layout';
-import Colors from '../constants/Colors';
-import { useHandleTabChange } from '../utils/useHandleTabChange';
-import { Text } from '../components/shared/Typography';
-import Button from '../components/shared/Button';
-import { openBrowser } from '../utils/openBrowser';
-import { useQuery } from 'react-query';
-import axios from 'redaxios';
+import { AntDesign } from '@expo/vector-icons';
 import htmlParser from 'fast-html-parser';
 import ContentLoader, { Rect } from 'react-content-loader/native';
+import {
+  ImageBackground,
+  Linking,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
+import { useQuery } from 'react-query';
+import axios from 'redaxios';
+import Button from '../components/shared/Button';
+import { Text } from '../components/shared/Typography';
+import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
+import { openBrowser } from '../utils/openBrowser';
+import { useHandleTabChange } from '../utils/useHandleTabChange';
 
 function LoadingButtons() {
   return (
@@ -51,6 +57,14 @@ function getButtonColor({ text }) {
   }
 
   return Colors.darkGray;
+}
+
+function openInstagram() {
+  Linking.openURL('https://www.instagram.com/echochurchlive/');
+}
+
+function openFacebook() {
+  Linking.openURL('https://www.facebook.com/echochurchlive/');
 }
 
 function ConnectScreen() {
@@ -125,16 +139,35 @@ function ConnectScreen() {
             paddingTop: 8,
           }}
         >
-          {data?.buttons.map((button) => (
-            <Button
-              key={button.text}
-              onPress={() =>
-                openBrowser({ title: button.text, url: button.link })
-              }
-              style={{ backgroundColor: getButtonColor(button) }}
-              title={button.text}
+          {data?.buttons.map((button) => {
+            const handlePress = () => {
+              openBrowser({ title: button.text, url: button.link });
+            };
+            return (
+              <Button
+                key={button.text}
+                onPress={handlePress}
+                style={{ backgroundColor: getButtonColor(button) }}
+                title={button.text}
+              />
+            );
+          })}
+          <View style={styles.social}>
+            <AntDesign
+              accessibilityLabel="Instagram"
+              name="instagram"
+              size={40}
+              color={Colors.red}
+              onPress={openInstagram}
             />
-          ))}
+            <AntDesign
+              accessibilityLabel="Facebook"
+              name="facebook-square"
+              size={40}
+              color={Colors.red}
+              onPress={openFacebook}
+            />
+          </View>
         </ScrollView>
       )}
     </View>
@@ -158,6 +191,12 @@ const styles = StyleSheet.create({
   mainContainer: {
     backgroundColor: Colors.black,
     flex: 1,
+  },
+  social: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 40,
   },
 });
 

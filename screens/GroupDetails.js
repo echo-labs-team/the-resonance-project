@@ -1,4 +1,6 @@
-import React, { useRef } from 'react';
+import { Feather } from '@expo/vector-icons';
+import { useHeaderHeight } from '@react-navigation/elements';
+import { useRef } from 'react';
 import {
   ImageBackground,
   Platform,
@@ -7,22 +9,20 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import { useSafeArea } from 'react-native-safe-area-context';
-import { useHeaderHeight } from '@react-navigation/elements';
-import { Feather } from '@expo/vector-icons';
 import DropdownAlert from 'react-native-dropdownalert';
 import Hyperlink from 'react-native-hyperlink';
-import logEvent from '../utils/logEvent';
-import Layout from '../constants/Layout';
-import Colors from '../constants/Colors';
-import { Text, Title, Heading } from '../components/shared/Typography';
-import Button from '../components/shared/Button';
+import { useSafeArea } from 'react-native-safe-area-context';
+import Ask from '../components/AskAboutGroupModal';
+import Address from '../components/GroupAddress';
 import { styles as groupStyles } from '../components/GroupCardDetails';
 import Location from '../components/GroupLocation';
-import Address from '../components/GroupAddress';
-import Leader from '../components/Leader';
 import SignUp from '../components/JoinGroupModal';
-import Ask from '../components/AskAboutGroupModal';
+import Leader from '../components/Leader';
+import Button from '../components/shared/Button';
+import { Heading, Text, Title } from '../components/shared/Typography';
+import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
+import logEvent from '../utils/logEvent';
 
 function GroupDetails({ route }) {
   const insets = useSafeArea();
@@ -50,16 +50,14 @@ function GroupDetails({ route }) {
     Online: isOnline,
   } = route.params?.group ?? {};
 
-  const isWomenOnly = AudienceName.includes('Women Only');
-  const isMenOnly = AudienceName.includes('Men Only');
+  const isWomenOnly = AudienceName.includes('Women');
+  const isMenOnly = AudienceName.includes('Men');
   const shouldShowLocation = Boolean(isOnline || City);
   const shouldShowAddress = Boolean(!isOnline && City);
   const shouldShowLeaders = Boolean(LeaderNames);
 
   const onShare = async () => {
-    logEvent('TAP Group Share', {
-      group: Name,
-    });
+    logEvent('TAP Group Share', { group: Name });
 
     try {
       const result = await Share.share({
@@ -92,14 +90,14 @@ function GroupDetails({ route }) {
         <Title
           adjustsFontSizeToFit
           light
-          numberOfLines={2}
+          numberOfLines={4}
           style={groupStyles.title}
         >
           {Name}
         </Title>
 
         <View style={groupStyles.when}>
-          <Text>{FriendlyScheduleText}</Text>
+          <Text>{FriendlyScheduleText.replace(/<[^>]*>/g, '')}</Text>
         </View>
 
         <View style={[groupStyles.details, { marginBottom: 16 }]}>
