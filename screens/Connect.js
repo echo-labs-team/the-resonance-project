@@ -67,6 +67,10 @@ function openFacebook() {
   Linking.openURL('https://www.facebook.com/echochurchlive/');
 }
 
+function openTwitter() {
+  Linking.openURL('https://twitter.com/echochurchlive');
+}
+
 function ConnectScreen() {
   useHandleTabChange('Connect');
   const insets = useSafeArea();
@@ -166,6 +170,13 @@ function ConnectScreen() {
               size={40}
               color={Colors.red}
               onPress={openFacebook}
+            />
+            <AntDesign
+              accessibilityLabel="Twitter"
+              name="twitter"
+              size={40}
+              color={Colors.red}
+              onPress={openTwitter}
             />
           </View>
         </ScrollView>
