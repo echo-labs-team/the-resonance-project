@@ -47,7 +47,7 @@ export interface Group {
 async function fetchOpenGroups() {
   const { data } =
     (await axios.get<{ Data: Array<Group>; Error: Error; Success: boolean }>(
-      'https://my.echo.church/api/GroupFinder/GetGroups/25,161?primaryAliasId=16536'
+      'https://rock.echo.church/api/GroupFinder/GetGroups/25,161/0'
     )) || {};
 
   if (!data.Success || !data.Data || !Array.isArray(data.Data)) {
