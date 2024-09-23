@@ -1,43 +1,44 @@
-import React from 'react';
-import { StyleSheet, View, TouchableHighlight } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import logEvent from '../utils/logEvent';
+import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { Text, Title } from '../components/shared/Typography';
 import Colors from '../constants/Colors';
+import logEvent from '../utils/logEvent';
 
 export default ({ item }) => {
   const navigation = useNavigation();
-  const { Name = '', GroupCampus, FriendlyScheduleText, Description } = item;
+  const { Description, FriendlyScheduleText, GroupCampus, Name = '' } = item;
 
   return (
     <TouchableHighlight
-      testID="GroupCardDetails"
-      style={styles.group}
-      underlayColor={Colors.darkestGray}
       onPress={() => {
         logEvent('OPEN Group Details', { group: Name });
         navigation.navigate('GroupDetails', { group: { ...item } });
       }}
+      style={styles.group}
+      testID="GroupCardDetails"
+      underlayColor={Colors.darkestGray}
     >
       <View>
         <Title
-          light
           adjustsFontSizeToFit
-          numberOfLines={2}
+          light
+          numberOfLines={4}
           style={styles.title}
         >
           {Name}
         </Title>
 
         {FriendlyScheduleText ? (
-          <Text style={styles.detail}>{FriendlyScheduleText}</Text>
+          <Text style={styles.detail}>
+            {FriendlyScheduleText.replace(/<[^>]*>/g, '')}
+          </Text>
         ) : null}
 
         <Text bold style={styles.detail}>
           {GroupCampus}
         </Text>
 
-        <Text light numberOfLines={3} ellipsizeMode="tail">
+        <Text ellipsizeMode="tail" light numberOfLines={3}>
           {Description}
         </Text>
       </View>
@@ -46,15 +47,15 @@ export default ({ item }) => {
 };
 
 export const styles = StyleSheet.create({
+  detail: {
+    marginBottom: 10,
+  },
   group: {
+    borderRadius: 16,
     padding: 16,
     position: 'relative',
-    borderRadius: 16,
   },
   title: {
     marginVertical: 10,
-  },
-  detail: {
-    marginBottom: 10,
   },
 });

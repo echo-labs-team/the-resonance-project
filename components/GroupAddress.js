@@ -5,7 +5,7 @@ import logEvent from '../utils/logEvent';
 import Colors from '../constants/Colors';
 import { Heading } from './shared/Typography';
 
-export default ({ title, city }) => {
+export default ({ city, title }) => {
   const addressItems = [city].filter(Boolean);
 
   const openMaps = () => {
@@ -24,16 +24,16 @@ export default ({ title, city }) => {
       <Heading>Address</Heading>
 
       <TouchableHighlight
-        underlayColor={Colors.darkBlue}
         onPress={openMaps}
         style={styles.highlight}
+        underlayColor={Colors.darkBlue}
       >
         <View style={styles.address}>
           <View>
             <Heading light>{city}</Heading>
           </View>
           <View style={styles.chevron}>
-            <Feather name={'chevron-right'} size={26} color={Colors.gray} />
+            <Feather color={Colors.gray} name="chevron-right" size={26} />
           </View>
         </View>
       </TouchableHighlight>
@@ -42,8 +42,8 @@ export default ({ title, city }) => {
 };
 
 const styles = StyleSheet.create({
+  address: { alignItems: 'center', flex: 1, flexDirection: 'row' },
+  chevron: { marginLeft: 'auto' },
   container: { marginBottom: 16 },
   highlight: { borderRadius: 4 },
-  address: { flex: 1, flexDirection: 'row', alignItems: 'center' },
-  chevron: { marginLeft: 'auto' },
 });

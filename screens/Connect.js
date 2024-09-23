@@ -1,28 +1,125 @@
-import React from 'react';
+import { AntDesign } from '@expo/vector-icons';
+import htmlParser from 'fast-html-parser';
+import ContentLoader, { Rect } from 'react-content-loader/native';
 import {
-  FlatList,
   ImageBackground,
+  Linking,
   ScrollView,
   StyleSheet,
-  TouchableHighlight,
   View,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import { Feather } from '@expo/vector-icons';
-import logEvent from '../utils/logEvent';
-import Layout from '../constants/Layout';
-import Colors from '../constants/Colors';
-import { useHandleTabChange } from '../utils/useHandleTabChange';
-import { listItems, callToActionButtons } from '../config/connect';
-import { Text } from '../components/shared/Typography';
+import { useQuery } from 'react-query';
+import axios from 'redaxios';
 import Button from '../components/shared/Button';
+import { Text } from '../components/shared/Typography';
+import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
 import { openBrowser } from '../utils/openBrowser';
+import { useHandleTabChange } from '../utils/useHandleTabChange';
 
-const numberOfCTAs = callToActionButtons.length;
+function LoadingButtons() {
+  return (
+    <View style={{ gap: 24, paddingHorizontal: 16, paddingTop: 8 }}>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <ContentLoader
+          backgroundColor={Colors.darkGray}
+          foregroundColor={Colors.darkerGray}
+          key={`loading-button-${index}`}
+          preserveAspectRatio="none"
+          style={{
+            backgroundColor: Colors.darkestGray,
+            borderRadius: 30,
+            height: 60,
+            overflow: 'hidden',
+          }}
+          viewBox="0 0 300 60"
+        >
+          <Rect height="60" rx="0" ry="0" width="100%" x="0" y="0" />
+        </ContentLoader>
+      ))}
+    </View>
+  );
+}
 
-const ConnectScreen = ({ navigation }) => {
+function getButtonColor({ text }) {
+  if (text === 'Check In') {
+    return Colors.red;
+  }
+  if (text === 'Attend Activate') {
+    return Colors.red;
+  }
+  if (text === 'Give') {
+    return Colors.red;
+  }
+  if (text === 'View the Message Notes') {
+    return Colors.darkBlue;
+  }
+
+  return Colors.darkGray;
+}
+
+function openInstagram() {
+  Linking.openURL('https://www.instagram.com/echochurchlive/');
+}
+
+function openFacebook() {
+  Linking.openURL('https://www.facebook.com/echochurchlive/');
+}
+
+function openTwitter() {
+  Linking.openURL('https://twitter.com/echochurchlive');
+}
+
+function ConnectScreen() {
   useHandleTabChange('Connect');
   const insets = useSafeArea();
+  const { data, isLoading } = useQuery('connect', async () => {
+    const response = await axios(
+      `https://echo.church/wp-json/wp/v2/pages?slug=connect&timestamp=${new Date().getTime()}`,
+      { headers: { 'Cache-Control': 'no-cache' } }
+    );
+    const connectPage = response?.data?.[0] || {};
+    const html = connectPage?.content?.rendered || '';
+    const $ = htmlParser.parse(html);
+    const [, ...sections] = $.querySelectorAll('.elementor-section-boxed');
+    const visibleSections = sections.filter((section) => {
+      return !section.classNames.includes('elementor-hidden-desktop');
+    });
+    const buttons = visibleSections.map((section) => {
+      const button = {};
+
+      let target = section?.childNodes?.find((node) => Boolean(node.tagName));
+
+      while (target) {
+        target = target?.childNodes.find((node) => Boolean(node.tagName));
+
+        if (target?.tagName === 'a') {
+          // get the link inside the `href` attribute
+          const regex = /href=["']([^"']+)["']/i;
+          const link = target?.rawAttrs.match(regex)[1];
+          const safeLink = link.replace('http://', 'https://');
+
+          if (safeLink.charAt(0) === '/') {
+            button.link = safeLink.replace('/', 'https://www.echo.church/');
+          } else {
+            button.link = safeLink;
+          }
+        }
+        const buttonText = target?.childNodes.find(
+          (node) => node.rawAttrs === 'class="elementor-button-text"'
+        );
+
+        if (buttonText) {
+          button.text = buttonText?.childNodes[0]?.rawText;
+        }
+      }
+
+      return button;
+    });
+
+    return { buttons };
+  });
 
   return (
     <View style={[styles.mainContainer, { paddingTop: insets.top }]}>
@@ -35,106 +132,82 @@ const ConnectScreen = ({ navigation }) => {
         CONNECT
       </Text>
 
-      <FlatList
-        keyExtractor={({ value }) => value}
-        data={listItems}
-        renderItem={({ item: { value, page } = {} }) => (
-          <TouchableHighlight
-            underlayColor="transparent"
-            onPress={() => {
-              logEvent(`OPEN ${page}`);
-              navigation.navigate(page);
-            }}
-          >
-            <View style={styles.item}>
-              <Text XL style={styles.text}>
-                {value}
-              </Text>
-              <Feather
-                name="chevron-right"
-                size={30}
-                color={Colors.lightGray}
-              />
-            </View>
-          </TouchableHighlight>
-        )}
-        style={styles.list}
-      />
-
-      <View>
-        {/* 
-          only allow the ScrollView around the CTAs to
-          scroll if there's more than 2 extra ones 
-        */}
+      {isLoading ? (
+        <LoadingButtons />
+      ) : (
         <ScrollView
-          scrollEnabled={numberOfCTAs > 2}
-          style={styles.callToActions}
+          contentContainerStyle={{
+            gap: 24,
+            paddingBottom: insets.bottom || 24,
+            paddingHorizontal: 16,
+            paddingTop: 8,
+          }}
         >
-          {numberOfCTAs &&
-            callToActionButtons.map(({ title, url, backgroundColor }) => (
+          {data?.buttons.map((button) => {
+            const handlePress = () => {
+              openBrowser({ title: button.text, url: button.link });
+            };
+            return (
               <Button
-                key={title}
-                title={title}
-                style={[styles.checkIn, { backgroundColor }]}
-                onPress={() => openBrowser({ title, url })}
+                key={button.text}
+                onPress={handlePress}
+                style={{ backgroundColor: getButtonColor(button) }}
+                title={button.text}
               />
-            ))}
-          <Button
-            icon={
-              <Feather name="check-square" size={28} color={Colors.white} />
-            }
-            title="Check In"
-            style={styles.checkIn}
-            onPress={() =>
-              openBrowser({
-                title: 'Check In',
-                url: 'http://echo.church/checkin',
-              })
-            }
-          />
+            );
+          })}
+          <View style={styles.social}>
+            <AntDesign
+              accessibilityLabel="Instagram"
+              name="instagram"
+              size={40}
+              color={Colors.red}
+              onPress={openInstagram}
+            />
+            <AntDesign
+              accessibilityLabel="Facebook"
+              name="facebook-square"
+              size={40}
+              color={Colors.red}
+              onPress={openFacebook}
+            />
+            <AntDesign
+              accessibilityLabel="Twitter"
+              name="twitter"
+              size={40}
+              color={Colors.red}
+              onPress={openTwitter}
+            />
+          </View>
         </ScrollView>
-      </View>
+      )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    backgroundColor: Colors.black,
-  },
-  headerTitle: {
-    marginVertical: 10,
-    marginLeft: 16,
-    color: Colors.red,
-  },
   backgroundImage: {
-    width: '100%',
-    height: Layout.window.height,
     flex: 1,
+    height: Layout.window.height,
+    left: 0,
     position: 'absolute',
     top: 0,
-    left: 0,
+    width: '100%',
   },
-  list: {
-    paddingHorizontal: 10,
-    paddingBottom: 20,
+  headerTitle: {
+    color: Colors.red,
+    marginLeft: 16,
+    marginVertical: 10,
   },
-  item: {
-    flexDirection: 'row',
+  mainContainer: {
+    backgroundColor: Colors.black,
+    flex: 1,
+  },
+  social: {
     alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  text: {
-    paddingVertical: 10,
-    paddingLeft: 8,
-  },
-  checkIn: {
-    margin: 10,
-    backgroundColor: Colors.red,
-  },
-  callToActions: {
-    maxHeight: 360,
+    justifyContent: 'center',
+    flexDirection: 'row',
+    gap: 40,
   },
 });
 

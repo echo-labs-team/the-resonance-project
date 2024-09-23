@@ -23,25 +23,25 @@ function getIcon(type) {
   return {
     BLOG: {
       expoIcon: (
-        <MaterialCommunityIcons name="post" size={24} color={Colors.white} />
+        <MaterialCommunityIcons color={Colors.white} name="post" size={24} />
       ),
     },
     INSTAGRAM: {
       expoIcon: (
         <MaterialCommunityIcons
+          color={Colors.white}
           name="instagram"
           size={24}
-          color={Colors.white}
         />
       ),
     },
     SOCIAL: {
       expoIcon: (
-        <MaterialCommunityIcons name="twitter" size={24} color={Colors.white} />
+        <MaterialCommunityIcons color={Colors.white} name="twitter" size={24} />
       ),
     },
     'VERSE OF THE DAY': {
-      expoIcon: <FontAwesome5 name="bible" size={24} color={Colors.white} />,
+      expoIcon: <FontAwesome5 color={Colors.white} name="bible" size={24} />,
     },
   }[type];
 }
@@ -60,7 +60,7 @@ function getImageHeight(type, image) {
   return 200;
 }
 
-function Card({ type, url, image, title, date }) {
+function Card({ date, image, title, type, url }) {
   if (!type) {
     return null;
   }
@@ -69,8 +69,6 @@ function Card({ type, url, image, title, date }) {
 
   return (
     <TouchableHighlight
-      underlayColor={Colors.darkBlue}
-      style={styles.card}
       onPress={() => {
         logEvent('TAP post', {
           post_type: type?.toLowerCase(),
@@ -89,6 +87,8 @@ function Card({ type, url, image, title, date }) {
           Linking.openURL(url);
         }
       }}
+      style={styles.card}
+      underlayColor={Colors.darkBlue}
     >
       <View>
         {image ? (
@@ -115,20 +115,20 @@ function Card({ type, url, image, title, date }) {
               </Text>
             )}
           </View>
-          {date && (
+          {date ? (
             <Text light style={styles.cardTypeText}>
               {date}
             </Text>
-          )}
+          ) : null}
         </View>
-        {title && (
+        {title ? (
           <Text
-            style={styles.title}
             numberOfLines={type === 'SOCIAL' ? undefined : 3}
+            style={styles.title}
           >
             {title}
           </Text>
-        )}
+        ) : null}
       </View>
     </TouchableHighlight>
   );
@@ -136,38 +136,38 @@ function Card({ type, url, image, title, date }) {
 
 export const styles = StyleSheet.create({
   card: {
-    flex: 1,
-    marginBottom: 16,
     backgroundColor: Colors.darkestGray,
     borderRadius: 8,
+    flex: 1,
+    marginBottom: 16,
     overflow: 'hidden',
   },
+  cardType: {
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  cardTypeIcon: {
+    height: 16,
+    width: 16,
+  },
+  cardTypeText: {
+    paddingLeft: 8,
+  },
+  cardTypeView: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+  },
   image: {
-    width: undefined,
     marginBottom: 8,
     resizeMode: 'cover',
+    width: undefined,
   },
   title: {
     paddingHorizontal: 8,
     paddingVertical: 8,
-  },
-  cardTypeView: {
-    paddingHorizontal: 8,
-    paddingVertical: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  cardType: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  cardTypeIcon: {
-    width: 16,
-    height: 16,
-  },
-  cardTypeText: {
-    paddingLeft: 8,
   },
 });
 

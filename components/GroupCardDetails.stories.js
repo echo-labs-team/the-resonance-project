@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, Button } from 'react-native';
 import { BlurView } from 'expo-blur';
@@ -9,25 +8,25 @@ import { styles } from '../screens/Groups';
 import GroupCardDetails from './GroupCardDetails';
 
 const item = {
-  Name: 'Group Name',
-  GroupCampus: 'North San Jose',
-  FriendlyScheduleText: 'Friday @ 5pm',
   Description: 'Group description',
+  FriendlyScheduleText: 'Friday @ 5pm',
+  GroupCampus: 'North San Jose',
+  Name: 'Group Name',
 };
 
 const Stack = createStackNavigator();
 const containerStyles = {
-  padding: 10,
+  backgroundColor: 'black',
   flex: 1,
   justifyContent: 'center',
-  backgroundColor: 'black',
+  padding: 10,
 };
 
 function GroupCard() {
   return (
     <View style={containerStyles}>
       <View style={styles.cardShadow}>
-        <BlurView tint="dark" intensity={100} style={styles.card}>
+        <BlurView intensity={100} style={styles.card} tint="dark">
           <GroupCardDetails item={item} />
         </BlurView>
       </View>
@@ -49,8 +48,8 @@ function GroupDetails({ navigation }) {
 storiesOf('Group Card', module).add('default', () => (
   <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen name="Group Card" component={GroupCard} />
-      <Stack.Screen name="GroupDetails" component={GroupDetails} />
+      <Stack.Screen component={GroupCard} name="Group Card" />
+      <Stack.Screen component={GroupDetails} name="GroupDetails" />
     </Stack.Navigator>
   </NavigationContainer>
 ));

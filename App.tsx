@@ -1,26 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
-import { enableScreens } from 'react-native-screens';
+import * as Amplitude from 'expo-analytics-amplitude';
+import Constants from 'expo-constants';
 import * as SplashScreen from 'expo-splash-screen';
-import { requestTrackingPermissionsAsync } from 'expo-tracking-transparency';
-import * as Sentry from 'sentry-expo';
+import { StatusBar } from 'expo-status-bar';
+import { useTrackingPermissions } from 'expo-tracking-transparency';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { AppState, Platform, StyleSheet, UIManager, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import Storybook from './storybook';
-import {
-  AppState,
-  AppStateStatus,
-  Platform,
-  StyleSheet,
-  UIManager,
-  View,
-} from 'react-native';
-import Constants from 'expo-constants';
-import { StatusBar } from 'expo-status-bar';
-import * as Amplitude from 'expo-analytics-amplitude';
-import { resources } from './resources';
-import logEvent from './utils/logEvent';
+import { enableScreens } from 'react-native-screens';
+import { QueryClient, QueryClientProvider, setLogger } from 'react-query';
+import * as Sentry from 'sentry-expo';
 import AppNavigator from './navigation/AppNavigator';
+import { resources } from './resources';
+import Storybook from './storybook';
+import logEvent from './utils/logEvent';
 
 const RUN_STORYBOOK = __DEV__ && false;
 
@@ -28,31 +21,31 @@ enableScreens();
 
 // initialize Sentry and Amplitude
 Sentry.init({
-  dsn: Constants.manifest?.extra?.SENTRY_DSN,
-  enableAutoSessionTracking: true,
   debug: __DEV__,
+  dsn: Constants.manifest?.extra?.SENTRY_DSN as string,
+  enableAutoSessionTracking: true,
 });
 
 if (Constants.manifest?.extra?.AMPLITUDE) {
-  Amplitude.initializeAsync(Constants.manifest.extra.AMPLITUDE);
+  void Amplitude.initializeAsync(Constants.manifest.extra.AMPLITUDE as string);
 }
 
 if (__DEV__) {
   setLogger({
+    error: console.error,
     log: console.log,
     warn: console.warn,
-    error: console.error,
   });
 } else {
   setLogger({
-    log: (message) => {
-      Sentry.Native.captureMessage(message);
-    },
-    warn: (message) => {
-      Sentry.Native.captureMessage(message);
-    },
     error: (error) => {
       Sentry.Native.captureException(error);
+    },
+    log: (message: string) => {
+      Sentry.Native.captureMessage(message);
+    },
+    warn: (message: string) => {
+      Sentry.Native.captureMessage(message);
     },
   });
 }
@@ -67,7 +60,9 @@ if (
 const queryClient = new QueryClient();
 
 function App() {
+  const appState = useRef(AppState.currentState);
   const [appIsReady, setAppIsReady] = useState(false);
+  const [status, requestPermission] = useTrackingPermissions();
 
   useEffect(() => {
     async function prepare() {
@@ -85,38 +80,24 @@ function App() {
       }
     }
 
-    prepare();
+    void prepare();
   }, []);
 
-  // https://docs.expo.dev/versions/latest/sdk/tracking-transparency/
-  // The `TrackingTransparency` permission is necessary on iOS 14+
   useEffect(() => {
-    (async () => {
-      await requestTrackingPermissionsAsync();
-    })();
-  }, []);
-
-  /**
-   * Log when our app
-   * becomes active (The app is running in the foreground)
-   * or runs in the background (The user is either: in another app, on the home screen,
-   * or [Android-only] on another Activity, even if it was launched by the app)
-   * https://reactnative.dev/docs/appstate
-   */
-  useEffect(() => {
-    function handleAppStateChange(state: AppStateStatus) {
-      if (state === 'active') {
-        queryClient.invalidateQueries();
-        logEvent('Start session');
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        void queryClient.invalidateQueries();
       }
-      if (state === 'background') {
-        logEvent('End session');
-      }
-    }
 
-    AppState.addEventListener('change', handleAppStateChange);
+      appState.current = nextAppState;
+    });
 
-    return () => AppState.removeEventListener('change', handleAppStateChange);
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   const onLayoutRootView = useCallback(async () => {
@@ -127,8 +108,14 @@ function App() {
       // we hide the splash screen once we know the root view has already
       // performed layout.
       await SplashScreen.hideAsync();
+
+      if (!status?.granted) {
+        setTimeout(() => {
+          void requestPermission();
+        }, 500);
+      }
     }
-  }, [appIsReady]);
+  }, [appIsReady, requestPermission, status?.granted]);
 
   if (!appIsReady) {
     return null;
@@ -139,13 +126,12 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <SafeAreaProvider>
           <StatusBar
-            hidden
             animated
-            style="light"
             networkActivityIndicatorVisible
+            style="light"
             translucent
           />
-          <View style={styles.container} onLayout={onLayoutRootView}>
+          <View onLayout={onLayoutRootView} style={styles.container}>
             <AppNavigator />
           </View>
         </SafeAreaProvider>

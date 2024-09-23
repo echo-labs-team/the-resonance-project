@@ -19,10 +19,10 @@ import Button from './shared/Button';
 import Colors from '../constants/Colors';
 
 export default ({
-  success = false,
   buttonTitle = '🚨 needs a title 🚨',
-  handleOpenModal,
   children,
+  handleOpenModal,
+  success = false,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -37,22 +37,22 @@ export default ({
   return (
     <>
       <Button
-        title={buttonTitle}
-        style={styles.button}
         onPress={() => {
           if (handleOpenModal) {
             handleOpenModal();
           }
           setIsVisible(true);
         }}
+        style={styles.button}
+        title={buttonTitle}
       />
       <Modal
         isVisible={isVisible}
         onBackButtonPress={() => setIsVisible(false)}
         onBackdropPress={() => setIsVisible(false)}
         onSwipeComplete={() => setIsVisible(false)}
-        swipeDirection="down"
         style={styles.modal}
+        swipeDirection="down"
       >
         <KeyboardAvoidingView
           behavior={Platform.OS == 'ios' ? 'padding' : 'height'}
@@ -72,28 +72,29 @@ const dragBarColor = 'rgba(255,255,255,0.3)';
 
 const styles = StyleSheet.create({
   button: { marginBottom: 16 },
-  modal: {
-    margin: 0,
-    justifyContent: 'flex-end',
-  },
   closeButton: { alignSelf: 'flex-end' },
   container: {
-    height: '85%',
-    paddingTop: 10,
-    paddingBottom: 20,
-    position: 'relative',
+    backgroundColor: Colors.darkerGray,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
-    backgroundColor: Colors.darkerGray,
+    height: '85%',
+    paddingBottom: 20,
+    paddingTop: 10,
+    position: 'relative',
   },
   // needed to allow scrolling on android
   contentContainer: { flexGrow: 1 },
+
   dragBar: {
-    width: 100,
+    alignSelf: 'center',
+    backgroundColor: dragBarColor,
+    borderRadius: 6,
     height: 6,
     marginBottom: 30,
-    alignSelf: 'center',
-    borderRadius: 6,
-    backgroundColor: dragBarColor,
+    width: 100,
+  },
+  modal: {
+    justifyContent: 'flex-end',
+    margin: 0,
   },
 });

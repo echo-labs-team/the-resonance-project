@@ -17,8 +17,8 @@ storiesOf('Live Card', module)
 
 const styles = StyleSheet.create({
   base: {
-    width: '80%',
-    height: '25%',
     borderRadius: 8,
+    height: '25%',
+    width: '80%',
   },
 });

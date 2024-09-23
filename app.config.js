@@ -6,9 +6,14 @@ export default {
   expo: {
     name: 'Echo.Church',
     description: 'Echo.Church App',
+    owner: 'echo-church',
     slug: 'echo',
     scheme: 'echo',
-    version: '2.0.1',
+    version: '3.0.1',
+    runtimeVersion:
+      process.env.NODE_ENV === 'development'
+        ? undefined
+        : { policy: 'sdkVersion' },
     orientation: 'portrait',
     icon: './assets/images/app-icon.png',
     userInterfaceStyle: 'dark',
@@ -19,7 +24,8 @@ export default {
       backgroundColor: '#000000',
     },
     updates: {
-      fallbackToCacheTimeout: 0,
+      fallbackToCacheTimeout: 3000,
+      url: 'https://u.expo.dev/7ce5e2a0-a01a-4585-8211-371d22c90172',
     },
     assetBundlePatterns: ['**/*'],
     hooks: {
@@ -60,6 +66,9 @@ export default {
       ],
     ],
     extra: {
+      eas: {
+        projectId: '7ce5e2a0-a01a-4585-8211-371d22c90172',
+      },
       AMPLITUDE: process.env.AMPLITUDE,
       TIMESTAMP: timestamp,
       ONESIGNAL_APP_ID: process.env.ONESIGNAL_APP_ID,

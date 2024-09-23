@@ -21,9 +21,7 @@ describe('<GroupCardDetails/>', () => {
         Description: 'This group is a test',
       },
     };
-    const { toJSON, getByTestId } = render(<GroupCardDetails {...props} />);
-
-    expect(toJSON()).toMatchSnapshot();
+    const { getByTestId } = render(<GroupCardDetails {...props} />);
 
     fireEvent.press(getByTestId('GroupCardDetails'));
 

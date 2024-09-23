@@ -26,7 +26,7 @@ function AnimatedCircle() {
   return (
     <Animated.View style={style}>
       <Svg style={styles.circle} viewBox="0 0 100 100">
-        <Circle cx="50" cy="50" r="50" fill={Colors.red} fillOpacity="1" />
+        <Circle cx="50" cy="50" fill={Colors.red} fillOpacity="1" r="50" />
       </Svg>
     </Animated.View>
   );
@@ -42,19 +42,19 @@ export default ({ style }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginBottom: 30,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors.darkestGray,
-  },
-  liveText: {
-    marginRight: 10,
-    marginBottom: 0,
-  },
   circle: {
     height: 20,
     width: 20,
+  },
+  container: {
+    alignItems: 'center',
+    backgroundColor: Colors.darkestGray,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 30,
+  },
+  liveText: {
+    marginBottom: 0,
+    marginRight: 10,
   },
 });

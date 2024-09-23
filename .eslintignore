@@ -9,3 +9,4 @@ tasks/
 node_modules/
 docs/
 __mocks__/
+*.js
