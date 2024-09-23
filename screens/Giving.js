@@ -1,25 +1,44 @@
-import React from 'react';
+import Constants from 'expo-constants';
 import {
+  Clipboard,
   ImageBackground,
   Linking,
   ScrollView,
   StyleSheet,
   View,
-  Clipboard,
 } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
-import Constants from 'expo-constants';
-import logEvent from '../utils/logEvent';
-import Layout from '../constants/Layout';
-import Colors from '../constants/Colors';
-import { useHandleTabChange } from '../utils/useHandleTabChange';
-import { Text, Subtitle } from '../components/shared/Typography';
 import Button from '../components/shared/Button';
+import { Subtitle, Text } from '../components/shared/Typography';
+import Colors from '../constants/Colors';
+import Layout from '../constants/Layout';
+import logEvent from '../utils/logEvent';
+import { openBrowser } from '../utils/openBrowser';
+import { useHandleTabChange } from '../utils/useHandleTabChange';
 
 const build = Constants.manifest?.extra?.TIMESTAMP || '';
-const handleGive = (campus) => {
-  logEvent(`TAP Giving ${campus}`);
-  Linking.openURL(`https://pushpay.com/g/echochurch${campus}`);
+const openGiveNow = () => {
+  logEvent(`TAP Giving Cash`);
+  Linking.openURL('https://donate.overflow.co/echochurch/cash');
+};
+const openGiveStocks = () => {
+  logEvent(`TAP Giving Stocks`);
+  Linking.openURL('https://donate.overflow.co/echochurch/stock/select-flow');
+};
+const openGiveCrypto = () => {
+  logEvent(`TAP Giving Crypto`);
+  Linking.openURL('https://donate.overflow.co/echochurch/crypto');
+};
+const openDAF = () => {
+  logEvent(`TAP Giving DAF`);
+  Linking.openURL('https://donate.overflow.co/echochurch/daf');
+};
+const openChallenge = () => {
+  logEvent(`TAP Giving Challenge`);
+  openBrowser({
+    title: '90-Day Tithe Challenge',
+    url: 'https://www.echo.church/tithechallenge',
+  });
 };
 
 function GivingScreen() {
@@ -47,25 +66,31 @@ function GivingScreen() {
         </Text>
 
         <Button
-          onPress={() => handleGive('north')}
+          onPress={() => openGiveNow()}
           style={styles.button}
-          title="North San Jose"
+          title="Give Now"
         />
         <Button
-          onPress={() => handleGive('sunnyvale')}
+          onPress={() => openGiveStocks()}
           style={styles.button}
-          title="Sunnyvale"
+          title="Give Stocks"
         />
         <Button
-          onPress={() => handleGive('fremont')}
+          onPress={() => openGiveCrypto()}
           style={styles.button}
-          title="Fremont"
+          title="Give Crypto"
         />
         <Button
-          onPress={() => handleGive('online')}
+          onPress={() => openDAF()}
           style={styles.button}
-          title="Online"
+          title="Donor-Advised Funds"
         />
+        <Button
+          onPress={() => openChallenge()}
+          style={styles.button}
+          title="Join 90-Day Tithe Challenge"
+        />
+
         <Button
           onPress={() => Clipboard.setString(build)}
           style={styles.sha_button}
@@ -87,7 +112,10 @@ const styles = StyleSheet.create({
     top: 0,
     width: '100%',
   },
-  button: { marginVertical: 10 },
+  button: {
+    backgroundColor: Colors.red,
+    marginVertical: 10,
+  },
   container: {
     flex: 1,
     paddingHorizontal: 16,
